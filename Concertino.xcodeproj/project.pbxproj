@@ -11,6 +11,7 @@
 		095A9CBD23E4E2400010E150 /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */; };
 		095A9CBE23E4E2400010E150 /* Barlow-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */; };
 		095A9CBF23E4E2400010E150 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */; };
+		095A9CC123E50E400010E150 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A9CC023E50E400010E150 /* SearchField.swift */; };
 		09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3423E24F1F0011D718 /* AppDelegate.swift */; };
 		09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3623E24F1F0011D718 /* SceneDelegate.swift */; };
 		09E19F3923E24F1F0011D718 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3823E24F1F0011D718 /* ContentView.swift */; };
@@ -34,6 +35,7 @@
 		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-ExtraBold.ttf"; path = "../../../../../../Library/Fonts/Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-Regular.ttf"; path = "../../../../../../Library/Fonts/Barlow-Regular.ttf"; sourceTree = "<group>"; };
 		095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "../../../../../../Library/Fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		095A9CC023E50E400010E150 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		09E19F3123E24F1F0011D718 /* Concertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concertino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E19F3423E24F1F0011D718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E19F3623E24F1F0011D718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				09E19F5D23E257A50011D718 /* TabButton.swift */,
+				095A9CC023E50E400010E150 /* SearchField.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				09E19F5123E254480011D718 /* Library.swift in Sources */,
 				09E19F5523E2545B0011D718 /* TabMenu.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
+				095A9CC123E50E400010E150 /* SearchField.swift in Sources */,
 				09E19F5723E2546B0011D718 /* Settings.swift in Sources */,
 				09E19F5923E254730011D718 /* Radio.swift in Sources */,
 				09E19F4D23E253780011D718 /* Structure.swift in Sources */,

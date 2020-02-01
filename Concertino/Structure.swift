@@ -12,19 +12,24 @@ struct Structure: View {
     @EnvironmentObject var AppState: AppState
     
     var body: some View {
-        VStack {
-            Header()
-            Spacer()
-            if self.AppState.currentTab == "library" { Library() }
-            if self.AppState.currentTab == "favorites" { Favorites() }
-            if self.AppState.currentTab == "radio" { Radio() }
-            if self.AppState.currentTab == "settings" { Settings() }
-            Spacer()
+        ZStack(alignment: .bottom) {
+            VStack {
+                Header()
+                Spacer()
+                
+                ZStack(alignment: .top) {
+                    Library().opacity(self.AppState.currentTab == "library" ? 1 : 0)
+                    Favorites().opacity(self.AppState.currentTab == "favorites" ? 1 : 0)
+                    Radio().opacity(self.AppState.currentTab == "radio" ? 1 : 0)
+                    Settings().opacity(self.AppState.currentTab == "settings" ? 1 : 0)
+                }
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 116, trailing: 0))
+                    
+                Spacer()
+                TabMenu()
+            }
             Player()
-            Spacer()
-            TabMenu()
         }
-        
     }
 }
 

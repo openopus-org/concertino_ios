@@ -15,6 +15,9 @@ struct ContentView: View {
         ZStack(alignment: .top) {
             Color(hex: 0x121212)
                 .edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x3C3C3C), Color(hex: 0x121212)]), startPoint: .top, endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
+                .frame(height: 60)
             Structure()
         }
         .foregroundColor(.white)

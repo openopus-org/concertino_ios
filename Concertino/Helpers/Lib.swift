@@ -11,6 +11,7 @@ import Combine
 
 final class AppState: ObservableObject  {
     @Published var currentTab = "library"
+    @Published var fullPlayer = false
 }
 
 extension Color {
@@ -28,4 +29,13 @@ extension Color {
             opacity: alpha
         )
     }
+}
+
+public struct SearchStyle: TextFieldStyle {
+  public func _body(configuration: TextField<Self._Label>) -> some View {
+    configuration
+      .padding(0)
+        .font(.custom("Nunito", size: 15))
+        .foregroundColor(.black)
+  }
 }

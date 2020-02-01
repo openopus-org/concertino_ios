@@ -13,7 +13,7 @@ struct Header: View {
         Image("logo")
         .resizable()
         .scaledToFit()
-            .frame(width: 140)
+            .frame(height: 22)
     }
 }
 
