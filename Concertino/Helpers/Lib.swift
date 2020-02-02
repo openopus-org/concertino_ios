@@ -39,3 +39,29 @@ public struct SearchStyle: TextFieldStyle {
         .foregroundColor(.black)
   }
 }
+
+public func APIget(_ url: String, completion: @escaping (Data) -> ()) {
+    
+    guard let urlR = URL(string: url) else {
+        fatalError("Invalid URL")
+    }
+    
+    let request = URLRequest(url: urlR)
+    
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        
+        if let data = data {
+            completion(data)
+        }
+        
+    }.resume()
+}
+
+public func parseJSON<T: Decodable>(_ data: Data) -> T {
+    do {
+        let decoder = JSONDecoder()
+        return try decoder.decode(T.self, from: data)
+    } catch {
+        fatalError("Couldn't parse as \(T.self):\n\(error)")
+    }
+}

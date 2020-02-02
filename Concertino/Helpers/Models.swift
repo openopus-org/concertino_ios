@@ -8,14 +8,16 @@
 
 import SwiftUI
 
-struct Models: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct Composers: Codable {
+    var composers: [Composer]?
 }
 
-struct Models_Previews: PreviewProvider {
-    static var previews: some View {
-        Models()
-    }
+struct Composer: Codable, Identifiable {
+    var id: String
+    var name: String
+    var complete_name: String
+    var birth: String
+    var death: String?
+    var epoch: String
+    var portrait: URL
 }
