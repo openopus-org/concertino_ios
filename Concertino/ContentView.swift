@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var AppState: AppState
+    //@EnvironmentObject var AppState: AppState
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -27,7 +27,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(AppState())
+        ContentView()
     }
 }
 

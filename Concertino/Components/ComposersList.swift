@@ -18,7 +18,7 @@ class ComposersData: ObservableObject {
     }
     
     func loadData() {
-        APIget(AppConstants.openOpusBackend+"/composer/list/rec.json") { results in
+        APIget(AppConstants.openOpusBackend+"/composer/list/pop.json") { results in
             let composersData: Composers = parseJSON(results)
             DispatchQueue.main.async {
                 self.title = "Most Requested Composers"
@@ -57,4 +57,3 @@ struct ComposersList_Previews: PreviewProvider {
         ComposersList()
     }
 }
-

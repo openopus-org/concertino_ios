@@ -9,23 +9,23 @@
 import SwiftUI
 
 struct Player: View {
-    @EnvironmentObject var AppState: AppState
+    @State var fullPlayer = false
     
     var body: some View {
         ZStack(alignment: .top) {
             LinearGradient(gradient: Gradient(colors: [Color(hex: 0x4F4F4F), Color(hex: 0x2B2B2F)]), startPoint: .top, endPoint: .bottom)
-                .frame(minHeight: 130, maxHeight: self.AppState.fullPlayer ? .infinity : 130)
+                .frame(minHeight: 130, maxHeight: self.fullPlayer ? .infinity : 130)
             .cornerRadius(25)
             
-        Button(
-            action: { self.AppState.fullPlayer.toggle() },
-            label: {
-                Image("handle")
-                .resizable()
-                .frame(width: 7, height: 32)
-                .foregroundColor(Color(hex: 0x696969))
-                    .rotationEffect(.degrees(self.AppState.fullPlayer ? 90 : 270))
-            })
+            Button(
+                action: { self.fullPlayer.toggle() },
+                label: {
+                    Image("handle")
+                    .resizable()
+                    .frame(width: 7, height: 32)
+                    .foregroundColor(Color(hex: 0x696969))
+                        .rotationEffect(.degrees(self.fullPlayer ? 90 : 270))
+                })
         }
         .padding(EdgeInsets(top: 32, leading: 0, bottom: 46, trailing: 0))
     }

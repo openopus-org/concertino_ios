@@ -23,6 +23,7 @@ class ComposersSearchData: ObservableObject {
             DispatchQueue.main.async {
                 self.title = "Search Results"
                 self.composers = composersData.composers ?? []
+                print(self.composers)
             }
         }
     }
@@ -46,7 +47,7 @@ struct ComposersSearch: View {
             List(composers.composers, id: \.id) { composer in
                     ComposerRow(composer: composer)
                 }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            
             Spacer()
         }
         

@@ -12,11 +12,9 @@ struct Library: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                SearchField().padding(EdgeInsets(top: 9, leading: 20, bottom: 6, trailing: 20))
                 ComposersList()
             }
         }
-        //.background(Color.black.opacity(0))
     }
 }
 

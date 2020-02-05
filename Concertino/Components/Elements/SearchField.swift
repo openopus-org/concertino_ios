@@ -10,35 +10,52 @@ import SwiftUI
 
 struct SearchField: View {
     @State private var search = ""
+    @EnvironmentObject var AppState: AppState
     
     var body: some View {
         HStack {
-            Image("search")
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(Color(hex: 0xFE365E))
-                .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 0))
-                .frame(maxHeight: 15)
-            
-            ZStack(alignment: .leading) {
-                if search.isEmpty {
-                    Text("Search composer by name")
-                        .foregroundColor(.black)
-                        .font(.custom("Nunito", size: 15))
-                        .padding(1)
+            HStack {
+                Image("search")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(Color(hex: 0xFE365E))
+                    .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 0))
+                    .frame(maxHeight: 15)
+                
+                ZStack(alignment: .leading) {
+                    if self.search.isEmpty {
+                        Text("Search composer by name")
+                            .foregroundColor(.black)
+                            .font(.custom("Nunito", size: 15))
+                            .padding(1)
+                    }
+                    TextField("", text: $search, onEditingChanged: { isEditing in
+                            if (isEditing) {
+                                self.AppState.currentTab = "composersearch"
+                            }
+                    })
+                        .textFieldStyle(SearchStyle())
+                        .disableAutocorrection(true)
                 }
-               TextField("", text: $search, onEditingChanged: { isEditing in
-                    
-                }, onCommit: {
-                    
-                    }).textFieldStyle(SearchStyle())
+                
             }
-            
+                .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
+                .foregroundColor(.black)
+                .background(Color(.white))
+                .cornerRadius(12)
+            if self.AppState.currentTab == "composersearch" {
+                Button(action: {
+                        self.AppState.currentTab = "library"
+                        self.search = ""
+                        self.endEditing(true) },
+                       label: { Text("Cancel")
+                        .foregroundColor(Color(hex: 0xfe365e))
+                        .font(.custom("Nunito", size: 13))
+                        .padding(4)
+                })
+            }
         }
-        .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
-        .foregroundColor(.black)
-        .background(Color(.white))
-        .cornerRadius(12)
+        
     }
 }
 

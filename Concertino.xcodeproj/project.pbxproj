@@ -17,6 +17,7 @@
 		09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65223E6226F004CDAB6 /* ComposersList.swift */; };
 		09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65423E628C6004CDAB6 /* ComposerRow.swift */; };
 		09AAD65823E62B74004CDAB6 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 09AAD65723E62B74004CDAB6 /* URLImage */; };
+		09BAA81423E9C53F00157611 /* ComposersSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAA81323E9C53F00157611 /* ComposersSearch.swift */; };
 		09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3423E24F1F0011D718 /* AppDelegate.swift */; };
 		09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3623E24F1F0011D718 /* SceneDelegate.swift */; };
 		09E19F3923E24F1F0011D718 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3823E24F1F0011D718 /* ContentView.swift */; };
@@ -45,6 +46,7 @@
 		09AAD65023E62120004CDAB6 /* Inc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inc.swift; sourceTree = "<group>"; };
 		09AAD65223E6226F004CDAB6 /* ComposersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersList.swift; sourceTree = "<group>"; };
 		09AAD65423E628C6004CDAB6 /* ComposerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerRow.swift; sourceTree = "<group>"; };
+		09BAA81323E9C53F00157611 /* ComposersSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersSearch.swift; sourceTree = "<group>"; };
 		09E19F3123E24F1F0011D718 /* Concertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concertino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E19F3423E24F1F0011D718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E19F3623E24F1F0011D718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 				09E19F5823E254730011D718 /* Radio.swift */,
 				09E19F5A23E254810011D718 /* Favorites.swift */,
 				09AAD65223E6226F004CDAB6 /* ComposersList.swift */,
+				09BAA81323E9C53F00157611 /* ComposersSearch.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */,
 				09E19F3923E24F1F0011D718 /* ContentView.swift in Sources */,
 				09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */,
+				09BAA81423E9C53F00157611 /* ComposersSearch.swift in Sources */,
 				09E19F5E23E257A50011D718 /* TabButton.swift in Sources */,
 				09E19F5B23E254810011D718 /* Favorites.swift in Sources */,
 				09E19F4F23E2543E0011D718 /* Header.swift in Sources */,

@@ -7,11 +7,11 @@
 //
 
 import SwiftUI
-import Combine
 
 final class AppState: ObservableObject  {
     @Published var currentTab = "library"
     @Published var fullPlayer = false
+    @Published var searching = false
 }
 
 extension Color {
@@ -28,6 +28,12 @@ extension Color {
             blue: components.B,
             opacity: alpha
         )
+    }
+}
+
+extension View {
+    func endEditing(_ force: Bool) {
+        UIApplication.shared.windows.forEach { $0.endEditing(force)}
     }
 }
 
