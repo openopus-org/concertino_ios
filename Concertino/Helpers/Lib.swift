@@ -7,11 +7,22 @@
 //
 
 import SwiftUI
+import Combine
 
 final class AppState: ObservableObject  {
     @Published var currentTab = "library"
     @Published var fullPlayer = false
     @Published var searching = false
+}
+
+final class ComposerSearchString: ObservableObject {
+    let objectWillChange = PassthroughSubject<(), Never>()
+    
+    @Published var searchstring: String = "" {
+        didSet {
+            objectWillChange.send()
+        }
+    }
 }
 
 extension Color {

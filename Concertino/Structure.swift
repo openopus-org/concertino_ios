@@ -21,12 +21,10 @@ struct Structure: View {
                 }
                 ZStack(alignment: .top) {
                     Library().opacity(self.AppState.currentTab == "library" ? 1 : 0)
+                    ComposersSearch().opacity(self.AppState.currentTab == "composersearch" ? 1 : 0)
                     Favorites().opacity(self.AppState.currentTab == "favorites" ? 1 : 0)
                     Radio().opacity(self.AppState.currentTab == "radio" ? 1 : 0)
                     Settings().opacity(self.AppState.currentTab == "settings" ? 1 : 0)
-                    if self.AppState.currentTab == "composersearch" {
-                        ComposersSearch()
-                    }
                 }
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 116, trailing: 0))
                     

@@ -11,7 +11,6 @@ import SwiftUI
 class ComposersData: ObservableObject {
     @Published var dataIsLoaded: Bool = false
     @Published var composers = [Composer]()
-    @Published var title: String = ""
     
     init() {
         loadData()
@@ -21,7 +20,6 @@ class ComposersData: ObservableObject {
         APIget(AppConstants.openOpusBackend+"/composer/list/pop.json") { results in
             let composersData: Composers = parseJSON(results)
             DispatchQueue.main.async {
-                self.title = "Most Requested Composers"
                 self.composers = composersData.composers ?? []
             }
         }
@@ -34,7 +32,7 @@ struct ComposersList: View {
     var body: some View {
         //if composers.dataIsLoaded {
         VStack(alignment: .leading) {
-            Text(composers.title.uppercased())
+            Text("Most Requested Composers".uppercased())
                 .foregroundColor(Color(hex: 0x717171))
                 .font(.custom("Nunito", size: 12))
                 .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))

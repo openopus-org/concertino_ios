@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SearchField: View {
-    @State private var search = ""
+    @EnvironmentObject var composersSearch: ComposerSearchString
     @EnvironmentObject var AppState: AppState
     
     var body: some View {
@@ -23,13 +23,13 @@ struct SearchField: View {
                     .frame(maxHeight: 15)
                 
                 ZStack(alignment: .leading) {
-                    if self.search.isEmpty {
+                    if self.composersSearch.searchstring.isEmpty {
                         Text("Search composer by name")
                             .foregroundColor(.black)
                             .font(.custom("Nunito", size: 15))
                             .padding(1)
                     }
-                    TextField("", text: $search, onEditingChanged: { isEditing in
+                    TextField("", text: $composersSearch.searchstring, onEditingChanged: { isEditing in
                             if (isEditing) {
                                 self.AppState.currentTab = "composersearch"
                             }
@@ -46,7 +46,7 @@ struct SearchField: View {
             if self.AppState.currentTab == "composersearch" {
                 Button(action: {
                         self.AppState.currentTab = "library"
-                        self.search = ""
+                    self.composersSearch.searchstring = ""
                         self.endEditing(true) },
                        label: { Text("Cancel")
                         .foregroundColor(Color(hex: 0xfe365e))
@@ -61,6 +61,7 @@ struct SearchField: View {
 
 struct SearchField_Previews: PreviewProvider {
     static var previews: some View {
-        SearchField()
+        EmptyView()
+        //SearchField(composersSearch: "")
     }
 }
