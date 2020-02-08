@@ -10,10 +10,8 @@ import SwiftUI
 
 struct Library: View {
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading) {
-                ComposersList()
-            }
+        VStack(alignment: .leading) {
+            ComposersList()
         }
     }
 }

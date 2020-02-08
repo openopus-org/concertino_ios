@@ -11,8 +11,8 @@ import Combine
 
 final class AppState: ObservableObject  {
     @Published var currentTab = "library"
+    @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
-    @Published var searching = false
 }
 
 final class ComposerSearchString: ObservableObject {
@@ -51,7 +51,7 @@ extension View {
 public struct SearchStyle: TextFieldStyle {
   public func _body(configuration: TextField<Self._Label>) -> some View {
     configuration
-      .padding(0)
+      .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
         .font(.custom("Nunito", size: 15))
         .foregroundColor(.black)
   }
@@ -59,7 +59,9 @@ public struct SearchStyle: TextFieldStyle {
 
 public func APIget(_ url: String, completion: @escaping (Data) -> ()) {
     
-    guard let urlR = URL(string: url) else {
+    guard let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
+        let urlR = URL(string: encoded) else
+    {
         fatalError("Invalid URL")
     }
     

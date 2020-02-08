@@ -19,6 +19,8 @@ struct ComposersSearch: View {
     }
     
     func loadData() {
+        loading = true
+        
         if self.composersSearch.searchstring.count > 3 {
             APIget(AppConstants.openOpusBackend+"/composer/list/search/\(self.composersSearch.searchstring).json") { results in
                 let composersData: Composers = parseJSON(results)
@@ -26,12 +28,16 @@ struct ComposersSearch: View {
                 DispatchQueue.main.async {
                     if let compo = composersData.composers {
                         self.composers = compo
-                        self.loading = false
                     }
+                    else {
+                        self.composers = [Composer]()
+                    }
+                    
+                    self.loading = false
                 }
             }
         }
-        else if self.composersSearch.searchstring == "" {
+        else {
             DispatchQueue.main.async {
                 self.composers = [Composer]()
                 self.loading = false
@@ -42,19 +48,49 @@ struct ComposersSearch: View {
     var body: some View {
 
         VStack(alignment: .leading) {
-            Text("Search Results For: \(self.composersSearch.searchstring)".uppercased())
-                .foregroundColor(Color(hex: 0x717171))
-                .font(.custom("Nunito", size: 12))
-                .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))
-            if self.loading { Text("loading...") }
-            List(self.composers, id: \.id) { composer in
-                    ComposerRow(composer: composer)
+            if self.composersSearch.searchstring != "" {
+                
+                if self.loading {
+                    HStack {
+                        Spacer()
+                        ActivityIndicator(isAnimating: loading)
+                        .configure { $0.color = .white; $0.style = .large }
+                        Spacer()
+                    }
+                    .padding(40)
+                }
+                else {
+                    if self.composers.count > 0 {
+                        Text("Composers".uppercased())
+                        .foregroundColor(Color(hex: 0x717171))
+                        .font(.custom("Nunito", size: 12))
+                        .padding(EdgeInsets(top: 7, leading: 20, bottom: 0, trailing: 0))
+                        List(self.composers, id: \.id) { composer in
+                            ComposerRow(composer: composer)
+                        }
+                    }
+                    else {
+                        HStack(alignment: .top) {
+                            VStack {
+                                Image("warning")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundColor(Color(hex: 0xa7a6a6))
+                                    .frame(height: 28)
+                                    .padding(5)
+                                Text((self.composersSearch.searchstring.count > 3 ? "No matches for: \(self.composersSearch.searchstring)" : "Search term too short"))
+                                    .foregroundColor(Color(hex: 0xa7a6a6))
+                                    .font(.custom("Barlow", size: 14))
+                            }
+                        }.padding(15)
+                    }
+                }
             }
-            .onAppear(perform: loadData)
-            .onReceive(composersSearch.objectWillChange, perform: loadData)
             Spacer()
         }
-        
+        .onAppear(perform: loadData)
+        .onReceive(composersSearch.objectWillChange, perform: loadData)
+        .frame(maxWidth: .infinity)
     }
 }
 

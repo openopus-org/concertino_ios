@@ -12,6 +12,8 @@
 		095A9CBE23E4E2400010E150 /* Barlow-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */; };
 		095A9CBF23E4E2400010E150 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */; };
 		095A9CC123E50E400010E150 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A9CC023E50E400010E150 /* SearchField.swift */; };
+		099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F90CA23EE15AF004A7021 /* ComposerBox.swift */; };
+		099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F90CC23EE1855004A7021 /* ActivityIndicator.swift */; };
 		09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD64E23E61E9F004CDAB6 /* Models.swift */; };
 		09AAD65123E62121004CDAB6 /* Inc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65023E62120004CDAB6 /* Inc.swift */; };
 		09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65223E6226F004CDAB6 /* ComposersList.swift */; };
@@ -42,6 +44,8 @@
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-Regular.ttf"; path = "../../../../../../Library/Fonts/Barlow-Regular.ttf"; sourceTree = "<group>"; };
 		095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "../../../../../../Library/Fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		095A9CC023E50E400010E150 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		099F90CA23EE15AF004A7021 /* ComposerBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerBox.swift; sourceTree = "<group>"; };
+		099F90CC23EE1855004A7021 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		09AAD64E23E61E9F004CDAB6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		09AAD65023E62120004CDAB6 /* Inc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inc.swift; sourceTree = "<group>"; };
 		09AAD65223E6226F004CDAB6 /* ComposersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersList.swift; sourceTree = "<group>"; };
@@ -165,6 +169,8 @@
 				09E19F5D23E257A50011D718 /* TabButton.swift */,
 				095A9CC023E50E400010E150 /* SearchField.swift */,
 				09AAD65423E628C6004CDAB6 /* ComposerRow.swift */,
+				099F90CA23EE15AF004A7021 /* ComposerBox.swift */,
+				099F90CC23EE1855004A7021 /* ActivityIndicator.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -251,8 +257,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */,
+				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
 				09E19F5123E254480011D718 /* Library.swift in Sources */,
 				09E19F5523E2545B0011D718 /* TabMenu.swift in Sources */,
+				099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
 				095A9CC123E50E400010E150 /* SearchField.swift in Sources */,
 				09E19F5723E2546B0011D718 /* Settings.swift in Sources */,

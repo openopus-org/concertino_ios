@@ -18,7 +18,7 @@ struct SearchField: View {
                 Image("search")
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(Color(hex: 0xFE365E))
+                    .foregroundColor(.black)
                     .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 0))
                     .frame(maxHeight: 15)
                 
@@ -31,7 +31,7 @@ struct SearchField: View {
                     }
                     TextField("", text: $composersSearch.searchstring, onEditingChanged: { isEditing in
                             if (isEditing) {
-                                self.AppState.currentTab = "composersearch"
+                                self.AppState.currentLibraryTab = "composersearch"
                             }
                     })
                         .textFieldStyle(SearchStyle())
@@ -39,14 +39,16 @@ struct SearchField: View {
                 }
                 
             }
-                .padding(EdgeInsets(top: 8, leading: 6, bottom: 8, trailing: 6))
-                .foregroundColor(.black)
-                .background(Color(.white))
-                .cornerRadius(12)
-            if self.AppState.currentTab == "composersearch" {
+            .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
+            .foregroundColor(.black)
+            .background(Color(.white))
+            .cornerRadius(12)
+            .clipped()
+            
+            if self.AppState.currentLibraryTab == "composersearch" {
                 Button(action: {
-                        self.AppState.currentTab = "library"
-                    self.composersSearch.searchstring = ""
+                        self.AppState.currentLibraryTab = "home"
+                        self.composersSearch.searchstring = ""
                         self.endEditing(true) },
                        label: { Text("Cancel")
                         .foregroundColor(Color(hex: 0xfe365e))

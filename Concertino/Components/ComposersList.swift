@@ -39,7 +39,7 @@ struct ComposersList: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(composers.composers, id: \.id) { composer in
-                        ComposerRow(composer: composer)
+                        ComposerBox(composer: composer)
                     }
                 }
                 .frame(minHeight: 174)

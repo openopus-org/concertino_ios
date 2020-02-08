@@ -16,12 +16,12 @@ struct Structure: View {
             VStack {
                 Header()
                 Spacer()
-                if (self.AppState.currentTab == "library" || self.AppState.currentTab == "composersearch") {
+                if (self.AppState.currentTab == "library") {
                     SearchField().padding(EdgeInsets(top: 9, leading: 20, bottom: 6, trailing: 20))
                 }
                 ZStack(alignment: .top) {
-                    Library().opacity(self.AppState.currentTab == "library" ? 1 : 0)
-                    ComposersSearch().opacity(self.AppState.currentTab == "composersearch" ? 1 : 0)
+                    Library().opacity(self.AppState.currentTab == "library" && self.AppState.currentLibraryTab == "home" ? 1 : 0)
+                    ComposersSearch().opacity(self.AppState.currentTab == "library" && self.AppState.currentLibraryTab == "composersearch" ? 1 : 0)
                     Favorites().opacity(self.AppState.currentTab == "favorites" ? 1 : 0)
                     Radio().opacity(self.AppState.currentTab == "radio" ? 1 : 0)
                     Settings().opacity(self.AppState.currentTab == "settings" ? 1 : 0)

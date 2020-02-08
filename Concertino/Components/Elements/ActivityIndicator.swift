@@ -8,14 +8,27 @@
 
 import SwiftUI
 
-struct ActivityIndicator: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct ActivityIndicator: UIViewRepresentable {
+
+    typealias UIView = UIActivityIndicatorView
+    var isAnimating: Bool
+    var configuration = { (indicator: UIView) in }
+
+    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIView { UIView() }
+    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<Self>) {
+        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
+        configuration(uiView)
+    }
+}
+
+extension View where Self == ActivityIndicator {
+    func configure(_ configuration: @escaping (Self.UIView)->Void) -> Self {
+        Self.init(isAnimating: self.isAnimating, configuration: configuration)
     }
 }
 
 struct ActivityIndicator_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityIndicator()
+        ActivityIndicator(isAnimating: true)
     }
 }
