@@ -69,6 +69,7 @@ struct ComposersSearchResults: View {
                                 ComposerRow(composer: composer)
                             }
                         }
+                        .gesture(DragGesture().onChanged{_ in      self.endEditing(true) })
                     }
                     else {
                         HStack(alignment: .top) {
@@ -89,7 +90,6 @@ struct ComposersSearchResults: View {
             }
             Spacer()
         }
-        .onAppear(perform: loadData)
         .onReceive(composersSearch.objectWillChange, perform: loadData)
         .frame(maxWidth: .infinity)
     }

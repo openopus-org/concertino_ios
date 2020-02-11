@@ -9,8 +9,23 @@
 import SwiftUI
 
 struct Library: View {
+    @EnvironmentObject var AppState: AppState
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            NavigationView {
+                VStack {
+                    SearchField().padding(EdgeInsets(top: 9, leading: 20, bottom: 6, trailing: 20))
+                    ZStack(alignment: .top) {
+                        Home().opacity(self.AppState.currentLibraryTab == "home" ? 1 : 0)
+                        ComposersSearch().opacity(self.AppState.currentLibraryTab == "composersearch" ? 1 : 0)
+                    }
+                    Spacer()
+                }
+            }
+            .padding(.top, -50)
+        }
+        .clipped()
     }
 }
 

@@ -20,12 +20,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView().environmentObject(AppState()).environmentObject(ComposerSearchString()).environment(\.colorScheme, .dark)
+        let contentView = Structure()
+                            .environment(\.colorScheme, .dark)
+                            .environmentObject(AppState())
+                            .environmentObject(ComposerSearchString())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView.onTapGesture { window.endEditing(true)})
+            window.overrideUserInterfaceStyle = .dark
+            window.rootViewController = UIHostingController(rootView: contentView)
+            //window.rootViewController = DarkHostingController(rootView: contentView)
+            //.onTapGesture(count: 1, perform: { window.endEditing(true)})
             self.window = window
             window.makeKeyAndVisible()
         }

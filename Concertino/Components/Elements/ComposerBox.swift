@@ -17,6 +17,7 @@ struct ComposerBox: View {
             VStack(alignment: .leading) {
                 URLImage(composer.portrait) { img in
                     img.image
+                        .renderingMode(.original)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .clipped()

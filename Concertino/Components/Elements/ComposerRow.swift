@@ -16,6 +16,7 @@ struct ComposerRow: View {
         HStack {
             URLImage(composer.portrait) { img in
                 img.image
+                    .renderingMode(.original)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .clipped()

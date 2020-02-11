@@ -49,7 +49,9 @@ struct SearchField: View {
                 Button(action: {
                         self.AppState.currentLibraryTab = "home"
                         self.composersSearch.searchstring = ""
-                        self.endEditing(true) },
+                        self.endEditing(true)
+                    
+                },
                        label: { Text("Cancel")
                         .foregroundColor(Color(hex: 0xfe365e))
                         .font(.custom("Nunito", size: 13))

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import URLImage
 
 class ComposersData: ObservableObject {
     @Published var dataIsLoaded: Bool = false
@@ -39,7 +40,9 @@ struct ComposersList: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(composers.composers, id: \.id) { composer in
-                        ComposerBox(composer: composer)
+                        NavigationLink(destination: ComposerDetail(composer: composer)) {
+                            ComposerBox(composer: composer)
+                        }
                     }
                 }
                 .frame(minHeight: 174)

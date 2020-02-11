@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct Library: View {
+struct Home: View {
     var body: some View {
         VStack(alignment: .leading) {
             ComposersList()
@@ -17,8 +17,8 @@ struct Library: View {
     }
 }
 
-struct Library_Previews: PreviewProvider {
+struct Home_Previews: PreviewProvider {
     static var previews: some View {
-        Library()
+        Home()
     }
 }
