@@ -2,7 +2,7 @@
 //  Library.swift
 //  Concertino
 //
-//  Created by Adriano Brandao on 29/01/20.
+//  Created by Adriano Brandao on 10/02/20.
 //  Copyright © 2020 Open Opus. All rights reserved.
 //
 
@@ -10,9 +10,7 @@ import SwiftUI
 
 struct Library: View {
     var body: some View {
-        VStack(alignment: .leading) {
-            ComposersList()
-        }
+        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
