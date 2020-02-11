@@ -30,8 +30,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let window = UIWindow(windowScene: windowScene)
             window.overrideUserInterfaceStyle = .dark
             window.rootViewController = UIHostingController(rootView: contentView)
-            //window.rootViewController = DarkHostingController(rootView: contentView)
-            //.onTapGesture(count: 1, perform: { window.endEditing(true)})
             self.window = window
             window.makeKeyAndVisible()
         }
