@@ -1,21 +1,21 @@
 //
-//  ComposerDetail.swift
+//  WorkRow.swift
 //  Concertino
 //
-//  Created by Adriano Brandao on 11/02/20.
+//  Created by Adriano Brandao on 12/02/20.
 //  Copyright © 2020 Open Opus. All rights reserved.
 //
 
 import SwiftUI
 
-struct ComposerDetail: View {
+struct WorkRow: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
-struct ComposerDetail_Previews: PreviewProvider {
+struct WorkRow_Previews: PreviewProvider {
     static var previews: some View {
-        ComposerDetail()
+        WorkRow()
     }
 }
