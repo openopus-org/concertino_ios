@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             .environment(\.colorScheme, .dark)
                             .environmentObject(AppState())
                             .environmentObject(ComposerSearchString())
+                            .environmentObject(WorkSearchGenre())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

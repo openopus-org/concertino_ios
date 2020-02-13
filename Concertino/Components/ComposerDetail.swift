@@ -9,13 +9,25 @@
 import SwiftUI
 
 struct ComposerDetail: View {
+    var composer: Composer
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Group {
+                ComposerHeader(composer: composer)
+                    .padding(.top, 12)
+                GenreBar(composerId: composer.id)
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            WorksSearch(composerId: composer.id)
+            Spacer()
+        }
+        
     }
 }
 
 struct ComposerDetail_Previews: PreviewProvider {
     static var previews: some View {
-        ComposerDetail()
+        EmptyView()
     }
 }

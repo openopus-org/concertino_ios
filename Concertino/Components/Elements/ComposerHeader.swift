@@ -9,7 +9,7 @@
 import SwiftUI
 import URLImage
 
-struct ComposerDetail: View {
+struct ComposerHeader: View {
     var composer: Composer
     @Environment(\.presentationMode) var presentationMode
     
@@ -50,12 +50,13 @@ struct ComposerDetail: View {
                 }
                 .padding(12)
             }
+            Spacer()
         }
         .onAppear(perform: { self.endEditing(true) })
     }
 }
 
-struct ComposerDetail_Previews: PreviewProvider {
+struct ComposerHeader_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()
     }

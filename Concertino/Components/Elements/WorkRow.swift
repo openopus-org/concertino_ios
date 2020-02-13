@@ -9,13 +9,24 @@
 import SwiftUI
 
 struct WorkRow: View {
+    var work: Work
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Spacer()
+            Text(work.title)
+                .font(.custom("Barlow", size: 15))
+            if work.subtitle != nil {
+                Text(work.subtitle!)
+                    .font(.custom("Barlow", size: 12))
+            }
+        }
+        .padding(EdgeInsets(top: 8, leading: 2, bottom: (work.subtitle != nil ? 15 : 0), trailing: 0))
     }
 }
 
 struct WorkRow_Previews: PreviewProvider {
     static var previews: some View {
-        WorkRow()
+        EmptyView()
     }
 }

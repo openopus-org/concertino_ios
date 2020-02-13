@@ -21,3 +21,20 @@ struct Composer: Codable, Identifiable {
     var epoch: String
     var portrait: URL
 }
+
+struct Genres: Codable {
+    var genres: [String]?
+}
+
+struct Works: Codable {
+    var works: [Work]?
+}
+
+struct Work: Codable, Identifiable {
+    var id: String
+    var title: String
+    var subtitle: String?
+    var genre: String
+    var recommended: String
+    var popular: String
+}

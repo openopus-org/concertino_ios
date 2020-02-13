@@ -7,11 +7,12 @@
 //
 
 import SwiftUI
-
+ 
 struct GenreBar: View {
     var composerId: String
     @State private var genres = [String]()
     @State private var loading = true
+    @EnvironmentObject var genre: WorkSearchGenre
     
     func loadData() {
         loading = true
@@ -23,6 +24,12 @@ struct GenreBar: View {
                 if let genr = genresData.genres {
                     self.genres = genr
                     self.loading = false
+                    
+                    if genr.contains("Recommended") {
+                        self.genre.searchgenre = "Recommended"
+                    } else {
+                        self.genre.searchgenre = "all"
+                    }
                 }
                 else {
                     self.genres = [String]()
@@ -38,16 +45,15 @@ struct GenreBar: View {
             Text("Works".uppercased())
                 .foregroundColor(Color(hex: 0x717171))
                 .font(.custom("Nunito", size: 12))
-                .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))
-            ScrollView(.horizontal, showsIndicators: false) {
+                .padding(.top, 12)
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(genres, id: \.self) { genre in
-                        Text(genre)
+                        Button(action: { self.genre.searchgenre = genre }, label: {
+                            GenreButton(genre: genre, active: (self.genre.searchgenre == genre))
+                                .frame(maxWidth: .infinity)
+                        })
                     }
                 }
-                .frame(minHeight: 174)
-                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-            }
         }
         .onAppear(perform: loadData)
     }

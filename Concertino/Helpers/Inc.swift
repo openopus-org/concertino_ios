@@ -11,4 +11,5 @@ import Foundation
 struct AppConstants {
     static let openOpusBackend = "https://api.openopus.org"
     static let concBackend = "https://api.concertino.app"
+    static let genreList = ["Chamber", "Keyboard", "Orchestral", "Stage", "Vocal"]
 }

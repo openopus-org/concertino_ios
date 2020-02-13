@@ -25,6 +25,16 @@ final class ComposerSearchString: ObservableObject {
     }
 }
 
+final class WorkSearchGenre: ObservableObject {
+    let objectWillChange = PassthroughSubject<(), Never>()
+    
+    @Published var searchgenre: String = "All" {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+}
+
 extension Color {
     init(hex: Int, alpha: Double = 1) {
         let components = (
@@ -66,6 +76,10 @@ public func APIget(_ url: String, completion: @escaping (Data) -> ()) {
     }
     
     let request = URLRequest(url: urlR)
+    
+    let sessionConfig = URLSessionConfiguration.default
+    sessionConfig.timeoutIntervalForRequest = 3000000.0
+    sessionConfig.timeoutIntervalForResource = 6000000.0
     
     URLSession.shared.dataTask(with: request) { data, response, error in
         
