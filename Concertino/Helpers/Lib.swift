@@ -25,10 +25,22 @@ final class ComposerSearchString: ObservableObject {
     }
 }
 
-final class WorkSearchGenre: ObservableObject {
+final class WorkSearch: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
     
-    @Published var searchgenre: String = "All" {
+    @Published var genreName: String = "" {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+    
+    @Published var composerId: String = "" {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+    
+    @Published var searchString: String = "" {
         didSet {
             objectWillChange.send()
         }
@@ -50,6 +62,12 @@ extension Color {
             opacity: alpha
         )
     }
+}
+
+extension Collection {
+  func enumeratedArray() -> Array<(offset: Int, element: Self.Element)> {
+    return Array(self.enumerated())
+  }
 }
 
 extension View {

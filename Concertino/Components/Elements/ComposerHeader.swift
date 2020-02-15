@@ -15,16 +15,7 @@ struct ComposerHeader: View {
     
     var body: some View {
         HStack {
-            Button(
-                action: { self.presentationMode.wrappedValue.dismiss() },
-            label: {
-                Image("handle")
-                .resizable()
-                .frame(width: 14, height: 36)
-                .foregroundColor(Color(hex: 0xfe365e))
-                .rotationEffect(.degrees(180))
-                .padding(.trailing, 10)
-            })
+            BackButton()
             URLImage(composer.portrait) { img in
                 img.image
                     .renderingMode(.original)
@@ -33,22 +24,22 @@ struct ComposerHeader: View {
                     .clipped()
                     .clipShape(Circle())
             }
-            .frame(width: 72, height: 72)
+            .frame(width: 70, height: 70)
             VStack {
                 VStack(alignment: .leading) {
                     
                     Text(composer.name.uppercased())
                         .foregroundColor(Color(hex: 0xfe365e))
-                        .font(.custom("Nunito-ExtraBold", size: 15))
+                        .font(.custom("Nunito-ExtraBold", size: 17))
                     Group{
                         Text(composer.complete_name)
                         Text("(" + composer.birth.prefix(4)) + Text(composer.death != nil ? "-" : "") + Text((composer.death?.prefix(4) ?? "")) + Text(")")
                     }
                     .foregroundColor(.white)
                     .lineLimit(20)
-                    .font(.custom("Nunito", size: 12))
+                    .font(.custom("Nunito", size: 14))
                 }
-                .padding(12)
+                .padding(8)
             }
             Spacer()
         }

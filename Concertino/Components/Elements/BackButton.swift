@@ -9,8 +9,19 @@
 import SwiftUI
 
 struct BackButton: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(
+            action: { self.presentationMode.wrappedValue.dismiss() },
+        label: {
+            Image("handle")
+            .resizable()
+            .frame(width: 14, height: 36)
+            .foregroundColor(Color(hex: 0xfe365e))
+            .rotationEffect(.degrees(180))
+            .padding(.trailing, 10)
+        })
     }
 }
 

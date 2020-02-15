@@ -22,7 +22,7 @@ struct ComposerRow: View {
                     .clipped()
                     .clipShape(Circle())
             }
-            .frame(width: 72, height: 72)
+            .frame(width: 60, height: 60)
             VStack {
                 VStack(alignment: .leading) {
                     
@@ -37,7 +37,7 @@ struct ComposerRow: View {
                     .lineLimit(20)
                     .font(.custom("Nunito", size: 12))
                 }
-                .padding(12)
+                .padding(8)
             }
         }
     }

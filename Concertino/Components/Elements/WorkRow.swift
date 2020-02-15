@@ -10,18 +10,20 @@ import SwiftUI
 
 struct WorkRow: View {
     var work: Work
+    var composer: Composer
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Spacer()
-            Text(work.title)
-                .font(.custom("Barlow", size: 15))
-            if work.subtitle != nil {
-                Text(work.subtitle!)
-                    .font(.custom("Barlow", size: 12))
+        NavigationLink(destination: WorkDetail(work: work, composer: composer), label: {
+            VStack(alignment: .leading) {
+                Text(work.title)
+                    .font(.custom("Barlow", size: 15))
+                if work.subtitle != "" {
+                    Text(work.subtitle!)
+                        .font(.custom("Barlow", size: 12))
+                }
             }
-        }
-        .padding(EdgeInsets(top: 8, leading: 2, bottom: (work.subtitle != nil ? 15 : 0), trailing: 0))
+            .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 0))
+        })
     }
 }
 

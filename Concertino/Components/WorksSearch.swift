@@ -9,26 +9,36 @@
 import SwiftUI
 
 struct WorksSearch: View {
-    var composerId: String
-    @EnvironmentObject var genre: WorkSearchGenre
+    var composer: Composer
+    @EnvironmentObject var search: WorkSearch
     @State private var loading = true
     @State private var works = [Work]()
+    @State private var genresAvail = [String]()
+    @State private var hasEssential = false
     
-    init(composerId: String) {
+    init(composer: Composer) {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
-        self.composerId = composerId
+        self.composer = composer
     }
     
     func loadData() {
         loading = true
         
-        APIget(AppConstants.openOpusBackend+"/work/list/composer/\(self.composerId)/\(self.genre.searchgenre).json") { results in
+        APIget(AppConstants.openOpusBackend+"/work/list/composer/\(self.composer.id)/\(self.search.genreName).json") { results in
             let worksData: Works = parseJSON(results)
             
             DispatchQueue.main.async {
+                self.genresAvail.removeAll()
                 if let wrks = worksData.works {
                     self.works = wrks
+                    self.hasEssential = (self.works.filter({$0.recommended == "1"}).count > 0)
+                    
+                    for genre in AppConstants.genreList {
+                        if self.works.filter({$0.genre == genre}).count > 0 {
+                            self.genresAvail.append(genre)
+                        }
+                    }
                 }
                 else {
                     self.works = [Work]()
@@ -52,45 +62,17 @@ struct WorksSearch: View {
             }
             else {
                 if self.works.count > 0 {
-                    List {
-                        ForEach(AppConstants.genreList, id: \.self) { genre in
-                            //if self.works.filter({$0.genre == genre}).count > 0 {
-                                Section(header:
-                                    Text(genre)
-                                        .font(.custom("Barlow-SemiBold", size: 14))
-                                        .padding(.top, 14)
-                                    ){
-                                    ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
-                                        //NavigationLink(destination: ) {
-                                            WorkRow(work: work)
-                                        //}
-                                    }
-                                }
-                            //}
-                        }
-                    }
-                    .listStyle(GroupedListStyle())
+                    WorksList(genre: search.genreName, genrelist: genresAvail, works: works, composer: self.composer, essential: hasEssential)
+                    .padding(.top, 14)
                     .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                 }
                 else {
-                    HStack(alignment: .top) {
-                        VStack {
-                            Image("warning")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(Color(hex: 0xa7a6a6))
-                                .frame(height: 28)
-                                .padding(5)
-                            Text("No works found.")
-                                .foregroundColor(Color(hex: 0xa7a6a6))
-                                .font(.custom("Barlow", size: 14))
-                        }
-                    }.padding(15)
+                    ErrorMessage(msg: "No works found.")
                 }
             }
         }
         .frame(maxWidth: .infinity)
-        .onReceive(genre.objectWillChange, perform: loadData)
+        .onReceive(search.objectWillChange, perform: loadData)
     }
 }
 

@@ -12,7 +12,7 @@ struct GenreBar: View {
     var composerId: String
     @State private var genres = [String]()
     @State private var loading = true
-    @EnvironmentObject var genre: WorkSearchGenre
+    @EnvironmentObject var search: WorkSearch
     
     func loadData() {
         loading = true
@@ -25,10 +25,14 @@ struct GenreBar: View {
                     self.genres = genr
                     self.loading = false
                     
-                    if genr.contains("Recommended") {
-                        self.genre.searchgenre = "Recommended"
-                    } else {
-                        self.genre.searchgenre = "all"
+                    if (self.search.composerId != self.composerId) {
+                        self.search.composerId = self.composerId
+                        
+                        if genr.contains("Recommended") {
+                            self.search.genreName = "Recommended"
+                        } else {
+                            self.search.genreName = "all"
+                        }
                     }
                 }
                 else {
@@ -46,14 +50,14 @@ struct GenreBar: View {
                 .foregroundColor(Color(hex: 0x717171))
                 .font(.custom("Nunito", size: 12))
                 .padding(.top, 12)
-                HStack(alignment: .top, spacing: 14) {
-                    ForEach(genres, id: \.self) { genre in
-                        Button(action: { self.genre.searchgenre = genre }, label: {
-                            GenreButton(genre: genre, active: (self.genre.searchgenre == genre))
-                                .frame(maxWidth: .infinity)
-                        })
-                    }
+            HStack(alignment: .top, spacing: 14) {
+                ForEach(genres, id: \.self) { genre in
+                    Button(action: { self.search.genreName = genre }, label: {
+                        GenreButton(genre: genre, active: (self.search.genreName == genre))
+                            .frame(maxWidth: .infinity)
+                    })
                 }
+            }
         }
         .onAppear(perform: loadData)
     }

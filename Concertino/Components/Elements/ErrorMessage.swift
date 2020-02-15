@@ -9,13 +9,27 @@
 import SwiftUI
 
 struct ErrorMessage: View {
+    var msg: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack(alignment: .top) {
+            VStack {
+                Image("warning")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundColor(Color(hex: 0xa7a6a6))
+                    .frame(height: 28)
+                    .padding(5)
+                Text(msg)
+                    .foregroundColor(Color(hex: 0xa7a6a6))
+                    .font(.custom("Barlow", size: 14))
+            }
+        }.padding(15)
     }
 }
 
 struct ErrorMessage_Previews: PreviewProvider {
     static var previews: some View {
-        ErrorMessage()
+        ErrorMessage(msg: "Error")
     }
 }

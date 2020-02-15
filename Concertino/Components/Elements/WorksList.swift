@@ -9,13 +9,57 @@
 import SwiftUI
 
 struct WorksList: View {
+    var genre: String
+    var genrelist: [String]
+    var works: [Work]
+    var composer: Composer
+    var essential: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Group {
+            if self.genre == "Popular" || self.genre == "Recommended" {
+                List {
+                    ForEach(self.genrelist, id: \.self) { genre in
+                        Section(header:
+                            Text(genre)
+                                .font(.custom("Barlow-SemiBold", size: 13))
+                                .foregroundColor(Color(hex: 0xFE365E))
+                            ){
+                            ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
+                                WorkRow(work: work, composer: self.composer)
+                            }
+                        }
+                    }
+                }
+                .listStyle(GroupedListStyle())
+            }
+            else if self.essential {
+                List {
+                    ForEach(["1", "0"], id: \.self) { rec in
+                        Section(header:
+                            Text(rec == "1" ? "Essential" : "Other works")
+                                .font(.custom("Barlow-SemiBold", size: 13))
+                                .foregroundColor(Color(hex: 0xFE365E))
+                            ){
+                            ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
+                                WorkRow(work: work, composer: self.composer)
+                            }
+                        }
+                    }
+                }
+                .listStyle(GroupedListStyle())
+            }
+            else {
+                List(self.works, id: \.id) { work in
+                    WorkRow(work: work, composer: self.composer)
+                }
+            }
+        }
     }
 }
 
 struct WorksList_Previews: PreviewProvider {
     static var previews: some View {
-        WorksList()
+        EmptyView()
     }
 }

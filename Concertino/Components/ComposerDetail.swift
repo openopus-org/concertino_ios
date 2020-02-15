@@ -19,7 +19,7 @@ struct ComposerDetail: View {
                 GenreBar(composerId: composer.id)
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-            WorksSearch(composerId: composer.id)
+            WorksSearch(composer: composer)
             Spacer()
         }
         

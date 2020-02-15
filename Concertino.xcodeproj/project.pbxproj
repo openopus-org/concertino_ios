@@ -21,6 +21,14 @@
 		09A0084023F3631F001C696E /* GenreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A0083F23F3631F001C696E /* GenreButton.swift */; };
 		09A0084223F4E056001C696E /* WorksSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A0084123F4E056001C696E /* WorksSearch.swift */; };
 		09A0084423F4E391001C696E /* WorkRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A0084323F4E391001C696E /* WorkRow.swift */; };
+		09A6741B23F7606F000000D6 /* WorksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6741A23F7606F000000D6 /* WorksList.swift */; };
+		09A6741D23F778C4000000D6 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6741C23F778C4000000D6 /* ErrorMessage.swift */; };
+		09A6741F23F77FDD000000D6 /* WorkDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6741E23F77FDD000000D6 /* WorkDetail.swift */; };
+		09A6742123F78033000000D6 /* WorkHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742023F78033000000D6 /* WorkHeader.swift */; };
+		09A6742323F78171000000D6 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742223F78171000000D6 /* BackButton.swift */; };
+		09A6742523F79239000000D6 /* RecordingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742423F79239000000D6 /* RecordingsList.swift */; };
+		09A6742723F79392000000D6 /* RecordingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742623F79392000000D6 /* RecordingRow.swift */; };
+		09A6742923F7B341000000D6 /* RecordingsDisclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742823F7B341000000D6 /* RecordingsDisclaimer.swift */; };
 		09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD64E23E61E9F004CDAB6 /* Models.swift */; };
 		09AAD65123E62121004CDAB6 /* Inc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65023E62120004CDAB6 /* Inc.swift */; };
 		09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65223E6226F004CDAB6 /* ComposersList.swift */; };
@@ -59,6 +67,14 @@
 		09A0083F23F3631F001C696E /* GenreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreButton.swift; sourceTree = "<group>"; };
 		09A0084123F4E056001C696E /* WorksSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksSearch.swift; sourceTree = "<group>"; };
 		09A0084323F4E391001C696E /* WorkRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkRow.swift; sourceTree = "<group>"; };
+		09A6741A23F7606F000000D6 /* WorksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksList.swift; sourceTree = "<group>"; };
+		09A6741C23F778C4000000D6 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		09A6741E23F77FDD000000D6 /* WorkDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkDetail.swift; sourceTree = "<group>"; };
+		09A6742023F78033000000D6 /* WorkHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkHeader.swift; sourceTree = "<group>"; };
+		09A6742223F78171000000D6 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		09A6742423F79239000000D6 /* RecordingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsList.swift; sourceTree = "<group>"; };
+		09A6742623F79392000000D6 /* RecordingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingRow.swift; sourceTree = "<group>"; };
+		09A6742823F7B341000000D6 /* RecordingsDisclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsDisclaimer.swift; sourceTree = "<group>"; };
 		09AAD64E23E61E9F004CDAB6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		09AAD65023E62120004CDAB6 /* Inc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inc.swift; sourceTree = "<group>"; };
 		09AAD65223E6226F004CDAB6 /* ComposersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersList.swift; sourceTree = "<group>"; };
@@ -174,6 +190,8 @@
 				09BAA81323E9C53F00157611 /* ComposersSearch.swift */,
 				09A0083B23F35AA9001C696E /* ComposerDetail.swift */,
 				09A0084123F4E056001C696E /* WorksSearch.swift */,
+				09A6741E23F77FDD000000D6 /* WorkDetail.swift */,
+				09A6742423F79239000000D6 /* RecordingsList.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -189,6 +207,12 @@
 				099F90CC23EE1855004A7021 /* ActivityIndicator.swift */,
 				09A0083F23F3631F001C696E /* GenreButton.swift */,
 				09A0084323F4E391001C696E /* WorkRow.swift */,
+				09A6741A23F7606F000000D6 /* WorksList.swift */,
+				09A6741C23F778C4000000D6 /* ErrorMessage.swift */,
+				09A6742023F78033000000D6 /* WorkHeader.swift */,
+				09A6742223F78171000000D6 /* BackButton.swift */,
+				09A6742623F79392000000D6 /* RecordingRow.swift */,
+				09A6742823F7B341000000D6 /* RecordingsDisclaimer.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -279,26 +303,34 @@
 				09E19F5123E254480011D718 /* Home.swift in Sources */,
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
 				09E19F5523E2545B0011D718 /* TabMenu.swift in Sources */,
+				09A6742123F78033000000D6 /* WorkHeader.swift in Sources */,
+				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
 				099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
 				095A9CC123E50E400010E150 /* SearchField.swift in Sources */,
+				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,
+				09A6741B23F7606F000000D6 /* WorksList.swift in Sources */,
 				09E19F5723E2546B0011D718 /* Settings.swift in Sources */,
 				09A0084423F4E391001C696E /* WorkRow.swift in Sources */,
+				09A6741F23F77FDD000000D6 /* WorkDetail.swift in Sources */,
 				09E19F5923E254730011D718 /* Radio.swift in Sources */,
 				09E19F4D23E253780011D718 /* Structure.swift in Sources */,
 				09A0083C23F35AA9001C696E /* ComposerDetail.swift in Sources */,
 				097CE15423F20E6B00050846 /* ComposerHeader.swift in Sources */,
 				09E19F5323E254530011D718 /* Player.swift in Sources */,
+				09A6742923F7B341000000D6 /* RecordingsDisclaimer.swift in Sources */,
 				09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */,
 				09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */,
 				09BAA81423E9C53F00157611 /* ComposersSearch.swift in Sources */,
 				09E19F5E23E257A50011D718 /* TabButton.swift in Sources */,
 				09E19F5B23E254810011D718 /* Favorites.swift in Sources */,
 				09A0083E23F35C16001C696E /* GenreBar.swift in Sources */,
+				09A6742323F78171000000D6 /* BackButton.swift in Sources */,
 				09E19F4F23E2543E0011D718 /* Header.swift in Sources */,
 				09AAD65123E62121004CDAB6 /* Inc.swift in Sources */,
 				09A0084223F4E056001C696E /* WorksSearch.swift in Sources */,
 				09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */,
+				09A6741D23F778C4000000D6 /* ErrorMessage.swift in Sources */,
 				09E19F4A23E251320011D718 /* Lib.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
 			);

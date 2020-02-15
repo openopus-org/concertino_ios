@@ -38,3 +38,26 @@ struct Work: Codable, Identifiable {
     var recommended: String
     var popular: String
 }
+
+struct Recordings: Codable {
+    var recordings: [Recording]?
+    var next: String?
+}
+
+struct Recording: Codable, Identifiable {
+    let id = UUID()
+    var cover: URL
+    var apple_albumid: String
+    var singletrack: String
+    var compilation: String
+    var observation: String?
+    var performers: [Performer]
+    var set: Int
+    var historic: String
+    var verified: String
+}
+
+struct Performer: Codable {
+    var name: String
+    var role: String?
+}

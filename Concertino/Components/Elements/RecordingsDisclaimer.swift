@@ -9,13 +9,18 @@
 import SwiftUI
 
 struct RecordingsDisclaimer: View {
+    var msg: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(msg)
+            .font(.custom("Nunito", size: 12))
+            .foregroundColor(Color(hex: 0xa7a6a6))
+            .padding(15)
     }
 }
 
 struct RecordingsDisclaimer_Previews: PreviewProvider {
     static var previews: some View {
-        RecordingsDisclaimer()
+        RecordingsDisclaimer(msg: "Disclaimer")
     }
 }

@@ -72,19 +72,7 @@ struct ComposersSearch: View {
                         .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                     }
                     else {
-                        HStack(alignment: .top) {
-                            VStack {
-                                Image("warning")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundColor(Color(hex: 0xa7a6a6))
-                                    .frame(height: 28)
-                                    .padding(5)
-                                Text((self.composersSearch.searchstring.count > 3 ? "No matches for: \(self.composersSearch.searchstring)" : "Search term too short"))
-                                    .foregroundColor(Color(hex: 0xa7a6a6))
-                                    .font(.custom("Barlow", size: 14))
-                            }
-                        }.padding(15)
+                        ErrorMessage(msg: (self.composersSearch.searchstring.count > 3 ? "No matches for: \(self.composersSearch.searchstring)" : "Search term too short"))
                     }
                 }
             }
