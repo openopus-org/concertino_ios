@@ -13,7 +13,7 @@ struct Composers: Codable {
 }
 
 struct Composer: Codable, Identifiable {
-    var id: String
+    let id: String
     var name: String
     var complete_name: String
     var birth: String
@@ -31,7 +31,7 @@ struct Works: Codable {
 }
 
 struct Work: Codable, Identifiable {
-    var id: String
+    let id: String
     var title: String
     var subtitle: String?
     var genre: String
@@ -44,8 +44,7 @@ struct Recordings: Codable {
     var next: String?
 }
 
-struct Recording: Codable, Identifiable {
-    let id = UUID()
+struct Recording: Codable {
     var cover: URL
     var apple_albumid: String
     var singletrack: String
@@ -55,6 +54,18 @@ struct Recording: Codable, Identifiable {
     var set: Int
     var historic: String
     var verified: String
+}
+
+extension Recording: Identifiable, Equatable {
+    var id: String { return "\(apple_albumid)-\(set)" }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: Recording, rhs: Recording) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 struct Performer: Codable {

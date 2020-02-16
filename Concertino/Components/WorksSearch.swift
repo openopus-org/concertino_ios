@@ -23,28 +23,30 @@ struct WorksSearch: View {
     }
     
     func loadData() {
-        loading = true
-        
-        APIget(AppConstants.openOpusBackend+"/work/list/composer/\(self.composer.id)/\(self.search.genreName).json") { results in
-            let worksData: Works = parseJSON(results)
+        if !self.search.loadingGenres {
+            loading = true
             
-            DispatchQueue.main.async {
-                self.genresAvail.removeAll()
-                if let wrks = worksData.works {
-                    self.works = wrks
-                    self.hasEssential = (self.works.filter({$0.recommended == "1"}).count > 0)
-                    
-                    for genre in AppConstants.genreList {
-                        if self.works.filter({$0.genre == genre}).count > 0 {
-                            self.genresAvail.append(genre)
+            APIget(AppConstants.openOpusBackend+"/work/list/composer/\(self.composer.id)/\(self.search.genreName).json") { results in
+                let worksData: Works = parseJSON(results)
+                
+                DispatchQueue.main.async {
+                    self.genresAvail.removeAll()
+                    if let wrks = worksData.works {
+                        self.works = wrks
+                        self.hasEssential = (self.works.filter({$0.recommended == "1"}).count > 0)
+                        
+                        for genre in AppConstants.genreList {
+                            if self.works.filter({$0.genre == genre}).count > 0 {
+                                self.genresAvail.append(genre)
+                            }
                         }
                     }
+                    else {
+                        self.works = [Work]()
+                    }
+                    
+                    self.loading = false
                 }
-                else {
-                    self.works = [Work]()
-                }
-                
-                self.loading = false
             }
         }
     }
@@ -72,6 +74,7 @@ struct WorksSearch: View {
             }
         }
         .frame(maxWidth: .infinity)
+        .onAppear(perform: { if self.loading { self.loadData() }})
         .onReceive(search.objectWillChange, perform: loadData)
     }
 }

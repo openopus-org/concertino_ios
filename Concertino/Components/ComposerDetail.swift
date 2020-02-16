@@ -22,7 +22,6 @@ struct ComposerDetail: View {
             WorksSearch(composer: composer)
             Spacer()
         }
-        
     }
 }
 

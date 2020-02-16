@@ -29,7 +29,11 @@ struct RecordingsList: View {
             
             DispatchQueue.main.async {
                 if let recds = recsData.recordings {
-                    self.recordings += recds
+                    for rec in recds {
+                        if !self.recordings.contains(rec) {
+                            self.recordings.append(rec)
+                        }
+                    }
                 }
                 else {
                     self.recordings += [Recording]()
@@ -51,7 +55,7 @@ struct RecordingsList: View {
         VStack(alignment: .leading) {
             
                 List {
-                    ForEach(self.recordings, id: \.apple_albumid) { recording in
+                    ForEach(self.recordings, id: \.id) { recording in
                         RecordingRow(recording: recording)
                     }
                     

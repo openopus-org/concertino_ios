@@ -17,17 +17,18 @@ struct GenreBar: View {
     func loadData() {
         loading = true
         
+        if (search.composerId != self.composerId) {
+            search.loadingGenres = true
+        }
+        
         APIget(AppConstants.openOpusBackend+"/genre/list/composer/\(self.composerId).json") { results in
             let genresData: Genres = parseJSON(results)
             
             DispatchQueue.main.async {
                 if let genr = genresData.genres {
                     self.genres = genr
-                    self.loading = false
                     
                     if (self.search.composerId != self.composerId) {
-                        self.search.composerId = self.composerId
-                        
                         if genr.contains("Recommended") {
                             self.search.genreName = "Recommended"
                         } else {
@@ -39,6 +40,10 @@ struct GenreBar: View {
                     self.genres = [String]()
                 }
                 
+                if (self.search.composerId != self.composerId) {
+                    self.search.composerId = self.composerId
+                    self.search.loadingGenres = false
+                }
                 self.loading = false
             }
         }

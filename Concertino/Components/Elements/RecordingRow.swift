@@ -26,11 +26,15 @@ struct RecordingRow: View {
             .padding(.trailing, 12)
             VStack(alignment: .leading) {
                 ForEach(recording.performers, id: \.name) { performer in
-                    Text(performer.name)
-                        .font(.custom("Barlow-SemiBold", size: 13))
-                    +
-                        Text(AppConstants.groupList.contains(performer.role ?? "") || performer.role == "" ? "" : ", \(performer.role ?? "")")
-                        .font(.custom("Barlow", size: 13))
+                    Group {
+                        if (self.recording.performers.count <= AppConstants.maxPerformers || AppConstants.mainPerformersList.contains(performer.role ?? "")) {
+                            Text(performer.name)
+                                .font(.custom("Barlow-SemiBold", size: 13))
+                            +
+                                Text(AppConstants.groupList.contains(performer.role ?? "") || performer.role == "" ? "" : ", \(performer.role ?? "")")
+                                .font(.custom("Barlow", size: 13))
+                        }
+                    }
                 }
                 .foregroundColor(.white)
                 .lineLimit(20)

@@ -13,4 +13,6 @@ struct AppConstants {
     static let concBackend = "https://api.concertino.app"
     static let genreList = ["Chamber", "Keyboard", "Orchestral", "Stage", "Vocal"]
     static let groupList = ["Orchestra", "Choir", "Ensemble"]
+    static let maxPerformers = 5
+    static let mainPerformersList = ["Orchestra", "Ensemble", "Piano", "Conductor", "Violin", "Cello"]
 }

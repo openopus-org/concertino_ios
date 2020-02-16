@@ -28,6 +28,12 @@ final class ComposerSearchString: ObservableObject {
 final class WorkSearch: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
     
+    @Published var loadingGenres: Bool = true {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+    
     @Published var genreName: String = "" {
         didSet {
             objectWillChange.send()
@@ -114,5 +120,19 @@ public func parseJSON<T: Decodable>(_ data: Data) -> T {
         return try decoder.decode(T.self, from: data)
     } catch {
         fatalError("Couldn't parse as \(T.self):\n\(error)")
+    }
+}
+
+extension Array where Element: Hashable {
+    func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+
+    mutating func removeDuplicates() {
+        self = self.removingDuplicates()
     }
 }
