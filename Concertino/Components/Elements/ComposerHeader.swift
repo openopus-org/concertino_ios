@@ -16,7 +16,7 @@ struct ComposerHeader: View {
     var body: some View {
         HStack {
             BackButton()
-            URLImage(composer.portrait) { img in
+            URLImage(composer.portrait!) { img in
                 img.image
                     .renderingMode(.original)
                     .resizable()
@@ -33,7 +33,7 @@ struct ComposerHeader: View {
                         .font(.custom("Nunito-ExtraBold", size: 17))
                     Group{
                         Text(composer.complete_name)
-                        Text("(" + composer.birth.prefix(4)) + Text(composer.death != nil ? "-" : "") + Text((composer.death?.prefix(4) ?? "")) + Text(")")
+                        Text("(" + composer.birth!.prefix(4)) + Text(composer.death != nil ? "-" : "") + Text((composer.death?.prefix(4) ?? "")) + Text(")")
                     }
                     .foregroundColor(.white)
                     .lineLimit(20)

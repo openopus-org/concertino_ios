@@ -56,7 +56,9 @@ struct RecordingsList: View {
             
                 List {
                     ForEach(self.recordings, id: \.id) { recording in
-                        RecordingRow(recording: recording)
+                        NavigationLink(destination: RecordingDetail(workId: self.work.id, recordingId: recording.apple_albumid, recordingSet: recording.set), label: {
+                            RecordingRow(recording: recording)
+                        })
                     }
                     
                     HStack {

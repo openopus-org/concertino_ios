@@ -123,16 +123,15 @@ public func parseJSON<T: Decodable>(_ data: Data) -> T {
     }
 }
 
-extension Array where Element: Hashable {
-    func removingDuplicates() -> [Element] {
-        var addedDict = [Element: Bool]()
-
-        return filter {
-            addedDict.updateValue(true, forKey: $0) == nil
-        }
+public func convertSeconds (seconds: Int) -> String {
+    let h = seconds / 3600
+    let min = (seconds % 3600) / 60
+    let s = (seconds % 3600) % 60
+    
+    if (h > 0) {
+        return String(format: "%02d:%02d:%02d", h, min, s)
     }
-
-    mutating func removeDuplicates() {
-        self = self.removingDuplicates()
+    else {
+        return String(format: "%d:%02d", min, s)
     }
 }

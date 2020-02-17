@@ -14,25 +14,47 @@ struct RecordingRow: View {
     
     var body: some View {
         HStack(alignment: .top) {
-            URLImage(recording.cover) { img in
-                img.image
-                    .renderingMode(.original)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
+            ZStack(alignment: .bottomTrailing) {
+                URLImage(recording.cover) { img in
+                    img.image
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .clipped()
+                        .cornerRadius(20)
+                }
+                .frame(width: 85, height: 85)
+                .padding(.trailing, 12)
+                
+                if recording.isVerified {
+                    VStack {
+                        Image("checked")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 12, height: 12)
+                        .foregroundColor(Color(hex: 0xfe365e))
+                    }
+                    .frame(width: 22, height: 22)
+                    .background(Color.black)
                     .clipped()
-                    .cornerRadius(20)
+                    .clipShape(Circle())
+                    .offset(x: -18)
+                }
             }
-            .frame(width: 85, height: 85)
-            .padding(.trailing, 12)
             VStack(alignment: .leading) {
+                if recording.observation != "" && recording.observation != nil {
+                    Text(recording.observation ?? "")
+                    .font(.custom("Barlow", size: 10))
+                    .padding(.bottom, 6)
+                }
                 ForEach(recording.performers, id: \.name) { performer in
                     Group {
                         if (self.recording.performers.count <= AppConstants.maxPerformers || AppConstants.mainPerformersList.contains(performer.role ?? "")) {
-                            Text(performer.name)
-                                .font(.custom("Barlow-SemiBold", size: 13))
-                            +
-                                Text(AppConstants.groupList.contains(performer.role ?? "") || performer.role == "" ? "" : ", \(performer.role ?? "")")
-                                .font(.custom("Barlow", size: 13))
+                                Text(performer.name)
+                                    .font(.custom("Barlow-SemiBold", size: 13))
+                                +
+                                Text(performer.readableRole)
+                                    .font(.custom("Barlow", size: 13))
                         }
                     }
                 }

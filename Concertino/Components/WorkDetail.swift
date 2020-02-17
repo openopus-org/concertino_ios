@@ -24,7 +24,6 @@ struct WorkDetail: View {
             RecordingsList(work: work)
             Spacer()
         }
-        
     }
 }
 

@@ -9,8 +9,8 @@
 import Foundation
 
 struct AppConstants {
-    static let openOpusBackend = "https://api.openopus.org"
-    static let concBackend = "https://api.concertino.app"
+    static let openOpusBackend = "https://beta.api.openopus.org"
+    static let concBackend = "https://beta.api.concertino.app"
     static let genreList = ["Chamber", "Keyboard", "Orchestral", "Stage", "Vocal"]
     static let groupList = ["Orchestra", "Choir", "Ensemble"]
     static let maxPerformers = 5

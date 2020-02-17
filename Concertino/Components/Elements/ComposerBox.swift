@@ -15,7 +15,7 @@ struct ComposerBox: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                URLImage(composer.portrait) { img in
+                URLImage(composer.portrait!) { img in
                     img.image
                         .renderingMode(.original)
                         .resizable()
@@ -29,7 +29,7 @@ struct ComposerBox: View {
                     .font(.custom("Nunito-ExtraBold", size: 13))
                 Group{
                     Text(composer.complete_name)
-                    Text("(" + composer.birth.prefix(4)) + Text(composer.death != nil ? "-" : "") + Text((composer.death?.prefix(4) ?? "")) + Text(")")
+                    Text("(" + composer.birth!.prefix(4)) + Text(composer.death != nil ? "-" : "") + Text((composer.death?.prefix(4) ?? "")) + Text(")")
                 }
                 .foregroundColor(.white)
                 .lineLimit(20)

@@ -16,10 +16,10 @@ struct Composer: Codable, Identifiable {
     let id: String
     var name: String
     var complete_name: String
-    var birth: String
+    var birth: String?
     var death: String?
     var epoch: String
-    var portrait: URL
+    var portrait: URL?
 }
 
 struct Genres: Codable {
@@ -35,8 +35,9 @@ struct Work: Codable, Identifiable {
     var title: String
     var subtitle: String?
     var genre: String
-    var recommended: String
-    var popular: String
+    var recommended: String?
+    var popular: String?
+    var composer: Composer?
 }
 
 struct Recordings: Codable {
@@ -44,16 +45,50 @@ struct Recordings: Codable {
     var next: String?
 }
 
+struct FullRecording: Codable {
+    var work: Work
+    var recording: Recording
+}
+
+struct Track: Codable {
+    var cd: Int
+    var position: Int
+    var length: Int
+    var title: String
+    var apple_trackid: String
+    
+    var readableLength: String {
+        get { return convertSeconds(seconds: length) }
+    }
+}
+
+extension Track: Identifiable {
+    var id: String { return apple_trackid }
+}
+
 struct Recording: Codable {
     var cover: URL
     var apple_albumid: String
-    var singletrack: String
-    var compilation: String
+    var singletrack: String?
+    var compilation: String?
     var observation: String?
     var performers: [Performer]
     var set: Int
-    var historic: String
+    var historic: String?
     var verified: String
+    var label: String?
+    var length: Int?
+    var tracks: [Track]?
+    var apple_tracks: [String]?
+    
+    var isVerified: Bool {
+        get { return verified == "true" }
+        set { verified = newValue ? "true" : "false" }
+    }
+    
+    var readableLength: String {
+        get { return convertSeconds(seconds: length ?? 0) }
+    }
 }
 
 extension Recording: Identifiable, Equatable {
@@ -71,4 +106,18 @@ extension Recording: Identifiable, Equatable {
 struct Performer: Codable {
     var name: String
     var role: String?
+    
+    var readableRole: String {
+        get {
+            var ret = ""
+            
+            if let rol = role {
+                if (rol != "" && !AppConstants.groupList.contains(rol)) {
+                    ret = ", \(rol)"
+                }
+            }
+            
+            return ret
+        }
+    }
 }

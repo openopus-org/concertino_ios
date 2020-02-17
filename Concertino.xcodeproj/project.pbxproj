@@ -50,6 +50,8 @@
 		09E19F5923E254730011D718 /* Radio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F5823E254730011D718 /* Radio.swift */; };
 		09E19F5B23E254810011D718 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F5A23E254810011D718 /* Favorites.swift */; };
 		09E19F5E23E257A50011D718 /* TabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F5D23E257A50011D718 /* TabButton.swift */; };
+		09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5523F9E2D800599992 /* RecordingDetail.swift */; };
+		09FE9A5823F9E38A00599992 /* RecordingDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5723F9E38A00599992 /* RecordingDetailed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +99,8 @@
 		09E19F5823E254730011D718 /* Radio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio.swift; sourceTree = "<group>"; };
 		09E19F5A23E254810011D718 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		09E19F5D23E257A50011D718 /* TabButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButton.swift; sourceTree = "<group>"; };
+		09FE9A5523F9E2D800599992 /* RecordingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetail.swift; sourceTree = "<group>"; };
+		09FE9A5723F9E38A00599992 /* RecordingDetailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetailed.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +196,7 @@
 				09A0084123F4E056001C696E /* WorksSearch.swift */,
 				09A6741E23F77FDD000000D6 /* WorkDetail.swift */,
 				09A6742423F79239000000D6 /* RecordingsList.swift */,
+				09FE9A5523F9E2D800599992 /* RecordingDetail.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 				09A6742223F78171000000D6 /* BackButton.swift */,
 				09A6742623F79392000000D6 /* RecordingRow.swift */,
 				09A6742823F7B341000000D6 /* RecordingsDisclaimer.swift */,
+				09FE9A5723F9E38A00599992 /* RecordingDetailed.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -302,6 +308,7 @@
 				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
 				09E19F5123E254480011D718 /* Home.swift in Sources */,
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
+				09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */,
 				09E19F5523E2545B0011D718 /* TabMenu.swift in Sources */,
 				09A6742123F78033000000D6 /* WorkHeader.swift in Sources */,
 				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
@@ -332,6 +339,7 @@
 				09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */,
 				09A6741D23F778C4000000D6 /* ErrorMessage.swift in Sources */,
 				09E19F4A23E251320011D718 /* Lib.swift in Sources */,
+				09FE9A5823F9E38A00599992 /* RecordingDetailed.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
