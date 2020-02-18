@@ -15,4 +15,5 @@ struct AppConstants {
     static let groupList = ["Orchestra", "Choir", "Ensemble"]
     static let maxPerformers = 5
     static let mainPerformersList = ["Orchestra", "Ensemble", "Piano", "Conductor", "Violin", "Cello"]
+    static let appleLink = "https://geo.music.apple.com/us/album/-/"
 }

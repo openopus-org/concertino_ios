@@ -46,10 +46,20 @@ struct RecordingDetail: View {
                     Spacer()
                 }
                 else if recording.count > 0 {
-                    RecordingDetailed(recording: recording.first!)
+                    ScrollView(showsIndicators: false) {
+                        VStack(alignment: .leading) {
+                            RecordingWorkPerformers(recording: recording.first!)
+                            RecordingPlayButtons(recording: recording.first!)
+                                .padding(.top, 16)
+                                .padding(.bottom, 12)
+                            RecordingTrackList(recording: recording.first!)
+                                .padding(.top, 10)
+                            RecordingDisclaimer(isVerified: recording.first!.recording.isVerified)
+                        }
+                    }
                 }
             }
-            .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 28))
+            .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 22))
             .onAppear(perform: loadData)
             
             Spacer()

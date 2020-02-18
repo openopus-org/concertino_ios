@@ -50,8 +50,12 @@
 		09E19F5923E254730011D718 /* Radio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F5823E254730011D718 /* Radio.swift */; };
 		09E19F5B23E254810011D718 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F5A23E254810011D718 /* Favorites.swift */; };
 		09E19F5E23E257A50011D718 /* TabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F5D23E257A50011D718 /* TabButton.swift */; };
+		09E5441A23FB571E005B8AEE /* RecordingPlayButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E5441923FB571E005B8AEE /* RecordingPlayButtons.swift */; };
+		09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E5441B23FB5734005B8AEE /* RecordingTrackList.swift */; };
+		09E5441E23FB749C005B8AEE /* RecordingDisclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E5441D23FB749C005B8AEE /* RecordingDisclaimer.swift */; };
+		09E5442023FB87B7005B8AEE /* RecordingMini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E5441F23FB87B7005B8AEE /* RecordingMini.swift */; };
 		09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5523F9E2D800599992 /* RecordingDetail.swift */; };
-		09FE9A5823F9E38A00599992 /* RecordingDetailed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5723F9E38A00599992 /* RecordingDetailed.swift */; };
+		09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,8 +103,12 @@
 		09E19F5823E254730011D718 /* Radio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio.swift; sourceTree = "<group>"; };
 		09E19F5A23E254810011D718 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
 		09E19F5D23E257A50011D718 /* TabButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButton.swift; sourceTree = "<group>"; };
+		09E5441923FB571E005B8AEE /* RecordingPlayButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPlayButtons.swift; sourceTree = "<group>"; };
+		09E5441B23FB5734005B8AEE /* RecordingTrackList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTrackList.swift; sourceTree = "<group>"; };
+		09E5441D23FB749C005B8AEE /* RecordingDisclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDisclaimer.swift; sourceTree = "<group>"; };
+		09E5441F23FB87B7005B8AEE /* RecordingMini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingMini.swift; sourceTree = "<group>"; };
 		09FE9A5523F9E2D800599992 /* RecordingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetail.swift; sourceTree = "<group>"; };
-		09FE9A5723F9E38A00599992 /* RecordingDetailed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetailed.swift; sourceTree = "<group>"; };
+		09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWorkPerformers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,7 +226,11 @@
 				09A6742223F78171000000D6 /* BackButton.swift */,
 				09A6742623F79392000000D6 /* RecordingRow.swift */,
 				09A6742823F7B341000000D6 /* RecordingsDisclaimer.swift */,
-				09FE9A5723F9E38A00599992 /* RecordingDetailed.swift */,
+				09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */,
+				09E5441923FB571E005B8AEE /* RecordingPlayButtons.swift */,
+				09E5441B23FB5734005B8AEE /* RecordingTrackList.swift */,
+				09E5441D23FB749C005B8AEE /* RecordingDisclaimer.swift */,
+				09E5441F23FB87B7005B8AEE /* RecordingMini.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -310,6 +322,7 @@
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
 				09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */,
 				09E19F5523E2545B0011D718 /* TabMenu.swift in Sources */,
+				09E5441E23FB749C005B8AEE /* RecordingDisclaimer.swift in Sources */,
 				09A6742123F78033000000D6 /* WorkHeader.swift in Sources */,
 				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
 				099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */,
@@ -327,6 +340,7 @@
 				09E19F5323E254530011D718 /* Player.swift in Sources */,
 				09A6742923F7B341000000D6 /* RecordingsDisclaimer.swift in Sources */,
 				09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */,
+				09E5442023FB87B7005B8AEE /* RecordingMini.swift in Sources */,
 				09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */,
 				09BAA81423E9C53F00157611 /* ComposersSearch.swift in Sources */,
 				09E19F5E23E257A50011D718 /* TabButton.swift in Sources */,
@@ -339,8 +353,10 @@
 				09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */,
 				09A6741D23F778C4000000D6 /* ErrorMessage.swift in Sources */,
 				09E19F4A23E251320011D718 /* Lib.swift in Sources */,
-				09FE9A5823F9E38A00599992 /* RecordingDetailed.swift in Sources */,
+				09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */,
+				09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
+				09E5441A23FB571E005B8AEE /* RecordingPlayButtons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

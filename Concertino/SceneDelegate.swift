@@ -25,6 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             .environmentObject(AppState())
                             .environmentObject(ComposerSearchString())
                             .environmentObject(WorkSearch())
+                            .environmentObject(PlayState())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

@@ -9,13 +9,27 @@
 import SwiftUI
 
 struct RecordingDisclaimer: View {
+    var isVerified: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Image(isVerified ? "checked" : "warning")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 18, height: 18)
+                    
+            Text(isVerified ? "This recording was verified by a human and its metadata were considered right." : "This recording was fetched automatically with no human verification.")
+                .font(.custom("Nunito", size: 10))
+                .lineLimit(20)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .foregroundColor(Color(hex: 0xa7a6a6))
+        .padding(EdgeInsets(top: 20, leading: 30, bottom: 30, trailing: 30))
     }
 }
 
 struct RecordingDisclaimer_Previews: PreviewProvider {
     static var previews: some View {
-        RecordingDisclaimer()
+        EmptyView()
     }
 }

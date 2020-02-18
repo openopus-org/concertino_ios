@@ -53,6 +53,16 @@ final class WorkSearch: ObservableObject {
     }
 }
 
+final class PlayState: ObservableObject {
+    let objectWillChange = PassthroughSubject<(), Never>()
+    
+    @Published var recording = [FullRecording]() {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+}
+
 extension Color {
     init(hex: Int, alpha: Double = 1) {
         let components = (
