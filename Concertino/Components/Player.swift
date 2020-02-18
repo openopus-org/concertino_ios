@@ -11,7 +11,8 @@ import StoreKit
 import MediaPlayer
 
 struct Player: View {
-    @State var fullPlayer = false
+    @State private var fullPlayer = false
+    @State private var currentTrack = [CurrentTrack]()
     @EnvironmentObject var playState: PlayState
     
     func playMusic() {
@@ -35,6 +36,16 @@ struct Player: View {
 
                             player.setQueue(with: queue)
                             player.play()
+                            
+                            // set playstate
+                            
+                            DispatchQueue.main.async {
+                                self.currentTrack = [CurrentTrack (
+                                    track: (self.playState.recording.first!.recording.tracks!.first)!,
+                                    playing: true,
+                                    position: 0
+                                )]
+                            }
                         }
                     }
                 }
@@ -76,7 +87,7 @@ struct Player: View {
                         Spacer()
                     }
                     else {
-                        RecordingMini(recording: playState.recording.first!)
+                        RecordingMini(recording: playState.recording.first!, currentTrack: $currentTrack)
                             .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
                     }
                 }

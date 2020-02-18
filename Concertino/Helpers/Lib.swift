@@ -139,7 +139,7 @@ public func convertSeconds (seconds: Int) -> String {
     let s = (seconds % 3600) % 60
     
     if (h > 0) {
-        return String(format: "%02d:%02d:%02d", h, min, s)
+        return String(format: "%d:%02d:%02d", h, min, s)
     }
     else {
         return String(format: "%d:%02d", min, s)

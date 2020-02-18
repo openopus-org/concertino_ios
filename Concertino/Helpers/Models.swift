@@ -66,6 +66,16 @@ extension Track: Identifiable {
     var id: String { return apple_trackid }
 }
 
+struct CurrentTrack: Codable {
+    var track: Track
+    var playing: Bool
+    var position: Int
+    
+    var readablePosition: String {
+        get { return convertSeconds(seconds: position) }
+    }
+}
+
 struct Recording: Codable {
     var cover: URL
     var apple_albumid: String
