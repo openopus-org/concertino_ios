@@ -13,6 +13,7 @@ struct RecordingMini: View {
     var recording: FullRecording
     @EnvironmentObject var playState: PlayState
     @Binding var currentTrack: [CurrentTrack]
+    @EnvironmentObject var mediaBridge: MediaBridge
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -44,32 +45,43 @@ struct RecordingMini: View {
             }
             
             if self.currentTrack.count > 0 {
-                HStack {
-                    Button(
-                        action: {  },
-                    label: {
-                        Image("play")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 22)
-                        .foregroundColor(Color(hex: 0xfe365e))
-                        .padding(.leading, 18)
-                        .padding(.trailing, 22)
-                    })
-                    
-                    Group {
-                        Text(self.currentTrack.first!.readablePosition)
-                        
-                        ProgressBar(progress: 0.2)
-                            .padding(.leading, 6)
-                            .padding(.trailing, 6)
-                            .frame(height: 4)
-                        
-                        Text(self.recording.recording.readableLength)
+                if self.currentTrack.first!.loading {
+                    HStack {
+                        Spacer()
+                        ActivityIndicator(isAnimating: true)
+                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .medium }
+                        Spacer()
                     }
-                    .font(.custom("Nunito", size: 11))
+                    .padding(.top, 4)
                 }
-                .padding(.top, 4)
+                else {
+                    HStack {
+                        Button(
+                            action: { self.mediaBridge.togglePlay() },
+                        label: {
+                            Image(self.currentTrack.first!.playing ? "pause" : "play")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 22)
+                            .foregroundColor(Color(hex: 0xfe365e))
+                            .padding(.leading, 18)
+                            .padding(.trailing, 22)
+                        })
+                        
+                        Group {
+                            Text(self.currentTrack.first!.readable_full_position)
+                            
+                            ProgressBar(progress: self.currentTrack.first!.full_progress)
+                                .padding(.leading, 6)
+                                .padding(.trailing, 6)
+                                .frame(height: 4)
+                            
+                            Text(self.recording.recording.readableLength)
+                        }
+                        .font(.custom("Nunito", size: 11))
+                    }
+                    .padding(.top, 4)
+                }
             }
         }
         

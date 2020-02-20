@@ -8,43 +8,38 @@
 
 import SwiftUI
 import StoreKit
-import MediaPlayer
 
 struct Player: View {
     @State private var fullPlayer = false
     @State private var currentTrack = [CurrentTrack]()
+    @EnvironmentObject var mediaBridge: MediaBridge
     @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var timerHolder: TimerHolder
     
     func playMusic() {
         SKCloudServiceController.requestAuthorization { status in
-            
             if (SKCloudServiceController.authorizationStatus() == .authorized)
             {
                 // user authorized app access to music
                 
                 let controller = SKCloudServiceController()
-                
                 controller.requestCapabilities { capabilities, error in
-                    
                     if capabilities.contains(.musicCatalogPlayback) {
                         
                         // user has an active apple music account
                         
-                        if let tracks = self.playState.recording.first!.recording.apple_tracks {
-                            let player = MPMusicPlayerController.applicationQueuePlayer
-                            let queue  = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
-
-                            player.setQueue(with: queue)
-                            player.play()
-                            
-                            // set playstate
-                            
-                            DispatchQueue.main.async {
+                        DispatchQueue.main.async {
+                            if let tracks = self.playState.recording.first!.recording.apple_tracks {
                                 self.currentTrack = [CurrentTrack (
-                                    track: (self.playState.recording.first!.recording.tracks!.first)!,
-                                    playing: true,
-                                    position: 0
+                                    track_index: 0,
+                                    playing: false,
+                                    loading: true,
+                                    track_position: 0,
+                                    track_length: (self.playState.recording.first!.recording.tracks!.first?.length)!,
+                                    full_position: 0,
+                                    full_length: self.playState.recording.first!.recording.length!
                                 )]
+                                self.mediaBridge.setQueueAndPlay(tracks: tracks)
                             }
                         }
                     }
@@ -96,11 +91,48 @@ struct Player: View {
         .padding(EdgeInsets(top: 32, leading: 0, bottom: 46, trailing: 0))
         .clipped()
         .onReceive(playState.objectWillChange, perform: playMusic)
+        .onReceive(timerHolder.objectWillChange, perform: {
+            if (self.currentTrack.count > 0 && self.timerHolder.count > 0) {
+                self.currentTrack[0].track_position += 1
+                self.currentTrack[0].full_position += 1
+            }
+        })
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange)) { status in
+                if self.currentTrack.count > 0 {
+                    if let isPlaying = status.userInfo?["playing"] {
+                        self.currentTrack[0].playing = isPlaying as! Bool
+                        
+                        if (isPlaying as! Bool) {
+                            self.timerHolder.start()
+                        }
+                        else {
+                            self.timerHolder.stop()
+                        }
+                    }
+                }
+            }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange)) { status in
+            if self.currentTrack.count > 0 {
+                if let trackIndex = status.userInfo?["index"] {
+                    self.currentTrack[0].track_index = trackIndex as! Int
+                    self.currentTrack[0].track_position = 0
+                    self.currentTrack[0].full_position = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
+                }
+                
+                if self.currentTrack[0].loading {
+                    if let trackTitle = status.userInfo?["title"] {
+                        if !((trackTitle as! String).contains("Loading.")) {
+                            self.currentTrack[0].loading = false
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
 struct Player_Previews: PreviewProvider {
     static var previews: some View {
-        Player()
+        EmptyView()
     }
 }
