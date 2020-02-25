@@ -17,6 +17,11 @@ struct Player: View {
     @EnvironmentObject var timerHolder: TimerHolder
     
     func playMusic() {
+        if self.currentTrack.count > 0 {
+            self.mediaBridge.stop()
+            self.currentTrack[0].loading = true
+        }
+        
         SKCloudServiceController.requestAuthorization { status in
             if (SKCloudServiceController.authorizationStatus() == .authorized)
             {
@@ -34,12 +39,13 @@ struct Player: View {
                                     track_index: 0,
                                     playing: false,
                                     loading: true,
+                                    starting_point: 0,
                                     track_position: 0,
                                     track_length: (self.playState.recording.first!.recording.tracks!.first?.length)!,
                                     full_position: 0,
                                     full_length: self.playState.recording.first!.recording.length!
                                 )]
-                                self.mediaBridge.setQueueAndPlay(tracks: tracks)
+                                self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil)
                             }
                         }
                     }
@@ -72,14 +78,18 @@ struct Player: View {
                         ScrollView(showsIndicators: false) {
                             VStack(alignment: .leading) {
                                 RecordingWorkPerformers(recording: playState.recording.first!)
-                                RecordingDisclaimer(isVerified: playState.recording.first!.recording.isVerified)
+                                    .padding(.bottom, 30)
+                                RecordingProgressBars(recording: playState.recording.first!, currentTrack: $currentTrack)
+                                
                             }
                             .padding(30)
-                            .padding(.top, 0)
+                            .padding(.top, -16)
                         }
                         .padding(.top, 0)
-                        
+
                         Spacer()
+                        
+                        RecordingPlaybackControl(currentTrack: $currentTrack)
                     }
                     else {
                         RecordingMini(recording: playState.recording.first!, currentTrack: $currentTrack)
@@ -92,9 +102,9 @@ struct Player: View {
         .clipped()
         .onReceive(playState.objectWillChange, perform: playMusic)
         .onReceive(timerHolder.objectWillChange, perform: {
-            if (self.currentTrack.count > 0 && self.timerHolder.count > 0) {
-                self.currentTrack[0].track_position += 1
-                self.currentTrack[0].full_position += 1
+            if (self.currentTrack.count > 0) {
+                self.currentTrack[0].track_position = self.mediaBridge.getCurrentPlaybackTime()
+                self.currentTrack[0].full_position = self.currentTrack[0].starting_point + self.currentTrack[0].track_position
             }
         })
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange)) { status in
@@ -116,12 +126,14 @@ struct Player: View {
                 if let trackIndex = status.userInfo?["index"] {
                     self.currentTrack[0].track_index = trackIndex as! Int
                     self.currentTrack[0].track_position = 0
+                    self.currentTrack[0].starting_point = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
                     self.currentTrack[0].full_position = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
+                    self.currentTrack[0].track_length = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].length)
                 }
                 
                 if self.currentTrack[0].loading {
                     if let trackTitle = status.userInfo?["title"] {
-                        if !((trackTitle as! String).contains("Loading.")) {
+                        if !((trackTitle as! String).hasPrefix("Loading")) {
                             self.currentTrack[0].loading = false
                         }
                     }

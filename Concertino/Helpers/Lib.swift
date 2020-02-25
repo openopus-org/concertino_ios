@@ -193,7 +193,7 @@ public func convertSeconds (seconds: Int) -> String {
 }
 
 class MediaBridge: ObservableObject {
-    let player = MPMusicPlayerController.applicationMusicPlayer
+    let player = MPMusicPlayerController.applicationQueuePlayer
 
     init() {
       NotificationCenter.default.addObserver(
@@ -216,9 +216,14 @@ class MediaBridge: ObservableObject {
       player.stop()
     }
     
-    func setQueueAndPlay(tracks: [String]) {
-        let queue  = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
-
+    func setQueueAndPlay(tracks: [String], starttrack: String?) {
+        let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
+        
+        if let sttrack = starttrack {
+            print(sttrack)
+            queue.startItemID = sttrack
+        }
+        
         player.setQueue(with: queue)
         player.prepareToPlay()
         player.play()
@@ -237,11 +242,35 @@ class MediaBridge: ObservableObject {
         NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange, object: self, userInfo: ["playing": (player.playbackState == .playing)])
     }
     
+    func getCurrentPlaybackTime() -> Int {
+        if (player.nowPlayingItem != nil) {
+            return Int(player.currentPlaybackTime)
+        } else {
+            return 0
+        }
+    }
+    
     func togglePlay() {
         if (player.playbackState == .playing) {
             player.pause()
         } else {
             player.play()
         }
+    }
+    
+    func nextTrack() {
+        player.skipToNextItem()
+    }
+    
+    func previousTrack() {
+        if (player.indexOfNowPlayingItem > 0) {
+          player.skipToPreviousItem()
+        } else {
+          player.skipToBeginning()
+        }
+    }
+    
+    func stop() {
+        player.stop()
     }
 }

@@ -11,7 +11,6 @@ import URLImage
 
 struct RecordingMini: View {
     var recording: FullRecording
-    @EnvironmentObject var playState: PlayState
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
     

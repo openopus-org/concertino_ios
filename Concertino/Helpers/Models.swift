@@ -52,7 +52,7 @@ struct FullRecording: Codable {
 
 struct Track: Codable {
     var cd: Int
-    var position: Int
+    var index: Int
     var length: Int
     var title: String
     var apple_trackid: String
@@ -71,6 +71,7 @@ struct CurrentTrack: Codable {
     var track_index: Int
     var playing: Bool
     var loading: Bool
+    var starting_point: Int
     var track_position: Int
     var track_length: Int
     var full_position: Int
