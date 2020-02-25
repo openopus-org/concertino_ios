@@ -51,10 +51,6 @@ struct GenreBar: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Works".uppercased())
-                .foregroundColor(Color(hex: 0x717171))
-                .font(.custom("Nunito", size: 12))
-                .padding(.top, 12)
             HStack(alignment: .top, spacing: 14) {
                 ForEach(genres, id: \.self) { genre in
                     Button(action: { self.search.genreName = genre }, label: {
@@ -63,6 +59,7 @@ struct GenreBar: View {
                     })
                 }
             }
+            .padding(.top, 12)
         }
         .onAppear(perform: loadData)
     }

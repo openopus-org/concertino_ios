@@ -10,11 +10,11 @@ import SwiftUI
 import StoreKit
 
 struct Player: View {
-    @State private var fullPlayer = false
     @State private var currentTrack = [CurrentTrack]()
     @EnvironmentObject var mediaBridge: MediaBridge
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var timerHolder: TimerHolder
+    @EnvironmentObject var AppState: AppState
     
     func playMusic() {
         if self.currentTrack.count > 0 {
@@ -57,24 +57,24 @@ struct Player: View {
     var body: some View {
         ZStack(alignment: .top) {
             LinearGradient(gradient: Gradient(colors: [Color(hex: 0x4F4F4F), Color(hex: 0x2B2B2F)]), startPoint: .top, endPoint: .bottom)
-                .frame(minHeight: 130, maxHeight: self.fullPlayer ? .infinity : 130)
+                .frame(minHeight: 130, maxHeight: self.AppState.fullPlayer ? .infinity : 130)
                 .cornerRadius(25)
             
             VStack {
                 Button(
-                    action: { self.fullPlayer.toggle() },
+                    action: { self.AppState.fullPlayer.toggle() },
                     label: {
                         Image("handle")
                             .resizable()
                             .frame(width: 7, height: 32)
                             .foregroundColor(Color(hex: 0x696969))
-                            .rotationEffect(.degrees(self.fullPlayer ? 90 : 270))
+                            .rotationEffect(.degrees(self.AppState.fullPlayer ? 90 : 270))
                     })
                     .frame(height: 7)
-                    .padding(.top, (fullPlayer ? 14 : 10))
+                    .padding(.top, (self.AppState.fullPlayer ? 14 : 10))
                 
                 if (playState.recording.count > 0) {
-                    if fullPlayer {
+                    if self.AppState.fullPlayer {
                         ScrollView(showsIndicators: false) {
                             VStack(alignment: .leading) {
                                 RecordingWorkPerformers(recording: playState.recording.first!)

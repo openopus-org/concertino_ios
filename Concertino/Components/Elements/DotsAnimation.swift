@@ -9,8 +9,21 @@
 import SwiftUI
 
 struct DotsAnimation: View {
+    @State private var isAnimated = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ForEach(0...2, id: \.self) { index in
+                Circle()
+                    .frame(width: 6, height: 6)
+                    .foregroundColor(Color(hex: 0xfe365e))
+                    .scaleEffect(self.isAnimated ? 0 : 1)
+                    .animation(Animation.linear(duration: 0.6).repeatForever().delay(0.2 * Double(index)))
+            }
+        }
+        .onAppear() {
+            self.isAnimated = true
+        }
     }
 }
 

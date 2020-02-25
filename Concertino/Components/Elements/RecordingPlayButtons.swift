@@ -11,29 +11,52 @@ import SwiftUI
 struct RecordingPlayButtons: View {
     var recording: FullRecording
     @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var AppState: AppState
     
     var body: some View {
         HStack(spacing: 6) {
-            Button(
-                action: { self.playState.recording = [self.recording] },
-                label: {
-                    HStack {
+            if self.playState.recording.count > 0 && self.playState.recording.first!.recording.apple_albumid == self.recording.recording.apple_albumid && self.playState.recording.first!.work.id == self.recording.work.id && self.playState.recording.first!.recording.set == self.recording.recording.set {
+                Button(
+                    action: { self.AppState.fullPlayer = true },
+                    label: {
                         HStack {
-                            Spacer()
-                            Image("play")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 20)
-                            Text("play".uppercased())
-                                .font(.custom("Nunito", size: 14))
-                            Spacer()
+                            HStack {
+                                Spacer()
+                                DotsAnimation()
+                                    .padding(.trailing, 3)
+                                Text("playing".uppercased())
+                                    .font(.custom("Nunito", size: 12))
+                                Spacer()
+                            }
                         }
-                    }
-                    .padding(14)
-                    .foregroundColor(.white)
-                    .background(Color(hex: 0xfe365e))
-                    .cornerRadius(16)
-            })
+                        .padding(15)
+                        .foregroundColor(.white)
+                        .background(Color(hex: 0x4F4F4F))
+                        .cornerRadius(16)
+                })
+            } else {
+                Button(
+                    action: { self.playState.recording = [self.recording] },
+                    label: {
+                        HStack {
+                            HStack {
+                                Spacer()
+                                Image("play")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 20)
+                                Text("play".uppercased())
+                                    .font(.custom("Nunito", size: 14))
+                                Spacer()
+                            }
+                        }
+                        .padding(14)
+                        .foregroundColor(.white)
+                        .background(Color(hex: 0xfe365e))
+                        .cornerRadius(16)
+                })
+            }
+            
             
             Button(
                 action: { UIApplication.shared.open(URL(string: AppConstants.appleLink + self.recording.recording.apple_albumid)!) },
