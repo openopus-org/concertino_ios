@@ -15,6 +15,7 @@ struct Player: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var timerHolder: TimerHolder
     @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var settingStore: SettingStore
     
     func playMusic() {
         if self.currentTrack.count > 0 {
@@ -45,7 +46,15 @@ struct Player: View {
                                     full_position: 0,
                                     full_length: self.playState.recording.first!.recording.length!
                                 )]
-                                self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil)
+                                
+                                self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
+                                
+                                if self.playState.autoplay {
+                                    self.settingStore.lastPlayState = self.playState.recording
+                                } else {
+                                    self.currentTrack[0].loading = false
+                                    self.playState.autoplay = true
+                                }
                             }
                         }
                     }
@@ -100,6 +109,12 @@ struct Player: View {
         }
         .padding(EdgeInsets(top: 32, leading: 0, bottom: 46, trailing: 0))
         .clipped()
+        .onAppear(perform: {
+            if (self.currentTrack.count == 0 && self.settingStore.lastPlayState.count > 0) {
+                self.playState.autoplay = false
+                self.playState.recording = self.settingStore.lastPlayState
+            }
+        })
         .onReceive(playState.objectWillChange, perform: playMusic)
         .onReceive(timerHolder.objectWillChange, perform: {
             if (self.currentTrack.count > 0) {

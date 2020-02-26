@@ -36,7 +36,10 @@ struct RecordingPlayButtons: View {
                 })
             } else {
                 Button(
-                    action: { self.playState.recording = [self.recording] },
+                    action: {
+                        self.playState.autoplay = true
+                        self.playState.recording = [self.recording]
+                    },
                     label: {
                         HStack {
                             HStack {

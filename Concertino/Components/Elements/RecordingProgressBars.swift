@@ -19,7 +19,7 @@ struct RecordingProgressBars: View {
             VStack(alignment: .leading) {
                 
                 Button(action: {
-                    self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.recording.apple_tracks!, starttrack: track.apple_trackid)
+                    self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.recording.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
                 }, label: {
                     Text(track.title)
                         .font(.custom("Barlow", size: 14))

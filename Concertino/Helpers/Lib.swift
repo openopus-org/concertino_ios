@@ -62,6 +62,8 @@ final class PlayState: ObservableObject {
             objectWillChange.send()
         }
     }
+    
+    var autoplay = true
 }
 
 class TimerHolder: ObservableObject {
@@ -216,7 +218,7 @@ class MediaBridge: ObservableObject {
       player.stop()
     }
     
-    func setQueueAndPlay(tracks: [String], starttrack: String?) {
+    func setQueueAndPlay(tracks: [String], starttrack: String?, autoplay: Bool) {
         let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
         
         if let sttrack = starttrack {
@@ -226,7 +228,10 @@ class MediaBridge: ObservableObject {
         
         player.setQueue(with: queue)
         player.prepareToPlay()
-        player.play()
+        
+        if autoplay {
+            player.play()
+        }
     }
     
     @objc func playItemChanged(_ notification:Notification) {
@@ -272,5 +277,55 @@ class MediaBridge: ObservableObject {
     
     func stop() {
         player.stop()
+    }
+}
+
+final class SettingStore: ObservableObject {
+    @Published var defaults: UserDefaults
+    
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        
+        defaults.register(defaults: [
+            "concertino.hideIncomplete" : true,
+            "concertino.hideHistorical" : true,
+            "concertino.lastPlayState" : [FullRecording]()
+        ])
+    }
+    
+    var hideIncomplete: Bool {
+        get {
+            defaults.bool(forKey: "concertino.hideIncomplete")
+        }
+        
+        set {
+            defaults.set(newValue, forKey: "concertino.hideIncomplete")
+        }
+    }
+    
+    var hideHistorical: Bool {
+        get {
+            defaults.bool(forKey: "concertino.hideHistorical")
+        }
+        
+        set {
+            defaults.set(newValue, forKey: "concertino.hideHistorical")
+        }
+    }
+    
+    var lastPlayState: [FullRecording] {
+        get {
+            var ret = [FullRecording]()
+            
+            if let data = UserDefaults.standard.value(forKey: "concertino.lastPlayState") as? Data {
+                ret = try! PropertyListDecoder().decode(Array<FullRecording>.self, from: data)
+            }
+            
+            return ret
+        }
+        
+        set {
+            defaults.set(try? PropertyListEncoder().encode(newValue), forKey: "concertino.lastPlayState")
+        }
     }
 }
