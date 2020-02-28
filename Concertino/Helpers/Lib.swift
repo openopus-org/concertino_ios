@@ -26,6 +26,16 @@ final class ComposerSearchString: ObservableObject {
     }
 }
 
+final class OmnisearchString: ObservableObject {
+    let objectWillChange = PassthroughSubject<(), Never>()
+    
+    @Published var searchstring: String = "" {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+}
+
 final class WorkSearch: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
     
@@ -42,12 +52,6 @@ final class WorkSearch: ObservableObject {
     }
     
     @Published var composerId: String = "" {
-        didSet {
-            objectWillChange.send()
-        }
-    }
-    
-    @Published var searchString: String = "" {
         didSet {
             objectWillChange.send()
         }

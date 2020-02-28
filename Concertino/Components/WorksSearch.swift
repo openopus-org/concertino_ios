@@ -74,7 +74,12 @@ struct WorksSearch: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .onAppear(perform: { if self.loading { self.loadData() }})
+        .onAppear(perform: {
+            self.endEditing(true)
+            if self.loading {
+                self.loadData()
+            }
+        })
         .onReceive(search.objectWillChange, perform: loadData)
     }
 }

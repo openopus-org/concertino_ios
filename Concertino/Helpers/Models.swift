@@ -40,6 +40,20 @@ struct Work: Codable, Identifiable {
     var composer: Composer?
 }
 
+struct Omnisearch: Codable {
+    var results: [OmniResults]?
+}
+
+struct OmniResults: Codable {
+    var composer: Composer
+    var work: Work?
+    var next: Int?
+}
+
+extension OmniResults: Identifiable {
+    var id: String { return "work_\(work?.id ?? "0")_composer_\(composer.id)" }
+}
+
 struct Recordings: Codable {
     var recordings: [Recording]?
     var next: String?

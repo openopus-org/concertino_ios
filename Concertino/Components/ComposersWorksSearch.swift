@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ComposerWorkSearch: View {
+struct ComposersWorksSearch: View {
     @EnvironmentObject var omnisearch: OmnisearchString
     @State private var results = [OmniResults]()
     @State private var offset = 0
@@ -31,8 +31,6 @@ struct ComposerWorkSearch: View {
                     self.results.removeAll()
                     if let results = omniData.results {
                         self.results = results
-                        
-                        print(results)
                     }
                     else {
                         self.results = [OmniResults]()
@@ -65,13 +63,21 @@ struct ComposerWorkSearch: View {
                 }
                 else {
                     if self.results.count > 0 {
-                        /*Text("Composers".uppercased())
-                        .foregroundColor(Color(hex: 0x717171))
-                        .font(.custom("Nunito", size: 12))
-                        .padding(EdgeInsets(top: 7, leading: 20, bottom: 0, trailing: 0))*/
                         List(self.results, id: \.id) { result in
-                            NavigationLink(destination: ComposerDetail(composer: result.composer)) {
-                                ComposerRow(composer: result.composer)
+                            Group {
+                                if result.work != nil {
+                                    NavigationLink(destination: WorkDetail(work: result.work!, composer: result.composer)) {
+                                        WorkSearchRow(work: result.work!, composer: result.composer)
+                                            .padding(.top, 6)
+                                            .padding(.bottom, 6)
+                                    }
+                                } else {
+                                    NavigationLink(destination: ComposerDetail(composer: result.composer)) {
+                                        ComposerRow(composer: result.composer)
+                                            .padding(.top, 6)
+                                            .padding(.bottom, 6)
+                                    }
+                                }
                             }
                         }
                         .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
@@ -84,11 +90,14 @@ struct ComposerWorkSearch: View {
             Spacer()
         }
         .onReceive(omnisearch.objectWillChange, perform: loadData)
+        .onAppear(perform: {
+            self.endEditing(true)
+        })
         .frame(maxWidth: .infinity)
     }
 }
 
-struct ComposerWorkSearch_Previews: PreviewProvider {
+struct ComposersWorksSearch_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()
     }

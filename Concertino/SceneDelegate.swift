@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             .environment(\.colorScheme, .dark)
                             .environmentObject(AppState())
                             .environmentObject(ComposerSearchString())
+                            .environmentObject(OmnisearchString())
                             .environmentObject(WorkSearch())
                             .environmentObject(PlayState())
                             .environmentObject(TimerHolder())

@@ -1,5 +1,5 @@
 //
-//  SearchField.swift
+//  OmnisearchField.swift
 //  Concertino
 //
 //  Created by Adriano Brandao on 31/01/20.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct SearchField: View {
+struct OmnisearchField: View {
     @EnvironmentObject var omnisearch: OmnisearchString
     @EnvironmentObject var AppState: AppState
     
@@ -63,7 +63,7 @@ struct SearchField: View {
     }
 }
 
-struct SearchField_Previews: PreviewProvider {
+struct OmnisearchField_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()
     }

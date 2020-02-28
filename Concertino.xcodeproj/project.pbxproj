@@ -11,12 +11,15 @@
 		095A9CBD23E4E2400010E150 /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */; };
 		095A9CBE23E4E2400010E150 /* Barlow-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */; };
 		095A9CBF23E4E2400010E150 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */; };
-		095A9CC123E50E400010E150 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A9CC023E50E400010E150 /* SearchField.swift */; };
+		095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A9CC023E50E400010E150 /* OmnisearchField.swift */; };
 		097325E823FC406E00A1C9E6 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325E723FC406E00A1C9E6 /* ProgressBar.swift */; };
 		097325EA2404560900A1C9E6 /* RecordingProgressBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325E92404560900A1C9E6 /* RecordingProgressBars.swift */; };
 		097325EC24047D0600A1C9E6 /* RecordingPlaybackControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325EB24047D0600A1C9E6 /* RecordingPlaybackControl.swift */; };
 		097325EE2404BD1900A1C9E6 /* CircleAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325ED2404BD1900A1C9E6 /* CircleAnimation.swift */; };
 		097325F02404C10700A1C9E6 /* DotsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325EF2404C10700A1C9E6 /* DotsAnimation.swift */; };
+		097325F224089FA200A1C9E6 /* ComposersSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F124089FA200A1C9E6 /* ComposersSearch.swift */; };
+		097325F42408A01B00A1C9E6 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F32408A01B00A1C9E6 /* SearchField.swift */; };
+		097325F62408B5E000A1C9E6 /* WorkSearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */; };
 		097CE15423F20E6B00050846 /* ComposerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097CE15323F20E6B00050846 /* ComposerHeader.swift */; };
 		097CE15823F24C7700050846 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097CE15723F24C7700050846 /* Library.swift */; };
 		099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F90CA23EE15AF004A7021 /* ComposerBox.swift */; };
@@ -39,7 +42,7 @@
 		09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65223E6226F004CDAB6 /* ComposersList.swift */; };
 		09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65423E628C6004CDAB6 /* ComposerRow.swift */; };
 		09AAD65823E62B74004CDAB6 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 09AAD65723E62B74004CDAB6 /* URLImage */; };
-		09BAA81423E9C53F00157611 /* ComposersSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAA81323E9C53F00157611 /* ComposersSearch.swift */; };
+		09BAA81423E9C53F00157611 /* ComposersWorksSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAA81323E9C53F00157611 /* ComposersWorksSearch.swift */; };
 		09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3423E24F1F0011D718 /* AppDelegate.swift */; };
 		09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3623E24F1F0011D718 /* SceneDelegate.swift */; };
 		09E19F3B23E24F210011D718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3A23E24F210011D718 /* Assets.xcassets */; };
@@ -68,12 +71,15 @@
 		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-ExtraBold.ttf"; path = "../../../../../../Library/Fonts/Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-Regular.ttf"; path = "../../../../../../Library/Fonts/Barlow-Regular.ttf"; sourceTree = "<group>"; };
 		095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "../../../../../../Library/Fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; };
-		095A9CC023E50E400010E150 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		095A9CC023E50E400010E150 /* OmnisearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmnisearchField.swift; sourceTree = "<group>"; };
 		097325E723FC406E00A1C9E6 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		097325E92404560900A1C9E6 /* RecordingProgressBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingProgressBars.swift; sourceTree = "<group>"; };
 		097325EB24047D0600A1C9E6 /* RecordingPlaybackControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPlaybackControl.swift; sourceTree = "<group>"; };
 		097325ED2404BD1900A1C9E6 /* CircleAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleAnimation.swift; sourceTree = "<group>"; };
 		097325EF2404C10700A1C9E6 /* DotsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsAnimation.swift; sourceTree = "<group>"; };
+		097325F124089FA200A1C9E6 /* ComposersSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersSearch.swift; sourceTree = "<group>"; };
+		097325F32408A01B00A1C9E6 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSearchRow.swift; sourceTree = "<group>"; };
 		097CE15323F20E6B00050846 /* ComposerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerHeader.swift; sourceTree = "<group>"; };
 		097CE15723F24C7700050846 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		099F90CA23EE15AF004A7021 /* ComposerBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerBox.swift; sourceTree = "<group>"; };
@@ -95,7 +101,7 @@
 		09AAD65023E62120004CDAB6 /* Inc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inc.swift; sourceTree = "<group>"; };
 		09AAD65223E6226F004CDAB6 /* ComposersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersList.swift; sourceTree = "<group>"; };
 		09AAD65423E628C6004CDAB6 /* ComposerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerRow.swift; sourceTree = "<group>"; };
-		09BAA81323E9C53F00157611 /* ComposersSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersSearch.swift; sourceTree = "<group>"; };
+		09BAA81323E9C53F00157611 /* ComposersWorksSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersWorksSearch.swift; sourceTree = "<group>"; };
 		09E19F3123E24F1F0011D718 /* Concertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concertino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E19F3423E24F1F0011D718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E19F3623E24F1F0011D718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,12 +215,13 @@
 				09A0083D23F35C16001C696E /* GenreBar.swift */,
 				09AAD65223E6226F004CDAB6 /* ComposersList.swift */,
 				097CE15723F24C7700050846 /* Library.swift */,
-				09BAA81323E9C53F00157611 /* ComposersSearch.swift */,
+				09BAA81323E9C53F00157611 /* ComposersWorksSearch.swift */,
 				09A0083B23F35AA9001C696E /* ComposerDetail.swift */,
 				09A0084123F4E056001C696E /* WorksSearch.swift */,
 				09A6741E23F77FDD000000D6 /* WorkDetail.swift */,
 				09A6742423F79239000000D6 /* RecordingsList.swift */,
 				09FE9A5523F9E2D800599992 /* RecordingDetail.swift */,
+				097325F124089FA200A1C9E6 /* ComposersSearch.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -224,7 +231,7 @@
 			children = (
 				097CE15323F20E6B00050846 /* ComposerHeader.swift */,
 				09E19F5D23E257A50011D718 /* TabButton.swift */,
-				095A9CC023E50E400010E150 /* SearchField.swift */,
+				095A9CC023E50E400010E150 /* OmnisearchField.swift */,
 				09AAD65423E628C6004CDAB6 /* ComposerRow.swift */,
 				099F90CA23EE15AF004A7021 /* ComposerBox.swift */,
 				099F90CC23EE1855004A7021 /* ActivityIndicator.swift */,
@@ -246,6 +253,8 @@
 				097325EB24047D0600A1C9E6 /* RecordingPlaybackControl.swift */,
 				097325ED2404BD1900A1C9E6 /* CircleAnimation.swift */,
 				097325EF2404C10700A1C9E6 /* DotsAnimation.swift */,
+				097325F32408A01B00A1C9E6 /* SearchField.swift */,
+				097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -337,13 +346,15 @@
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
 				097325F02404C10700A1C9E6 /* DotsAnimation.swift in Sources */,
 				09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */,
+				097325F42408A01B00A1C9E6 /* SearchField.swift in Sources */,
 				09E19F5523E2545B0011D718 /* TabMenu.swift in Sources */,
 				09E5441E23FB749C005B8AEE /* RecordingDisclaimer.swift in Sources */,
 				09A6742123F78033000000D6 /* WorkHeader.swift in Sources */,
 				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
+				097325F224089FA200A1C9E6 /* ComposersSearch.swift in Sources */,
 				099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
-				095A9CC123E50E400010E150 /* SearchField.swift in Sources */,
+				095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */,
 				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,
 				09A6741B23F7606F000000D6 /* WorksList.swift in Sources */,
 				09E19F5723E2546B0011D718 /* Settings.swift in Sources */,
@@ -359,8 +370,9 @@
 				09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */,
 				09E5442023FB87B7005B8AEE /* RecordingMini.swift in Sources */,
 				09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */,
-				09BAA81423E9C53F00157611 /* ComposersSearch.swift in Sources */,
+				09BAA81423E9C53F00157611 /* ComposersWorksSearch.swift in Sources */,
 				09E19F5E23E257A50011D718 /* TabButton.swift in Sources */,
+				097325F62408B5E000A1C9E6 /* WorkSearchRow.swift in Sources */,
 				09E19F5B23E254810011D718 /* Favorites.swift in Sources */,
 				09A0083E23F35C16001C696E /* GenreBar.swift in Sources */,
 				09A6742323F78171000000D6 /* BackButton.swift in Sources */,

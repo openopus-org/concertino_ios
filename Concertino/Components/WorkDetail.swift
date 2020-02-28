@@ -16,9 +16,9 @@ struct WorkDetail: View {
         VStack(alignment: .leading) {
             Group {
                 WorkHeader(work: work, composer: composer)
-                Text("Recordings".uppercased())
+                /*Text("Recordings".uppercased())
                     .foregroundColor(Color(hex: 0x717171))
-                    .font(.custom("Nunito", size: 12))
+                    .font(.custom("Nunito", size: 12))*/
             }
             .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 20))
             RecordingsList(work: work)
