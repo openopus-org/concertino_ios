@@ -1,5 +1,5 @@
 //
-//  SearchField.swift
+//  WorkSearchRow.swift
 //  Concertino
 //
 //  Created by Adriano Brandao on 27/02/20.
@@ -8,14 +8,14 @@
 
 import SwiftUI
 
-struct SearchField: View {
+struct WorkSearchRow: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
 }
 
-struct SearchField_Previews: PreviewProvider {
+struct WorkSearchRow_Previews: PreviewProvider {
     static var previews: some View {
-        SearchField()
+        WorkSearchRow()
     }
 }

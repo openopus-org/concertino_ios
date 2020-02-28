@@ -1,16 +1,17 @@
 //
-//  ComposerSearch.swift
+//  ComposerWorkSearch.swift
 //  Concertino
 //
-//  Created by Adriano Brandao on 27/02/20.
+//  Created by Adriano Brandao on 01/02/20.
 //  Copyright © 2020 Open Opus. All rights reserved.
 //
 
 import SwiftUI
 
-struct ComposersSearch: View {
-    @EnvironmentObject var composersSearch: ComposerSearchString
-    @State private var composers = [Composer]()
+struct ComposerWorkSearch: View {
+    @EnvironmentObject var omnisearch: OmnisearchString
+    @State private var results = [OmniResults]()
+    @State private var offset = 0
     @State private var loading = true
     
     init() {
@@ -21,16 +22,20 @@ struct ComposersSearch: View {
     func loadData() {
         loading = true
         
-        if self.composersSearch.searchstring.count > 3 {
-            APIget(AppConstants.openOpusBackend+"/composer/list/search/\(self.composersSearch.searchstring).json") { results in
-                let composersData: Composers = parseJSON(results)
+        if self.omnisearch.searchstring.count > 3 {
+            APIget(AppConstants.openOpusBackend+"/omnisearch/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
+                let omniData: Omnisearch = parseJSON(results)
                 
                 DispatchQueue.main.async {
-                    if let compo = composersData.composers {
-                        self.composers = compo
+                    
+                    self.results.removeAll()
+                    if let results = omniData.results {
+                        self.results = results
+                        
+                        print(results)
                     }
                     else {
-                        self.composers = [Composer]()
+                        self.results = [OmniResults]()
                     }
                     
                     self.loading = false
@@ -39,7 +44,7 @@ struct ComposersSearch: View {
         }
         else {
             DispatchQueue.main.async {
-                self.composers = [Composer]()
+                self.results = [OmniResults]()
                 self.loading = false
             }
         }
@@ -47,7 +52,7 @@ struct ComposersSearch: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if self.composersSearch.searchstring != "" {
+            if self.omnisearch.searchstring != "" {
                 
                 if self.loading {
                     HStack {
@@ -59,31 +64,31 @@ struct ComposersSearch: View {
                     .padding(40)
                 }
                 else {
-                    if self.composers.count > 0 {
-                        Text("Composers".uppercased())
+                    if self.results.count > 0 {
+                        /*Text("Composers".uppercased())
                         .foregroundColor(Color(hex: 0x717171))
                         .font(.custom("Nunito", size: 12))
-                        .padding(EdgeInsets(top: 7, leading: 20, bottom: 0, trailing: 0))
-                        List(self.composers, id: \.id) { composer in
-                            NavigationLink(destination: ComposerDetail(composer: composer)) {
-                                ComposerRow(composer: composer)
+                        .padding(EdgeInsets(top: 7, leading: 20, bottom: 0, trailing: 0))*/
+                        List(self.results, id: \.id) { result in
+                            NavigationLink(destination: ComposerDetail(composer: result.composer)) {
+                                ComposerRow(composer: result.composer)
                             }
                         }
                         .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                     }
                     else {
-                        ErrorMessage(msg: (self.composersSearch.searchstring.count > 3 ? "No matches for: \(self.composersSearch.searchstring)" : "Search term too short"))
+                        ErrorMessage(msg: (self.omnisearch.searchstring.count > 3 ? "No matches for: \(self.omnisearch.searchstring)" : "Search term too short"))
                     }
                 }
             }
             Spacer()
         }
-        .onReceive(composersSearch.objectWillChange, perform: loadData)
+        .onReceive(omnisearch.objectWillChange, perform: loadData)
         .frame(maxWidth: .infinity)
     }
 }
 
-struct ComposersSearch_Previews: PreviewProvider {
+struct ComposerWorkSearch_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()
     }
