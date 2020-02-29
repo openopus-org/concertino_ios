@@ -32,7 +32,26 @@ struct Player: View {
                 controller.requestCapabilities { capabilities, error in
                     if capabilities.contains(.musicCatalogPlayback) {
                         
-                        // user has an active apple music account
+                        // user has an active apple music account, get the user token & apple default recommendations
+                        
+                        controller.requestUserToken(forDeveloperToken: AppConstants.developerToken) { userToken, error in
+                            APIget("\(AppConstants.appleAPI)/me/recommendations", userToken: userToken) { results in
+                                
+                                let recomm: Recommendations = parseJSON(results)
+                                
+                                // log in to concertino
+                                
+                                APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "recid": recomm.data[0].id, "id": self.settingStore.userId]) { results in
+                                    
+                                    let login: Login = parseJSON(results)
+                                    self.settingStore.userId = login.user.id
+                                    
+                                    if let auth = login.user.auth {
+                                        self.settingStore.userAuth = auth
+                                    }
+                                }
+                            }
+                        }
                         
                         DispatchQueue.main.async {
                             if let tracks = self.playState.recording.first!.recording.apple_tracks {

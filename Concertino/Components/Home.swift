@@ -9,9 +9,12 @@
 import SwiftUI
 
 struct Home: View {
+    @EnvironmentObject var settingStore: SettingStore
+    
     var body: some View {
         VStack(alignment: .leading) {
             ComposersList()
+            if self.settingStore.userId > 0 { FavoriteComposersList() }
             Spacer()
         }
     }

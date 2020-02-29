@@ -22,7 +22,7 @@ struct ComposersSearch: View {
         loading = true
         
         if self.composersSearch.searchstring.count > 3 {
-            APIget(AppConstants.openOpusBackend+"/composer/list/search/\(self.composersSearch.searchstring).json") { results in
+            APIget(AppConstants.openOpusBackend+"/composer/list/search/\(self.composersSearch.searchstring).json", userToken: nil) { results in
                 let composersData: Composers = parseJSON(results)
                 
                 DispatchQueue.main.async {

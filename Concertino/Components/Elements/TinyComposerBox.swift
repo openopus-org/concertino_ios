@@ -7,15 +7,39 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct TinyComposerBox: View {
+    var composer: Composer
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            VStack {
+                URLImage(composer.portrait!) { img in
+                    img.image
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipped()
+                        .clipShape(Circle())
+                }
+                .frame(width: 32, height: 32)
+                Text(composer.name)
+                    .foregroundColor(Color.white)
+                    .font(.custom("Nunito-ExtraBold", size: 9))
+                    .padding(.top, -4)
+            }
+            .padding(12)
+        }
+        .frame(minWidth: 72, maxWidth: 72, minHeight: 72,  maxHeight: 72, alignment: .top)
+        .background(Color(hex: 0x202023))
+        .padding(0)
+        .cornerRadius(12)
     }
 }
 
 struct TinyComposerBox_Previews: PreviewProvider {
     static var previews: some View {
-        TinyComposerBox()
+        EmptyView()
     }
 }

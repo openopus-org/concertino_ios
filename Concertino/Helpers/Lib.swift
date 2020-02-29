@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine
 import MediaPlayer
+import CommonCrypto
 
 final class AppState: ObservableObject  {
     @Published var currentTab = "library"
@@ -153,7 +154,35 @@ public struct SearchStyle: TextFieldStyle {
   }
 }
 
-public func APIget(_ url: String, completion: @escaping (Data) -> ()) {
+public func APIget(_ url: String, userToken: String?, completion: @escaping (Data) -> ()) {
+    print(url)
+    guard let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
+        let urlR = URL(string: encoded) else
+    {
+        fatalError("Invalid URL")
+    }
+    
+    var request = URLRequest(url: urlR)
+    
+    if let token = userToken {
+        request.setValue("Bearer \(AppConstants.developerToken)", forHTTPHeaderField: "authorization")
+        request.setValue(token, forHTTPHeaderField: "music-user-token")
+    }
+    
+    let sessionConfig = URLSessionConfiguration.default
+    sessionConfig.timeoutIntervalForRequest = 3000000.0
+    sessionConfig.timeoutIntervalForResource = 6000000.0
+    
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        
+        if let data = data {
+            completion(data)
+        }
+        
+    }.resume()
+}
+
+public func APIpost(_ url: String, parameters: [String: Any], completion: @escaping (Data) -> ()) {
     
     guard let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
         let urlR = URL(string: encoded) else
@@ -161,7 +190,13 @@ public func APIget(_ url: String, completion: @escaping (Data) -> ()) {
         fatalError("Invalid URL")
     }
     
-    let request = URLRequest(url: urlR)
+    print(url)
+    parameters.forEach() { print($0) }
+    
+    var request = URLRequest(url: urlR)
+    request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+    request.httpMethod = "POST"
+    request.httpBody = parameters.percentEncoded()
     
     let sessionConfig = URLSessionConfiguration.default
     sessionConfig.timeoutIntervalForRequest = 3000000.0
@@ -293,7 +328,9 @@ final class SettingStore: ObservableObject {
         defaults.register(defaults: [
             "concertino.hideIncomplete" : true,
             "concertino.hideHistorical" : true,
-            "concertino.lastPlayState" : [FullRecording]()
+            "concertino.lastPlayState" : [FullRecording](),
+            "concertino.userId" : 0,
+            "concertino.userAuth" : ""
         ])
     }
     
@@ -331,5 +368,79 @@ final class SettingStore: ObservableObject {
         set {
             defaults.set(try? PropertyListEncoder().encode(newValue), forKey: "concertino.lastPlayState")
         }
+    }
+    
+    var userId: Int {
+        get {
+            defaults.integer(forKey: "concertino.userId")
+        }
+        
+        set {
+            defaults.set(newValue, forKey: "concertino.userId")
+        }
+    }
+    
+    var userAuth: String {
+        get {
+            defaults.string(forKey: "concertino.userAuth") ?? ""
+        }
+        
+        set {
+            defaults.set(newValue, forKey: "concertino.userAuth")
+        }
+    }
+}
+
+extension Dictionary {
+    func percentEncoded() -> Data? {
+        return map { key, value in
+            let escapedKey = "\(key)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            let escapedValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlQueryValueAllowed) ?? ""
+            return escapedKey + "=" + escapedValue
+        }
+        .joined(separator: "&")
+        .data(using: .utf8)
+    }
+}
+
+extension CharacterSet {
+    static let urlQueryValueAllowed: CharacterSet = {
+        let generalDelimitersToEncode = ":#[]@" // does not include "?" or "/" due to RFC 3986 - Section 3.4
+        let subDelimitersToEncode = "!$&'()*+,;="
+
+        var allowed = CharacterSet.urlQueryAllowed
+        allowed.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
+        return allowed
+    }()
+}
+
+extension Date {
+    var millisecondsSince1970: Int64 {
+        return Int64((self.timeIntervalSince1970 * 1000.0).rounded())
+    }
+}
+
+public func MD5(_ string: String) -> String? {
+    let length = Int(CC_MD5_DIGEST_LENGTH)
+    var digest = [UInt8](repeating: 0, count: length)
+
+    if let d = string.data(using: String.Encoding.utf8) {
+        _ = d.withUnsafeBytes { body -> String in CC_MD5(body.baseAddress, CC_LONG(d.count), &digest)
+            return ""
+        }
+    }
+
+    return (0..<length).reduce("") {
+        $0 + String(format: "%02x", digest[$1])
+    }
+}
+
+public func authGen(userId: Int, userAuth: String) -> String? {
+    let timestamp = (((Date().millisecondsSince1970 / 1000 | 0) + (60 * 1)) / (60 * 5) | 0)
+    if let auth = MD5("\(timestamp)-\(userId)-\(userAuth)") {
+        return auth
+    }
+    else {
+        return ""
     }
 }

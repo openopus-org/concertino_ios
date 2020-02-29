@@ -20,6 +20,8 @@
 		097325F224089FA200A1C9E6 /* ComposersSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F124089FA200A1C9E6 /* ComposersSearch.swift */; };
 		097325F42408A01B00A1C9E6 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F32408A01B00A1C9E6 /* SearchField.swift */; };
 		097325F62408B5E000A1C9E6 /* WorkSearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */; };
+		097325F8240A111400A1C9E6 /* FavoriteComposersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F7240A111400A1C9E6 /* FavoriteComposersList.swift */; };
+		097325FA240A19D600A1C9E6 /* TinyComposerBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325F9240A19D600A1C9E6 /* TinyComposerBox.swift */; };
 		097CE15423F20E6B00050846 /* ComposerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097CE15323F20E6B00050846 /* ComposerHeader.swift */; };
 		097CE15823F24C7700050846 /* Library.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097CE15723F24C7700050846 /* Library.swift */; };
 		099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099F90CA23EE15AF004A7021 /* ComposerBox.swift */; };
@@ -80,6 +82,8 @@
 		097325F124089FA200A1C9E6 /* ComposersSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersSearch.swift; sourceTree = "<group>"; };
 		097325F32408A01B00A1C9E6 /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
 		097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSearchRow.swift; sourceTree = "<group>"; };
+		097325F7240A111400A1C9E6 /* FavoriteComposersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteComposersList.swift; sourceTree = "<group>"; };
+		097325F9240A19D600A1C9E6 /* TinyComposerBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyComposerBox.swift; sourceTree = "<group>"; };
 		097CE15323F20E6B00050846 /* ComposerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerHeader.swift; sourceTree = "<group>"; };
 		097CE15723F24C7700050846 /* Library.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Library.swift; sourceTree = "<group>"; };
 		099F90CA23EE15AF004A7021 /* ComposerBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerBox.swift; sourceTree = "<group>"; };
@@ -222,6 +226,7 @@
 				09A6742423F79239000000D6 /* RecordingsList.swift */,
 				09FE9A5523F9E2D800599992 /* RecordingDetail.swift */,
 				097325F124089FA200A1C9E6 /* ComposersSearch.swift */,
+				097325F7240A111400A1C9E6 /* FavoriteComposersList.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -255,6 +260,7 @@
 				097325EF2404C10700A1C9E6 /* DotsAnimation.swift */,
 				097325F32408A01B00A1C9E6 /* SearchField.swift */,
 				097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */,
+				097325F9240A19D600A1C9E6 /* TinyComposerBox.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -356,6 +362,7 @@
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
 				095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */,
 				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,
+				097325FA240A19D600A1C9E6 /* TinyComposerBox.swift in Sources */,
 				09A6741B23F7606F000000D6 /* WorksList.swift in Sources */,
 				09E19F5723E2546B0011D718 /* Settings.swift in Sources */,
 				097325EA2404560900A1C9E6 /* RecordingProgressBars.swift in Sources */,
@@ -383,6 +390,7 @@
 				097325E823FC406E00A1C9E6 /* ProgressBar.swift in Sources */,
 				09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */,
 				097325EE2404BD1900A1C9E6 /* CircleAnimation.swift in Sources */,
+				097325F8240A111400A1C9E6 /* FavoriteComposersList.swift in Sources */,
 				09A6741D23F778C4000000D6 /* ErrorMessage.swift in Sources */,
 				09E19F4A23E251320011D718 /* Lib.swift in Sources */,
 				09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */,

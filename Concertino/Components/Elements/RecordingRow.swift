@@ -15,7 +15,7 @@ struct RecordingRow: View {
     var body: some View {
         HStack(alignment: .top) {
             ZStack(alignment: .bottomTrailing) {
-                URLImage(recording.cover) { img in
+                URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
                     img.image
                         .renderingMode(.original)
                         .resizable()

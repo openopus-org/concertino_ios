@@ -17,7 +17,7 @@ struct RecordingMini: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                URLImage(recording.recording.cover) { img in
+                URLImage(recording.recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
                     img.image
                         .renderingMode(.original)
                         .resizable()

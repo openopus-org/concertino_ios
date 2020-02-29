@@ -21,7 +21,7 @@ struct GenreBar: View {
             search.loadingGenres = true
         }
         
-        APIget(AppConstants.openOpusBackend+"/genre/list/composer/\(self.composerId).json") { results in
+        APIget(AppConstants.openOpusBackend+"/genre/list/composer/\(self.composerId).json", userToken: nil) { results in
             let genresData: Genres = parseJSON(results)
             
             DispatchQueue.main.async {

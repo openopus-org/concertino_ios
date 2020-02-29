@@ -14,6 +14,7 @@ struct RecordingsList: View {
     @State private var page = "0"
     @State private var nextpage = "0"
     @State private var recordings = [Recording]()
+    @EnvironmentObject var settingStore: SettingStore
     
     init(work: Work) {
         UITableView.appearance().backgroundColor = .clear
@@ -24,7 +25,7 @@ struct RecordingsList: View {
     func loadData() {
         loading = true
         
-        APIget(AppConstants.concBackend+"/recording/list/work/\(self.work.id)/\(self.page).json") { results in
+        APIget(AppConstants.concBackend+"/recording/list/work/\(self.work.id)/\(self.page).json", userToken: nil) { results in
             let recsData: Recordings = parseJSON(results)
             
             DispatchQueue.main.async {
@@ -56,9 +57,13 @@ struct RecordingsList: View {
             
                 List {
                     ForEach(self.recordings, id: \.id) { recording in
-                        NavigationLink(destination: RecordingDetail(workId: self.work.id, recordingId: recording.apple_albumid, recordingSet: recording.set), label: {
-                            RecordingRow(recording: recording)
-                        })
+                        Group {
+                            if !recording.isCompilation || !self.settingStore.hideIncomplete {
+                                NavigationLink(destination: RecordingDetail(workId: self.work.id, recordingId: recording.apple_albumid, recordingSet: recording.set), label: {
+                                    RecordingRow(recording: recording)
+                                })
+                            }
+                        }
                     }
                     
                     HStack {

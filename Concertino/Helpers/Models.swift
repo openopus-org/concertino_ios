@@ -109,7 +109,7 @@ struct CurrentTrack: Codable {
 }
 
 struct Recording: Codable {
-    var cover: URL
+    var cover: URL?
     var apple_albumid: String
     var singletrack: String?
     var compilation: String?
@@ -126,6 +126,11 @@ struct Recording: Codable {
     var isVerified: Bool {
         get { return verified == "true" }
         set { verified = newValue ? "true" : "false" }
+    }
+    
+    var isCompilation: Bool {
+        get { return compilation == "true" }
+        set { compilation = newValue ? "true" : "false" }
     }
     
     var readableLength: String {
@@ -162,4 +167,23 @@ struct Performer: Codable {
             return ret
         }
     }
+}
+
+struct Recommendations: Codable {
+    var data: [Recommendation]
+}
+
+struct Recommendation: Codable, Identifiable {
+    var id: String
+    var type: String
+}
+
+struct Login: Codable {
+    var user: User
+}
+
+struct User: Codable, Identifiable {
+    var apple_recid: String
+    var id: Int
+    var auth: String?
 }
