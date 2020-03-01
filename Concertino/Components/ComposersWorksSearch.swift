@@ -23,7 +23,7 @@ struct ComposersWorksSearch: View {
         loading = true
         
         if self.omnisearch.searchstring.count > 3 {
-            APIget(AppConstants.openOpusBackend+"/omnisearch/\(self.omnisearch.searchstring)/\(self.offset).json", userToken: nil) { results in
+            APIget(AppConstants.openOpusBackend+"/omnisearch/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
                 let omniData: Omnisearch = parseJSON(results)
                 
                 DispatchQueue.main.async {

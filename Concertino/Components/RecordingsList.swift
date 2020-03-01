@@ -25,7 +25,7 @@ struct RecordingsList: View {
     func loadData() {
         loading = true
         
-        APIget(AppConstants.concBackend+"/recording/list/work/\(self.work.id)/\(self.page).json", userToken: nil) { results in
+        APIget(AppConstants.concBackend+"/recording/list/work/\(self.work.id)/\(self.page).json") { results in
             let recsData: Recordings = parseJSON(results)
             
             DispatchQueue.main.async {

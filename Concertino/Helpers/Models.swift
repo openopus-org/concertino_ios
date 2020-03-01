@@ -187,3 +187,7 @@ struct User: Codable, Identifiable {
     var id: Int
     var auth: String?
 }
+
+struct Token: Codable {
+    var token: String
+}

@@ -18,6 +18,4 @@ struct AppConstants {
     static let maxPerformers = 5
     static let mainPerformersList = ["Orchestra", "Ensemble", "Piano", "Conductor", "Violin", "Cello"]
     static let appleLink = "https://geo.music.apple.com/us/album/-/"
-    static let developerToken = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkZES0o3TE01U1QifQ.eyJpYXQiOjE1NzM1OTAwMTUsImV4cCI6MTU4OTE0MjAxNSwiaXNzIjoiVFhXMlc1MzJCOSJ9.Z5JuJKLdxX2M7yy9EePzrB-8zmKsP8KjrscjCCA3c1ielWqRvy8C3KX7Zqjn8fxnAYj-FoiAki4rYkX_vzNl3A"
-    static let appleAPI = "https://api.music.apple.com/v1"
 }

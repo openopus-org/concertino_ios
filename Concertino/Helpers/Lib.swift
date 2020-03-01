@@ -154,7 +154,7 @@ public struct SearchStyle: TextFieldStyle {
   }
 }
 
-public func APIget(_ url: String, userToken: String?, completion: @escaping (Data) -> ()) {
+public func APIget(_ url: String, completion: @escaping (Data) -> ()) {
     print(url)
     guard let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
         let urlR = URL(string: encoded) else
@@ -162,12 +162,7 @@ public func APIget(_ url: String, userToken: String?, completion: @escaping (Dat
         fatalError("Invalid URL")
     }
     
-    var request = URLRequest(url: urlR)
-    
-    if let token = userToken {
-        request.setValue("Bearer \(AppConstants.developerToken)", forHTTPHeaderField: "authorization")
-        request.setValue(token, forHTTPHeaderField: "music-user-token")
-    }
+    let request = URLRequest(url: urlR)
     
     let sessionConfig = URLSessionConfiguration.default
     sessionConfig.timeoutIntervalForRequest = 3000000.0

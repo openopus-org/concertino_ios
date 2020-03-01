@@ -26,7 +26,7 @@ struct WorksSearch: View {
         if !self.search.loadingGenres {
             loading = true
             
-            APIget(AppConstants.openOpusBackend+"/work/list/composer/\(self.composer.id)/\(self.search.genreName).json", userToken: nil) { results in
+            APIget(AppConstants.openOpusBackend+"/work/list/composer/\(self.composer.id)/\(self.search.genreName).json") { results in
                 let worksData: Works = parseJSON(results)
                 
                 DispatchQueue.main.async {

@@ -34,14 +34,16 @@ struct Player: View {
                         
                         // user has an active apple music account, get the user token & apple default recommendations
                         
-                        controller.requestUserToken(forDeveloperToken: AppConstants.developerToken) { userToken, error in
-                            APIget("\(AppConstants.appleAPI)/me/recommendations", userToken: userToken) { results in
-                                
-                                let recomm: Recommendations = parseJSON(results)
-                                
-                                // log in to concertino
-                                
-                                APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "recid": recomm.data[0].id, "id": self.settingStore.userId]) { results in
+                        APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
+                            
+                            let token: Token = parseJSON(results)
+                            controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
+                               
+                            // log in to concertino
+                                    
+                                APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId]) { results in
+                                        
+                                    print(String(decoding: results, as: UTF8.self))
                                     
                                     let login: Login = parseJSON(results)
                                     self.settingStore.userId = login.user.id
