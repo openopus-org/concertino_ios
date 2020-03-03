@@ -34,26 +34,53 @@ struct Player: View {
                         
                         // user has an active apple music account, get the user token & apple default recommendations
                         
-                        APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
-                            
-                            let token: Token = parseJSON(results)
-                            controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
-                               
-                            // log in to concertino
-                                    
-                                APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId]) { results in
+                        // first, check if the app needs to log in again
+                        
+                        if timeframe(timestamp: self.settingStore.lastLogged, minutes: 120)  {
+                            APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
+                                
+                                let token: Token = parseJSON(results)
+                                controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
+                                   
+                                // log in to concertino
                                         
-                                    print(String(decoding: results, as: UTF8.self))
-                                    
-                                    let login: Login = parseJSON(results)
-                                    self.settingStore.userId = login.user.id
-                                    
-                                    if let auth = login.user.auth {
-                                        self.settingStore.userAuth = auth
+                                    APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId]) { results in
+                                            
+                                        print(String(decoding: results, as: UTF8.self))
+                                        
+                                        // saving login info to the settings store
+                                        
+                                        DispatchQueue.main.async {
+                                            let login: Login = parseJSON(results)
+                                            self.settingStore.userId = login.user.id
+                                            self.settingStore.lastLogged = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                                            
+                                            if let auth = login.user.auth {
+                                                self.settingStore.userAuth = auth
+                                            }
+                                            
+                                            if let favoritecomposers = login.favorite {
+                                                self.settingStore.favoriteComposers = favoritecomposers
+                                            }
+                                            
+                                            if let favoriteworks = login.works {
+                                                self.settingStore.favoriteWorks = favoriteworks
+                                            }
+                                            
+                                            if let forbiddencomposers = login.forbidden {
+                                                self.settingStore.forbiddenComposers = forbiddencomposers
+                                            }
+                                            
+                                            if let playlists = login.playlists {
+                                                self.settingStore.playlists = playlists
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
+                        
+                        // let's play some music!
                         
                         DispatchQueue.main.async {
                             if let tracks = self.playState.recording.first!.recording.apple_tracks {
@@ -72,6 +99,14 @@ struct Player: View {
                                 
                                 if self.playState.autoplay {
                                     self.settingStore.lastPlayState = self.playState.recording
+                                    
+                                    // logging in the session
+                                    
+                                    APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId, "wid": self.playState.recording.first!.work.id, "aid": self.playState.recording.first!.recording.apple_albumid, "set": self.playState.recording.first!.recording.set, "cover": self.playState.recording.first!.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.playState.recording.first!.recording.jsonPerformers]) { results in
+                                        
+                                        print(String(decoding: results, as: UTF8.self))
+                                    }
+                                        
                                 } else {
                                     self.currentTrack[0].loading = false
                                     self.playState.autoplay = true
@@ -147,6 +182,7 @@ struct Player: View {
                 if self.currentTrack.count > 0 {
                     if let isPlaying = status.userInfo?["playing"] {
                         self.currentTrack[0].playing = isPlaying as! Bool
+                        self.playState.playing = isPlaying as! Bool
                         
                         if (isPlaying as! Bool) {
                             self.timerHolder.start()

@@ -61,10 +61,17 @@ final class WorkSearch: ObservableObject {
 
 final class PlayState: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
+    let playingstateWillChange = PassthroughSubject<(), Never>()
     
     @Published var recording = [FullRecording]() {
         didSet {
             objectWillChange.send()
+        }
+    }
+    
+    @Published var playing = false {
+        didSet {
+            playingstateWillChange.send()
         }
     }
     
@@ -155,7 +162,8 @@ public struct SearchStyle: TextFieldStyle {
 }
 
 public func APIget(_ url: String, completion: @escaping (Data) -> ()) {
-    print(url)
+    print("✅ \(url)")
+    
     guard let encoded = url.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed),
         let urlR = URL(string: encoded) else
     {
@@ -185,8 +193,8 @@ public func APIpost(_ url: String, parameters: [String: Any], completion: @escap
         fatalError("Invalid URL")
     }
     
-    print(url)
-    parameters.forEach() { print($0) }
+    print("✅ \(url)")
+    parameters.forEach() { print("✴️ \($0)") }
     
     var request = URLRequest(url: urlR)
     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -261,11 +269,22 @@ class MediaBridge: ObservableObject {
         }
         
         player.setQueue(with: queue)
-        player.prepareToPlay()
-        
-        if autoplay {
-            player.play()
-        }
+        player.prepareToPlay(completionHandler: {(error) in
+            DispatchQueue.main.async {
+                if error != nil {
+                    print("🆘 \(error!.localizedDescription)")
+                    let alertController = UIAlertController(title: "Couldn't play", message:
+                        "Sorry, this recording is not available in your country.", preferredStyle: UIAlertController.Style.alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(alertController, animated: true, completion: nil)
+                } else {
+                    print("✅ No errors!")
+                    if autoplay {
+                        self.player.play()
+                    }
+                }
+            }
+        })
     }
     
     @objc func playItemChanged(_ notification:Notification) {
@@ -314,74 +333,99 @@ class MediaBridge: ObservableObject {
     }
 }
 
-final class SettingStore: ObservableObject {
-    @Published var defaults: UserDefaults
-    
-    init(defaults: UserDefaults = .standard) {
-        self.defaults = defaults
-        
-        defaults.register(defaults: [
-            "concertino.hideIncomplete" : true,
-            "concertino.hideHistorical" : true,
-            "concertino.lastPlayState" : [FullRecording](),
-            "concertino.userId" : 0,
-            "concertino.userAuth" : ""
-        ])
+@propertyWrapper
+struct UserDefault<T> {
+    let key: String
+    let defaultValue: T
+
+    init(_ key: String, defaultValue: T) {
+        self.key = key
+        self.defaultValue = defaultValue
     }
-    
-    var hideIncomplete: Bool {
+
+    var wrappedValue: T {
         get {
-            defaults.bool(forKey: "concertino.hideIncomplete")
+            return UserDefaults.standard.object(forKey: key) as? T ?? defaultValue
         }
-        
         set {
-            defaults.set(newValue, forKey: "concertino.hideIncomplete")
+            UserDefaults.standard.set(newValue, forKey: key)
         }
     }
-    
-    var hideHistorical: Bool {
-        get {
-            defaults.bool(forKey: "concertino.hideHistorical")
-        }
-        
-        set {
-            defaults.set(newValue, forKey: "concertino.hideHistorical")
-        }
+}
+
+@propertyWrapper
+struct RecordingUserDefault {
+    let key: String
+
+    init(_ key: String) {
+        self.key = key
     }
-    
-    var lastPlayState: [FullRecording] {
+
+    var wrappedValue: [FullRecording] {
         get {
             var ret = [FullRecording]()
             
-            if let data = UserDefaults.standard.value(forKey: "concertino.lastPlayState") as? Data {
+            if let data = UserDefaults.standard.value(forKey: key) as? Data {
                 ret = try! PropertyListDecoder().decode(Array<FullRecording>.self, from: data)
             }
             
             return ret
         }
-        
         set {
-            defaults.set(try? PropertyListEncoder().encode(newValue), forKey: "concertino.lastPlayState")
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(newValue), forKey: key)
         }
     }
-    
-    var userId: Int {
+}
+
+@propertyWrapper
+struct PlaylistsUserDefault {
+    let key: String
+
+    init(_ key: String) {
+        self.key = key
+    }
+
+    var wrappedValue: [Playlist] {
         get {
-            defaults.integer(forKey: "concertino.userId")
+            var ret = [Playlist]()
+            
+            if let data = UserDefaults.standard.value(forKey: key) as? Data {
+                ret = try! PropertyListDecoder().decode(Array<Playlist>.self, from: data)
+            }
+            
+            return ret
         }
-        
         set {
-            defaults.set(newValue, forKey: "concertino.userId")
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(newValue), forKey: key)
         }
     }
+}
+
+final class SettingStore: ObservableObject {
+    let composersWillChange = PassthroughSubject<Void, Never>()
+    let playstateWillChange = PassthroughSubject<Void, Never>()
+    let playlistsWillChange = PassthroughSubject<Void, Never>()
     
-    var userAuth: String {
-        get {
-            defaults.string(forKey: "concertino.userAuth") ?? ""
+    @UserDefault("concertino.hideIncomplete", defaultValue: true) var hideIncomplete: Bool
+    @UserDefault("concertino.hideHistorical", defaultValue: true) var hideHistorical: Bool
+    @UserDefault("concertino.userId", defaultValue: 0) var userId: Int
+    @UserDefault("concertino.lastLogged", defaultValue: 0) var lastLogged: Int
+    @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
+    @RecordingUserDefault("concertino.lastPlayState") var lastPlayState: [FullRecording] {
+        willSet {
+            playstateWillChange.send()
         }
-        
-        set {
-            defaults.set(newValue, forKey: "concertino.userAuth")
+    }
+    @UserDefault("concertino.favoriteComposers", defaultValue: [String]()) var favoriteComposers: [String] {
+        willSet {
+            composersWillChange.send()
+        }
+    }
+    @UserDefault("concertino.favoriteWorks", defaultValue: [String]()) var favoriteWorks: [String]
+    @UserDefault("concertino.forbiddenComposers", defaultValue: [String]()) var forbiddenComposers: [String]
+    @PlaylistsUserDefault("concertino.playlists") var playlists: [Playlist] {
+        willSet {
+            playlistsWillChange.send()
         }
     }
 }
@@ -437,5 +481,16 @@ public func authGen(userId: Int, userAuth: String) -> String? {
     }
     else {
         return ""
+    }
+}
+
+public func timeframe(timestamp: Int, minutes: Int) -> Bool {
+    let now = (Date().millisecondsSince1970 / (60 * 1000) | 0)
+    let limit = timestamp + minutes
+    
+    if now >= limit {
+        return true
+    } else {
+        return false
     }
 }

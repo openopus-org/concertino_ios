@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RecordingPlayButtons: View {
     var recording: FullRecording
+    @State private var isPlaying = true
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var AppState: AppState
     
@@ -22,10 +23,23 @@ struct RecordingPlayButtons: View {
                         HStack {
                             HStack {
                                 Spacer()
-                                DotsAnimation()
-                                    .padding(.trailing, 3)
-                                Text("playing".uppercased())
-                                    .font(.custom("Nunito", size: 12))
+                                if self.isPlaying {
+                                    DotsAnimation()
+                                        .padding(.trailing, 3)
+                                    Text("playing".uppercased())
+                                        .font(.custom("Nunito", size: 11))
+                                }
+                                else {
+                                    Image("handle")
+                                        .resizable()
+                                        .frame(width: 7, height: 14)
+                                        .foregroundColor(Color(hex: 0x696969))
+                                        .rotationEffect(.degrees(90))
+                                        .padding(.trailing, 8)
+                                    Text("in the player".uppercased())
+                                        .foregroundColor(Color(hex: 0x696969))
+                                        .font(.custom("Nunito", size: 11))
+                                }
                                 Spacer()
                             }
                         }
@@ -77,6 +91,8 @@ struct RecordingPlayButtons: View {
                     .cornerRadius(16)
             })
         }
+        .onAppear(perform: { self.isPlaying = self.playState.playing })
+        .onReceive(self.playState.playingstateWillChange, perform: { self.isPlaying = self.playState.playing })
     }
 }
 

@@ -61,7 +61,11 @@ struct GenreBar: View {
             }
             .padding(.top, 12)
         }
-        .onAppear(perform: loadData)
+        .onAppear(perform: {
+            if self.genres.count == 0 {
+                self.loadData()
+            }
+        })
     }
 }
 

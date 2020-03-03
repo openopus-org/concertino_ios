@@ -136,6 +136,17 @@ struct Recording: Codable {
     var readableLength: String {
         get { return convertSeconds(seconds: length ?? 0) }
     }
+    
+    var jsonPerformers: String {
+        get {
+            do {
+                let jsonData = try JSONEncoder().encode(performers)
+                return String(data: jsonData, encoding: .utf8)!
+            } catch {
+                return ""
+            }
+        }
+    }
 }
 
 extension Recording: Identifiable, Equatable {
@@ -180,6 +191,10 @@ struct Recommendation: Codable, Identifiable {
 
 struct Login: Codable {
     var user: User
+    var works: [String]?
+    var favorite: [String]?
+    var forbidden: [String]?
+    var playlists: [Playlist]?
 }
 
 struct User: Codable, Identifiable {
@@ -190,4 +205,26 @@ struct User: Codable, Identifiable {
 
 struct Token: Codable {
     var token: String
+}
+
+struct Playlist: Codable, Identifiable {
+    var id: String
+    var name: String
+    var owner: String
+    var summary: PlaylistSummary
+}
+
+struct PlaylistSummary: Codable {
+    var composers: PlaylistComposers
+    var works: PlaylistWorks
+}
+
+struct PlaylistComposers: Codable {
+    var portraits: [String]
+    var names: [String]
+    var rows: Int
+}
+
+struct PlaylistWorks: Codable {
+    var rows: Int
 }

@@ -14,7 +14,7 @@ struct Home: View {
     var body: some View {
         VStack(alignment: .leading) {
             ComposersList()
-            if self.settingStore.userId > 0 { FavoriteComposersList() }
+            FavoriteComposersList()
             Spacer()
         }
     }

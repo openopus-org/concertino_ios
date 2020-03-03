@@ -92,7 +92,10 @@ struct RecordingsList: View {
         .frame(maxWidth: .infinity)
         .onAppear(perform: {
             self.endEditing(true)
-            self.loadData()
+            
+            if self.recordings.count == 0 {
+                self.loadData()
+            }
         })
     }
 }
