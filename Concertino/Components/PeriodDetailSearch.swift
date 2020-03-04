@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct PeriodDetail: View {
+struct PeriodDetailSearch: View {
     let period: String
     @State private var composers = [Composer]()
     @State private var loading = true
@@ -73,7 +73,7 @@ struct PeriodDetail: View {
     }
 }
 
-struct PeriodDetail_Previews: PreviewProvider {
+struct PeriodDetailSearch_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()
     }

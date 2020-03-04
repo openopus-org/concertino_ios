@@ -14,6 +14,7 @@ struct AppConstants {
     static let concFrontend = "https://beta.concertino.app"
     static let concNoCoverImg = concFrontend + "/img/nocover.png"
     static let genreList = ["Chamber", "Keyboard", "Orchestral", "Stage", "Vocal"]
+    static let periodList = ["Medieval", "Renaissance", "Baroque", "Classical", "Early Romantic", "Romantic", "Late Romantic", "20th Century", "Post-War", "21st Century"]
     static let groupList = ["Orchestra", "Choir", "Ensemble"]
     static let maxPerformers = 5
     static let mainPerformersList = ["Orchestra", "Ensemble", "Piano", "Conductor", "Violin", "Cello"]

@@ -9,13 +9,15 @@
 import SwiftUI
 
 struct PeriodHeader: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        BackButton()
     }
 }
 
 struct PeriodHeader_Previews: PreviewProvider {
     static var previews: some View {
-        PeriodHeader()
+        EmptyView()
     }
 }

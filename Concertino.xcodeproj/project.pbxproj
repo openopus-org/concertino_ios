@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0922D466240F1E9B001E8DFE /* PeriodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D465240F1E9B001E8DFE /* PeriodList.swift */; };
+		0922D468240F1FAC001E8DFE /* PeriodBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D467240F1FAC001E8DFE /* PeriodBox.swift */; };
+		0922D46A240F1FBB001E8DFE /* PeriodDetailSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */; };
+		0922D46C240F3449001E8DFE /* PeriodHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D46B240F3449001E8DFE /* PeriodHeader.swift */; };
+		0922D46E240F34BC001E8DFE /* PeriodDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D46D240F34BC001E8DFE /* PeriodDetail.swift */; };
 		095A9CBC23E4E2400010E150 /* Barlow-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */; };
 		095A9CBD23E4E2400010E150 /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */; };
 		095A9CBE23E4E2400010E150 /* Barlow-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */; };
@@ -69,6 +74,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0922D465240F1E9B001E8DFE /* PeriodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodList.swift; sourceTree = "<group>"; };
+		0922D467240F1FAC001E8DFE /* PeriodBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodBox.swift; sourceTree = "<group>"; };
+		0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailSearch.swift; sourceTree = "<group>"; };
+		0922D46B240F3449001E8DFE /* PeriodHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodHeader.swift; sourceTree = "<group>"; };
+		0922D46D240F34BC001E8DFE /* PeriodDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetail.swift; sourceTree = "<group>"; };
 		095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-SemiBold.ttf"; path = "../../../../../../Library/Fonts/Barlow-SemiBold.ttf"; sourceTree = "<group>"; };
 		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-ExtraBold.ttf"; path = "../../../../../../Library/Fonts/Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-Regular.ttf"; path = "../../../../../../Library/Fonts/Barlow-Regular.ttf"; sourceTree = "<group>"; };
@@ -227,6 +237,9 @@
 				09FE9A5523F9E2D800599992 /* RecordingDetail.swift */,
 				097325F124089FA200A1C9E6 /* ComposersSearch.swift */,
 				097325F7240A111400A1C9E6 /* FavoriteComposersList.swift */,
+				0922D465240F1E9B001E8DFE /* PeriodList.swift */,
+				0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */,
+				0922D46D240F34BC001E8DFE /* PeriodDetail.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -261,6 +274,8 @@
 				097325F32408A01B00A1C9E6 /* SearchField.swift */,
 				097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */,
 				097325F9240A19D600A1C9E6 /* TinyComposerBox.swift */,
+				0922D467240F1FAC001E8DFE /* PeriodBox.swift */,
+				0922D46B240F3449001E8DFE /* PeriodHeader.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -347,13 +362,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */,
+				0922D46C240F3449001E8DFE /* PeriodHeader.swift in Sources */,
 				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
+				0922D46E240F34BC001E8DFE /* PeriodDetail.swift in Sources */,
 				09E19F5123E254480011D718 /* Home.swift in Sources */,
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
 				097325F02404C10700A1C9E6 /* DotsAnimation.swift in Sources */,
+				0922D468240F1FAC001E8DFE /* PeriodBox.swift in Sources */,
 				09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */,
 				097325F42408A01B00A1C9E6 /* SearchField.swift in Sources */,
 				09E19F5523E2545B0011D718 /* TabMenu.swift in Sources */,
+				0922D46A240F1FBB001E8DFE /* PeriodDetailSearch.swift in Sources */,
 				09E5441E23FB749C005B8AEE /* RecordingDisclaimer.swift in Sources */,
 				09A6742123F78033000000D6 /* WorkHeader.swift in Sources */,
 				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
@@ -376,6 +395,7 @@
 				09A6742923F7B341000000D6 /* RecordingsDisclaimer.swift in Sources */,
 				09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */,
 				09E5442023FB87B7005B8AEE /* RecordingMini.swift in Sources */,
+				0922D466240F1E9B001E8DFE /* PeriodList.swift in Sources */,
 				09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */,
 				09BAA81423E9C53F00157611 /* ComposersWorksSearch.swift in Sources */,
 				09E19F5E23E257A50011D718 /* TabButton.swift in Sources */,

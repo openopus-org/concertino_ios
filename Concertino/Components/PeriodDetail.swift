@@ -9,13 +9,23 @@
 import SwiftUI
 
 struct PeriodDetail: View {
+    var period: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Group {
+                PeriodHeader()
+                    .padding(.top, 12)
+            }
+            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+            PeriodDetailSearch(period: period)
+            Spacer()
+        }
     }
 }
 
 struct PeriodDetail_Previews: PreviewProvider {
     static var previews: some View {
-        PeriodDetail()
+        EmptyView()
     }
 }

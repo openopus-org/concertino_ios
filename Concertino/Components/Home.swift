@@ -14,6 +14,7 @@ struct Home: View {
     var body: some View {
         VStack(alignment: .leading) {
             ComposersList()
+            PeriodList()
             FavoriteComposersList()
             Spacer()
         }
