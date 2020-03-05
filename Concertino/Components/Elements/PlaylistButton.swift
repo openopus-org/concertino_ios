@@ -7,12 +7,48 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct PlaylistButton: View {
     var playlist: Playlist
+    var active: Bool
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            VStack(alignment: .leading) {
+                ZStack {
+                    ForEach(0 ..< playlist.summary.composers.portraits.prefix(4).count) { number in
+                        URLImage(self.playlist.summary.composers.portraits[number]) { img in
+                            img.image
+                                .renderingMode(.original)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .clipped()
+                                .clipShape(Circle())
+                        }
+                        .frame(width: 40, height: 40)
+                        .offset(x: CGFloat(number * (self.playlist.summary.composers.portraits.prefix(4).count == 4 ? 27 : 35)))
+                    }
+                }
+                .padding(.top, 10)
+                
+                Text(playlist.name)
+                    .foregroundColor(Color(hex: (self.active ? 0xFFFFFF : 0xfe365e)))
+                    .font(.custom("Nunito-ExtraBold", size: 12))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(20)
+                
+                Text("\(playlist.summary.works.rows) works by \(playlist.summary.composers.nameList)")
+                    .foregroundColor(Color.white)
+                    .font(.custom("Nunito", size: 9))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(20)
+            }
+            .frame(minWidth: 125, maxWidth: 125, minHeight: 130,  maxHeight: 130, alignment: .topLeading)
+        }
+        .frame(minWidth: 145, maxWidth: 145, minHeight: 130,  maxHeight: 130)
+        .background(Color(hex: (self.active ? 0xfe365e : 0x202023)))
+        .cornerRadius(13)
     }
 }
 

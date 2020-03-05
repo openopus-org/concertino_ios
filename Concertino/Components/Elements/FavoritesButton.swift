@@ -18,14 +18,17 @@ struct FavoritesButton: View {
                 .resizable()
                 .foregroundColor(Color(hex: (self.active ? 0xFFFFFF : 0xfe365e)))
                 .aspectRatio(contentMode: .fill)
-                .frame(width: 16, height: 16)
+                .frame(width: 14, height: 14)
                 .padding(.bottom, 1)
+                .padding(.top, 6)
             
             Text(playlist == "fav" ? "Your favorites" : "Recently played")
                 .foregroundColor(Color(hex: (self.active ? 0xFFFFFF : 0xfe365e)))
-                .font(.custom("Nunito", size: 12))
+                .font(.custom("Nunito", size: 11))
+                .lineLimit(20)
+                .lineSpacing(-4)
         }
-        .frame(minWidth: 115, maxWidth: 115, minHeight: 115,  maxHeight: 115)
+        .frame(minWidth: 95, maxWidth: 95, minHeight: 130,  maxHeight: 130)
         .background(Color(hex: (self.active ? 0xfe365e : 0x202023)))
         .cornerRadius(13)
     }

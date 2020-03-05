@@ -17,6 +17,7 @@ struct Favorites: View {
                 VStack {
                     PlaylistsMenu(playlistSwitcher: $playlistSwitcher)
                     PlaylistsRecordings(playlistSwitcher: $playlistSwitcher)
+                    Spacer()
                 }
             }
             .padding(.top, -50)

@@ -15,11 +15,6 @@ struct PlaylistsMenu: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Playlists".uppercased())
-                .foregroundColor(Color(hex: 0x717171))
-                .font(.custom("Nunito", size: 12))
-                .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))
-            
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
                     Button(action: {
@@ -41,13 +36,12 @@ struct PlaylistsMenu: View {
                             self.playlistActive = playlist.id
                             self.playlistSwitcher.playlist = playlist.id
                         }, label: {
-                            //PlaylistButton(playlist: playlist)
-                            Text(playlist.name)
+                            PlaylistButton(playlist: playlist, active: self.playlistActive == playlist.id)
                         })
                     }
                 }
                 .frame(minHeight: 98)
-                .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
+                .padding(EdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20))
             }
         }
     }

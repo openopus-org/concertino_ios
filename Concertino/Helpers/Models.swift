@@ -225,9 +225,15 @@ struct PlaylistSummary: Codable {
 }
 
 struct PlaylistComposers: Codable {
-    var portraits: [String]
+    var portraits: [URL]
     var names: [String]
     var rows: Int
+    
+    var nameList: String {
+        get {
+            return (names.prefix(4).map{String($0)}).joined(separator: ", ")
+        }
+    }
 }
 
 struct PlaylistWorks: Codable {
