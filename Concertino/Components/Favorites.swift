@@ -9,15 +9,24 @@
 import SwiftUI
 
 struct Favorites: View {
+    @State private var playlistSwitcher = PlaylistSwitcher()
+    
     var body: some View {
-        ScrollView {
-            Text("Favorites")
+        VStack {
+            NavigationView {
+                VStack {
+                    PlaylistsMenu(playlistSwitcher: $playlistSwitcher)
+                    PlaylistsRecordings(playlistSwitcher: $playlistSwitcher)
+                }
+            }
+            .padding(.top, -50)
         }
+        .clipped()
     }
 }
 
 struct Favorites_Previews: PreviewProvider {
     static var previews: some View {
-        Favorites()
+        EmptyView()
     }
 }

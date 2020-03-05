@@ -9,10 +9,15 @@
 import SwiftUI
 
 struct PeriodHeader: View {
+    var period: String
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        BackButton()
+        HStack {
+            BackButton()
+            Text(period)
+                .font(.custom("Barlow-SemiBold", size: 17))
+        }
     }
 }
 

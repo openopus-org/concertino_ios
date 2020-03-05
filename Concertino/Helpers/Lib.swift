@@ -37,6 +37,16 @@ final class OmnisearchString: ObservableObject {
     }
 }
 
+final class PlaylistSwitcher: ObservableObject {
+    let objectWillChange = PassthroughSubject<(), Never>()
+    
+    @Published var playlist: String = "fav" {
+        didSet {
+            objectWillChange.send()
+        }
+    }
+}
+
 final class WorkSearch: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
     
@@ -492,5 +502,19 @@ public func timeframe(timestamp: Int, minutes: Int) -> Bool {
         return true
     } else {
         return false
+    }
+}
+
+extension Binding {
+    func didSet(execute: @escaping (Value) ->Void) -> Binding {
+        return Binding(
+            get: {
+                return self.wrappedValue
+            },
+            set: {
+                execute($0)
+                self.wrappedValue = $0
+            }
+        )
     }
 }

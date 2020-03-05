@@ -54,6 +54,10 @@ extension OmniResults: Identifiable {
     var id: String { return "work_\(work?.id ?? "0")_composer_\(composer.id)" }
 }
 
+struct PlaylistRecordings: Codable {
+    var recordings: [Recording]?
+}
+
 struct Recordings: Codable {
     var recordings: [Recording]?
     var next: String?
@@ -122,6 +126,7 @@ struct Recording: Codable {
     var length: Int?
     var tracks: [Track]?
     var apple_tracks: [String]?
+    var work: Work?
     
     var isVerified: Bool {
         get { return verified == "true" }

@@ -42,19 +42,32 @@ struct RecordingRow: View {
                 }
             }
             VStack(alignment: .leading) {
+                if recording.work != nil {
+                    Text(recording.work!.composer!.name.uppercased())
+                        .font(.custom("Nunito-ExtraBold", size: 13))
+                        .foregroundColor(Color(hex: 0xfe365e))
+                    
+                    Text(recording.work!.title)
+                        .font(.custom("Barlow", size: 15))
+                        .padding(.bottom, 6)
+                        .lineLimit(20)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                
                 if recording.observation != "" && recording.observation != nil {
                     Text(recording.observation ?? "")
                     .font(.custom("Barlow", size: 10))
                     .padding(.bottom, 6)
                 }
+                
                 ForEach(recording.performers, id: \.name) { performer in
                     Group {
                         if (self.recording.performers.count <= AppConstants.maxPerformers || AppConstants.mainPerformersList.contains(performer.role ?? "")) {
                                 Text(performer.name)
-                                    .font(.custom("Barlow-SemiBold", size: 13))
+                                    .font(.custom("Barlow-SemiBold", size: (self.recording.work != nil ? 12 : 13)))
                                 +
                                 Text(performer.readableRole)
-                                    .font(.custom("Barlow", size: 13))
+                                    .font(.custom("Barlow", size: (self.recording.work != nil ? 12 : 13)))
                         }
                     }
                 }
