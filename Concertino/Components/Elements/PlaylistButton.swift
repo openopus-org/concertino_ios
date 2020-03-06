@@ -38,7 +38,7 @@ struct PlaylistButton: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(20)
                 
-                Text("\(playlist.summary.works.rows) works by \(playlist.summary.composers.nameList)")
+                Text("\(playlist.summary.works.rows) work\(self.playlist.summary.works.rows > 1 ? "s" : "") by \(playlist.summary.composers.nameList)")
                     .foregroundColor(Color.white)
                     .font(.custom("Nunito", size: 9))
                     .fixedSize(horizontal: false, vertical: true)

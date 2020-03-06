@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PlaylistsMenu: View {
     @State var playlistActive = "fav"
+    @State var playlistList = [Playlist]()
     @Binding var playlistSwitcher: PlaylistSwitcher
     @EnvironmentObject var settingStore: SettingStore
     
@@ -31,7 +32,7 @@ struct PlaylistsMenu: View {
                         FavoritesButton(playlist: "recent", active: self.playlistActive == "recent")
                     })
                     
-                    ForEach(self.settingStore.playlists, id: \.id) { playlist in
+                    ForEach(self.playlistList, id: \.id) { playlist in
                         Button(action: {
                             self.playlistActive = playlist.id
                             self.playlistSwitcher.playlist = playlist.id
@@ -44,6 +45,16 @@ struct PlaylistsMenu: View {
                 .padding(EdgeInsets(top: 10, leading: 20, bottom: 0, trailing: 20))
             }
         }
+        .onReceive(settingStore.playlistsDidChange, perform: {
+            print("🆗 playlist changed")
+            self.playlistList = self.settingStore.playlists
+        })
+        .onAppear(perform: {
+            if self.playlistList.count == 0 {
+                print("🆗 simply appeared")
+                self.playlistList = self.settingStore.playlists
+            }
+        })
     }
 }
 

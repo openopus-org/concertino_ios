@@ -64,7 +64,7 @@ struct PlaylistsRecordings: View {
                         ActivityIndicator(isAnimating: loading)
                             .configure { $0.color = .white; $0.style = .large }
                     } else {
-                        ErrorMessage(msg: "No recordings were found in this playlist.")
+                        ErrorMessage(msg: "No recordings found.")
                     }
                 }
                 .padding(.top, 40)
@@ -74,6 +74,7 @@ struct PlaylistsRecordings: View {
         }
         .frame(maxWidth: .infinity)
         .onReceive(playlistSwitcher.objectWillChange, perform: loadData)
+        .onReceive(settingStore.playlistsWillChange, perform: loadData)
         .onAppear(perform: {
             self.endEditing(true)
             

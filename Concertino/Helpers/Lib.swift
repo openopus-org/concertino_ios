@@ -415,6 +415,7 @@ final class SettingStore: ObservableObject {
     let composersWillChange = PassthroughSubject<Void, Never>()
     let playstateWillChange = PassthroughSubject<Void, Never>()
     let playlistsWillChange = PassthroughSubject<Void, Never>()
+    let playlistsDidChange = PassthroughSubject<Void, Never>()
     
     @UserDefault("concertino.hideIncomplete", defaultValue: true) var hideIncomplete: Bool
     @UserDefault("concertino.hideHistorical", defaultValue: true) var hideHistorical: Bool
@@ -436,6 +437,10 @@ final class SettingStore: ObservableObject {
     @PlaylistsUserDefault("concertino.playlists") var playlists: [Playlist] {
         willSet {
             playlistsWillChange.send()
+        }
+        
+        didSet {
+            playlistsDidChange.send()
         }
     }
 }
