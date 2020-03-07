@@ -45,10 +45,14 @@ struct FavoriteComposersList: View {
         }
         .onAppear(perform: {
             if self.composers.count == 0 {
+                print("🆗 favorite composers loaded from view appearance")
                 self.loadData()
             }
         })
-        .onReceive(settingStore.composersWillChange, perform: loadData)
+        .onReceive(settingStore.composersDidChange, perform: {
+            print("🆗 favorite composers changed")
+            self.loadData()
+        })
     }
 }
 

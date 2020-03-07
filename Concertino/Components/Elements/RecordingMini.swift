@@ -82,6 +82,9 @@ struct RecordingMini: View {
                     .padding(.top, 4)
                 }
             }
+            else {
+                BrowseOnlyMode(size: "min")
+            }
         }
         
     }

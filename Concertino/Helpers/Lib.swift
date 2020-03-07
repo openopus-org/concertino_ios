@@ -413,6 +413,7 @@ struct PlaylistsUserDefault {
 
 final class SettingStore: ObservableObject {
     let composersWillChange = PassthroughSubject<Void, Never>()
+    let composersDidChange = PassthroughSubject<Void, Never>()
     let playstateWillChange = PassthroughSubject<Void, Never>()
     let playlistsWillChange = PassthroughSubject<Void, Never>()
     let playlistsDidChange = PassthroughSubject<Void, Never>()
@@ -430,6 +431,9 @@ final class SettingStore: ObservableObject {
     @UserDefault("concertino.favoriteComposers", defaultValue: [String]()) var favoriteComposers: [String] {
         willSet {
             composersWillChange.send()
+        }
+        didSet {
+            composersDidChange.send()
         }
     }
     @UserDefault("concertino.favoriteWorks", defaultValue: [String]()) var favoriteWorks: [String]

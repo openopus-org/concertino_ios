@@ -51,7 +51,7 @@ struct PlaylistsMenu: View {
         })
         .onAppear(perform: {
             if self.playlistList.count == 0 {
-                print("🆗 simply appeared")
+                print("🆗 playlist menu loaded from appearance")
                 self.playlistList = self.settingStore.playlists
             }
         })

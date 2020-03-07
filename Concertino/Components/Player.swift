@@ -23,6 +23,8 @@ struct Player: View {
             self.currentTrack[0].loading = true
         }
         
+        self.settingStore.lastPlayState = self.playState.recording
+        
         SKCloudServiceController.requestAuthorization { status in
             if (SKCloudServiceController.authorizationStatus() == .authorized)
             {
@@ -98,8 +100,6 @@ struct Player: View {
                                 self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
                                 
                                 if self.playState.autoplay {
-                                    self.settingStore.lastPlayState = self.playState.recording
-                                    
                                     // logging in the session
                                     
                                     APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId, "wid": self.playState.recording.first!.work.id, "aid": self.playState.recording.first!.recording.apple_albumid, "set": self.playState.recording.first!.recording.set, "cover": self.playState.recording.first!.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.playState.recording.first!.recording.jsonPerformers]) { results in

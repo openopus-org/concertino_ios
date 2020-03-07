@@ -64,6 +64,9 @@ struct RecordingPlaybackControl: View {
                     }
                 }
             }
+            else {
+                BrowseOnlyMode(size: "max")
+            }
         }
         .padding(.top, 16)
         .padding(.bottom, 32)

@@ -15,29 +15,36 @@ struct RecordingProgressBars: View {
     @EnvironmentObject var playState: PlayState
     
     var body: some View {
-        ForEach(self.recording.recording.tracks!, id: \.id) { track in
-            VStack(alignment: .leading) {
-                
-                Button(action: {
-                    self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.recording.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
-                }, label: {
-                    Text(track.title)
-                        .font(.custom("Barlow", size: 14))
-                        .foregroundColor(Color.white)
-                })
-                
-                HStack {
-                    Text(self.currentTrack.first!.track_index == track.index ? self.currentTrack.first!.readable_track_position : "0:00")
-                    
-                    ProgressBar(progress: self.currentTrack.first!.track_index == track.index ? self.currentTrack.first!.track_progress : 0)
-                        .padding(.leading, 6)
-                        .padding(.trailing, 6)
-                        .frame(height: 4)
-    
-                    Text(track.readableLength)
+        Group {
+            if self.currentTrack.count > 0 {
+                ForEach(self.recording.recording.tracks!, id: \.id) { track in
+                    VStack(alignment: .leading) {
+                        
+                        Button(action: {
+                            self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.recording.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
+                        }, label: {
+                            Text(track.title)
+                                .font(.custom("Barlow", size: 14))
+                                .foregroundColor(Color.white)
+                        })
+                        
+                        HStack {
+                            Text(self.currentTrack.first!.track_index == track.index ? self.currentTrack.first!.readable_track_position : "0:00")
+                            
+                            ProgressBar(progress: self.currentTrack.first!.track_index == track.index ? self.currentTrack.first!.track_progress : 0)
+                                .padding(.leading, 6)
+                                .padding(.trailing, 6)
+                                .frame(height: 4)
+            
+                            Text(track.readableLength)
+                        }
+                        .font(.custom("Nunito", size: 11))
+                        .padding(.bottom, 14)
+                    }
                 }
-                .font(.custom("Nunito", size: 11))
-                .padding(.bottom, 14)
+            } else {
+                RecordingTrackList(recording: self.recording)
+                .padding(.top, 10)
             }
         }
     }
