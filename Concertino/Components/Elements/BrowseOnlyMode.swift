@@ -7,13 +7,38 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct BrowseOnlyMode: View {
     var size: String
+    @EnvironmentObject var playState: PlayState
     
     var body: some View {
         Button(action: {
-            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+            SKCloudServiceController.requestAuthorization { status in
+                if (SKCloudServiceController.authorizationStatus() == .authorized)
+                {
+                    let controller = SKCloudServiceController()
+                    controller.requestCapabilities { capabilities, error in
+                        if capabilities.contains(.musicCatalogPlayback) {
+                            self.playState.recording = self.playState.recording
+                        }
+                        else {
+                            if capabilities.contains(.musicCatalogSubscriptionEligible) {
+                                DispatchQueue.main.async {
+                                    let amc = AppleMusicSubscribeController()
+                                    amc.showAppleMusicSignup()
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    DispatchQueue.main.async {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                    }
+                }
+            }
         }, label: {
             HStack {
                 Spacer()

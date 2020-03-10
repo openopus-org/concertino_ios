@@ -75,6 +75,11 @@ struct PlaylistsRecordings: View {
         .frame(maxWidth: .infinity)
         .onReceive(playlistSwitcher.objectWillChange, perform: loadData)
         .onReceive(settingStore.playlistsWillChange, perform: loadData)
+        .onReceive(settingStore.playedRecordingDidChange, perform: {
+            if self.playlistSwitcher.playlist == "recent" {
+                self.loadData()
+            }
+        })
         .onAppear(perform: {
             self.endEditing(true)
             

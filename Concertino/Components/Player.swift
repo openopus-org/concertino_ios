@@ -23,6 +23,18 @@ struct Player: View {
             self.currentTrack[0].loading = true
         }
         
+        if self.playState.autoplay {
+            // logging in the session
+
+            if self.settingStore.userId > 0 {
+                MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
+                    DispatchQueue.main.async {
+                        self.settingStore.lastPlayedRecording = self.playState.recording
+                    }
+                }
+            }
+        }
+        
         self.settingStore.lastPlayState = self.playState.recording
         
         SKCloudServiceController.requestAuthorization { status in
@@ -76,6 +88,16 @@ struct Player: View {
                                             if let playlists = login.playlists {
                                                 self.settingStore.playlists = playlists
                                             }
+                                            
+                                            // registering first recording played
+                                            
+                                            if self.playState.autoplay {
+                                                MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
+                                                    DispatchQueue.main.async {
+                                                        self.settingStore.lastPlayedRecording = self.playState.recording
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -99,19 +121,17 @@ struct Player: View {
                                 
                                 self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
                                 
-                                if self.playState.autoplay {
-                                    // logging in the session
-                                    
-                                    APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId, "wid": self.playState.recording.first!.work.id, "aid": self.playState.recording.first!.recording.apple_albumid, "set": self.playState.recording.first!.recording.set, "cover": self.playState.recording.first!.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.playState.recording.first!.recording.jsonPerformers]) { results in
-                                        
-                                        print(String(decoding: results, as: UTF8.self))
-                                    }
-                                        
-                                } else {
+                                if !self.playState.autoplay {
                                     self.currentTrack[0].loading = false
                                     self.playState.autoplay = true
                                 }
                             }
+                        }
+                    }
+                    else if capabilities.contains(.musicCatalogSubscriptionEligible) && self.playState.autoplay {
+                        DispatchQueue.main.async {
+                            let amc = AppleMusicSubscribeController()
+                            amc.showAppleMusicSignup()
                         }
                     }
                 }

@@ -14,7 +14,7 @@ The player itself is full of features, so there is a [wiki](https://getconcertin
 
 Concertino uses SwiftUI, so you'll need MacOS Catalina and XCode 11 to build it (and iOS 13 to test it on a device).
 
-*Work in progress! It's far from functional.*
+*Work in progress! It's pretty much functional, but not fully ready yet.*
 
 ## Contributing with code
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

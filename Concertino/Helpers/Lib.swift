@@ -10,6 +10,8 @@ import SwiftUI
 import Combine
 import MediaPlayer
 import CommonCrypto
+import StoreKit
+import UIKit
 
 final class AppState: ObservableObject  {
     @Published var currentTab = "library"
@@ -417,7 +419,15 @@ final class SettingStore: ObservableObject {
     let playstateWillChange = PassthroughSubject<Void, Never>()
     let playlistsWillChange = PassthroughSubject<Void, Never>()
     let playlistsDidChange = PassthroughSubject<Void, Never>()
+    let playedRecordingDidChange = PassthroughSubject<Void, Never>()
     
+    var lastPlayedRecording = [FullRecording]() {
+        didSet {
+            playedRecordingDidChange.send()
+        }
+    }
+    
+    @UserDefault("concertino.firstUsage", defaultValue: true) var firstUsage: Bool
     @UserDefault("concertino.hideIncomplete", defaultValue: true) var hideIncomplete: Bool
     @UserDefault("concertino.hideHistorical", defaultValue: true) var hideHistorical: Bool
     @UserDefault("concertino.userId", defaultValue: 0) var userId: Int
@@ -525,5 +535,29 @@ extension Binding {
                 self.wrappedValue = $0
             }
         )
+    }
+}
+
+func MarkPlayed(settingStore: SettingStore, playState: PlayState, completion: @escaping (Data) -> ()) {
+    APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work.id, "aid": playState.recording.first!.recording.apple_albumid, "set": playState.recording.first!.recording.set, "cover": playState.recording.first!.recording.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.recording.jsonPerformers]) { results in
+            completion(results)
+    }
+}
+
+class AppleMusicSubscribeController: UIViewController {
+    func showAppleMusicSignup() {
+        let vc = SKCloudServiceSetupViewController()
+        vc.delegate = self as? SKCloudServiceSetupViewControllerDelegate
+
+        let options: [SKCloudServiceSetupOptionsKey: Any] = [
+            .action: SKCloudServiceSetupAction.subscribe,
+            .messageIdentifier: SKCloudServiceSetupMessageIdentifier.join
+        ]
+            
+        vc.load(options: options) { success, error in
+            if success {
+                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(vc, animated: true)
+            }
+        }
     }
 }
