@@ -56,45 +56,54 @@ struct Player: View {
                                 let token: Token = parseJSON(results)
                                 controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
                                    
-                                // log in to concertino
+                                // get the country/storefront
+                                    
+                                    controller.requestStorefrontCountryCode { countryCode, error in
                                         
-                                    APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId]) { results in
+                                        // log in to concertino
                                             
-                                        print(String(decoding: results, as: UTF8.self))
-                                        
-                                        // saving login info to the settings store
-                                        
-                                        DispatchQueue.main.async {
-                                            let login: Login = parseJSON(results)
-                                            self.settingStore.userId = login.user.id
-                                            self.settingStore.lastLogged = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                                        APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId, "country": countryCode ?? ""]) { results in
+                                                
+                                            print(String(decoding: results, as: UTF8.self))
                                             
-                                            if let auth = login.user.auth {
-                                                self.settingStore.userAuth = auth
-                                            }
+                                            // saving login info to the settings store
                                             
-                                            if let favoritecomposers = login.favorite {
-                                                self.settingStore.favoriteComposers = favoritecomposers
-                                            }
-                                            
-                                            if let favoriteworks = login.works {
-                                                self.settingStore.favoriteWorks = favoriteworks
-                                            }
-                                            
-                                            if let forbiddencomposers = login.forbidden {
-                                                self.settingStore.forbiddenComposers = forbiddencomposers
-                                            }
-                                            
-                                            if let playlists = login.playlists {
-                                                self.settingStore.playlists = playlists
-                                            }
-                                            
-                                            // registering first recording played
-                                            
-                                            if self.playState.autoplay {
-                                                MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
-                                                    DispatchQueue.main.async {
-                                                        self.settingStore.lastPlayedRecording = self.playState.recording
+                                            DispatchQueue.main.async {
+                                                let login: Login = parseJSON(results)
+                                                self.settingStore.userId = login.user.id
+                                                self.settingStore.lastLogged = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                                                
+                                                if let cc = countryCode {
+                                                    self.settingStore.country = cc
+                                                }
+                                                
+                                                if let auth = login.user.auth {
+                                                    self.settingStore.userAuth = auth
+                                                }
+                                                
+                                                if let favoritecomposers = login.favorite {
+                                                    self.settingStore.favoriteComposers = favoritecomposers
+                                                }
+                                                
+                                                if let favoriteworks = login.works {
+                                                    self.settingStore.favoriteWorks = favoriteworks
+                                                }
+                                                
+                                                if let forbiddencomposers = login.forbidden {
+                                                    self.settingStore.forbiddenComposers = forbiddencomposers
+                                                }
+                                                
+                                                if let playlists = login.playlists {
+                                                    self.settingStore.playlists = playlists
+                                                }
+                                                
+                                                // registering first recording played
+                                                
+                                                if self.playState.autoplay {
+                                                    MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
+                                                        DispatchQueue.main.async {
+                                                            self.settingStore.lastPlayedRecording = self.playState.recording
+                                                        }
                                                     }
                                                 }
                                             }
@@ -124,6 +133,22 @@ struct Player: View {
                                 if !self.playState.autoplay {
                                     self.currentTrack[0].loading = false
                                     self.playState.autoplay = true
+                                }
+                                
+                                // radio? fetch the next recording on the queue
+                                
+                                if self.AppState.radioQueue.count > 0 {
+                                    print("🔄 Radio ON, fetching the next recording!")
+                                    randomRecording(work: self.AppState.radioQueue.removeFirst(), hideIncomplete: false, country: self.settingStore.country) { rec in
+                                        if rec.count > 0 {
+                                            DispatchQueue.main.async {
+                                                self.AppState.radioNextRecording = rec
+                                            }
+                                        }
+                                        else {
+                                            print("⛔️ No recording")
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -201,6 +226,23 @@ struct Player: View {
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange)) { status in
                 if self.currentTrack.count > 0 {
                     if let isPlaying = status.userInfo?["playing"] {
+                        
+                        // detecting end of queue
+                        
+                        if self.currentTrack[0].playing && isPlaying as! Bool == false && self.mediaBridge.getCurrentPlaybackTime() == 0 && self.mediaBridge.getCurrentTrackIndex() == 0 {
+                            print("⏹ Queue ended! [stopped playing at track 0, time 0]")
+                            
+                            // radio
+                            if self.AppState.radioNextRecording.count > 0 {
+                                print("⏭ Radio ON, play the next recording!")
+                            
+                                DispatchQueue.main.async {
+                                    self.playState.autoplay = true
+                                    self.playState.recording = self.AppState.radioNextRecording
+                                }
+                            }
+                        }
+                        
                         self.currentTrack[0].playing = isPlaying as! Bool
                         self.playState.playing = isPlaying as! Bool
                         

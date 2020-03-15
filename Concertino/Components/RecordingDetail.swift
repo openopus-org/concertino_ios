@@ -14,10 +14,11 @@ struct RecordingDetail: View {
     var recordingSet: Int
     @State private var recording = [FullRecording]()
     @State private var loading = true
+    @EnvironmentObject var settingStore: SettingStore
     
     func loadData() {
         loading = true
-        APIget(AppConstants.concBackend+"/recording/detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
+        APIget(AppConstants.concBackend+"/recording/" + (self.settingStore.country != "" ? self.settingStore.country + "/" : "") + "detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
             let recordingData: FullRecording = parseJSON(results)
             
             DispatchQueue.main.async {

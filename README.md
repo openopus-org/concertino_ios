@@ -1,6 +1,6 @@
 # concertino_ios
 
-[Concertino](https://getconcertmaster.com) is a classical music front-end for Apple Music.
+[Concertino](https://getconcertino.com) is a classical music front-end for Apple Music.
 
 It's splitted in several projects. **This one provides only the iOS app.** (There's a [web player](https://github.com/openopus-org/concertino_player) as well!) All data comes from an API which, in its turn, uses the Apple Music API. Apple doesn't allow multiple apps using the same API key, so you can't fork only the app and use the Concertino API - you have to fork both.
 

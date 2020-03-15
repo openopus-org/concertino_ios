@@ -52,6 +52,8 @@ struct RecordingPlayButtons: View {
                 Button(
                     action: {
                         self.playState.autoplay = true
+                        self.AppState.radioQueue.removeAll()
+                        self.AppState.radioNextRecording.removeAll()
                         self.playState.recording = [self.recording]
                     },
                     label: {

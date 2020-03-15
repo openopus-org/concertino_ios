@@ -17,6 +17,8 @@ final class AppState: ObservableObject  {
     @Published var currentTab = "library"
     @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
+    @Published var radioQueue = [Work]()
+    @Published var radioNextRecording = [FullRecording]()
 }
 
 final class ComposerSearchString: ObservableObject {
@@ -206,7 +208,7 @@ public func APIpost(_ url: String, parameters: [String: Any], completion: @escap
     }
     
     print("✅ \(url)")
-    parameters.forEach() { print("✴️ \($0)") }
+    //parameters.forEach() { print("✴️ \($0)") }
     
     var request = URLRequest(url: urlR)
     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -276,7 +278,6 @@ class MediaBridge: ObservableObject {
         let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
         
         if let sttrack = starttrack {
-            print(sttrack)
             queue.startItemID = sttrack
         }
         
@@ -284,13 +285,13 @@ class MediaBridge: ObservableObject {
         player.prepareToPlay(completionHandler: {(error) in
             DispatchQueue.main.async {
                 if error != nil {
-                    print("🆘 \(error!.localizedDescription)")
+                    print("🆘 Prepare to play: \(error!.localizedDescription)")
                     let alertController = UIAlertController(title: "Couldn't play", message:
                         "Sorry, this recording is not available in your country.", preferredStyle: UIAlertController.Style.alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
                     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(alertController, animated: true, completion: nil)
                 } else {
-                    print("✅ No errors!")
+                    print("✅ Prepare to play: no errors!")
                     if autoplay {
                         self.player.play()
                     }
@@ -315,6 +316,14 @@ class MediaBridge: ObservableObject {
     func getCurrentPlaybackTime() -> Int {
         if (player.nowPlayingItem != nil) {
             return Int(player.currentPlaybackTime)
+        } else {
+            return 0
+        }
+    }
+    
+    func getCurrentTrackIndex() -> Int {
+        if (player.nowPlayingItem != nil) {
+            return Int(player.indexOfNowPlayingItem)
         } else {
             return 0
         }
@@ -433,6 +442,8 @@ final class SettingStore: ObservableObject {
     @UserDefault("concertino.userId", defaultValue: 0) var userId: Int
     @UserDefault("concertino.lastLogged", defaultValue: 0) var lastLogged: Int
     @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
+    @UserDefault("concertino.country", defaultValue: "") var country: String
+    
     @RecordingUserDefault("concertino.lastPlayState") var lastPlayState: [FullRecording] {
         willSet {
             playstateWillChange.send()
@@ -524,6 +535,7 @@ public func timeframe(timestamp: Int, minutes: Int) -> Bool {
     }
 }
 
+/*
 extension Binding {
     func didSet(execute: @escaping (Value) ->Void) -> Binding {
         return Binding(
@@ -537,6 +549,7 @@ extension Binding {
         )
     }
 }
+*/
 
 func MarkPlayed(settingStore: SettingStore, playState: PlayState, completion: @escaping (Data) -> ()) {
     APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work.id, "aid": playState.recording.first!.recording.apple_albumid, "set": playState.recording.first!.recording.set, "cover": playState.recording.first!.recording.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.recording.jsonPerformers]) { results in
@@ -561,3 +574,32 @@ class AppleMusicSubscribeController: UIViewController {
         }
     }
 }
+
+public func startRadio(userId: Int, parameters: [String: Any], completion: @escaping (Data) -> ()) {
+    APIpost("\(AppConstants.concBackend)/dyn/user/work/random/", parameters: ["id": userId, "popularcomposer": parameters["popularcomposer"] ?? "", "recommendedcomposer": parameters["recommendedcomposer"] ?? "", "popularwork": parameters["popularwork"] ?? "", "recommendedwork": parameters["recommendedwork"] ?? "", "genre": parameters["genre"] ?? "", "epoch": parameters["epoch"] ?? "", "composer": parameters["composer"] ?? "", "work": parameters["work"] ?? ""]) { results in
+            completion(results)
+    }
+}
+
+func randomRecording(work: Work, hideIncomplete: Bool, country: String, completion: @escaping ([FullRecording]) -> ()) {
+    APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
+        let recsData: Recordings = parseJSON(results)
+        
+        if let recds = recsData.recordings {
+            if let rec = recds.filter({
+                ($0.isCompilation == false) || (hideIncomplete == false)
+            }).randomElement() {
+                print("*️⃣ Compilation: \(rec.isCompilation)")
+                APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(work.id)/album/\(rec.apple_albumid)/\(rec.set).json") { results in
+                    if let recordingData: FullRecording = parseJSON(results) {
+                        completion([recordingData])
+                    }
+                }
+            }
+        }
+        else {
+            completion([FullRecording]())
+        }
+    }
+}
+ 
