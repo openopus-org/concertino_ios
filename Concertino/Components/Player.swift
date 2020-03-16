@@ -139,14 +139,17 @@ struct Player: View {
                                 
                                 if self.AppState.radioQueue.count > 0 {
                                     print("🔄 Radio ON, fetching the next recording!")
-                                    randomRecording(work: self.AppState.radioQueue.removeFirst(), hideIncomplete: false, country: self.settingStore.country) { rec in
-                                        if rec.count > 0 {
-                                            DispatchQueue.main.async {
-                                                self.AppState.radioNextRecording = rec
+                                    
+                                    if self.AppState.radioNextRecordings.count == 0 {
+                                        randomRecording(work: self.AppState.radioQueue.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                                            if rec.count > 0 {
+                                                DispatchQueue.main.async {
+                                                    self.AppState.radioNextRecordings = rec
+                                                }
                                             }
-                                        }
-                                        else {
-                                            print("⛔️ No recording")
+                                            else {
+                                                print("⛔️ No recording")
+                                            }
                                         }
                                     }
                                 }
@@ -233,12 +236,12 @@ struct Player: View {
                             print("⏹ Queue ended! [stopped playing at track 0, time 0]")
                             
                             // radio
-                            if self.AppState.radioNextRecording.count > 0 {
+                            if self.AppState.radioNextRecordings.count > 0 {
                                 print("⏭ Radio ON, play the next recording!")
                             
                                 DispatchQueue.main.async {
                                     self.playState.autoplay = true
-                                    self.playState.recording = self.AppState.radioNextRecording
+                                    self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
                                 }
                             }
                         }
@@ -265,12 +268,12 @@ struct Player: View {
                         self.playState.playing = false
                         
                         // radio
-                        if self.AppState.radioNextRecording.count > 0 {
+                        if self.AppState.radioNextRecordings.count > 0 {
                             print("⏭ Radio ON, play the next recording!")
                         
                             DispatchQueue.main.async {
                                 self.playState.autoplay = true
-                                self.playState.recording = self.AppState.radioNextRecording
+                                self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
                             }
                         }
                         
