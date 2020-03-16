@@ -13,6 +13,7 @@ struct RecordingMini: View {
     var recording: FullRecording
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
+    @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -83,7 +84,13 @@ struct RecordingMini: View {
                 }
             }
             else {
-                BrowseOnlyMode(size: "min")
+                if self.settingStore.userId > 0 {
+                    RecordingNotAvailable(size: "min")
+                }
+                else {
+                    BrowseOnlyMode(size: "min")
+                }
+                
             }
         }
         

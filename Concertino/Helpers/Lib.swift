@@ -283,18 +283,9 @@ class MediaBridge: ObservableObject {
         
         player.setQueue(with: queue)
         player.prepareToPlay(completionHandler: {(error) in
-            DispatchQueue.main.async {
-                if error != nil {
-                    print("🆘 Prepare to play: \(error!.localizedDescription)")
-                    let alertController = UIAlertController(title: "Couldn't play", message:
-                        "Sorry, this recording is not available in your country.", preferredStyle: UIAlertController.Style.alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(alertController, animated: true, completion: nil)
-                } else {
-                    print("✅ Prepare to play: no errors!")
-                    if autoplay {
-                        self.player.play()
-                    }
+            if autoplay {
+                DispatchQueue.main.async {
+                    self.player.play()
                 }
             }
         })
@@ -303,7 +294,8 @@ class MediaBridge: ObservableObject {
     @objc func playItemChanged(_ notification:Notification) {
         let status: [String : Any] = [
             "index": player.indexOfNowPlayingItem,
-            "title": player.nowPlayingItem?.title ?? ""
+            "title": player.nowPlayingItem?.title ?? "",
+            "success": player.nowPlayingItem != nil
             ]
         
         NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)

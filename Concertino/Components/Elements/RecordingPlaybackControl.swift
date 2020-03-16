@@ -11,6 +11,7 @@ import SwiftUI
 struct RecordingPlaybackControl: View {
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
+    @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
         Group {
@@ -65,7 +66,12 @@ struct RecordingPlaybackControl: View {
                 }
             }
             else {
-                BrowseOnlyMode(size: "max")
+                if self.settingStore.userId > 0 {
+                    RecordingNotAvailable(size: "max")
+                }
+                else {
+                    BrowseOnlyMode(size: "max")
+                }
             }
         }
         .padding(.top, 16)

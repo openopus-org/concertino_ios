@@ -55,6 +55,7 @@
 		09AAD65823E62B74004CDAB6 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 09AAD65723E62B74004CDAB6 /* URLImage */; };
 		09BAA81423E9C53F00157611 /* ComposersWorksSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAA81323E9C53F00157611 /* ComposersWorksSearch.swift */; };
 		09DEEB0B241352F700350397 /* BrowseOnlyMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB0A241352F700350397 /* BrowseOnlyMode.swift */; };
+		09DEEB0F241EF9F800350397 /* RecordingNotAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */; };
 		09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3423E24F1F0011D718 /* AppDelegate.swift */; };
 		09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3623E24F1F0011D718 /* SceneDelegate.swift */; };
 		09E19F3B23E24F210011D718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3A23E24F210011D718 /* Assets.xcassets */; };
@@ -126,6 +127,7 @@
 		09AAD65423E628C6004CDAB6 /* ComposerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerRow.swift; sourceTree = "<group>"; };
 		09BAA81323E9C53F00157611 /* ComposersWorksSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersWorksSearch.swift; sourceTree = "<group>"; };
 		09DEEB0A241352F700350397 /* BrowseOnlyMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseOnlyMode.swift; sourceTree = "<group>"; };
+		09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingNotAvailable.swift; sourceTree = "<group>"; };
 		09E19F3123E24F1F0011D718 /* Concertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concertino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E19F3423E24F1F0011D718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E19F3623E24F1F0011D718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				0922D4732410A067001E8DFE /* PlaylistButton.swift */,
 				0922D4752410A0C6001E8DFE /* FavoritesButton.swift */,
 				09DEEB0A241352F700350397 /* BrowseOnlyMode.swift */,
+				09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				0922D466240F1E9B001E8DFE /* PeriodList.swift in Sources */,
 				09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */,
 				09BAA81423E9C53F00157611 /* ComposersWorksSearch.swift in Sources */,
+				09DEEB0F241EF9F800350397 /* RecordingNotAvailable.swift in Sources */,
 				09E19F5E23E257A50011D718 /* TabButton.swift in Sources */,
 				0922D4762410A0C6001E8DFE /* FavoritesButton.swift in Sources */,
 				097325F62408B5E000A1C9E6 /* WorkSearchRow.swift in Sources */,
@@ -585,7 +589,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.Concertino;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -606,7 +610,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.Concertino;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

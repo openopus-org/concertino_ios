@@ -257,18 +257,43 @@ struct Player: View {
             }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange)) { status in
             if self.currentTrack.count > 0 {
-                if let trackIndex = status.userInfo?["index"] {
-                    self.currentTrack[0].track_index = trackIndex as! Int
-                    self.currentTrack[0].track_position = 0
-                    self.currentTrack[0].starting_point = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
-                    self.currentTrack[0].full_position = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
-                    self.currentTrack[0].track_length = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].length)
-                }
                 
-                if self.currentTrack[0].loading {
-                    if let trackTitle = status.userInfo?["title"] {
-                        if !((trackTitle as! String).hasPrefix("Loading")) {
-                            self.currentTrack[0].loading = false
+                if let success = status.userInfo?["success"] {
+                    if success as! Bool == false {
+                        print("🔴 Playing Item is nil!")
+                        self.currentTrack.removeAll()
+                        self.playState.playing = false
+                        
+                        // radio
+                        if self.AppState.radioNextRecording.count > 0 {
+                            print("⏭ Radio ON, play the next recording!")
+                        
+                            DispatchQueue.main.async {
+                                self.playState.autoplay = true
+                                self.playState.recording = self.AppState.radioNextRecording
+                            }
+                        }
+                        
+                        /*let alertController = UIAlertController(title: "Couldn't play", message:
+                            "Sorry, this recording is not available in your country.", preferredStyle: UIAlertController.Style.alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(alertController, animated: true, completion: nil)*/
+                    }
+                    else {
+                        if let trackIndex = status.userInfo?["index"] {
+                            self.currentTrack[0].track_index = trackIndex as! Int
+                            self.currentTrack[0].track_position = 0
+                            self.currentTrack[0].starting_point = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
+                            self.currentTrack[0].full_position = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
+                            self.currentTrack[0].track_length = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].length)
+                        }
+                        
+                        if self.currentTrack[0].loading {
+                            if let trackTitle = status.userInfo?["title"] {
+                                if !((trackTitle as! String).hasPrefix("Loading")) {
+                                    self.currentTrack[0].loading = false
+                                }
+                            }
                         }
                     }
                 }

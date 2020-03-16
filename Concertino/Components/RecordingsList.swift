@@ -26,6 +26,7 @@ struct RecordingsList: View {
         loading = true
         
         APIget(AppConstants.concBackend+"/recording/" + (self.settingStore.country != "" ? self.settingStore.country + "/" : "") + "list/work/\(self.work.id)/\(self.page).json") { results in
+        //APIget(AppConstants.concBackend+"/recording/list/work/\(self.work.id)/\(self.page).json") { results in
             let recsData: Recordings = parseJSON(results)
             
             DispatchQueue.main.async {
