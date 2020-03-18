@@ -56,6 +56,7 @@
 		09BAA81423E9C53F00157611 /* ComposersWorksSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09BAA81323E9C53F00157611 /* ComposersWorksSearch.swift */; };
 		09DEEB0B241352F700350397 /* BrowseOnlyMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB0A241352F700350397 /* BrowseOnlyMode.swift */; };
 		09DEEB0F241EF9F800350397 /* RecordingNotAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */; };
+		09DEEB112421830C00350397 /* PlaylistButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB102421830C00350397 /* PlaylistButtons.swift */; };
 		09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3423E24F1F0011D718 /* AppDelegate.swift */; };
 		09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3623E24F1F0011D718 /* SceneDelegate.swift */; };
 		09E19F3B23E24F210011D718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3A23E24F210011D718 /* Assets.xcassets */; };
@@ -128,6 +129,7 @@
 		09BAA81323E9C53F00157611 /* ComposersWorksSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersWorksSearch.swift; sourceTree = "<group>"; };
 		09DEEB0A241352F700350397 /* BrowseOnlyMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseOnlyMode.swift; sourceTree = "<group>"; };
 		09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingNotAvailable.swift; sourceTree = "<group>"; };
+		09DEEB102421830C00350397 /* PlaylistButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistButtons.swift; sourceTree = "<group>"; };
 		09E19F3123E24F1F0011D718 /* Concertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concertino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E19F3423E24F1F0011D718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E19F3623E24F1F0011D718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				0922D4752410A0C6001E8DFE /* FavoritesButton.swift */,
 				09DEEB0A241352F700350397 /* BrowseOnlyMode.swift */,
 				09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */,
+				09DEEB102421830C00350397 /* PlaylistButtons.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -399,6 +402,7 @@
 				097325F224089FA200A1C9E6 /* ComposersSearch.swift in Sources */,
 				099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
+				09DEEB112421830C00350397 /* PlaylistButtons.swift in Sources */,
 				095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */,
 				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,
 				097325FA240A19D600A1C9E6 /* TinyComposerBox.swift in Sources */,

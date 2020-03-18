@@ -17,8 +17,8 @@ final class AppState: ObservableObject  {
     @Published var currentTab = "library"
     @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
-    @Published var radioQueue = [Work]()
-    @Published var radioNextRecordings = [FullRecording]()
+    @Published var radioNextWorks = [Work]()
+    @Published var radioNextRecordings = [Recording]()
 }
 
 final class ComposerSearchString: ObservableObject {
@@ -77,7 +77,7 @@ final class PlayState: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
     let playingstateWillChange = PassthroughSubject<(), Never>()
     
-    @Published var recording = [FullRecording]() {
+    @Published var recording = [Recording]() {
         didSet {
             objectWillChange.send()
         }
@@ -305,6 +305,14 @@ class MediaBridge: ObservableObject {
         NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange, object: self, userInfo: ["playing": (player.playbackState == .playing)])
     }
     
+    func getCurrentPlaybackState() -> Bool {
+        if (player.playbackState == .playing) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func getCurrentPlaybackTime() -> Int {
         if (player.nowPlayingItem != nil) {
             return Int(player.currentPlaybackTime)
@@ -374,12 +382,12 @@ struct RecordingUserDefault {
         self.key = key
     }
 
-    var wrappedValue: [FullRecording] {
+    var wrappedValue: [Recording] {
         get {
-            var ret = [FullRecording]()
+            var ret = [Recording]()
             
             if let data = UserDefaults.standard.value(forKey: key) as? Data {
-                ret = try! PropertyListDecoder().decode(Array<FullRecording>.self, from: data)
+                ret = try! PropertyListDecoder().decode(Array<Recording>.self, from: data)
             }
             
             return ret
@@ -422,7 +430,7 @@ final class SettingStore: ObservableObject {
     let playlistsDidChange = PassthroughSubject<Void, Never>()
     let playedRecordingDidChange = PassthroughSubject<Void, Never>()
     
-    var lastPlayedRecording = [FullRecording]() {
+    var lastPlayedRecording = [Recording]() {
         didSet {
             playedRecordingDidChange.send()
         }
@@ -436,7 +444,7 @@ final class SettingStore: ObservableObject {
     @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
     @UserDefault("concertino.country", defaultValue: "") var country: String
     
-    @RecordingUserDefault("concertino.lastPlayState") var lastPlayState: [FullRecording] {
+    @RecordingUserDefault("concertino.lastPlayState") var lastPlayState: [Recording] {
         willSet {
             playstateWillChange.send()
         }
@@ -544,7 +552,7 @@ extension Binding {
 */
 
 func MarkPlayed(settingStore: SettingStore, playState: PlayState, completion: @escaping (Data) -> ()) {
-    APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work.id, "aid": playState.recording.first!.recording.apple_albumid, "set": playState.recording.first!.recording.set, "cover": playState.recording.first!.recording.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.recording.jsonPerformers]) { results in
+    APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work!.id, "aid": playState.recording.first!.apple_albumid, "set": playState.recording.first!.set, "cover": playState.recording.first!.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.jsonPerformers]) { results in
             completion(results)
     }
 }
@@ -573,7 +581,7 @@ public func startRadio(userId: Int, parameters: [String: Any], completion: @esca
     }
 }
 
-func randomRecording(work: Work, hideIncomplete: Bool, country: String, completion: @escaping ([FullRecording]) -> ()) {
+func randomRecording(work: Work, hideIncomplete: Bool, country: String, completion: @escaping ([Recording]) -> ()) {
     APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
         let recsData: Recordings = parseJSON(results)
         
@@ -584,14 +592,25 @@ func randomRecording(work: Work, hideIncomplete: Bool, country: String, completi
                 print("*️⃣ Compilation: \(rec.isCompilation)")
                 APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(work.id)/album/\(rec.apple_albumid)/\(rec.set).json") { results in
                     if let recordingData: FullRecording = parseJSON(results) {
-                        completion([recordingData])
+                        var rec = recordingData.recording
+                        rec.work = recordingData.work
+                        completion([rec])
                     }
                 }
             }
         }
         else {
-            completion([FullRecording]())
+            completion([Recording]())
         }
     }
 }
- 
+
+func getRecordingDetail(recording: Recording, country: String, completion: @escaping ([Recording]) -> ()) {
+    APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(recording.work!.id)/album/\(recording.apple_albumid)/\(recording.set).json") { results in
+        if let recordingData: FullRecording = parseJSON(results) {
+            var rec = recordingData.recording
+            rec.work = recordingData.work
+            completion([rec])
+        }
+    }
+}

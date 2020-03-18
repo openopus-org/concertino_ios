@@ -10,7 +10,7 @@ import SwiftUI
 import URLImage
 
 struct RecordingMini: View {
-    var recording: FullRecording
+    var recording: Recording
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
     @EnvironmentObject var settingStore: SettingStore
@@ -18,7 +18,7 @@ struct RecordingMini: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                URLImage(recording.recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
+                URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
                     img.image
                         .renderingMode(.original)
                         .resizable()
@@ -30,11 +30,11 @@ struct RecordingMini: View {
                 .padding(.trailing, 8)
                 
                 VStack(alignment: .leading) {
-                    Text(recording.work.composer!.name.uppercased())
+                    Text(recording.work!.composer!.name.uppercased())
                         .font(.custom("Nunito-ExtraBold", size: 13))
                         .foregroundColor(Color(hex: 0xfe365e))
                     
-                    Text(recording.work.title)
+                    Text(recording.work!.title)
                         .font(.custom("Barlow", size: 14))
                         .padding(.bottom, 4)
                         .lineLimit(20)
@@ -76,7 +76,7 @@ struct RecordingMini: View {
                                 .padding(.trailing, 6)
                                 .frame(height: 4)
                             
-                            Text(self.recording.recording.readableLength)
+                            Text(self.recording.readableLength)
                         }
                         .font(.custom("Nunito", size: 11))
                     }

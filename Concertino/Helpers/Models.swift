@@ -58,14 +58,14 @@ struct PlaylistRecordings: Codable {
     var recordings: [Recording]?
 }
 
-struct Recordings: Codable {
-    var recordings: [Recording]?
-    var next: String?
-}
-
 struct FullRecording: Codable {
     var work: Work
     var recording: Recording
+}
+
+struct Recordings: Codable {
+    var recordings: [Recording]?
+    var next: String?
 }
 
 struct Track: Codable {

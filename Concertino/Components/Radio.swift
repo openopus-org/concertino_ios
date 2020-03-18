@@ -21,9 +21,9 @@ struct Radio: View {
                     
                     if let wrks = worksData.works {
                         DispatchQueue.main.async {
-                            self.AppState.radioQueue = wrks
+                            self.AppState.radioNextWorks = wrks
                              
-                            randomRecording(work: self.AppState.radioQueue.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                            randomRecording(work: self.AppState.radioNextWorks.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
                                 if rec.count > 0 {
                                     DispatchQueue.main.async {
                                         self.playState.autoplay = true

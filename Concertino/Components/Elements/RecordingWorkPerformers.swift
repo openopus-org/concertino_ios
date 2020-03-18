@@ -10,12 +10,12 @@ import SwiftUI
 import URLImage
 
 struct RecordingWorkPerformers: View {
-    var recording: FullRecording
+    var recording: Recording
     
     var body: some View {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading) { 
                 HStack(alignment: .top) {
-                    URLImage(recording.recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
+                    URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
                         img.image
                             .renderingMode(.original)
                             .resizable()
@@ -27,22 +27,22 @@ struct RecordingWorkPerformers: View {
                     .padding(.trailing, 8)
                     
                     VStack(alignment: .leading) {
-                        Text(recording.work.composer!.name.uppercased())
+                        Text(recording.work!.composer!.name.uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 15))
                             .foregroundColor(Color(hex: 0xfe365e))
                         
-                        Text(recording.work.title)
+                        Text(recording.work!.title)
                             .font(.custom("Barlow-SemiBold", size: 16))
                             .padding(.bottom, 4)
                             .lineLimit(20)
                             .fixedSize(horizontal: false, vertical: true)
                         
                         Group {
-                            if recording.recording.observation != "" && recording.recording.observation != nil {
-                                Text(recording.recording.observation ?? "")
+                            if recording.observation != "" && recording.observation != nil {
+                                Text(recording.observation ?? "")
                             }
-                            else if recording.work.subtitle != "" && recording.work.subtitle != nil {
-                                Text(recording.work.subtitle!)
+                            else if recording.work!.subtitle != "" && recording.work!.subtitle != nil {
+                                Text(recording.work!.subtitle!)
                             }
                         }
                         .font(.custom("Barlow", size: 14))
@@ -54,7 +54,7 @@ struct RecordingWorkPerformers: View {
                 }
                 .padding(.bottom, 18)
                 
-                ForEach(self.recording.recording.performers, id: \.name) { performer in
+                ForEach(self.recording.performers, id: \.name) { performer in
                     Text(performer.name)
                         .font(.custom("Barlow-SemiBold", size: 14))
                     +
@@ -63,7 +63,7 @@ struct RecordingWorkPerformers: View {
                 }
                 .foregroundColor(.white)
                 
-                Text(recording.recording.label ?? "")
+                Text(recording.label ?? "")
                     .font(.custom("Nunito", size: 11))
                     .padding(.top, 6)
         }

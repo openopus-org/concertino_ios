@@ -116,16 +116,16 @@ struct Player: View {
                         // let's play some music!
                         
                         DispatchQueue.main.async {
-                            if let tracks = self.playState.recording.first!.recording.apple_tracks {
+                            if let tracks = self.playState.recording.first!.apple_tracks {
                                 self.currentTrack = [CurrentTrack (
                                     track_index: 0,
                                     playing: false,
                                     loading: true,
                                     starting_point: 0,
                                     track_position: 0,
-                                    track_length: (self.playState.recording.first!.recording.tracks!.first?.length)!,
+                                    track_length: (self.playState.recording.first!.tracks!.first?.length)!,
                                     full_position: 0,
-                                    full_length: self.playState.recording.first!.recording.length!
+                                    full_length: self.playState.recording.first!.length!
                                 )]
                                 
                                 self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
@@ -137,19 +137,17 @@ struct Player: View {
                                 
                                 // radio? fetch the next recording on the queue
                                 
-                                if self.AppState.radioQueue.count > 0 {
-                                    print("🔄 Radio ON, fetching the next recording!")
+                                if self.AppState.radioNextWorks.count > 0 {
+                                    print("🔄 Radio ON, fetching a random recording!")
                                     
-                                    if self.AppState.radioNextRecordings.count == 0 {
-                                        randomRecording(work: self.AppState.radioQueue.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
-                                            if rec.count > 0 {
-                                                DispatchQueue.main.async {
-                                                    self.AppState.radioNextRecordings = rec
-                                                }
+                                    randomRecording(work: self.AppState.radioNextWorks.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                                        if rec.count > 0 {
+                                            DispatchQueue.main.async {
+                                                self.AppState.radioNextRecordings = rec
                                             }
-                                            else {
-                                                print("⛔️ No recording")
-                                            }
+                                        }
+                                        else {
+                                            print("⛔️ No recording")
                                         }
                                     }
                                 }
@@ -219,10 +217,27 @@ struct Player: View {
                 self.playState.recording = self.settingStore.lastPlayState
             }
         })
-        .onReceive(playState.objectWillChange, perform: playMusic)
+        .onReceive(playState.objectWillChange, perform: {
+            if self.playState.recording.first!.tracks != nil {
+                self.playMusic()
+            } else {
+                getRecordingDetail(recording: self.playState.recording.first!, country: self.settingStore.country) { recordingData in
+                    DispatchQueue.main.async {
+                        self.playState.autoplay = true
+                        self.playState.recording = [recordingData.first!]
+                    }
+                }
+            }
+        })
         .onReceive(timerHolder.objectWillChange, perform: {
             if (self.currentTrack.count > 0) {
                 self.currentTrack[0].track_position = self.mediaBridge.getCurrentPlaybackTime()
+                
+                if self.currentTrack[0].track_position < 2 {
+                    self.currentTrack[0].playing = self.mediaBridge.getCurrentPlaybackState()
+                    self.playState.playing = self.currentTrack[0].playing
+                }
+                
                 self.currentTrack[0].full_position = self.currentTrack[0].starting_point + self.currentTrack[0].track_position
             }
         })
@@ -238,11 +253,10 @@ struct Player: View {
                             // radio
                             if self.AppState.radioNextRecordings.count > 0 {
                                 print("⏭ Radio ON, play the next recording!")
+                                //print(self.AppState.radioNextRecordings.first)
                             
-                                DispatchQueue.main.async {
-                                    self.playState.autoplay = true
-                                    self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
-                                }
+                                self.playState.autoplay = true
+                                self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
                             }
                         }
                         
@@ -271,10 +285,8 @@ struct Player: View {
                         if self.AppState.radioNextRecordings.count > 0 {
                             print("⏭ Radio ON, play the next recording!")
                         
-                            DispatchQueue.main.async {
-                                self.playState.autoplay = true
-                                self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
-                            }
+                            self.playState.autoplay = true
+                            self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
                         }
                         
                         /*let alertController = UIAlertController(title: "Couldn't play", message:
@@ -286,9 +298,9 @@ struct Player: View {
                         if let trackIndex = status.userInfo?["index"] {
                             self.currentTrack[0].track_index = trackIndex as! Int
                             self.currentTrack[0].track_position = 0
-                            self.currentTrack[0].starting_point = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
-                            self.currentTrack[0].full_position = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].starting_point)
-                            self.currentTrack[0].track_length = (self.playState.recording.first!.recording.tracks![trackIndex as! Int].length)
+                            self.currentTrack[0].starting_point = (self.playState.recording.first!.tracks![trackIndex as! Int].starting_point)
+                            self.currentTrack[0].full_position = (self.playState.recording.first!.tracks![trackIndex as! Int].starting_point)
+                            self.currentTrack[0].track_length = (self.playState.recording.first!.tracks![trackIndex as! Int].length)
                         }
                         
                         if self.currentTrack[0].loading {

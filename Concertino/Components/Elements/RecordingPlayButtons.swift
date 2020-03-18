@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct RecordingPlayButtons: View {
-    var recording: FullRecording
+    var recording: Recording
     @State private var isPlaying = true
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var AppState: AppState
     
     var body: some View {
         HStack(spacing: 6) {
-            if self.playState.recording.count > 0 && self.playState.recording.first!.recording.apple_albumid == self.recording.recording.apple_albumid && self.playState.recording.first!.work.id == self.recording.work.id && self.playState.recording.first!.recording.set == self.recording.recording.set {
+            if self.playState.recording.count > 0 && self.playState.recording.first!.apple_albumid == self.recording.apple_albumid && self.playState.recording.first!.work!.id == self.recording.work!.id && self.playState.recording.first!.set == self.recording.set {
                 Button(
                     action: { self.AppState.fullPlayer = true },
                     label: {
@@ -52,7 +52,7 @@ struct RecordingPlayButtons: View {
                 Button(
                     action: {
                         self.playState.autoplay = true
-                        self.AppState.radioQueue.removeAll()
+                        self.AppState.radioNextWorks.removeAll()
                         self.AppState.radioNextRecordings.removeAll()
                         self.playState.recording = [self.recording]
                     },
@@ -78,7 +78,7 @@ struct RecordingPlayButtons: View {
             
             
             Button(
-                action: { UIApplication.shared.open(URL(string: AppConstants.appleLink + self.recording.recording.apple_albumid)!) },
+                action: { UIApplication.shared.open(URL(string: AppConstants.appleLink + self.recording.apple_albumid)!) },
                 label: {
                     HStack {
                         Spacer()

@@ -12,7 +12,7 @@ struct RecordingDetail: View {
     var workId: String
     var recordingId: String
     var recordingSet: Int
-    @State private var recording = [FullRecording]()
+    @State private var recording = [Recording]()
     @State private var loading = true
     @EnvironmentObject var settingStore: SettingStore
     
@@ -23,7 +23,9 @@ struct RecordingDetail: View {
             let recordingData: FullRecording = parseJSON(results)
             
             DispatchQueue.main.async {
-                self.recording = [recordingData]
+                var rec = recordingData.recording
+                rec.work = recordingData.work
+                self.recording = [rec]
                 self.loading = false
             }
         }
@@ -56,7 +58,7 @@ struct RecordingDetail: View {
                                 .padding(.bottom, 12)
                             RecordingTrackList(recording: recording.first!)
                                 .padding(.top, 10)
-                            RecordingDisclaimer(isVerified: recording.first!.recording.isVerified)
+                            RecordingDisclaimer(isVerified: recording.first!.isVerified)
                         }
                     }
                 }

@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct RecordingTrackList: View {
-    var recording: FullRecording
+    var recording: Recording
     
     var body: some View {
-        ForEach(self.recording.recording.tracks!, id: \.id) { track in
+        ForEach(self.recording.tracks!, id: \.id) { track in
             Group {
                 HStack {
                     Text(track.title)
