@@ -22,8 +22,8 @@ struct TabButton: View {
                 VStack {
                     Spacer()
                     
-                    if icon == "radio" {
-                        AnimatedRadioIcon(color: Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E), isAnimated: self.radioState.isActive)
+                    if tab == "radio" {
+                        AnimatedRadioIcon(color: Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : (self.radioState.isActive ? 0xFFFFFF : 0x7C726E)), isAnimated: self.radioState.isActive)
                             .frame(width: 70, height: 32)
                             .padding(.top, -4)
                             .padding(.bottom, 7)
@@ -37,7 +37,7 @@ struct TabButton: View {
                     
                     Text(label)
                         .font(.custom("Nunito", size: 10))
-                        .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E))
+                        .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : (self.radioState.isActive && tab == "radio" ? 0xFFFFFF : 0x7C726E)))
                         .padding(.top, icon == "radio" ? -14 : 0)
                 }
             })

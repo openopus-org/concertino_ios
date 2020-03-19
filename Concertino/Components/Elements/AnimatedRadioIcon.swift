@@ -42,10 +42,25 @@ struct radioIconAnimation: UIViewRepresentable {
       }
 
     func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<radioIconAnimation>) {
+        let someImage = UIImageView(frame: self.frame)
+
+        someImage.clipsToBounds = true
+        someImage.autoresizesSubviews = true
+        someImage.contentMode = UIView.ContentMode.scaleAspectFit
+        someImage.tintColor = self.color.uiColor()
+        
+        if isAnimated {
+            someImage.image = animatedImage
+        } else {
+            someImage.image = images[0]
+        }
+        
+        uiView.subviews[0].removeFromSuperview()
+        uiView.addSubview(someImage)
     }
 }
 
-struct AnimatedRadioIcon: View {
+struct AnimatedRadioIcon: View, Equatable {
     var color: Color
     var isAnimated: Bool
     
@@ -53,6 +68,10 @@ struct AnimatedRadioIcon: View {
         GeometryReader { proxy in
             radioIconAnimation(color: self.color, frame: proxy.frame(in: .local), isAnimated: self.isAnimated)
         }
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.isAnimated == rhs.isAnimated && lhs.color == rhs.color
     }
 }
 
