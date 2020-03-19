@@ -16,6 +16,7 @@ struct Player: View {
     @EnvironmentObject var timerHolder: TimerHolder
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var radioState: RadioState
     
     func playMusic() {
         if self.currentTrack.count > 0 {
@@ -137,13 +138,13 @@ struct Player: View {
                                 
                                 // radio? fetch the next recording on the queue
                                 
-                                if self.AppState.radioNextWorks.count > 0 {
+                                if self.radioState.nextWorks.count > 0 {
                                     print("🔄 Radio ON, fetching a random recording!")
                                     
-                                    randomRecording(work: self.AppState.radioNextWorks.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                                    randomRecording(work: self.radioState.nextWorks.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
                                         if rec.count > 0 {
                                             DispatchQueue.main.async {
-                                                self.AppState.radioNextRecordings = rec
+                                                self.radioState.nextRecordings = rec
                                             }
                                         }
                                         else {
@@ -251,12 +252,14 @@ struct Player: View {
                             print("⏹ Queue ended! [stopped playing at track 0, time 0]")
                             
                             // radio
-                            if self.AppState.radioNextRecordings.count > 0 {
+                            if self.radioState.nextRecordings.count > 0 {
                                 print("⏭ Radio ON, play the next recording!")
                                 //print(self.AppState.radioNextRecordings.first)
                             
                                 self.playState.autoplay = true
-                                self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
+                                self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
+                            } else if self.radioState.isActive {
+                                self.radioState.isActive = false
                             }
                         }
                         
@@ -282,11 +285,13 @@ struct Player: View {
                         self.playState.playing = false
                         
                         // radio
-                        if self.AppState.radioNextRecordings.count > 0 {
+                        if self.radioState.nextRecordings.count > 0 {
                             print("⏭ Radio ON, play the next recording!")
                         
                             self.playState.autoplay = true
-                            self.playState.recording = [self.AppState.radioNextRecordings.removeFirst()]
+                            self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
+                        } else if self.radioState.isActive {
+                            self.radioState.isActive = false
                         }
                         
                         /*let alertController = UIAlertController(title: "Couldn't play", message:

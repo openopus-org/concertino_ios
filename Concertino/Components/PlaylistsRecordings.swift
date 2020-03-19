@@ -49,7 +49,7 @@ struct PlaylistsRecordings: View {
         VStack(alignment: .leading) {
             if self.recordings.count > 0 {
                 List {
-                    PlaylistButtons(recordings: self.recordings)
+                    PlaylistButtons(recordings: self.recordings, playlistId: playlistSwitcher.playlist)
                     ForEach(self.recordings, id: \.id) { recording in
                         NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set), label: {
                             RecordingRow(recording: recording)

@@ -17,8 +17,13 @@ final class AppState: ObservableObject  {
     @Published var currentTab = "library"
     @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
-    @Published var radioNextWorks = [Work]()
-    @Published var radioNextRecordings = [Recording]()
+}
+
+final class RadioState: ObservableObject {
+    @Published var isActive = false
+    @Published var playlistId = ""
+    @Published var nextWorks = [Work]()
+    @Published var nextRecordings = [Recording]()
 }
 
 final class ComposerSearchString: ObservableObject {

@@ -12,6 +12,7 @@ struct Radio: View {
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var radioState: RadioState
     
     var body: some View {
         ScrollView {
@@ -21,9 +22,12 @@ struct Radio: View {
                     
                     if let wrks = worksData.works {
                         DispatchQueue.main.async {
-                            self.AppState.radioNextWorks = wrks
+                            self.radioState.isActive = true
+                            self.radioState.playlistId = ""
+                            self.radioState.nextRecordings.removeAll()
+                            self.radioState.nextWorks = wrks
                              
-                            randomRecording(work: self.AppState.radioNextWorks.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                            randomRecording(work: self.radioState.nextWorks.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
                                 if rec.count > 0 {
                                     DispatchQueue.main.async {
                                         self.playState.autoplay = true
@@ -38,7 +42,13 @@ struct Radio: View {
                     }
                 }
             }, label: {
-                Text("Radio")
+                VStack {
+                    AnimatedRadioIcon(color: Color(hex: 0xfe365e), isAnimated: true)
+                        .frame(width: 120, height: 60)
+                    AnimatedRadioIcon(color: Color(hex: 0xfe365e), isAnimated: false)
+                        .frame(width: 240, height: 120)
+                    Text("Radio")
+                }
             })
         }
     }

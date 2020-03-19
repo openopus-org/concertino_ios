@@ -30,6 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             .environmentObject(TimerHolder())
                             .environmentObject(MediaBridge())
                             .environmentObject(SettingStore())
+                            .environmentObject(RadioState())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

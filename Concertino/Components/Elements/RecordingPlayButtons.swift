@@ -13,6 +13,7 @@ struct RecordingPlayButtons: View {
     @State private var isPlaying = true
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var radioState: RadioState
     
     var body: some View {
         HStack(spacing: 6) {
@@ -52,8 +53,10 @@ struct RecordingPlayButtons: View {
                 Button(
                     action: {
                         self.playState.autoplay = true
-                        self.AppState.radioNextWorks.removeAll()
-                        self.AppState.radioNextRecordings.removeAll()
+                        self.radioState.isActive = false
+                        self.radioState.playlistId = ""
+                        self.radioState.nextWorks.removeAll()
+                        self.radioState.nextRecordings.removeAll()
                         self.playState.recording = [self.recording]
                     },
                     label: {

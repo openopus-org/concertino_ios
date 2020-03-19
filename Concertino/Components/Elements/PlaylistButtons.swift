@@ -12,7 +12,9 @@ struct PlaylistButtons: View {
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var radioState: RadioState
     var recordings: [Recording]
+    var playlistId: String
     
     var body: some View {
         HStack(spacing: 6) {
@@ -21,8 +23,12 @@ struct PlaylistButtons: View {
                     var recs = self.recordings
                     recs.shuffle()
                     
-                    self.AppState.radioNextRecordings = recs
-                    let rec = self.AppState.radioNextRecordings.removeFirst()
+                    self.radioState.isActive = true
+                    self.radioState.playlistId = self.playlistId
+                    self.radioState.nextWorks.removeAll()
+                    self.radioState.nextRecordings = recs
+                    
+                    let rec = self.radioState.nextRecordings.removeFirst()
                     
                     getRecordingDetail(recording: rec, country: self.settingStore.country) { recordingData in
                         DispatchQueue.main.async {
@@ -38,51 +44,57 @@ struct PlaylistButtons: View {
                             
                             Image("radio")
                                 .resizable()
-                                .frame(width: 7, height: 14)
-                                .foregroundColor(Color(hex: 0x696969))
-                                .rotationEffect(.degrees(90))
-                                .padding(.trailing, 8)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 18)
+                                .foregroundColor(.white)
+                                .padding(.trailing, 3)
                             
                             Text("start radio".uppercased())
-                                .foregroundColor(Color(hex: 0xfe365e))
-                                .font(.custom("Nunito", size: 14))
+                                .foregroundColor(.white)
+                                .font(.custom("Nunito", size: 13))
                             
                             Spacer()
                         }
                     }
-                    .padding(15)
+                    .padding(13)
                     .foregroundColor(.white)
-                    .background(Color(hex: 0x2B2B2F))
+                    .background(Color(hex: 0xfe365e))
                     .cornerRadius(16)
             })
+            .buttonStyle(BorderlessButtonStyle())
             
-            Button(
-                action: {  },
-                label: {
-                    HStack {
+            if self.playlistId != "fav" && self.playlistId != "recent" {
+                Button(
+                    action: {  },
+                    label: {
                         HStack {
-                            Spacer()
-                            
-                            Image("edit")
-                                .resizable()
-                                .frame(width: 7, height: 14)
-                                .foregroundColor(Color(hex: 0xfe365e))
-                                .rotationEffect(.degrees(90))
-                                .padding(.trailing, 8)
-                            
-                            Text("edit playlist".uppercased())
-                                .foregroundColor(Color(hex: 0xfe365e))
-                                .font(.custom("Nunito", size: 14))
-                            
-                            Spacer()
+                            HStack {
+                                Spacer()
+                                
+                                Image("edit")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 12)
+                                    .foregroundColor(.white)
+                                    .padding(.trailing, 2)
+                                
+                                Text("edit playlist".uppercased())
+                                    .foregroundColor(.white)
+                                    .font(.custom("Nunito", size: 12))
+                                
+                                Spacer()
+                            }
                         }
-                    }
-                    .padding(15)
-                    .foregroundColor(.white)
-                    .background(Color(hex: 0x2B2B2F))
-                    .cornerRadius(16)
-            })
+                        .padding(15)
+                        .foregroundColor(.white)
+                        .background(Color(hex: 0x2B2B2F))
+                        .cornerRadius(16)
+                })
+                .buttonStyle(BorderlessButtonStyle())
+            }
         }
+        .padding(.bottom, 10)
+        .padding(.top, 10)
     }
 }
 

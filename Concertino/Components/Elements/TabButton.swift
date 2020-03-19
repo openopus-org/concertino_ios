@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TabButton: View {
     @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var radioState: RadioState
     var icon: String
     var label: String
     var tab: String
@@ -20,14 +21,24 @@ struct TabButton: View {
             label: {
                 VStack {
                     Spacer()
-                    Image(icon)
+                    
+                    if icon == "radio" {
+                        AnimatedRadioIcon(color: Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E), isAnimated: self.radioState.isActive)
+                            .frame(width: 70, height: 32)
+                            .padding(.top, -4)
+                            .padding(.bottom, 7)
+                    } else {
+                        Image(icon)
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E))
                         .frame(minHeight: 20)
+                    }
+                    
                     Text(label)
                         .font(.custom("Nunito", size: 10))
                         .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E))
+                        .padding(.top, icon == "radio" ? -14 : 0)
                 }
             })
             .frame(height: 40)
