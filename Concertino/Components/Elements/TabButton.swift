@@ -29,10 +29,10 @@ struct TabButton: View {
                             .padding(.bottom, 7)
                     } else {
                         Image(icon)
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E))
-                        .frame(minHeight: 20)
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E))
+                            .frame(width: 70, height: 20)
                     }
                     
                     Text(label)
