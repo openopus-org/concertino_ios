@@ -12,6 +12,8 @@ struct RecordingPlaybackControl: View {
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var playState: PlayState
     
     var body: some View {
         Group {
@@ -28,38 +30,64 @@ struct RecordingPlaybackControl: View {
                     HStack {
                         Spacer()
                         
+                        Spacer()
+                            .frame(width: 36)
+                            .padding(.trailing, 22)
+                        
                         Button(
                             action: { self.mediaBridge.previousTrack() },
-                        label: {
-                            Image("skiptrack")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 24)
-                            .foregroundColor(Color(hex: 0xfe365e))
-                            .rotationEffect(.degrees(180))
-                        })
+                            label: {
+                                Image("skiptrack")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 24)
+                                .foregroundColor(Color(hex: 0xfe365e))
+                                .rotationEffect(.degrees(180))
+                            })
                         
                         Button(
                             action: { self.mediaBridge.togglePlay() },
-                        label: {
-                            Image(self.currentTrack.first!.playing ? "pause" : "play")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 58)
-                            .foregroundColor(Color(hex: 0xfe365e))
-                            .padding(.leading, 32)
-                            .padding(.trailing, 32)
-                        })
+                            label: {
+                                Image(self.currentTrack.first!.playing ? "pause" : "play")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 58)
+                                .foregroundColor(Color(hex: 0xfe365e))
+                                .padding(.leading, 32)
+                                .padding(.trailing, 32)
+                            })
                         
                         Button(
                             action: { self.mediaBridge.nextTrack() },
-                        label: {
-                            Image("skiptrack")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 24)
-                            .foregroundColor(Color(hex: 0xfe365e))
-                        })
+                            label: {
+                                Image("skiptrack")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 24)
+                                .foregroundColor(Color(hex: 0xfe365e))
+                            })
+                        
+                        Button(
+                            action: {
+                                if self.radioState.isActive {
+                                    if self.radioState.nextRecordings.count > 0 {
+                                        self.mediaBridge.stop()
+                                        self.playState.autoplay = true
+                                        self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
+                                    } else if self.radioState.isActive {
+                                        self.radioState.isActive = false
+                                    }
+                                }
+                            },
+                            label: {
+                                Image("skipradio")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 18)
+                                .foregroundColor(Color(hex: self.radioState.isActive ? 0xfe365e : 0x424242))
+                                .padding(.leading, 22)
+                            })
+
                         
                         Spacer()
                     }

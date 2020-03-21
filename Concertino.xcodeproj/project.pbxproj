@@ -58,6 +58,7 @@
 		09DEEB0F241EF9F800350397 /* RecordingNotAvailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */; };
 		09DEEB112421830C00350397 /* PlaylistButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB102421830C00350397 /* PlaylistButtons.swift */; };
 		09DEEB1324231DB700350397 /* AnimatedRadioIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB1224231DB700350397 /* AnimatedRadioIcon.swift */; };
+		09DEEB152425A09300350397 /* WorksRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB142425A09300350397 /* WorksRadioButton.swift */; };
 		09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3423E24F1F0011D718 /* AppDelegate.swift */; };
 		09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3623E24F1F0011D718 /* SceneDelegate.swift */; };
 		09E19F3B23E24F210011D718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3A23E24F210011D718 /* Assets.xcassets */; };
@@ -132,6 +133,7 @@
 		09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingNotAvailable.swift; sourceTree = "<group>"; };
 		09DEEB102421830C00350397 /* PlaylistButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistButtons.swift; sourceTree = "<group>"; };
 		09DEEB1224231DB700350397 /* AnimatedRadioIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedRadioIcon.swift; sourceTree = "<group>"; };
+		09DEEB142425A09300350397 /* WorksRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksRadioButton.swift; sourceTree = "<group>"; };
 		09E19F3123E24F1F0011D718 /* Concertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concertino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E19F3423E24F1F0011D718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E19F3623E24F1F0011D718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				09DEEB0E241EF9F800350397 /* RecordingNotAvailable.swift */,
 				09DEEB102421830C00350397 /* PlaylistButtons.swift */,
 				09DEEB1224231DB700350397 /* AnimatedRadioIcon.swift */,
+				09DEEB142425A09300350397 /* WorksRadioButton.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
 				0922D46E240F34BC001E8DFE /* PeriodDetail.swift in Sources */,
 				09E19F5123E254480011D718 /* Home.swift in Sources */,
+				09DEEB152425A09300350397 /* WorksRadioButton.swift in Sources */,
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
 				097325F02404C10700A1C9E6 /* DotsAnimation.swift in Sources */,
 				0922D4742410A067001E8DFE /* PlaylistButton.swift in Sources */,

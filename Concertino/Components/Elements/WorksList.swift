@@ -19,6 +19,12 @@ struct WorksList: View {
         Group {
             if self.genre == "Popular" || self.genre == "Recommended" {
                 List {
+                    Section(header:
+                        WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
+                            .padding(.bottom, -20)
+                    ){
+                        EmptyView()
+                    }
                     ForEach(self.genrelist, id: \.self) { genre in
                         Section(header:
                             Text(genre)
@@ -35,6 +41,12 @@ struct WorksList: View {
             }
             else if self.essential {
                 List {
+                    Section(header:
+                        WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
+                            .padding(.bottom, -20)
+                    ){
+                        EmptyView()
+                    }
                     ForEach(["1", "0"], id: \.self) { rec in
                         Section(header:
                             Text(rec == "1" ? "Essential" : "Other works")
@@ -50,9 +62,13 @@ struct WorksList: View {
                 .listStyle(GroupedListStyle())
             }
             else {
-                List(self.works, id: \.id) { work in
-                    WorkRow(work: work, composer: self.composer)
+                List {
+                    WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
+                    ForEach(self.works, id: \.id) { work in
+                        WorkRow(work: work, composer: self.composer)
+                    }
                 }
+                .padding(.bottom, 34)
             }
         }
     }

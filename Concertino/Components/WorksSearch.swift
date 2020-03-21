@@ -65,8 +65,6 @@ struct WorksSearch: View {
             else {
                 if self.works.count > 0 {
                     WorksList(genre: search.genreName, genrelist: genresAvail, works: works, composer: self.composer, essential: hasEssential)
-                    .padding(.top, 14)
-                    .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                 }
                 else {
                     ErrorMessage(msg: "No works found.")

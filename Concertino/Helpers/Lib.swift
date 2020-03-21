@@ -22,6 +22,7 @@ final class AppState: ObservableObject  {
 final class RadioState: ObservableObject {
     @Published var isActive = false
     @Published var playlistId = ""
+    @Published var genreId = ""
     @Published var nextWorks = [Work]()
     @Published var nextRecordings = [Recording]()
 }

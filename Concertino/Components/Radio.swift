@@ -24,6 +24,7 @@ struct Radio: View {
                         DispatchQueue.main.async {
                             self.radioState.isActive = true
                             self.radioState.playlistId = ""
+                            self.radioState.genreId = ""
                             self.radioState.nextRecordings.removeAll()
                             self.radioState.nextWorks = wrks
                              

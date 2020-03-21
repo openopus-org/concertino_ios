@@ -32,7 +32,7 @@ struct GenreBar: View {
                         if genr.contains("Recommended") {
                             self.search.genreName = "Recommended"
                         } else {
-                            self.search.genreName = "all"
+                            self.search.genreName = genr[0]
                         }
                     }
                 }

@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct PlaylistButtons: View {
-    @EnvironmentObject var AppState: AppState
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
