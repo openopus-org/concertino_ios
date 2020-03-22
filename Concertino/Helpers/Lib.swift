@@ -435,6 +435,8 @@ final class SettingStore: ObservableObject {
     let playlistsWillChange = PassthroughSubject<Void, Never>()
     let playlistsDidChange = PassthroughSubject<Void, Never>()
     let playedRecordingDidChange = PassthroughSubject<Void, Never>()
+    let composersFavoriteWorksWillChange = PassthroughSubject<Void, Never>()
+    let composersFavoriteWorksDidChange = PassthroughSubject<Void, Never>()
     
     var lastPlayedRecording = [Recording]() {
         didSet {
@@ -464,6 +466,14 @@ final class SettingStore: ObservableObject {
         }
     }
     @UserDefault("concertino.favoriteWorks", defaultValue: [String]()) var favoriteWorks: [String]
+    @UserDefault("concertino.composersFavoriteWorks", defaultValue: [String]()) var composersFavoriteWorks: [String] {
+        willSet {
+            composersFavoriteWorksWillChange.send()
+        }
+        didSet {
+            composersFavoriteWorksDidChange.send()
+        }
+    }
     @UserDefault("concertino.forbiddenComposers", defaultValue: [String]()) var forbiddenComposers: [String]
     @PlaylistsUserDefault("concertino.playlists") var playlists: [Playlist] {
         willSet {
@@ -619,4 +629,11 @@ func getRecordingDetail(recording: Recording, country: String, completion: @esca
             completion([rec])
         }
     }
+}
+
+public func alertError(_ msg: String) {
+    let alertController = UIAlertController(title: "Error", message:
+        msg, preferredStyle: UIAlertController.Style.alert)
+    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(alertController, animated: true, completion: nil)
 }

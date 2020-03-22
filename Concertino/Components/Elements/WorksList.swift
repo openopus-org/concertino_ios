@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct WorksList: View {
+    @EnvironmentObject var settingStore: SettingStore
     var genre: String
     var genrelist: [String]
     var works: [Work]
@@ -17,13 +18,15 @@ struct WorksList: View {
     
     var body: some View {
         Group {
-            if self.genre == "Popular" || self.genre == "Recommended" {
+            if self.genre == "Popular" || self.genre == "Recommended" || self.genre == "Favorites" {
                 List {
-                    Section(header:
-                        WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
-                            .padding(.bottom, -20)
-                    ){
-                        EmptyView()
+                    if self.settingStore.userId != 0 {
+                        Section(header:
+                            WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
+                                .padding(.bottom, -20)
+                        ){
+                            EmptyView()
+                        }
                     }
                     ForEach(self.genrelist, id: \.self) { genre in
                         Section(header:
@@ -41,11 +44,13 @@ struct WorksList: View {
             }
             else if self.essential {
                 List {
-                    Section(header:
-                        WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
-                            .padding(.bottom, -20)
-                    ){
-                        EmptyView()
+                    if self.settingStore.userId != 0 {
+                        Section(header:
+                            WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
+                                .padding(.bottom, -20)
+                        ){
+                            EmptyView()
+                        }
                     }
                     ForEach(["1", "0"], id: \.self) { rec in
                         Section(header:
@@ -63,7 +68,9 @@ struct WorksList: View {
             }
             else {
                 List {
-                    WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
+                    if self.settingStore.userId != 0 {
+                        WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
+                    }
                     ForEach(self.works, id: \.id) { work in
                         WorkRow(work: work, composer: self.composer)
                     }

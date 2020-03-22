@@ -12,6 +12,7 @@ struct WorksRadioButton: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
+    @State var isLoading = false
     var genreId: String
     
     var body: some View {
@@ -24,12 +25,15 @@ struct WorksRadioButton: View {
                     self.radioState.nextWorks.removeAll()
                     self.radioState.nextRecordings.removeAll()
                 } else {
+                    self.isLoading = true
                     var parameters = ["composer": self.genreId.split(separator: "-")[0]]
                     
                     if self.genreId.split(separator: "-")[1] == "Popular" {
                         parameters["popularwork"] = "1"
                     } else if self.genreId.split(separator: "-")[1] == "Recommended" {
                         parameters["recommendedwork"] = "1"
+                    } else if self.genreId.split(separator: "-")[1] == "Favorites" {
+                        parameters["work"] = "fav"
                     } else {
                         parameters["genre"] = self.genreId.split(separator: "-")[1]
                     }
@@ -50,10 +54,13 @@ struct WorksRadioButton: View {
                                         DispatchQueue.main.async {
                                             self.playState.autoplay = true
                                             self.playState.recording = rec
+                                            self.isLoading = false
                                         }
                                     }
                                     else {
-                                        print("⛔️ No recording")
+                                        DispatchQueue.main.async {
+                                            alertError("No recordings matching your criteria were found.")
+                                        }
                                     }
                                 }
                             }
@@ -66,21 +73,26 @@ struct WorksRadioButton: View {
                     HStack {
                         Spacer()
                         
-                        AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive && self.radioState.genreId == self.genreId)
-                            .frame(width: 40, height: 20)
-                            .padding(.trailing, self.radioState.isActive && self.radioState.genreId == self.genreId ? 3 : -10)
-                            .padding(.leading, self.radioState.isActive && self.radioState.genreId == self.genreId ? 0 : -10)
-                            
-                        Text((self.radioState.isActive && self.radioState.genreId == self.genreId ? "stop radio" : "start radio").uppercased())
-                            .foregroundColor(.white)
-                            .font(.custom("Nunito", size: self.radioState.isActive && self.radioState.genreId == self.genreId ? 11 : 13))
+                        if self.isLoading {
+                            ActivityIndicator(isAnimating: self.isLoading)
+                            .configure { $0.color = .white; $0.style = .medium }
+                        } else {
+                            AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive && self.radioState.genreId == self.genreId)
+                                .frame(width: 40, height: 20)
+                                .padding(.trailing, self.radioState.isActive && self.radioState.genreId == self.genreId ? 3 : -10)
+                                .padding(.leading, self.radioState.isActive && self.radioState.genreId == self.genreId ? 0 : -10)
+                                
+                            Text((self.radioState.isActive && self.radioState.genreId == self.genreId ? "stop radio" : "start radio").uppercased())
+                                .foregroundColor(.white)
+                                .font(.custom("Nunito", size: self.radioState.isActive && self.radioState.genreId == self.genreId ? 11 : 13))
+                        }
                         
                         Spacer()
                     }
                 }
                 .padding(13)
                 .foregroundColor(.white)
-                .background(Color(hex: self.radioState.isActive && self.radioState.genreId == self.genreId ? 0x696969 : 0xfe365e))
+                .background(Color(hex: ((self.radioState.isActive && self.radioState.genreId == self.genreId) || self.isLoading) ? 0x696969 : 0xfe365e))
                 .cornerRadius(16)
         })
         .buttonStyle(BorderlessButtonStyle())

@@ -11,6 +11,7 @@ import SwiftUI
 struct WorksSearch: View {
     var composer: Composer
     @EnvironmentObject var search: WorkSearch
+    @EnvironmentObject var settingStore: SettingStore
     @State private var loading = true
     @State private var works = [Work]()
     @State private var genresAvail = [String]()
@@ -25,8 +26,15 @@ struct WorksSearch: View {
     func loadData() {
         if !self.search.loadingGenres {
             loading = true
+            var url: String
             
-            APIget(AppConstants.openOpusBackend+"/work/list/composer/\(self.composer.id)/\(self.search.genreName).json") { results in
+            if self.search.genreName == "Favorites" {
+                url = AppConstants.concBackend+"/user/\(self.settingStore.userId)/composer/\(self.composer.id)/work/fav.json"
+            } else {
+                url = AppConstants.openOpusBackend+"/work/list/composer/\(self.composer.id)/\(self.search.genreName).json"
+            }
+            
+            APIget(url) { results in
                 let worksData: Works = parseJSON(results)
                 
                 DispatchQueue.main.async {
@@ -68,6 +76,7 @@ struct WorksSearch: View {
                 }
                 else {
                     ErrorMessage(msg: "No works found.")
+                        .padding(.top, 20)
                 }
             }
         }

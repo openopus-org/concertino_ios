@@ -196,6 +196,7 @@ struct Recommendation: Codable, Identifiable {
 
 struct Login: Codable {
     var user: User
+    var composerworks: [String]?
     var works: [String]?
     var favorite: [String]?
     var forbidden: [String]?

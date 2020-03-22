@@ -90,6 +90,10 @@ struct Player: View {
                                                     self.settingStore.favoriteWorks = favoriteworks
                                                 }
                                                 
+                                                if let composersfavoriteworks = login.composerworks {
+                                                    self.settingStore.composersFavoriteWorks = composersfavoriteworks
+                                                }
+                                                
                                                 if let forbiddencomposers = login.forbidden {
                                                     self.settingStore.forbiddenComposers = forbiddencomposers
                                                 }
@@ -148,7 +152,9 @@ struct Player: View {
                                             }
                                         }
                                         else {
-                                            print("⛔️ No recording")
+                                            DispatchQueue.main.async {
+                                                alertError("No recordings matching your criteria were found.")
+                                            }
                                         }
                                     }
                                 }

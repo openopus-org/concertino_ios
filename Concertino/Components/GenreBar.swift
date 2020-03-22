@@ -13,6 +13,7 @@ struct GenreBar: View {
     @State private var genres = [String]()
     @State private var loading = true
     @EnvironmentObject var search: WorkSearch
+    @EnvironmentObject var settingStore: SettingStore
     
     func loadData() {
         loading = true
@@ -26,10 +27,18 @@ struct GenreBar: View {
             
             DispatchQueue.main.async {
                 if let genr = genresData.genres {
-                    self.genres = genr
+                    var genreslist = genr.filter(){$0 != "Popular"}
+                    
+                    if self.settingStore.composersFavoriteWorks.contains(self.composerId) {
+                        genreslist.insert("Favorites", at: 0)
+                    }
+                    
+                    self.genres = genreslist
                     
                     if (self.search.composerId != self.composerId) {
-                        if genr.contains("Recommended") {
+                        if genr.contains("Favorites") {
+                            self.search.genreName = "Favorites"
+                        } else if genr.contains("Recommended") {
                             self.search.genreName = "Recommended"
                         } else {
                             self.search.genreName = genr[0]
@@ -66,6 +75,7 @@ struct GenreBar: View {
                 self.loadData()
             }
         })
+        .onReceive(settingStore.composersFavoriteWorksDidChange, perform: loadData)
     }
 }
 

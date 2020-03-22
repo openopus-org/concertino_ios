@@ -12,6 +12,7 @@ struct PlaylistButtons: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
+    @State var isLoading = false
     var recordings: [Recording]
     var playlistId: String
     
@@ -28,6 +29,7 @@ struct PlaylistButtons: View {
                         var recs = self.recordings
                         recs.shuffle()
                         
+                        self.isLoading = true
                         self.radioState.isActive = true
                         self.radioState.playlistId = self.playlistId
                         self.radioState.nextWorks.removeAll()
@@ -39,6 +41,7 @@ struct PlaylistButtons: View {
                             DispatchQueue.main.async {
                                 self.playState.autoplay = true
                                 self.playState.recording = recordingData
+                                self.isLoading = false
                             }
                         }
                     }
@@ -48,14 +51,19 @@ struct PlaylistButtons: View {
                         HStack {
                             Spacer()
                             
-                            AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive && self.radioState.playlistId == self.playlistId)
-                                .frame(width: 40, height: 20)
-                                .padding(.trailing, self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 3 : -10)
-                                .padding(.leading, self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 0 : -10)
-                                
-                            Text((self.radioState.isActive && self.radioState.playlistId == self.playlistId ? "stop radio" : "start radio").uppercased())
-                                .foregroundColor(.white)
-                                .font(.custom("Nunito", size: self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 11 : 13))
+                            if self.isLoading {
+                                ActivityIndicator(isAnimating: self.isLoading)
+                                .configure { $0.color = .white; $0.style = .medium }
+                            } else {
+                                AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive && self.radioState.playlistId == self.playlistId)
+                                    .frame(width: 40, height: 20)
+                                    .padding(.trailing, self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 3 : -10)
+                                    .padding(.leading, self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 0 : -10)
+                                    
+                                Text((self.radioState.isActive && self.radioState.playlistId == self.playlistId ? "stop radio" : "start radio").uppercased())
+                                    .foregroundColor(.white)
+                                    .font(.custom("Nunito", size: self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 11 : 13))
+                            }
                             
                             Spacer()
                         }

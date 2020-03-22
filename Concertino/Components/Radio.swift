@@ -17,7 +17,7 @@ struct Radio: View {
     var body: some View {
         ScrollView {
             Button(action: {
-                startRadio(userId: self.settingStore.userId, parameters: ["recommendedwork": "1"]) { results in
+                startRadio(userId: self.settingStore.userId, parameters: ["composer": 52, "recommendedwork": "1"]) { results in
                     let worksData: Works = parseJSON(results)
                     
                     if let wrks = worksData.works {
@@ -36,9 +36,13 @@ struct Radio: View {
                                     }
                                 }
                                 else {
-                                    print("⛔️ No recording")
+                                    alertError("No recordings were found.")
                                 }
                             }
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            alertError("No works matching your criteria were found.")
                         }
                     }
                 }
