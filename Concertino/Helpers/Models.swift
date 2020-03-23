@@ -240,3 +240,7 @@ struct PlaylistComposers: Codable {
 struct PlaylistWorks: Codable {
     var rows: Int
 }
+
+struct AddComposer: Codable {
+    var list: [String]
+}

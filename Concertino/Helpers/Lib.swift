@@ -637,3 +637,41 @@ public func alertError(_ msg: String) {
     alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(alertController, animated: true, completion: nil)
 }
+
+extension UIViewController {
+    func showToast(message: String) {
+        let toastView = UIView(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height/2 - 75, width: 150, height: 150))
+        toastView.backgroundColor = Color(hex: 0xFE365E).uiColor().withAlphaComponent(0.8)
+        toastView.alpha = 1.0
+        toastView.layer.cornerRadius = 10;
+        toastView.clipsToBounds  =  true
+        
+        let toastLabel = UILabel()
+        toastLabel.textColor = UIColor.white
+        toastLabel.font = UIFont(name: "Nunito-ExtraBold", size: 14.0)
+        toastLabel.translatesAutoresizingMaskIntoConstraints = false
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastView.addSubview(toastLabel)
+        
+        NSLayoutConstraint.activate([
+            toastLabel.topAnchor.constraint(equalTo: toastView.layoutMarginsGuide.centerYAnchor, constant: 28),
+            toastLabel.centerXAnchor.constraint(equalTo: toastView.layoutMarginsGuide.centerXAnchor),
+        ])
+        
+        let toastImage = UIImageView(frame: CGRect(x: (150/2)-(48/2), y: (150/2)-(36/2), width: 48, height: 36))
+        toastImage.clipsToBounds = true
+        toastImage.autoresizesSubviews = true
+        toastImage.contentMode = UIView.ContentMode.scaleAspectFit
+        toastImage.tintColor = UIColor.white
+        toastImage.image = UIImage(named: "checked")
+        toastView.addSubview(toastImage)
+        
+        self.view.addSubview(toastView)
+        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastView.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastView.removeFromSuperview()
+        })
+    }
+}

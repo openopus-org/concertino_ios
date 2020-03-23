@@ -10,7 +10,17 @@ import SwiftUI
 
 struct EllipsisButton: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Image(systemName: "ellipsis")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 20, height: 20)
+                .foregroundColor(.white)
+        }
+        .frame(width: 28, height: 28)
+        .background(Color(hex: 0x2B2B2F))
+        .clipped()
+        .clipShape(Circle())
     }
 }
 
