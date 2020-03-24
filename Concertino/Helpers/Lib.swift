@@ -641,7 +641,7 @@ public func alertError(_ msg: String) {
 extension UIViewController {
     func showToast(message: String) {
         let toastView = UIView(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height/2 - 75, width: 150, height: 150))
-        toastView.backgroundColor = Color(hex: 0xFE365E).uiColor().withAlphaComponent(0.8)
+        toastView.backgroundColor = Color(hex: 0xFE365E).uiColor().withAlphaComponent(1.0)
         toastView.alpha = 1.0
         toastView.layer.cornerRadius = 10;
         toastView.clipsToBounds  =  true
@@ -668,7 +668,7 @@ extension UIViewController {
         toastView.addSubview(toastImage)
         
         self.view.addSubview(toastView)
-        UIView.animate(withDuration: 3.0, delay: 0.1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1.0, delay: 1.5, options: .curveEaseOut, animations: {
             toastView.alpha = 0.0
         }, completion: {(isCompleted) in
             toastView.removeFromSuperview()

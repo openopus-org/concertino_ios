@@ -35,7 +35,7 @@ struct GenreBar: View {
                     
                     self.genres = genreslist
                     
-                    if (self.search.composerId != self.composerId) {
+                    if (self.search.composerId != self.composerId || (self.search.genreName == "Favorites" && !self.settingStore.composersFavoriteWorks.contains(self.composerId))) {
                         if genr.contains("Favorites") {
                             self.search.genreName = "Favorites"
                         } else if genr.contains("Recommended") {

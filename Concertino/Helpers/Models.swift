@@ -244,3 +244,8 @@ struct PlaylistWorks: Codable {
 struct AddComposer: Codable {
     var list: [String]
 }
+
+struct AddWork: Codable {
+    var list: [String]
+    var composerworks: [String]
+}

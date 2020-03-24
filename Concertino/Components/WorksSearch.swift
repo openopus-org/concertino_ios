@@ -88,6 +88,7 @@ struct WorksSearch: View {
             }
         })
         .onReceive(search.objectWillChange, perform: loadData)
+        .onReceive(settingStore.composersFavoriteWorksDidChange, perform: loadData)
     }
 }
 
