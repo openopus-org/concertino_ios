@@ -437,6 +437,8 @@ final class SettingStore: ObservableObject {
     let playedRecordingDidChange = PassthroughSubject<Void, Never>()
     let composersFavoriteWorksWillChange = PassthroughSubject<Void, Never>()
     let composersFavoriteWorksDidChange = PassthroughSubject<Void, Never>()
+    let recordingsWillChange = PassthroughSubject<Void, Never>()
+    let recordingsDidChange = PassthroughSubject<Void, Never>()
     
     var lastPlayedRecording = [Recording]() {
         didSet {
@@ -463,6 +465,14 @@ final class SettingStore: ObservableObject {
         }
         didSet {
             composersDidChange.send()
+        }
+    }
+    @UserDefault("concertino.favoriteRecordings", defaultValue: [String]()) var favoriteRecordings: [String] {
+        willSet {
+            recordingsWillChange.send()
+        }
+        didSet {
+            recordingsDidChange.send()
         }
     }
     @UserDefault("concertino.favoriteWorks", defaultValue: [String]()) var favoriteWorks: [String]
@@ -673,5 +683,27 @@ extension UIViewController {
         }, completion: {(isCompleted) in
             toastView.removeFromSuperview()
         })
+    }
+}
+
+struct ShareSheet: UIViewControllerRepresentable {
+    typealias Callback = (_ activityType: UIActivity.ActivityType?, _ completed: Bool, _ returnedItems: [Any]?, _ error: Error?) -> Void
+    
+    let activityItems: [Any]
+    let applicationActivities: [UIActivity]? = nil
+    let excludedActivityTypes: [UIActivity.ActivityType]? = nil
+    let callback: Callback? = nil
+      
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(
+            activityItems: activityItems,
+            applicationActivities: applicationActivities)
+        controller.excludedActivityTypes = excludedActivityTypes
+        controller.completionWithItemsHandler = callback
+        return controller
+    }
+      
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        // nothing to do here
     }
 }

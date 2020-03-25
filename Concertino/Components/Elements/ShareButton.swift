@@ -10,12 +10,22 @@ import SwiftUI
 
 struct ShareButton: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Image(systemName: "square.and.arrow.up")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 16, height: 16)
+                .foregroundColor(.white)
+        }
+        .frame(width: 28, height: 28)
+        .background(Color(hex: 0x2B2B2F))
+        .clipped()
+        .clipShape(Circle())
     }
 }
 
 struct ShareButton_Previews: PreviewProvider {
     static var previews: some View {
-        ShareButton()
+        EmptyView()
     }
 }

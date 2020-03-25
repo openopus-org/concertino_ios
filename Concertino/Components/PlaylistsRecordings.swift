@@ -81,6 +81,11 @@ struct PlaylistsRecordings: View {
                 self.loadData()
             }
         })
+        .onReceive(settingStore.recordingsDidChange, perform: {
+            if self.playlistSwitcher.playlist == "fav" {
+                self.loadData()
+            }
+        })
         .onAppear(perform: {
             self.endEditing(true)
             

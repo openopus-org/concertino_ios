@@ -197,6 +197,7 @@ struct Recommendation: Codable, Identifiable {
 struct Login: Codable {
     var user: User
     var composerworks: [String]?
+    var favoriterecordings: [String]?
     var works: [String]?
     var favorite: [String]?
     var forbidden: [String]?
@@ -248,4 +249,16 @@ struct AddComposer: Codable {
 struct AddWork: Codable {
     var list: [String]
     var composerworks: [String]
+}
+
+struct AddRecordings: Codable {
+    var favoriterecordings: [String]
+}
+
+struct ShortRecordingDetail: Codable {
+    var recording: ShortRecording
+}
+
+struct ShortRecording: Codable {
+    var id: String
 }

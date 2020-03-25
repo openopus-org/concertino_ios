@@ -12,6 +12,7 @@ struct AppConstants {
     static let openOpusBackend = "https://beta.api.openopus.org"
     static let concBackend = "https://beta.api.concertino.app"
     static let concFrontend = "https://beta.concertino.app"
+    static let concShortFrontend = "https://beta.cncert.in/r"
     static let concNoCoverImg = concFrontend + "/img/nocover.png"
     static let genreList = ["Chamber", "Keyboard", "Orchestral", "Stage", "Vocal"]
     static let periodList = ["Medieval", "Renaissance", "Baroque", "Classical", "Early Romantic", "Romantic", "Late Romantic", "20th Century", "Post-War", "21st Century"]

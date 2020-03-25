@@ -94,6 +94,10 @@ struct Player: View {
                                                     self.settingStore.composersFavoriteWorks = composersfavoriteworks
                                                 }
                                                 
+                                                if let favoriterecordings = login.favoriterecordings {
+                                                    self.settingStore.favoriteRecordings = favoriterecordings
+                                                }
+                                                
                                                 if let forbiddencomposers = login.forbidden {
                                                     self.settingStore.forbiddenComposers = forbiddencomposers
                                                 }

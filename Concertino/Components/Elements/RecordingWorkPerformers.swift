@@ -16,20 +16,19 @@ struct RecordingWorkPerformers: View {
     
     var actionSheet: ActionSheet {
         ActionSheet(title: Text("Select an action"), message: nil, buttons: [
-            .default(Text(self.settingStore.favoriteComposers.contains(composer.id) ? "Remove recording from favorites" : "Add recording to favorites"), action: {
-                
-                APIpost("\(AppConstants.concBackend)/dyn/user/composer/\(self.settingStore.favoriteComposers.contains(self.composer.id) ? "unfavorite" : "favorite")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "cid": self.composer.id]) { results in
+            .default(Text(self.settingStore.favoriteRecordings.contains("\(self.recording.work!.id)-\(recording.id)") ? "Remove recording from favorites" : "Add recording to favorites"), action: {
+                APIpost("\(AppConstants.concBackend)/dyn/user/recording/\(self.settingStore.favoriteRecordings.contains("\(self.recording.work!.id)-\(self.recording.id)") ? "unfavorite" : "favorite")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "wid": self.recording.work!.id, "aid": self.recording.apple_albumid, "set": self.recording.set, "cover": self.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.recording.jsonPerformers]) { results in
                     
                     print(String(decoding: results, as: UTF8.self))
                     
                     DispatchQueue.main.async {
-                        let addComposer: AddComposer = parseJSON(results)
-                        self.settingStore.favoriteComposers = addComposer.list
-                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteComposers.contains(self.composer.id) ? "Added!" : "Removed!")")
+                        let addRecordings: AddRecordings = parseJSON(results)
+                        self.settingStore.favoriteRecordings = addRecordings.favoriterecordings
+                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteRecordings.contains("\(self.recording.work!.id)-\(self.recording.id)") ? "Added!" : "Removed!")")
                     }
                 }
             }),
-            .default(Text("Add recording to a playlist"), action: {
+            /*.default(Text("Add recording to a playlist"), action: {
                 
                 APIpost("\(AppConstants.concBackend)/dyn/user/composer/\(self.settingStore.favoriteComposers.contains(self.composer.id) ? "permit" : "forbid")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "cid": self.composer.id]) { results in
                     
@@ -41,7 +40,7 @@ struct RecordingWorkPerformers: View {
                         UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.forbiddenComposers.contains(self.composer.id) ? "Added!" : "Removed!")")
                     }
                 }
-            }),
+            }),*/
             .cancel()
         ])
     }
@@ -105,6 +104,22 @@ struct RecordingWorkPerformers: View {
                     }
                     
                     Spacer()
+                    
+                    Button(action: {
+                        APIget(AppConstants.concBackend+"/recording/shorturl/work/\(self.recording.work!.id)/album/\(self.recording.apple_albumid)/\(self.recording.set).json") { results in
+                            
+                            let recordingData: ShortRecordingDetail = parseJSON(results)
+                            
+                            DispatchQueue.main.async {
+                                let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
+                                ac.excludedActivityTypes = [.addToReadingList]
+                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
+                            }
+                        }
+                    })
+                    {
+                        ShareButton()
+                    }
                     
                     Button(action: {
                         self.showSheet = true
