@@ -17,7 +17,7 @@ struct PlaylistButton: View {
         VStack {
             VStack(alignment: .leading) {
                 ZStack {
-                    ForEach(0 ..< playlist.summary.composers.portraits.prefix(4).count) { number in
+                    ForEach(0 ..< playlist.summary.composers.portraits.prefix(4).count, id: \.self) { number in
                         URLImage(self.playlist.summary.composers.portraits[number]) { img in
                             img.image
                                 .renderingMode(.original)

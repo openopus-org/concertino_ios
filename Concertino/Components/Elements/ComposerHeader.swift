@@ -12,7 +12,6 @@ import URLImage
 struct ComposerHeader: View {
     var composer: Composer
     @State private var showSheet = false
-    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     

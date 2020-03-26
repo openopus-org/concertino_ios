@@ -262,3 +262,7 @@ struct ShortRecordingDetail: Codable {
 struct ShortRecording: Codable {
     var id: String
 }
+
+struct PlaylistRecording: Codable {
+    var list: [Playlist]
+}

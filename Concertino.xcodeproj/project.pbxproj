@@ -61,6 +61,8 @@
 		09DEEB152425A09300350397 /* WorksRadioButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB142425A09300350397 /* WorksRadioButton.swift */; };
 		09DEEB1724282BD900350397 /* EllipsisButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB1624282BD900350397 /* EllipsisButton.swift */; };
 		09DEEB1D242AB7FA00350397 /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB1C242AB7FA00350397 /* ShareButton.swift */; };
+		09DEEB1F242C1CA000350397 /* AddToPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB1E242C1CA000350397 /* AddToPlaylist.swift */; };
+		09DEEB21242C2C2600350397 /* PlaylistChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DEEB20242C2C2600350397 /* PlaylistChooser.swift */; };
 		09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3423E24F1F0011D718 /* AppDelegate.swift */; };
 		09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F3623E24F1F0011D718 /* SceneDelegate.swift */; };
 		09E19F3B23E24F210011D718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3A23E24F210011D718 /* Assets.xcassets */; };
@@ -138,6 +140,8 @@
 		09DEEB142425A09300350397 /* WorksRadioButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorksRadioButton.swift; sourceTree = "<group>"; };
 		09DEEB1624282BD900350397 /* EllipsisButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EllipsisButton.swift; sourceTree = "<group>"; };
 		09DEEB1C242AB7FA00350397 /* ShareButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
+		09DEEB1E242C1CA000350397 /* AddToPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPlaylist.swift; sourceTree = "<group>"; };
+		09DEEB20242C2C2600350397 /* PlaylistChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistChooser.swift; sourceTree = "<group>"; };
 		09E19F3123E24F1F0011D718 /* Concertino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concertino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09E19F3423E24F1F0011D718 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09E19F3623E24F1F0011D718 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -309,6 +313,8 @@
 				09DEEB142425A09300350397 /* WorksRadioButton.swift */,
 				09DEEB1624282BD900350397 /* EllipsisButton.swift */,
 				09DEEB1C242AB7FA00350397 /* ShareButton.swift */,
+				09DEEB1E242C1CA000350397 /* AddToPlaylist.swift */,
+				09DEEB20242C2C2600350397 /* PlaylistChooser.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -450,6 +456,7 @@
 				097325E823FC406E00A1C9E6 /* ProgressBar.swift in Sources */,
 				09DEEB1D242AB7FA00350397 /* ShareButton.swift in Sources */,
 				0922D47224105981001E8DFE /* PlaylistsRecordings.swift in Sources */,
+				09DEEB1F242C1CA000350397 /* AddToPlaylist.swift in Sources */,
 				09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */,
 				09DEEB1724282BD900350397 /* EllipsisButton.swift in Sources */,
 				097325EE2404BD1900A1C9E6 /* CircleAnimation.swift in Sources */,
@@ -461,6 +468,7 @@
 				09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
 				09E5441A23FB571E005B8AEE /* RecordingPlayButtons.swift in Sources */,
+				09DEEB21242C2C2600350397 /* PlaylistChooser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

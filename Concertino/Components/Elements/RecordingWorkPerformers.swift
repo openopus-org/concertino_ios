@@ -12,6 +12,8 @@ import URLImage
 struct RecordingWorkPerformers: View {
     var recording: Recording
     @State private var showSheet = false
+    @State private var showPlaylistSheet = false
+    @State private var loadingSheet = false
     @EnvironmentObject var settingStore: SettingStore
     
     var actionSheet: ActionSheet {
@@ -28,19 +30,9 @@ struct RecordingWorkPerformers: View {
                     }
                 }
             }),
-            /*.default(Text("Add recording to a playlist"), action: {
-                
-                APIpost("\(AppConstants.concBackend)/dyn/user/composer/\(self.settingStore.favoriteComposers.contains(self.composer.id) ? "permit" : "forbid")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "cid": self.composer.id]) { results in
-                    
-                    print(String(decoding: results, as: UTF8.self))
-                    
-                    DispatchQueue.main.async {
-                        let addComposer: AddComposer = parseJSON(results)
-                        self.settingStore.forbiddenComposers = addComposer.list
-                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.forbiddenComposers.contains(self.composer.id) ? "Added!" : "Removed!")")
-                    }
-                }
-            }),*/
+            .default(Text("Add recording to a playlist"), action: {
+                self.showPlaylistSheet = true
+            }),
             .cancel()
         ])
     }
@@ -106,6 +98,7 @@ struct RecordingWorkPerformers: View {
                     Spacer()
                     
                     Button(action: {
+                        self.loadingSheet = true
                         APIget(AppConstants.concBackend+"/recording/shorturl/work/\(self.recording.work!.id)/album/\(self.recording.apple_albumid)/\(self.recording.set).json") { results in
                             
                             let recordingData: ShortRecordingDetail = parseJSON(results)
@@ -113,12 +106,13 @@ struct RecordingWorkPerformers: View {
                             DispatchQueue.main.async {
                                 let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
                                 ac.excludedActivityTypes = [.addToReadingList]
+                                self.loadingSheet = false
                                 UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
                             }
                         }
                     })
                     {
-                        ShareButton()
+                        ShareButton(isLoading: self.loadingSheet)
                     }
                     
                     Button(action: {
@@ -130,6 +124,9 @@ struct RecordingWorkPerformers: View {
                 }
         }
         .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
+        .sheet(isPresented: $showPlaylistSheet) {
+            AddToPlaylist(recording: self.recording).environmentObject(self.settingStore)
+        }
     }
 }
 

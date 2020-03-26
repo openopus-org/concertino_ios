@@ -9,13 +9,19 @@
 import SwiftUI
 
 struct ShareButton: View {
+    var isLoading: Bool
     var body: some View {
         VStack {
-            Image(systemName: "square.and.arrow.up")
+            if isLoading {
+                ActivityIndicator(isAnimating: true)
+                    .configure { $0.color = Color(.white).uiColor(); $0.style = .medium }
+            } else {
+                Image(systemName: "square.and.arrow.up")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 16, height: 16)
                 .foregroundColor(.white)
+            }
         }
         .frame(width: 28, height: 28)
         .background(Color(hex: 0x2B2B2F))

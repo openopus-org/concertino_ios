@@ -175,9 +175,18 @@ extension View {
 public struct SearchStyle: TextFieldStyle {
   public func _body(configuration: TextField<Self._Label>) -> some View {
     configuration
-      .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+        .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
         .font(.custom("Nunito", size: 15))
         .foregroundColor(.black)
+  }
+}
+
+public struct EditFieldStyle: TextFieldStyle {
+  public func _body(configuration: TextField<Self._Label>) -> some View {
+    configuration
+        .padding(12)
+        .font(.custom("Nunito", size: 15))
+        .cornerRadius(12)
   }
 }
 
