@@ -13,14 +13,13 @@ struct ShareButton: View {
     var body: some View {
         VStack {
             if isLoading {
-                ActivityIndicator(isAnimating: true)
-                    .configure { $0.color = Color(.white).uiColor(); $0.style = .medium }
+                CircleAnimation()
             } else {
                 Image(systemName: "square.and.arrow.up")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 16, height: 16)
-                .foregroundColor(.white)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 16, height: 16)
+                    .foregroundColor(.white)
             }
         }
         .frame(width: 28, height: 28)

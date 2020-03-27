@@ -13,6 +13,7 @@ struct PlaylistButtons: View {
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
     @State var isLoading = false
+    @State private var showPlaylistSheet = false
     var recordings: [Recording]
     var playlistId: String
     
@@ -77,7 +78,7 @@ struct PlaylistButtons: View {
             
             if self.playlistId != "fav" && self.playlistId != "recent" {
                 Button(
-                    action: {  },
+                    action: { self.showPlaylistSheet = true },
                     label: {
                         HStack {
                             HStack {
@@ -107,6 +108,9 @@ struct PlaylistButtons: View {
         }
         .padding(.bottom, 10)
         .padding(.top, 10)
+        .sheet(isPresented: $showPlaylistSheet) {
+            EditPlaylist(playlistId: self.playlistId, playlistName: self.settingStore.playlists.filter({$0.id == self.playlistId}).first!.name, recordings: self.recordings).environmentObject(self.settingStore)
+        }
     }
 }
 

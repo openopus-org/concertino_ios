@@ -662,8 +662,13 @@ extension UIViewController {
         let toastView = UIView(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height/2 - 75, width: 150, height: 150))
         toastView.backgroundColor = Color(hex: 0xFE365E).uiColor().withAlphaComponent(1.0)
         toastView.alpha = 1.0
-        toastView.layer.cornerRadius = 10;
-        toastView.clipsToBounds  =  true
+        toastView.layer.cornerRadius = 30
+        toastView.clipsToBounds = false
+        toastView.layer.shadowOpacity = 1
+        toastView.layer.shadowColor = UIColor.black.cgColor
+        toastView.layer.shadowRadius = 15
+        toastView.layer.shadowOffset = .zero
+        
         
         let toastLabel = UILabel()
         toastLabel.textColor = UIColor.white

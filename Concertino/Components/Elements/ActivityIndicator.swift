@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct ActivityIndicator: UIViewRepresentable {
-
     typealias UIView = UIActivityIndicatorView
     var isAnimating: Bool
     var configuration = { (indicator: UIView) in }

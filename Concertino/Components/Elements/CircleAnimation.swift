@@ -19,7 +19,7 @@ struct CircleAnimation: View {
             
             Circle()
                 .trim(from: 0, to: 0.2)
-                .stroke(Color(hex: 0xfe365e), lineWidth: 3)
+                .stroke(Color(.white), lineWidth: 3)
                 .frame(width: 20, height: 20)
                 .rotationEffect(Angle(degrees: isAnimated ? 360 : 0))
                 .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false))

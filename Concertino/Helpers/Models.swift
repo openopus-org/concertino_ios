@@ -155,7 +155,7 @@ struct Recording: Codable {
 }
 
 extension Recording: Identifiable, Equatable {
-    var id: String { return "\(apple_albumid)-\(set)" }
+    var id: String { return "\(work?.id ?? "0")-\(apple_albumid)-\(set)" }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

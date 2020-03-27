@@ -9,13 +9,120 @@
 import SwiftUI
 
 struct EditPlaylist: View {
+    @State var editPlaylistName = ""
+    @State var isLoading = false
+    @State var selectedRecordings = [Recording]()
+    @State var tempPlaylists = [Playlist]()
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var settingStore: SettingStore
+    var playlistId: String
+    var playlistName: String
+    var recordings: [Recording]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            HStack {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Text("Cancel")
+                        .foregroundColor(Color(hex: 0xfe365e))
+                        .font(.custom("Barlow", size: 14))
+                })
+                
+                Spacer()
+                
+                Button(action: {
+                    if self.selectedRecordings.count > 0 {
+                        self.isLoading = true
+                        APIpost("\(AppConstants.concBackend)/dyn/recording/multiunplaylist/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId, "rid": self.selectedRecordings.map({$0.id}).joined(separator:",")]) { results in
+                        
+                            print(String(decoding: results, as: UTF8.self))
+                            let playlistRecording: PlaylistRecording = parseJSON(results)
+                        
+                            DispatchQueue.main.async {
+                                self.tempPlaylists = playlistRecording.list
+                            }
+                        }
+                    }
+                    
+                    if self.editPlaylistName != "" && self.editPlaylistName != self.playlistName {
+                        self.isLoading = true
+                        APIpost("\(AppConstants.concBackend)/dyn/playlist/rename/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId, "name": self.editPlaylistName]) { results in
+
+                            let playlistRecording: PlaylistRecording = parseJSON(results)
+                        
+                            DispatchQueue.main.async {
+                                self.tempPlaylists = playlistRecording.list
+                            }
+                        }
+                    }
+                    
+                    if self.tempPlaylists.count > 0 {
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                            self.settingStore.playlists = self.tempPlaylists
+                            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Edited!")
+                        }
+                    }
+                    /*else {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }*/
+                }, label: {
+                    if self.isLoading {
+                        ActivityIndicator(isAnimating: true)
+                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .medium }
+                    } else {
+                        Text("Done")
+                            .foregroundColor(Color(hex: 0xfe365e))
+                            .font(.custom("Barlow-SemiBold", size: 14))
+                    }
+                })
+            }
+            
+            Text("Rename playlist".uppercased())
+                .font(.custom("Nunito-ExtraBold", size: 13))
+                .foregroundColor(Color(hex: 0xfe365e))
+                .padding(.top, 26)
+            Text("Change the name of this playlist")
+                .font(.custom("Barlow", size: 16))
+                .padding(.bottom, 4)
+            TextField(self.playlistName, text: $editPlaylistName)
+                .textFieldStyle(EditFieldStyle())
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(.black)
+                )
+            
+            Text("Remove recordings".uppercased())
+                .font(.custom("Nunito-ExtraBold", size: 13))
+                .foregroundColor(Color(hex: 0xfe365e))
+                .padding(.top, 26)
+            Text("Remove selected recordings from this playlist")
+                .font(.custom("Barlow", size: 16))
+                .padding(.bottom, 4)
+            
+            ScrollView(showsIndicators: false) {
+                ForEach(self.recordings, id: \.id) { recording in
+                    RecordingRemover(recording: recording, playlistId: self.playlistId, selectedRecordings: self.$selectedRecordings)
+                }
+            }
+            .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
+            
+            Spacer()
+        }
+        .padding(30)
+        .onAppear(perform: {
+            self.editPlaylistName = self.playlistName
+        })
     }
 }
 
 struct EditPlaylist_Previews: PreviewProvider {
     static var previews: some View {
-        EditPlaylist()
+        EmptyView()
     }
 }
