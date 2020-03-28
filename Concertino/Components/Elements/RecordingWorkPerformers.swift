@@ -18,15 +18,16 @@ struct RecordingWorkPerformers: View {
     
     var actionSheet: ActionSheet {
         ActionSheet(title: Text("Select an action"), message: nil, buttons: [
-            .default(Text(self.settingStore.favoriteRecordings.contains("\(self.recording.work!.id)-\(recording.id)") ? "Remove recording from favorites" : "Add recording to favorites"), action: {
-                APIpost("\(AppConstants.concBackend)/dyn/user/recording/\(self.settingStore.favoriteRecordings.contains("\(self.recording.work!.id)-\(self.recording.id)") ? "unfavorite" : "favorite")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "wid": self.recording.work!.id, "aid": self.recording.apple_albumid, "set": self.recording.set, "cover": self.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.recording.jsonPerformers]) { results in
+            .default(Text(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "Remove recording from favorites" : "Add recording to favorites"), action: {
+                APIpost("\(AppConstants.concBackend)/dyn/user/recording/\(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "unfavorite" : "favorite")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "wid": self.recording.work!.id, "aid": self.recording.apple_albumid, "set": self.recording.set, "cover": self.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.recording.jsonPerformers]) { results in
                     
                     print(String(decoding: results, as: UTF8.self))
                     
                     DispatchQueue.main.async {
                         let addRecordings: AddRecordings = parseJSON(results)
                         self.settingStore.favoriteRecordings = addRecordings.favoriterecordings
-                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteRecordings.contains("\(self.recording.work!.id)-\(self.recording.id)") ? "Added!" : "Removed!")")
+                        print(self.settingStore.favoriteRecordings)
+                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "Added!" : "Removed!")")
                     }
                 }
             }),

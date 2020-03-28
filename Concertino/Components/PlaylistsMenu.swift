@@ -46,8 +46,13 @@ struct PlaylistsMenu: View {
             }
         }
         .onReceive(settingStore.playlistsDidChange, perform: {
-            print("🆗 playlist changed")
+            print("🆗 playlists changed")
             self.playlistList = self.settingStore.playlists
+            
+            if self.playlistList.filter({ $0.id == self.playlistSwitcher.playlist }).count == 0 {
+                self.playlistActive = "fav"
+                self.playlistSwitcher.playlist = "fav"
+            }
         })
         .onAppear(perform: {
             if self.playlistList.count == 0 {

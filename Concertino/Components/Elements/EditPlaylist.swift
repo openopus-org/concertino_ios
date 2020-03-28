@@ -11,8 +11,8 @@ import SwiftUI
 struct EditPlaylist: View {
     @State var editPlaylistName = ""
     @State var isLoading = false
+    @State var deletePlaylist = false
     @State var selectedRecordings = [Recording]()
-    @State var tempPlaylists = [Playlist]()
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var settingStore: SettingStore
     var playlistId: String
@@ -33,44 +33,42 @@ struct EditPlaylist: View {
                 Spacer()
                 
                 Button(action: {
-                    if self.selectedRecordings.count > 0 {
+                    if self.deletePlaylist {
                         self.isLoading = true
-                        APIpost("\(AppConstants.concBackend)/dyn/recording/multiunplaylist/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId, "rid": self.selectedRecordings.map({$0.id}).joined(separator:",")]) { results in
+                        APIpost("\(AppConstants.concBackend)/dyn/playlist/delete/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId]) { results in
                         
                             print(String(decoding: results, as: UTF8.self))
                             let playlistRecording: PlaylistRecording = parseJSON(results)
-                        
+                            
                             DispatchQueue.main.async {
-                                self.tempPlaylists = playlistRecording.list
+                                self.isLoading = false
+                                self.presentationMode.wrappedValue.dismiss()
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                                self.settingStore.playlists = playlistRecording.list
+                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Deleted!")
                             }
                         }
-                    }
-                    
-                    if self.editPlaylistName != "" && self.editPlaylistName != self.playlistName {
+                    } else if self.selectedRecordings.count > 0 || (self.editPlaylistName != "" && self.editPlaylistName != self.playlistName) {
                         self.isLoading = true
-                        APIpost("\(AppConstants.concBackend)/dyn/playlist/rename/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId, "name": self.editPlaylistName]) { results in
-
-                            let playlistRecording: PlaylistRecording = parseJSON(results)
+                        APIpost("\(AppConstants.concBackend)/dyn/playlist/edit/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId, "rid": (self.selectedRecordings.count > 0 ? self.selectedRecordings.map({$0.id}).joined(separator:",") : ""), "name": (self.editPlaylistName != "" && self.editPlaylistName != self.playlistName ? self.editPlaylistName : "")]) { results in
                         
+                            print(String(decoding: results, as: UTF8.self))
+                            let playlistRecording: PlaylistRecording = parseJSON(results)
+                            
                             DispatchQueue.main.async {
-                                self.tempPlaylists = playlistRecording.list
+                                self.isLoading = false
+                                self.presentationMode.wrappedValue.dismiss()
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                                self.settingStore.playlists = playlistRecording.list
+                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Edited!")
                             }
                         }
                     }
-                    
-                    if self.tempPlaylists.count > 0 {
-                        DispatchQueue.main.async {
-                            self.isLoading = false
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                            self.settingStore.playlists = self.tempPlaylists
-                            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Edited!")
-                        }
-                    }
-                    /*else {
+                    else {
                         self.presentationMode.wrappedValue.dismiss()
-                    }*/
+                    }
                 }, label: {
                     if self.isLoading {
                         ActivityIndicator(isAnimating: true)
@@ -96,6 +94,19 @@ struct EditPlaylist: View {
                     RoundedRectangle(cornerRadius: 12)
                         .foregroundColor(.black)
                 )
+            
+            Text("Delete playlist".uppercased())
+                .font(.custom("Nunito-ExtraBold", size: 13))
+                .foregroundColor(Color(hex: 0xfe365e))
+                .padding(.top, 26)
+            HStack {
+                Toggle(isOn: $deletePlaylist) {
+                    Text("Permanently remove this playlist")
+                    .font(.custom("Barlow", size: 16))
+                }
+                .padding(.bottom, 4)
+                .padding(.top, -16)
+            }
             
             Text("Remove recordings".uppercased())
                 .font(.custom("Nunito-ExtraBold", size: 13))
