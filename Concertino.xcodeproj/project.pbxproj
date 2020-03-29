@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090625602430308500E8FC3E /* RadioStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906255F2430308500E8FC3E /* RadioStations.swift */; };
+		090625622430383100E8FC3E /* RadioStationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090625612430383100E8FC3E /* RadioStationButton.swift */; };
 		0922D466240F1E9B001E8DFE /* PeriodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D465240F1E9B001E8DFE /* PeriodList.swift */; };
 		0922D468240F1FAC001E8DFE /* PeriodBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D467240F1FAC001E8DFE /* PeriodBox.swift */; };
 		0922D46A240F1FBB001E8DFE /* PeriodDetailSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */; };
@@ -90,6 +92,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0906255F2430308500E8FC3E /* RadioStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStations.swift; sourceTree = "<group>"; };
+		090625612430383100E8FC3E /* RadioStationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStationButton.swift; sourceTree = "<group>"; };
 		0922D465240F1E9B001E8DFE /* PeriodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodList.swift; sourceTree = "<group>"; };
 		0922D467240F1FAC001E8DFE /* PeriodBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodBox.swift; sourceTree = "<group>"; };
 		0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailSearch.swift; sourceTree = "<group>"; };
@@ -271,6 +275,7 @@
 				09FE9A5523F9E2D800599992 /* RecordingDetail.swift */,
 				097325F124089FA200A1C9E6 /* ComposersSearch.swift */,
 				097325F7240A111400A1C9E6 /* FavoriteComposersList.swift */,
+				0906255F2430308500E8FC3E /* RadioStations.swift */,
 				0922D465240F1E9B001E8DFE /* PeriodList.swift */,
 				0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */,
 				0922D46D240F34BC001E8DFE /* PeriodDetail.swift */,
@@ -324,6 +329,7 @@
 				097C15D8242D6511006FBBEE /* EditPlaylist.swift */,
 				097C15DA242D70F9006FBBEE /* RecordingRemover.swift */,
 				097C15DC242DB75C006FBBEE /* MiniRecordingRow.swift */,
+				090625612430383100E8FC3E /* RadioStationButton.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -437,9 +443,11 @@
 				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,
 				097325FA240A19D600A1C9E6 /* TinyComposerBox.swift in Sources */,
 				09A6741B23F7606F000000D6 /* WorksList.swift in Sources */,
+				090625602430308500E8FC3E /* RadioStations.swift in Sources */,
 				09E19F5723E2546B0011D718 /* Settings.swift in Sources */,
 				097325EA2404560900A1C9E6 /* RecordingProgressBars.swift in Sources */,
 				09A0084423F4E391001C696E /* WorkRow.swift in Sources */,
+				090625622430383100E8FC3E /* RadioStationButton.swift in Sources */,
 				09A6741F23F77FDD000000D6 /* WorkDetail.swift in Sources */,
 				09E19F5923E254730011D718 /* Radio.swift in Sources */,
 				09E19F4D23E253780011D718 /* Structure.swift in Sources */,

@@ -113,7 +113,7 @@ class TimerHolder: ObservableObject {
         self.count = 0
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {
             _ in
-            self.count += 1
+            self.count = 1
         }
     }
     

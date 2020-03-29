@@ -12,11 +12,15 @@ struct Home: View {
     @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
-        VStack(alignment: .leading) {
-            ComposersList()
-            PeriodList()
-            FavoriteComposersList()
-            Spacer()
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading) {
+                ComposersList()
+                PeriodList()
+                FavoriteComposersList()
+                RadioStations()
+                Spacer()
+                    .frame(height: 40)
+            }
         }
     }
 }

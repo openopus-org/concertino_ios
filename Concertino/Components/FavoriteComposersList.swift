@@ -29,7 +29,7 @@ struct FavoriteComposersList: View {
                 Text("Your Favorite Composers".uppercased())
                     .foregroundColor(Color(hex: 0x717171))
                     .font(.custom("Nunito", size: 12))
-                    .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))
+                    .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .top, spacing: 14) {
                         ForEach(self.composers, id: \.id) { composer in

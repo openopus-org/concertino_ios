@@ -266,3 +266,13 @@ struct ShortRecording: Codable {
 struct PlaylistRecording: Codable {
     var list: [Playlist]
 }
+
+struct RadioStationPlaylist: Codable {
+    var id: String
+    var name: String
+    var cover: URL
+}
+
+struct RadioStationPlaylists: Codable {
+    var playlists: [RadioStationPlaylist]
+}
