@@ -1,21 +1,101 @@
 //
-//  RadioStationSuperButton.swift
+//  RadioStationButton.swift
 //  Concertino
 //
-//  Created by Adriano Brandao on 31/03/20.
+//  Created by Adriano Brandao on 28/03/20.
 //  Copyright © 2020 Open Opus. All rights reserved.
 //
 
 import SwiftUI
+import URLImage
 
 struct RadioStationSuperButton: View {
+    @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var radioState: RadioState
+    @State private var isLoading = false
+    var id: String
+    var name: String
+    var cover: URL
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(
+            action: {
+                self.isLoading = true
+                APIget(AppConstants.concBackend+"/recording/list/playlist/\(self.id).json") { results in
+                    let recsData: PlaylistRecordings = parseJSON(results)
+                    
+                    DispatchQueue.main.async {
+                        if let recds = recsData.recordings {
+                            var recs = recds
+                            recs.shuffle()
+                            
+                            self.radioState.isActive = true
+                            self.radioState.playlistId = self.id
+                            self.radioState.nextWorks.removeAll()
+                            self.radioState.nextRecordings = recs
+                            
+                            let rec = self.radioState.nextRecordings.removeFirst()
+                            
+                            getRecordingDetail(recording: rec, country: self.settingStore.country) { recordingData in
+                                DispatchQueue.main.async {
+                                    self.playState.autoplay = true
+                                    self.playState.recording = recordingData
+                                    self.isLoading = false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            label: {
+                HStack(alignment: .top) {  
+                    VStack {
+                        Spacer()
+                        
+                        if isLoading {
+                            HStack {
+                                Spacer()
+                                CircleAnimation()
+                                    .frame(height: 100)
+                                Spacer()
+                            }
+                            
+                            Spacer()
+                        } else {
+                            Text(self.name)
+                                .foregroundColor(Color.white)
+                                .font(.custom("Nunito", size: 16))
+                                .padding(12)
+                        }
+                    }
+                    
+                    Spacer()
+                }
+                .background(
+                    ZStack(alignment: .topLeading) {
+                        URLImage(self.cover) { img in
+                            img.image
+                                .renderingMode(.original)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 138, maxHeight: 138, alignment: .topLeading)
+                        }
+                        
+                        LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .bottom, endPoint: .top)
+                            .opacity(0.8)
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 138, maxHeight: 138, alignment: .topLeading)
+                    })
+                .padding(0)
+                .cornerRadius(20)
+            })
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 138, maxHeight: 138, alignment: .topLeading)
     }
 }
 
 struct RadioStationSuperButton_Previews: PreviewProvider {
     static var previews: some View {
-        RadioStationSuperButton()
+        EmptyView()
     }
 }
+

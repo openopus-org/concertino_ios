@@ -276,3 +276,7 @@ struct RadioStationPlaylist: Codable {
 struct RadioStationPlaylists: Codable {
     var playlists: [RadioStationPlaylist]
 }
+
+struct Supporters: Codable {
+    var patrons: [String]
+}

@@ -53,10 +53,12 @@ struct RadioStationButton: View {
                     Spacer()
                     
                     if isLoading {
-                        Group {
+                        HStack {
+                            Spacer()
                             CircleAnimation()
+                                .frame(height: 100)
+                            Spacer()
                         }
-                        .frame(width: 200, height: 100, alignment: .center)
                         
                         Spacer()
                     } else {
@@ -82,7 +84,7 @@ struct RadioStationButton: View {
                             .frame(minWidth: 200, idealWidth: 200, maxWidth: 200, minHeight: 138, idealHeight: 138, maxHeight: 138, alignment: .topLeading)
                     })
                 .padding(0)
-                .cornerRadius(12)
+                .cornerRadius(20)
             })
             .frame(minWidth: 200, idealWidth: 200, maxWidth: 200, minHeight: 138, idealHeight: 138, maxHeight: 138, alignment: .topLeading)
     }
