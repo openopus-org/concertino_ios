@@ -41,7 +41,12 @@ struct RecordingWorkPerformers: View {
     var body: some View {
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
-                    URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
+                    URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
+                        Rectangle()
+                            .fill(Color(hex: 0x2B2B2F))
+                            .frame(width: 110, height: 110)
+                            .cornerRadius(20)
+                    }) { img in
                         img.image
                             .renderingMode(.original)
                             .resizable()

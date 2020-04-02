@@ -16,7 +16,7 @@ struct RadioStations: View {
             var stationsData: RadioStationPlaylists = parseJSON(results)
             DispatchQueue.main.async {
                 stationsData.playlists.shuffle()
-                self.stations = Array(stationsData.playlists.prefix(10))
+                self.stations = Array(stationsData.playlists.prefix(6))
             }
         }
     }

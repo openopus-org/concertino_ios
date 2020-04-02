@@ -51,7 +51,11 @@ struct ComposerHeader: View {
         HStack {
             BackButton()
             
-            URLImage(composer.portrait!) { img in
+            URLImage(composer.portrait!, placeholder: { _ in
+                Circle()
+                    .fill(Color(hex: 0x2B2B2F))
+                    .frame(width: 70, height: 70)
+            }) { img in
                 img.image
                     .renderingMode(.original)
                     .resizable()

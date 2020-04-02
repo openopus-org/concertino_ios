@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import URLImage
 
 class ComposersData: ObservableObject {
     @Published var dataIsLoaded: Bool = false
@@ -31,7 +30,6 @@ struct ComposersList: View {
     @ObservedObject var composers = ComposersData()
     
     var body: some View {
-        //if composers.dataIsLoaded {
         VStack(alignment: .leading) {
             Text("Most Requested Composers".uppercased())
                 .foregroundColor(Color(hex: 0x717171))
@@ -49,7 +47,6 @@ struct ComposersList: View {
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             }
         }
-        //}
     }
 }
 

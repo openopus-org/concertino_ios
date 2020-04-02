@@ -38,6 +38,17 @@ struct OmnisearchField: View {
                         .disableAutocorrection(true)
                 }
                 
+                if self.AppState.currentLibraryTab == "composersearch" && !self.omnisearch.searchstring.isEmpty {
+                    Button(action: {
+                        self.omnisearch.searchstring = ""
+                    }, label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .foregroundColor(Color(hex: 0x7C726E))
+                            .frame(width: 16, height: 16)
+                            .padding(.trailing, 5)
+                    })
+                }
             }
             .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
             .foregroundColor(.black)

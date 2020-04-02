@@ -15,7 +15,12 @@ struct RecordingBox: View {
     var body: some View {
         VStack {
             VStack(alignment: .leading) {
-                URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg)) { img in
+                URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
+                    Rectangle()
+                        .fill(Color(hex: 0x2B2B2F))
+                        .frame(width: 125, height: 125)
+                        .cornerRadius(20)
+                }) { img in
                     img.image
                         .renderingMode(.original)
                         .resizable()

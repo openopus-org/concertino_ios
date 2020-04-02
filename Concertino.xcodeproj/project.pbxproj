@@ -114,6 +114,7 @@
 		0922D4732410A067001E8DFE /* PlaylistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistButton.swift; sourceTree = "<group>"; };
 		0922D4752410A0C6001E8DFE /* FavoritesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesButton.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
+		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
 		095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-SemiBold.ttf"; path = "../../../../../../Library/Fonts/Barlow-SemiBold.ttf"; sourceTree = "<group>"; };
 		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-ExtraBold.ttf"; path = "../../../../../../Library/Fonts/Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-Regular.ttf"; path = "../../../../../../Library/Fonts/Barlow-Regular.ttf"; sourceTree = "<group>"; };
@@ -233,6 +234,7 @@
 		09E19F3323E24F1F0011D718 /* Concertino */ = {
 			isa = PBXGroup;
 			children = (
+				093F0A2424357BFD0039C218 /* Concertino.entitlements */,
 				095A9CB323E4E1420010E150 /* Fonts */,
 				09E19F4B23E253660011D718 /* Components */,
 				09E19F4823E2510B0011D718 /* Helpers */,
@@ -652,6 +654,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
@@ -662,7 +665,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2.20;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.Concertino;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -673,6 +676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
@@ -683,7 +687,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2.20;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.Concertino;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
