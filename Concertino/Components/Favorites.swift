@@ -20,7 +20,7 @@ struct Favorites: View {
                     Spacer()
                 }
             }
-            .padding(.top, -50)
+            .padding(.top, UIDevice.current.hasNotch ? -50 : -95)
         }
         .clipped()
     }

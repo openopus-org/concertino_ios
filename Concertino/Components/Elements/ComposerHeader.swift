@@ -85,11 +85,13 @@ struct ComposerHeader: View {
             
             Spacer()
             
-            Button(action: {
-                self.showSheet = true
-            })
-            {
-                EllipsisButton()
+            if self.settingStore.userId > 0 {
+                Button(action: {
+                    self.showSheet = true
+                })
+                {
+                    EllipsisButton()
+                }
             }
         }
         .onAppear(perform: { self.endEditing(true) })

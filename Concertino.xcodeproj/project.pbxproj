@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09043E302436C9A300F07C57 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 09043E2F2436C9A300F07C57 /* AppIcon.appiconset */; };
+		09043E322436DA5200F07C57 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043E312436DA5200F07C57 /* Loader.swift */; };
 		090625602430308500E8FC3E /* RadioStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906255F2430308500E8FC3E /* RadioStations.swift */; };
 		090625622430383100E8FC3E /* RadioStationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090625612430383100E8FC3E /* RadioStationButton.swift */; };
 		0906256424316E6200E8FC3E /* RecentReleases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906256324316E6200E8FC3E /* RecentReleases.swift */; };
@@ -99,6 +101,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		09043E2F2436C9A300F07C57 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = ../../../../../Downloads/concertino/ios/AppIcon.appiconset; sourceTree = "<group>"; };
+		09043E312436DA5200F07C57 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		0906255F2430308500E8FC3E /* RadioStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStations.swift; sourceTree = "<group>"; };
 		090625612430383100E8FC3E /* RadioStationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStationButton.swift; sourceTree = "<group>"; };
 		0906256324316E6200E8FC3E /* RecentReleases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentReleases.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				09E19F3623E24F1F0011D718 /* SceneDelegate.swift */,
 				09E19F4C23E253780011D718 /* Structure.swift */,
 				09E19F3A23E24F210011D718 /* Assets.xcassets */,
+				09043E2F2436C9A300F07C57 /* AppIcon.appiconset */,
 				09E19F3F23E24F210011D718 /* LaunchScreen.storyboard */,
 				09E19F4223E24F210011D718 /* Info.plist */,
 				09E19F3C23E24F210011D718 /* Preview Content */,
@@ -296,6 +301,7 @@
 				0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */,
 				0922D46D240F34BC001E8DFE /* PeriodDetail.swift */,
 				0906256324316E6200E8FC3E /* RecentReleases.swift */,
+				09043E312436DA5200F07C57 /* Loader.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -421,6 +427,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09043E302436C9A300F07C57 /* AppIcon.appiconset in Resources */,
 				09E19F4123E24F210011D718 /* LaunchScreen.storyboard in Resources */,
 				09E19F3E23E24F210011D718 /* Preview Assets.xcassets in Resources */,
 				095A9CBD23E4E2400010E150 /* Nunito-ExtraBold.ttf in Resources */,
@@ -518,6 +525,7 @@
 				09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
 				09E5441A23FB571E005B8AEE /* RecordingPlayButtons.swift in Sources */,
+				09043E322436DA5200F07C57 /* Loader.swift in Sources */,
 				09DEEB21242C2C2600350397 /* PlaylistChooser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

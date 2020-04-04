@@ -17,6 +17,7 @@ final class AppState: ObservableObject  {
     @Published var currentTab = "library"
     @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
+    @Published var isLoading = true
 }
 
 final class RadioState: ObservableObject {
@@ -313,10 +314,16 @@ class MediaBridge: ObservableObject {
             "success": player.nowPlayingItem != nil
             ]
         
-        NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
+        print(status)
+        
+        if player.indexOfNowPlayingItem < 1000 {
+            NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
+        }
     }
     
     @objc func playbackStateChanged(_ notification:Notification) {
+        print(player.playbackState == .playing)
+        
         NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange, object: self, userInfo: ["playing": (player.playbackState == .playing)])
     }
     
@@ -737,5 +744,12 @@ extension Array {
         }
         
         return chunkedArray
+    }
+}
+
+extension UIDevice {
+    var hasNotch: Bool {
+        let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        return bottom > 0
     }
 }

@@ -12,6 +12,7 @@ struct RecentReleases: View {
     @State private var loading = true
     @State private var recordings = [Recording]()
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var appState: AppState
     
     func loadData() {
         self.recordings.removeAll()
@@ -32,6 +33,10 @@ struct RecentReleases: View {
                 }
                 
                 self.loading = false
+                
+                Timer.scheduledTimer(withTimeInterval: 2, repeats: false) {_ in 
+                    self.appState.isLoading = false
+                }
             }
         }
     }

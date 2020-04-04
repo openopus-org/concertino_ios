@@ -16,14 +16,14 @@ struct Library: View {
             NavigationView {
                 VStack {
                     OmnisearchField().padding(EdgeInsets(top: 9, leading: 20, bottom: 6, trailing: 20))
+                    
                     ZStack(alignment: .top) {
                         Home().opacity(self.AppState.currentLibraryTab == "home" ? 1 : 0)
                         ComposersWorksSearch().opacity(self.AppState.currentLibraryTab == "composersearch" ? 1 : 0)
                     }
-                    Spacer()
                 }
             }
-            .padding(.top, -50)
+            .padding(.top, UIDevice.current.hasNotch ? -50 : -95)
         }
         .clipped()
     }

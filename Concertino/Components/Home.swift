@@ -20,7 +20,7 @@ struct Home: View {
                 RadioStations()
                 RecentReleases()
                 Spacer()
-                    .frame(height: 40)
+                    .frame(height: 26)
             }
         }
     }

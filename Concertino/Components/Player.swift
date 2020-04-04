@@ -258,7 +258,7 @@ struct Player: View {
                         
                         // detecting end of queue
                         
-                        if self.currentTrack[0].playing && isPlaying as! Bool == false && self.mediaBridge.getCurrentPlaybackTime() == 0 && self.mediaBridge.getCurrentTrackIndex() == 0 {
+                        if self.currentTrack[0].playing && isPlaying as! Bool == false && ((self.mediaBridge.getCurrentPlaybackTime() == 0 && self.mediaBridge.getCurrentTrackIndex() == 0) || (abs(self.mediaBridge.getCurrentPlaybackTime()-self.currentTrack[0].track_length) < 3 && self.mediaBridge.getCurrentTrackIndex() == self.playState.recording[0].tracks!.count - 1)) {
                             print("⏹ Queue ended! [stopped playing at track 0, time 0]")
                             
                             // radio
@@ -271,7 +271,17 @@ struct Player: View {
                             } else if self.radioState.isActive {
                                 self.radioState.isActive = false
                             }
+                        } /*
+                            else {
+                            print("End of queue")
+                            print(self.currentTrack[0].playing)
+                            print(isPlaying as! Bool == false)
+                            print(self.mediaBridge.getCurrentPlaybackTime())
+                            print(self.mediaBridge.getCurrentTrackIndex())
+                            print(self.currentTrack[0].track_length)
+                            print(self.playState.recording[0].tracks!.count - 1)
                         }
+                        */
                         
                         self.currentTrack[0].playing = isPlaying as! Bool
                         self.playState.playing = isPlaying as! Bool

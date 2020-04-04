@@ -10,7 +10,34 @@ import SwiftUI
 
 struct Loader: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ZStack {
+                VStack {
+                    Spacer()
+                    
+                    Image("vertical-logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 240, height: 128)
+                    
+                    Spacer()
+                }
+                
+                VStack {
+                    Spacer()
+                    
+                    ActivityIndicator(isAnimating: true)
+                        .configure { $0.color = .white; $0.style = .large }
+                        .padding(.top, 244)
+                    
+                    Spacer()
+                }
+            }
+            
+        }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+        .background(Color.black)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 

@@ -121,11 +121,13 @@ struct RecordingWorkPerformers: View {
                         ShareButton(isLoading: self.loadingSheet)
                     }
                     
-                    Button(action: {
-                        self.showSheet = true
-                    })
-                    {
-                        EllipsisButton()
+                    if self.settingStore.userId > 0 {
+                        Button(action: {
+                            self.showSheet = true
+                        })
+                        {
+                            EllipsisButton()
+                        }
                     }
                 }
         }
