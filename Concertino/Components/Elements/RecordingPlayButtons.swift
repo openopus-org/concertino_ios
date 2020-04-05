@@ -33,13 +33,13 @@ struct RecordingPlayButtons: View {
                                 else {
                                     Image("handle")
                                         .resizable()
-                                        .frame(width: 7, height: 14)
+                                        .frame(width: 6, height: 12)
                                         .foregroundColor(Color(hex: 0x696969))
                                         .rotationEffect(.degrees(90))
-                                        .padding(.trailing, 8)
+                                        .padding(.trailing, 6)
                                     Text("in the player".uppercased())
                                         .foregroundColor(Color(hex: 0x696969))
-                                        .font(.custom("Nunito", size: 11))
+                                        .font(.custom("Nunito", size: 10))
                                 }
                                 Spacer()
                             }

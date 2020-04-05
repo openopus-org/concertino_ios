@@ -25,7 +25,7 @@ struct PlaylistsRecordings: View {
             case "recent":
                 url = AppConstants.concBackend+"/user/\(self.settingStore.userId)/recording/recent.json"
             default:
-                url = AppConstants.concBackend+"/recording/list/playlist/\(self.playlistSwitcher.playlist).json"
+                url = AppConstants.concBackend+"/recording/\(self.settingStore.country.isEmpty ? "" : self.settingStore.country+"/" )list/playlist/\(self.playlistSwitcher.playlist).json"
         }
         
         APIget(url) { results in

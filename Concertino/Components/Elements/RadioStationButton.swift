@@ -22,7 +22,7 @@ struct RadioStationButton: View {
         Button(
             action: {
                 self.isLoading = true
-                APIget(AppConstants.concBackend+"/recording/list/playlist/\(self.id).json") { results in
+                APIget(AppConstants.concBackend+"/recording/\(self.settingStore.country.isEmpty ? "" : self.settingStore.country+"/" )list/playlist/\(self.id).json") { results in
                     let recsData: PlaylistRecordings = parseJSON(results)
                     
                     DispatchQueue.main.async {

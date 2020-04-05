@@ -22,7 +22,7 @@ struct RadioStationSuperButton: View {
         Button(
             action: {
                 self.isLoading = true
-                APIget(AppConstants.concBackend+"/recording/list/playlist/\(self.id).json") { results in
+                APIget(AppConstants.concBackend+"/recording/\(self.settingStore.country.isEmpty ? "" : self.settingStore.country+"/" )list/playlist/\(self.id).json") { results in
                     let recsData: PlaylistRecordings = parseJSON(results)
                     
                     DispatchQueue.main.async {
@@ -39,6 +39,8 @@ struct RadioStationSuperButton: View {
                             
                             getRecordingDetail(recording: rec, country: self.settingStore.country) { recordingData in
                                 DispatchQueue.main.async {
+                                    print(recordingData)
+                                    
                                     self.playState.autoplay = true
                                     self.playState.recording = recordingData
                                     self.isLoading = false
