@@ -164,9 +164,9 @@ struct Player: View {
                                 } else if self.radioState.nextRecordings.count > 0 {
                                     print("⏭ Radio ON, fetching the next recording details!")
                                     
-                                    getRecordingDetail(recording: self.playState.recording.first!, country: self.settingStore.country) { recordingData in
+                                    getRecordingDetail(recording: self.radioState.nextRecordings.first!, country: self.settingStore.country) { recordingData in
                                         DispatchQueue.main.async {
-                                            self.playState.recording[0] = recordingData.first!
+                                            self.radioState.nextRecordings[0] = recordingData.first!
                                         }
                                     }
                                 }
@@ -237,7 +237,6 @@ struct Player: View {
             }
         })
         .onReceive(playState.objectWillChange, perform: {
-            print(self.playState.recording)
             if self.playState.recording.first!.tracks != nil {
                 self.playMusic()
             } /*else {
@@ -275,8 +274,9 @@ struct Player: View {
                         
                         // detecting end of queue
                         
-                        if self.currentTrack[0].playing && isPlaying as! Bool == false && ((self.mediaBridge.getCurrentPlaybackTime() == 0 && self.mediaBridge.getCurrentTrackIndex() == 0) || (abs(self.mediaBridge.getCurrentPlaybackTime()-self.currentTrack[0].track_length) < 3 && self.mediaBridge.getCurrentTrackIndex() == self.playState.recording[0].tracks!.count - 1)) {
+                        if self.currentTrack[0].playing && isPlaying as! Bool == false && ((self.mediaBridge.getCurrentPlaybackTime() == 0 && self.mediaBridge.getCurrentTrackIndex() == 0 && false) || (abs(self.mediaBridge.getCurrentPlaybackTime()-self.currentTrack[0].track_length) < 3 && self.mediaBridge.getCurrentTrackIndex() == self.playState.recording[0].tracks!.count - 1)) {
                             print("⏹ Queue ended! time \(self.mediaBridge.getCurrentPlaybackTime()) - track \(self.mediaBridge.getCurrentTrackIndex())")
+                            self.mediaBridge.stop()
                             
                             // radio
                             if self.radioState.nextRecordings.count > 0 {
@@ -347,13 +347,13 @@ struct Player: View {
                             self.currentTrack[0].track_length = (self.playState.recording.first!.tracks![trackIndex as! Int].length)
                         }
                         
-                        if self.currentTrack[0].loading {
+                        /*if self.currentTrack[0].loading {
                             if let trackTitle = status.userInfo?["title"] {
                                 if !((trackTitle as! String).hasPrefix("Loading")) {
-                                    //self.currentTrack[0].loading = false
+                                    self.currentTrack[0].loading = false
                                 }
                             }
-                        }
+                        }*/
                     }
                 }
             }

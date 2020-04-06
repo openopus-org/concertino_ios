@@ -13,6 +13,7 @@ struct RadioStationSuperButton: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var mediaBridge: MediaBridge
     @State private var isLoading = false
     var id: String
     var name: String
@@ -30,6 +31,7 @@ struct RadioStationSuperButton: View {
                             var recs = recds
                             recs.shuffle()
                             
+                            self.mediaBridge.stop()
                             self.radioState.isActive = true
                             self.radioState.playlistId = self.id
                             self.radioState.nextWorks.removeAll()
@@ -39,8 +41,6 @@ struct RadioStationSuperButton: View {
                             
                             getRecordingDetail(recording: rec, country: self.settingStore.country) { recordingData in
                                 DispatchQueue.main.async {
-                                    print(recordingData)
-                                    
                                     self.playState.autoplay = true
                                     self.playState.recording = recordingData
                                     self.isLoading = false

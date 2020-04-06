@@ -13,6 +13,7 @@ struct RadioStationButton: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var mediaBridge: MediaBridge
     @State private var isLoading = false
     var id: String
     var name: String
@@ -30,6 +31,7 @@ struct RadioStationButton: View {
                             var recs = recds
                             recs.shuffle()
                             
+                            self.mediaBridge.stop()
                             self.radioState.isActive = true
                             self.radioState.playlistId = self.id
                             self.radioState.nextWorks.removeAll()

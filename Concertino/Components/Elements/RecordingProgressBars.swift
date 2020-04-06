@@ -22,6 +22,8 @@ struct RecordingProgressBars: View {
                         VStack(alignment: .leading) {
                             
                             Button(action: {
+                                self.mediaBridge.stop()
+                                self.currentTrack[0].loading = true
                                 self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
                             }, label: {
                                 Text(track.title)
