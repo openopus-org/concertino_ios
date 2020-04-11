@@ -14,6 +14,7 @@ struct RecordingPlayButtons: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
         HStack(spacing: 6) {
@@ -81,7 +82,7 @@ struct RecordingPlayButtons: View {
             
             
             Button(
-                action: { UIApplication.shared.open(URL(string: AppConstants.appleLink + self.recording.apple_albumid)!) },
+                action: { UIApplication.shared.open(URL(string: AppConstants.appleLink.replacingOccurrences(of: "%%COUNTRY%%", with: self.settingStore.country.isEmpty ? "us" : "br") + self.recording.apple_albumid)!) },
                 label: {
                     HStack {
                         Spacer()

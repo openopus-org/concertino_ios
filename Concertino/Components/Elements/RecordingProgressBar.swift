@@ -9,13 +9,27 @@
 import SwiftUI
 
 struct RecordingProgressBar: View {
+    var track: Track
+    @Binding var currentTrack: [CurrentTrack]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Text(track.index == (self.currentTrack.first!.track_index - self.currentTrack.first!.zero_index) ? self.currentTrack.first!.readable_track_position : "0:00")
+            
+            ProgressBar(progress: track.index == (self.currentTrack.first!.track_index - self.currentTrack.first!.zero_index) ? self.currentTrack.first!.track_progress : 0)
+                .padding(.leading, 6)
+                .padding(.trailing, 6)
+                .frame(height: 4)
+
+            Text(track.readableLength)
+        }
+        .font(.custom("Nunito", size: 11))
+        .padding(.bottom, 14)
     }
 }
 
 struct RecordingProgressBar_Previews: PreviewProvider {
     static var previews: some View {
-        RecordingProgressBar()
+        EmptyView()
     }
 }

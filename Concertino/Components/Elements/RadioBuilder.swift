@@ -58,8 +58,10 @@ struct RadioBuilder: View {
                             }
                         }
                         else {
-                            self.isLoading = false
-                            alertError("No recordings were found.")
+                            DispatchQueue.main.async {
+                                self.isLoading = false
+                                alertError("No recordings were found.")
+                            }
                         }
                     }
                 }

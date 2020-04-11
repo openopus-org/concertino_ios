@@ -13,6 +13,7 @@ struct RecordingProgressBars: View {
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
     @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var radioState: RadioState
     
     var body: some View {
         Group {
@@ -24,25 +25,15 @@ struct RecordingProgressBars: View {
                             Button(action: {
                                 self.mediaBridge.stop()
                                 self.currentTrack[0].loading = true
-                                self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
+                                self.currentTrack[0].zero_index = 0
+                                self.mediaBridge.setQueueAndPlay(tracks: self.radioState.nextRecordings.count > 0 ? self.playState.recording.first!.apple_tracks! + self.radioState.nextRecordings.first!.apple_tracks! : self.playState.recording.first!.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
                             }, label: {
                                 Text(track.title)
                                     .font(.custom("Barlow", size: 14))
                                     .foregroundColor(Color.white)
                             })
                             
-                            HStack {
-                                Text(self.currentTrack.first!.track_index == track.index ? self.currentTrack.first!.readable_track_position : "0:00")
-                                
-                                ProgressBar(progress: self.currentTrack.first!.track_index == track.index ? self.currentTrack.first!.track_progress : 0)
-                                    .padding(.leading, 6)
-                                    .padding(.trailing, 6)
-                                    .frame(height: 4)
-                
-                                Text(track.readableLength)
-                            }
-                            .font(.custom("Nunito", size: 11))
-                            .padding(.bottom, 14)
+                            RecordingProgressBar(track: track, currentTrack: self.$currentTrack)
                         }
                     }
                 } else {

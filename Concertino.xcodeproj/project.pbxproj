@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		09043E302436C9A300F07C57 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 09043E2F2436C9A300F07C57 /* AppIcon.appiconset */; };
 		09043E322436DA5200F07C57 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043E312436DA5200F07C57 /* Loader.swift */; };
+		09043E34243D115C00F07C57 /* LegacyPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043E33243D115C00F07C57 /* LegacyPlayer.swift */; };
 		090625602430308500E8FC3E /* RadioStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906255F2430308500E8FC3E /* RadioStations.swift */; };
 		090625622430383100E8FC3E /* RadioStationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090625612430383100E8FC3E /* RadioStationButton.swift */; };
 		0906256424316E6200E8FC3E /* RecentReleases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906256324316E6200E8FC3E /* RecentReleases.swift */; };
 		090625662431707D00E8FC3E /* RecordingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090625652431707D00E8FC3E /* RecordingBox.swift */; };
 		090625682431910500E8FC3E /* RadioSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090625672431910500E8FC3E /* RadioSwitcher.swift */; };
+		0919D09D2441492800EF4B50 /* RecordingProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0919D09C2441492800EF4B50 /* RecordingProgressBar.swift */; };
 		0922D466240F1E9B001E8DFE /* PeriodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D465240F1E9B001E8DFE /* PeriodList.swift */; };
 		0922D468240F1FAC001E8DFE /* PeriodBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D467240F1FAC001E8DFE /* PeriodBox.swift */; };
 		0922D46A240F1FBB001E8DFE /* PeriodDetailSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */; };
@@ -103,11 +105,13 @@
 /* Begin PBXFileReference section */
 		09043E2F2436C9A300F07C57 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = ../../../../../Downloads/concertino/ios/AppIcon.appiconset; sourceTree = "<group>"; };
 		09043E312436DA5200F07C57 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		09043E33243D115C00F07C57 /* LegacyPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyPlayer.swift; sourceTree = "<group>"; };
 		0906255F2430308500E8FC3E /* RadioStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStations.swift; sourceTree = "<group>"; };
 		090625612430383100E8FC3E /* RadioStationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStationButton.swift; sourceTree = "<group>"; };
 		0906256324316E6200E8FC3E /* RecentReleases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentReleases.swift; sourceTree = "<group>"; };
 		090625652431707D00E8FC3E /* RecordingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingBox.swift; sourceTree = "<group>"; };
 		090625672431910500E8FC3E /* RadioSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioSwitcher.swift; sourceTree = "<group>"; };
+		0919D09C2441492800EF4B50 /* RecordingProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingProgressBar.swift; sourceTree = "<group>"; };
 		0922D465240F1E9B001E8DFE /* PeriodList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodList.swift; sourceTree = "<group>"; };
 		0922D467240F1FAC001E8DFE /* PeriodBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodBox.swift; sourceTree = "<group>"; };
 		0922D469240F1FBB001E8DFE /* PeriodDetailSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodDetailSearch.swift; sourceTree = "<group>"; };
@@ -302,6 +306,7 @@
 				0922D46D240F34BC001E8DFE /* PeriodDetail.swift */,
 				0906256324316E6200E8FC3E /* RecentReleases.swift */,
 				09043E312436DA5200F07C57 /* Loader.swift */,
+				09043E33243D115C00F07C57 /* LegacyPlayer.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -359,6 +364,7 @@
 				09AD2CD824341E6600375277 /* RadioStationsGrid.swift */,
 				09AD2CDA2434211D00375277 /* RadioStationSuperButton.swift */,
 				093F0A22243442660039C218 /* SettingsMenuItem.swift */,
+				0919D09C2441492800EF4B50 /* RecordingProgressBar.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -464,6 +470,7 @@
 				09DEEB1324231DB700350397 /* AnimatedRadioIcon.swift in Sources */,
 				09DEEB0B241352F700350397 /* BrowseOnlyMode.swift in Sources */,
 				09E5441E23FB749C005B8AEE /* RecordingDisclaimer.swift in Sources */,
+				09043E34243D115C00F07C57 /* LegacyPlayer.swift in Sources */,
 				09A6742123F78033000000D6 /* WorkHeader.swift in Sources */,
 				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
 				097325F224089FA200A1C9E6 /* ComposersSearch.swift in Sources */,
@@ -512,6 +519,7 @@
 				0922D47224105981001E8DFE /* PlaylistsRecordings.swift in Sources */,
 				09DEEB1F242C1CA000350397 /* AddToPlaylist.swift in Sources */,
 				09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */,
+				0919D09D2441492800EF4B50 /* RecordingProgressBar.swift in Sources */,
 				09DEEB1724282BD900350397 /* EllipsisButton.swift in Sources */,
 				097325EE2404BD1900A1C9E6 /* CircleAnimation.swift in Sources */,
 				09AD2CDB2434211D00375277 /* RadioStationSuperButton.swift in Sources */,
@@ -664,6 +672,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -673,7 +682,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.20;
+				MARKETING_VERSION = 1.20.4.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -687,6 +696,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -696,7 +706,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.20;
+				MARKETING_VERSION = 1.20.4.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

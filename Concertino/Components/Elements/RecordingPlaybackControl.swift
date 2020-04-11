@@ -35,7 +35,13 @@ struct RecordingPlaybackControl: View {
                             .padding(.trailing, 22)
                         
                         Button(
-                            action: { self.mediaBridge.previousTrack() },
+                            action: {
+                                if self.currentTrack.first!.track_index == 0 {
+                                    self.mediaBridge.skipToBeginning()
+                                } else {
+                                    self.mediaBridge.previousTrack()
+                                }
+                            },
                             label: {
                                 Image("skiptrack")
                                 .resizable()
@@ -59,7 +65,7 @@ struct RecordingPlaybackControl: View {
                         
                         Button(
                             action: {
-                                if self.radioState.isActive && (self.mediaBridge.getCurrentTrackIndex() == self.playState.recording[0].tracks!.count - 1) {
+                                /*if self.radioState.isActive && (self.mediaBridge.getCurrentTrackIndex() == self.playState.recording[0].tracks!.count - 1) {
                                     if self.radioState.nextRecordings.count > 0 {
                                         self.mediaBridge.stop()
                                         self.playState.autoplay = true
@@ -67,9 +73,9 @@ struct RecordingPlaybackControl: View {
                                     } else if self.radioState.isActive {
                                         self.radioState.isActive = false
                                     }
-                                } else {
-                                    self.mediaBridge.nextTrack()
-                                }
+                                } else {*/
+                                
+                                self.mediaBridge.nextTrack()
                             },
                             label: {
                                 Image("skiptrack")
@@ -81,7 +87,7 @@ struct RecordingPlaybackControl: View {
                         
                         Button(
                             action: {
-                                if self.radioState.isActive  {
+                                if self.radioState.isActive && self.radioState.canSkip  {
                                     if self.radioState.nextRecordings.count > 0 {
                                         self.mediaBridge.stop()
                                         self.playState.autoplay = true
@@ -96,7 +102,7 @@ struct RecordingPlaybackControl: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 18)
-                                .foregroundColor(Color(hex: self.radioState.isActive ? 0xfe365e : 0x424242))
+                                    .foregroundColor(Color(hex: self.radioState.isActive && self.radioState.canSkip ? 0xfe365e : 0x424242))
                                 .padding(.leading, 22)
                             })
 

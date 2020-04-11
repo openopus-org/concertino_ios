@@ -24,6 +24,7 @@ final class RadioState: ObservableObject {
     @Published var isActive = false
     @Published var playlistId = ""
     @Published var genreId = ""
+    @Published var canSkip = false
     @Published var nextWorks = [Work]()
     @Published var nextRecordings = [Recording]()
 }
@@ -96,6 +97,7 @@ final class PlayState: ObservableObject {
         }
     }
     
+    var keepQueue = false
     var autoplay = true
 }
 
@@ -307,6 +309,12 @@ class MediaBridge: ObservableObject {
         })
     }
     
+    func addToQueue(tracks: [String]) {
+        let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
+        
+        player.append(queue)
+    }
+    
     @objc func playItemChanged(_ notification:Notification) {
         let status: [String : Any] = [
             "index": player.indexOfNowPlayingItem,
@@ -361,6 +369,10 @@ class MediaBridge: ObservableObject {
     
     func nextTrack() {
         player.skipToNextItem()
+    }
+    
+    func skipToBeginning() {
+        player.skipToBeginning()
     }
     
     func previousTrack() {

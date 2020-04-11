@@ -87,6 +87,7 @@ extension Track: Identifiable {
 
 struct CurrentTrack: Codable {
     var track_index: Int
+    var zero_index: Int
     var playing: Bool
     var loading: Bool
     var starting_point: Int
@@ -279,4 +280,17 @@ struct RadioStationPlaylists: Codable {
 
 struct Supporters: Codable {
     var patrons: [String]
+}
+
+struct TrackQueue: Codable {
+    var tracks: [TrackQueued]
+}
+
+struct TrackQueued: Codable {
+    var apple_trackid: String
+    var recording_id: String
+}
+
+struct RecordingQueue: Codable {
+    var recordings: [Recording]
 }
