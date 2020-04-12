@@ -149,8 +149,8 @@ struct LegacyPlayer: View {
                                 
                                 if self.radioState.nextWorks.count > 0 {
                                     print("🔄 Radio ON, fetching a random recording!")
-                                    
-                                    randomRecording(work: self.radioState.nextWorks.removeFirst(), hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                                    self.radioState.nextWorks = Array(self.radioState.nextWorks.dropFirst())
+                                    randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
                                         if rec.count > 0 {
                                             DispatchQueue.main.async {
                                                 self.radioState.nextRecordings = rec

@@ -48,7 +48,7 @@ struct RadioBuilder: View {
                     self.radioState.nextRecordings.removeAll()
                     self.radioState.nextWorks = wrks
                      
-                    randomRecording(work: self.radioState.nextWorks.removeFirst(), hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                    randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
                         if rec.count > 0 {
                             DispatchQueue.main.async {
                                 self.isLoading = false

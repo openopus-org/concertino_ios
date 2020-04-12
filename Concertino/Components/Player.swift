@@ -155,8 +155,8 @@ struct Player: View {
                                 
                                 if self.radioState.nextWorks.count > 0 {
                                     print("🔄 Radio ON, fetching a random recording!")
-                                    
-                                    randomRecording(work: self.radioState.nextWorks.removeFirst(), hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                                    self.radioState.nextWorks = self.radioState.nextWorks.filter({ $0.id != self.playState.recording.first!.work!.id })
+                                    randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
                                         if rec.count > 0 {
                                             DispatchQueue.main.async {
                                                 self.radioState.nextRecordings = rec

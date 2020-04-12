@@ -12,6 +12,7 @@ struct RecordingDetail: View {
     var workId: String
     var recordingId: String
     var recordingSet: Int
+    @State private var error = false
     @State private var recording = [Recording]()
     @State private var loading = true
     @EnvironmentObject var settingStore: SettingStore
@@ -20,12 +21,16 @@ struct RecordingDetail: View {
         loading = true
         APIget(AppConstants.concBackend+"/recording/" + (self.settingStore.country != "" ? self.settingStore.country + "/" : "") + "detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
         //APIget(AppConstants.concBackend+"/recording/detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
-            let recordingData: FullRecording = parseJSON(results)
-            
-            DispatchQueue.main.async {
-                var rec = recordingData.recording
-                rec.work = recordingData.work
-                self.recording = [rec]
+            if let recordingData: FullRecording = safeJSON(results) {
+                DispatchQueue.main.async {
+                    var rec = recordingData.recording
+                    rec.work = recordingData.work
+                    self.recording = [rec]
+                    self.error = false
+                    self.loading = false
+                }
+            } else {
+                self.error = true
                 self.loading = false
             }
         }
@@ -44,6 +49,17 @@ struct RecordingDetail: View {
                         Spacer()
                         ActivityIndicator(isAnimating: loading)
                         .configure { $0.color = .white; $0.style = .large }
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                }
+                else if error {
+                    Spacer()
+                    
+                    VStack{
+                        Spacer()
+                        ErrorMessage(msg: "Recording not available in your country.")
                         Spacer()
                     }
                     

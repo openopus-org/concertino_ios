@@ -246,6 +246,15 @@ public func APIpost(_ url: String, parameters: [String: Any], completion: @escap
     }.resume()
 }
 
+public func safeJSON<T: Decodable>(_ data: Data) -> T? {
+    do {
+        let decoder = JSONDecoder()
+        return try decoder.decode(T.self, from: data)
+    } catch {
+        return nil
+    }
+}
+
 public func parseJSON<T: Decodable>(_ data: Data) -> T {
     do {
         let decoder = JSONDecoder()
@@ -635,7 +644,7 @@ public func startRadio(userId: Int, parameters: [String: Any], completion: @esca
     }
 }
 
-func randomRecording(work: Work, hideIncomplete: Bool, country: String, completion: @escaping ([Recording]) -> ()) {
+/*func randomRecording(work: Work, hideIncomplete: Bool, country: String, completion: @escaping ([Recording]) -> ()) {
     APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
         let recsData: Recordings = parseJSON(results)
         
@@ -655,6 +664,37 @@ func randomRecording(work: Work, hideIncomplete: Bool, country: String, completi
         }
         else {
             completion([Recording]())
+        }
+    }
+}*/
+
+func randomRecording(workQueue: [Work], hideIncomplete: Bool, country: String, completion: @escaping ([Recording]) -> ()) {
+    var workQ = workQueue
+    let work = workQ.removeFirst()
+    
+    APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
+        if let recsData: Recordings = parseJSON(results) {
+            if let recds = recsData.recordings {
+                print("found, everything OK")
+                if let rec = recds.filter({
+                    ($0.isCompilation == false) || (hideIncomplete == false)
+                }).randomElement() {
+                    print("*️⃣ Compilation: \(rec.isCompilation)")
+                    APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(work.id)/album/\(rec.apple_albumid)/\(rec.set).json") { results in
+                        if let recordingData: FullRecording = safeJSON(results) {
+                            var rec = recordingData.recording
+                            rec.work = recordingData.work
+                            completion([rec])
+                        }
+                    }
+                }
+            }
+            else {
+                print("nothing found, starting again")
+                randomRecording(workQueue: workQ, hideIncomplete: hideIncomplete, country: country) { rec in
+                    completion(rec)
+                }
+            }
         }
     }
 }
