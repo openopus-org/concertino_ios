@@ -23,29 +23,38 @@ struct RadioStationSuperButton: View {
         Button(
             action: {
                 self.isLoading = true
-                APIget(AppConstants.concBackend+"/recording/\(self.settingStore.country.isEmpty ? "" : self.settingStore.country+"/" )list/playlist/\(self.id).json") { results in
-                    let recsData: PlaylistRecordings = parseJSON(results)
-                    
-                    DispatchQueue.main.async {
-                        if let recds = recsData.recordings {
-                            var recs = recds
-                            recs.shuffle()
+                
+                getStoreFront() { countryCode in
+                    if let country = countryCode {
+                        APIget(AppConstants.concBackend+"/recording/\(country)/list/playlist/\(self.id).json") { results in
+                            let recsData: PlaylistRecordings = parseJSON(results)
                             
-                            self.mediaBridge.stop()
-                            self.radioState.isActive = true
-                            self.radioState.playlistId = self.id
-                            self.radioState.nextWorks.removeAll()
-                            self.radioState.nextRecordings = recs
-                            
-                            let rec = self.radioState.nextRecordings.removeFirst()
-                            
-                            getRecordingDetail(recording: rec, country: self.settingStore.country) { recordingData in
-                                DispatchQueue.main.async {
-                                    self.playState.autoplay = true
-                                    self.playState.recording = recordingData
-                                    self.isLoading = false
+                            DispatchQueue.main.async {
+                                if let recds = recsData.recordings {
+                                    var recs = recds
+                                    recs.shuffle()
+                                    
+                                    self.mediaBridge.stop()
+                                    self.radioState.isActive = true
+                                    self.radioState.playlistId = self.id
+                                    self.radioState.nextWorks.removeAll()
+                                    self.radioState.nextRecordings = recs
+                                    
+                                    let rec = self.radioState.nextRecordings.removeFirst()
+                                    
+                                    getRecordingDetail(recording: rec, country: country) { recordingData in
+                                        DispatchQueue.main.async {
+                                            self.playState.autoplay = true
+                                            self.playState.recording = recordingData
+                                            self.isLoading = false
+                                        }
+                                    }
                                 }
                             }
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.isLoading = false
                         }
                     }
                 }

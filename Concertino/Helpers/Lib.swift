@@ -799,10 +799,29 @@ extension Array {
     }
 }
 
+func getStoreFront(completion: @escaping (String?) -> ()) {
+    SKCloudServiceController.requestAuthorization { status in
+        if (SKCloudServiceController.authorizationStatus() == .authorized)
+        {
+            let controller = SKCloudServiceController()
+            controller.requestCapabilities { capabilities, error in
+                if capabilities.contains(.musicCatalogPlayback) {
+                  controller.requestStorefrontCountryCode { countryCode, error in
+                        completion(countryCode)
+                    }
+                } else {
+                    completion(nil)
+                }
+            }
+        } else {
+            completion(nil)
+        }
+    }
+}
+
 extension UIDevice {
     var hasNotch: Bool {
         let bottom = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.bottom ?? 0
-        //let bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         return bottom > 0
     }
 }

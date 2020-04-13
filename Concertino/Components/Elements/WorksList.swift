@@ -9,18 +9,18 @@
 import SwiftUI
 
 struct WorksList: View {
-    @EnvironmentObject var settingStore: SettingStore
     var genre: String
     var genrelist: [String]
     var works: [Work]
     var composer: Composer
     var essential: Bool
+    var radioReady: Bool
     
     var body: some View {
         Group {
             if self.genre == "Popular" || self.genre == "Recommended" || self.genre == "Favorites" {
                 List {
-                    if self.settingStore.userId != 0 {
+                    if self.radioReady {
                         Section(header:
                             WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
                                 .padding(.bottom, -20)
@@ -44,7 +44,7 @@ struct WorksList: View {
             }
             else if self.essential {
                 List {
-                    if self.settingStore.userId != 0 {
+                    if self.radioReady {
                         Section(header:
                             WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
                                 .padding(.bottom, -20)
@@ -68,7 +68,7 @@ struct WorksList: View {
             }
             else {
                 List {
-                    if self.settingStore.userId != 0 {
+                    if self.radioReady {
                         WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
                     }
                     ForEach(self.works, id: \.id) { work in

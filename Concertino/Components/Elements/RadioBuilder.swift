@@ -47,20 +47,24 @@ struct RadioBuilder: View {
                     self.radioState.genreId = ""
                     self.radioState.nextRecordings.removeAll()
                     self.radioState.nextWorks = wrks
-                     
-                    randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
-                        if rec.count > 0 {
-                            DispatchQueue.main.async {
-                                self.isLoading = false
-                                self.radioState.isActive = true
-                                self.playState.autoplay = true
-                                self.playState.recording = rec
-                            }
-                        }
-                        else {
-                            DispatchQueue.main.async {
-                                self.isLoading = false
-                                alertError("No recordings were found.")
+                    
+                    getStoreFront() { countryCode in
+                        if let country = countryCode {
+                            randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
+                                if rec.count > 0 {
+                                    DispatchQueue.main.async {
+                                        self.isLoading = false
+                                        self.radioState.isActive = true
+                                        self.playState.autoplay = true
+                                        self.playState.recording = rec
+                                    }
+                                }
+                                else {
+                                    DispatchQueue.main.async {
+                                        self.isLoading = false
+                                        alertError("No recordings were found.")
+                                    }
+                                }
                             }
                         }
                     }

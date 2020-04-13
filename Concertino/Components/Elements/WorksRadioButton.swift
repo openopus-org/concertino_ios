@@ -49,17 +49,21 @@ struct WorksRadioButton: View {
                                 self.radioState.nextRecordings.removeAll()
                                 self.radioState.nextWorks = wrks
                                 
-                                randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
-                                    if rec.count > 0 {
-                                        DispatchQueue.main.async {
-                                            self.playState.autoplay = true
-                                            self.playState.recording = rec
-                                            self.isLoading = false
-                                        }
-                                    }
-                                    else {
-                                        DispatchQueue.main.async {
-                                            alertError("No recordings matching your criteria were found.")
+                                getStoreFront() { countryCode in
+                                    if let country = countryCode {
+                                        randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
+                                            if rec.count > 0 {
+                                                DispatchQueue.main.async {
+                                                    self.playState.autoplay = true
+                                                    self.playState.recording = rec
+                                                    self.isLoading = false
+                                                }
+                                            }
+                                            else {
+                                                DispatchQueue.main.async {
+                                                    alertError("No recordings matching your criteria were found.")
+                                                }
+                                            }
                                         }
                                     }
                                 }

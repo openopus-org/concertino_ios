@@ -19,8 +19,8 @@ struct RecordingDetail: View {
     
     func loadData() {
         loading = true
+                
         APIget(AppConstants.concBackend+"/recording/" + (self.settingStore.country != "" ? self.settingStore.country + "/" : "") + "detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
-        //APIget(AppConstants.concBackend+"/recording/detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
             if let recordingData: FullRecording = safeJSON(results) {
                 DispatchQueue.main.async {
                     var rec = recordingData.recording
@@ -59,7 +59,7 @@ struct RecordingDetail: View {
                     
                     VStack{
                         Spacer()
-                        ErrorMessage(msg: "Recording not available in your country.")
+                        ErrorMessage(msg: "This recording is not available.")
                         Spacer()
                     }
                     
