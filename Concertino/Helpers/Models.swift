@@ -203,6 +203,7 @@ struct Login: Codable {
     var favorite: [String]?
     var forbidden: [String]?
     var playlists: [Playlist]?
+    var country: String?
 }
 
 struct User: Codable, Identifiable {

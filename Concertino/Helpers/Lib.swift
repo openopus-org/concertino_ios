@@ -310,7 +310,15 @@ class MediaBridge: ObservableObject {
         
         player.setQueue(with: queue)
         player.prepareToPlay(completionHandler: {(error) in
-            if autoplay {
+            if error != nil {
+                let status: [String : Any] = [
+                    "index": 0,
+                    "title": 0,
+                    "success": false
+                ]
+                NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
+            }
+            else if autoplay {
                 DispatchQueue.main.async {
                     self.player.play()
                 }
@@ -598,22 +606,6 @@ public func timeframe(timestamp: Int, minutes: Int) -> Bool {
     }
 }
 
-/*
-extension Binding {
-    func didSet(execute: @escaping (Value) ->Void) -> Binding {
-        return Binding(
-            get: {
-                return self.wrappedValue
-            },
-            set: {
-                execute($0)
-                self.wrappedValue = $0
-            }
-        )
-    }
-}
-*/
-
 func MarkPlayed(settingStore: SettingStore, playState: PlayState, completion: @escaping (Data) -> ()) {
     APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work!.id, "aid": playState.recording.first!.apple_albumid, "set": playState.recording.first!.set, "cover": playState.recording.first!.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.jsonPerformers]) { results in
             completion(results)
@@ -643,30 +635,6 @@ public func startRadio(userId: Int, parameters: [String: Any], completion: @esca
             completion(results)
     }
 }
-
-/*func randomRecording(work: Work, hideIncomplete: Bool, country: String, completion: @escaping ([Recording]) -> ()) {
-    APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
-        let recsData: Recordings = parseJSON(results)
-        
-        if let recds = recsData.recordings {
-            if let rec = recds.filter({
-                ($0.isCompilation == false) || (hideIncomplete == false)
-            }).randomElement() {
-                print("*️⃣ Compilation: \(rec.isCompilation)")
-                APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(work.id)/album/\(rec.apple_albumid)/\(rec.set).json") { results in
-                    if let recordingData: FullRecording = parseJSON(results) {
-                        var rec = recordingData.recording
-                        rec.work = recordingData.work
-                        completion([rec])
-                    }
-                }
-            }
-        }
-        else {
-            completion([Recording]())
-        }
-    }
-}*/
 
 func randomRecording(workQueue: [Work], hideIncomplete: Bool, country: String, completion: @escaping ([Recording]) -> ()) {
     var workQ = workQueue
@@ -801,20 +769,55 @@ extension Array {
 
 func getStoreFront(completion: @escaping (String?) -> ()) {
     SKCloudServiceController.requestAuthorization { status in
-        if (SKCloudServiceController.authorizationStatus() == .authorized)
-        {
+        if (SKCloudServiceController.authorizationStatus() == .authorized) {
             let controller = SKCloudServiceController()
-            controller.requestCapabilities { capabilities, error in
-                if capabilities.contains(.musicCatalogPlayback) {
-                  controller.requestStorefrontCountryCode { countryCode, error in
-                        completion(countryCode)
-                    }
-                } else {
-                    completion(nil)
-                }
+            controller.requestStorefrontCountryCode { countryCode, error in
+                completion(countryCode)
             }
         } else {
             completion(nil)
+        }
+    }
+}
+
+func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ canPlay: Bool, _ login: Login?) -> ()) {
+    let settingStore = SettingStore()
+    
+    SKCloudServiceController.requestAuthorization { status in
+        if (SKCloudServiceController.authorizationStatus() == .authorized) {
+            let controller = SKCloudServiceController()
+            controller.requestStorefrontCountryCode { countryCode, error in
+                controller.requestCapabilities { capabilities, error in
+                    if capabilities.contains(.musicCatalogPlayback) {
+                            if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
+                                APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
+                                    let token: Token = parseJSON(results)
+                                    controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
+                                        APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "country": countryCode ?? ""]) { results in
+                                            print(String(decoding: results, as: UTF8.self))
+                                            let login: Login = parseJSON(results)
+                                
+                                            completion(countryCode ?? "us", true, login)
+                                        }
+                                    }
+                                }
+                            } else {
+                                completion(countryCode ?? "us", true, nil)
+                            }
+                    } else if capabilities.contains(.musicCatalogSubscriptionEligible) && autoplay {
+                        DispatchQueue.main.async {
+                            let amc = AppleMusicSubscribeController()
+                            amc.showAppleMusicSignup()
+                        }
+                        
+                        completion(countryCode ?? "us", false, nil)
+                    } else {
+                        completion(countryCode ?? "us", false, nil)
+                    }
+                }
+            }
+        } else {
+            completion("us", false, nil)
         }
     }
 }

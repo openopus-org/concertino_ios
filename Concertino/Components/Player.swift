@@ -38,171 +38,134 @@ struct Player: View {
         
         self.settingStore.lastPlayState = self.playState.recording
         
-        SKCloudServiceController.requestAuthorization { status in
-            if (SKCloudServiceController.authorizationStatus() == .authorized)
-            {
-                // user authorized app access to music
+        // logging in apple music and concertino
+        
+        userLogin(self.playState.autoplay) { country, canPlay, loginResults in
+            if let login = loginResults {
                 
-                let controller = SKCloudServiceController()
-                controller.requestCapabilities { capabilities, error in
-                    if capabilities.contains(.musicCatalogPlayback) {
-                        
-                        // user has an active apple music account, get the user token & apple default recommendations
-                        
-                        // first, check if the app needs to log in again
-                        
-                        if timeframe(timestamp: self.settingStore.lastLogged, minutes: 120)  {
-                            APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
-                                
-                                let token: Token = parseJSON(results)
-                                controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
-                                   
-                                // get the country/storefront
-                                    
-                                    controller.requestStorefrontCountryCode { countryCode, error in
-                                        
-                                        // log in to concertino
-                                            
-                                        APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "id": self.settingStore.userId, "country": countryCode ?? ""]) { results in
-                                                
-                                            print(String(decoding: results, as: UTF8.self))
-                                            
-                                            // saving login info to the settings store
-                                            
-                                            DispatchQueue.main.async {
-                                                let login: Login = parseJSON(results)
-                                                self.settingStore.userId = login.user.id
-                                                self.settingStore.lastLogged = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
-                                                
-                                                if let cc = countryCode {
-                                                    self.settingStore.country = cc
-                                                }
-                                                
-                                                if let auth = login.user.auth {
-                                                    self.settingStore.userAuth = auth
-                                                }
-                                                
-                                                if let favoritecomposers = login.favorite {
-                                                    self.settingStore.favoriteComposers = favoritecomposers
-                                                }
-                                                
-                                                if let favoriteworks = login.works {
-                                                    self.settingStore.favoriteWorks = favoriteworks
-                                                }
-                                                
-                                                if let composersfavoriteworks = login.composerworks {
-                                                    self.settingStore.composersFavoriteWorks = composersfavoriteworks
-                                                }
-                                                
-                                                if let favoriterecordings = login.favoriterecordings {
-                                                    self.settingStore.favoriteRecordings = favoriterecordings
-                                                }
-                                                
-                                                if let forbiddencomposers = login.forbidden {
-                                                    self.settingStore.forbiddenComposers = forbiddencomposers
-                                                }
-                                                
-                                                if let playlists = login.playlists {
-                                                    self.settingStore.playlists = playlists
-                                                }
-                                                
-                                                // registering first recording played
-                                                
-                                                if self.playState.autoplay {
-                                                    MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
-                                                        DispatchQueue.main.async {
-                                                            self.settingStore.lastPlayedRecording = self.playState.recording
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                DispatchQueue.main.async {
+                    self.settingStore.userId = login.user.id
+                    self.settingStore.lastLogged = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                    self.settingStore.country = country
+                    
+                    if let auth = login.user.auth {
+                        self.settingStore.userAuth = auth
+                    }
+                    
+                    if let favoritecomposers = login.favorite {
+                        self.settingStore.favoriteComposers = favoritecomposers
+                    }
+                    
+                    if let favoriteworks = login.works {
+                        self.settingStore.favoriteWorks = favoriteworks
+                    }
+                    
+                    if let composersfavoriteworks = login.composerworks {
+                        self.settingStore.composersFavoriteWorks = composersfavoriteworks
+                    }
+                    
+                    if let favoriterecordings = login.favoriterecordings {
+                        self.settingStore.favoriteRecordings = favoriterecordings
+                    }
+                    
+                    if let forbiddencomposers = login.forbidden {
+                        self.settingStore.forbiddenComposers = forbiddencomposers
+                    }
+                    
+                    if let playlists = login.playlists {
+                        self.settingStore.playlists = playlists
+                    }
+                }
+            }
+            
+            if canPlay {
+                
+                DispatchQueue.main.async {
+                    
+                    // registering first recording played
+                    
+                    if self.playState.autoplay {
+                        MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
+                            DispatchQueue.main.async {
+                                self.settingStore.lastPlayedRecording = self.playState.recording
                             }
                         }
+                    }
+                    
+                    // let's play some music!
+                    
+                    if let tracks = self.playState.recording.first!.apple_tracks {
                         
-                        // let's play some music!
+                        if !self.playState.keepQueue {
+                            self.currentTrack = [CurrentTrack (
+                                track_index: 0,
+                                zero_index: 0,
+                                playing: false,
+                                loading: true,
+                                starting_point: 0,
+                                track_position: 0,
+                                track_length: (self.playState.recording.first!.tracks!.first?.length)!,
+                                full_position: 0,
+                                full_length: self.playState.recording.first!.length!
+                            )]
+                            
+                            self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
+                        }
+                        else {
+                            self.playState.keepQueue = false
+                        }
                         
-                        DispatchQueue.main.async {
-                            if let tracks = self.playState.recording.first!.apple_tracks {
-                                
-                                if !self.playState.keepQueue {
-                                    self.currentTrack = [CurrentTrack (
-                                        track_index: 0,
-                                        zero_index: 0,
-                                        playing: false,
-                                        loading: true,
-                                        starting_point: 0,
-                                        track_position: 0,
-                                        track_length: (self.playState.recording.first!.tracks!.first?.length)!,
-                                        full_position: 0,
-                                        full_length: self.playState.recording.first!.length!
-                                    )]
-                                    
-                                    self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
+                        if !self.playState.autoplay {
+                            self.currentTrack[0].loading = false
+                            self.playState.autoplay = true
+                        }
+                        
+                        // radio? fetch the next recording on the queue
+                        
+                        if self.radioState.nextWorks.count > 0 {
+                            print("🔄 Radio ON, fetching a random recording!")
+                            
+                            let indexPlayed = self.radioState.nextWorks.firstIndex(where: { $0.id == self.playState.recording.first!.work!.id })
+                            self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed!+1))
+                            randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                                if rec.count > 0 {
+                                    DispatchQueue.main.async {
+                                        self.radioState.nextRecordings = rec
+                                        self.mediaBridge.addToQueue(tracks: rec.first!.apple_tracks!)
+                                        self.radioState.nextRecordings[0] = rec.first!
+                                        self.radioState.canSkip = true
+                                    }
                                 }
                                 else {
-                                    self.playState.keepQueue = false
-                                }
-                                
-                                if !self.playState.autoplay {
-                                    self.currentTrack[0].loading = false
-                                    self.playState.autoplay = true
-                                }
-                                
-                                // radio? fetch the next recording on the queue
-                                
-                                if self.radioState.nextWorks.count > 0 {
-                                    print("🔄 Radio ON, fetching a random recording!")
-                                    
-                                    let indexPlayed = self.radioState.nextWorks.firstIndex(where: { $0.id == self.playState.recording.first!.work!.id })
-                                    self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed!+1))
-                                    randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
-                                        if rec.count > 0 {
-                                            DispatchQueue.main.async {
-                                                self.radioState.nextRecordings = rec
-                                                self.mediaBridge.addToQueue(tracks: rec.first!.apple_tracks!)
-                                                self.radioState.nextRecordings[0] = rec.first!
-                                                self.radioState.canSkip = true
-                                            }
-                                        }
-                                        else {
-                                            DispatchQueue.main.async {
-                                                self.radioState.isActive = false
-                                            }
-                                        }
-                                    }
-                                } else if self.radioState.nextRecordings.count > 0 {
-                                    print("⏭ Radio ON, fetching the next recording details!")
-                                    
-                                    getRecordingDetail(recording: self.radioState.nextRecordings.first!, country: self.settingStore.country) { recordingData in
-                                        if recordingData.count > 0 {
-                                            DispatchQueue.main.async {
-                                                self.mediaBridge.addToQueue(tracks: recordingData.first!.apple_tracks!)
-                                                self.radioState.nextRecordings[0] = recordingData.first!
-                                                self.radioState.canSkip = true
-                                            }
-                                        } else {
-                                            self.radioState.isActive = false
-                                        }
-                                    }
-                                } else if self.radioState.isActive {
                                     DispatchQueue.main.async {
                                         self.radioState.isActive = false
                                     }
                                 }
                             }
-                        }
-                    }
-                    else if capabilities.contains(.musicCatalogSubscriptionEligible) && self.playState.autoplay {
-                        DispatchQueue.main.async {
-                            let amc = AppleMusicSubscribeController()
-                            amc.showAppleMusicSignup()
+                        } else if self.radioState.nextRecordings.count > 0 {
+                            print("⏭ Radio ON, fetching the next recording details!")
+                            
+                            getRecordingDetail(recording: self.radioState.nextRecordings.first!, country: self.settingStore.country) { recordingData in
+                                if recordingData.count > 0 {
+                                    DispatchQueue.main.async {
+                                        self.mediaBridge.addToQueue(tracks: recordingData.first!.apple_tracks!)
+                                        self.radioState.nextRecordings[0] = recordingData.first!
+                                        self.radioState.canSkip = true
+                                    }
+                                } else {
+                                    self.radioState.isActive = false
+                                }
+                            }
+                        } else if self.radioState.isActive {
+                            DispatchQueue.main.async {
+                                self.radioState.isActive = false
+                            }
                         }
                     }
                 }
             }
+            
+            self.settingStore.firstUsage = false
         }
     }
     
@@ -232,7 +195,6 @@ struct Player: View {
                                 RecordingWorkPerformers(recording: playState.recording.first!)
                                     .padding(.bottom, 30)
                                 RecordingProgressBars(recording: playState.recording.first!, currentTrack: $currentTrack)
-                                
                             }
                             .padding(30)
                             .padding(.top, -16)

@@ -186,7 +186,53 @@ struct RadioBuilder: View {
                             self.radioState.nextWorks.removeAll()
                             self.radioState.nextRecordings.removeAll()
                         } else {
-                            self.initRadio()
+                            if self.settingStore.userId > 0 {
+                                self.initRadio()
+                            } else {
+                                self.isLoading = true
+                                userLogin(self.playState.autoplay) { country, canPlay, loginResults in
+                                    if let login = loginResults {
+                                        
+                                        DispatchQueue.main.async {
+                                            self.settingStore.userId = login.user.id
+                                            self.settingStore.lastLogged = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                                            self.settingStore.country = country
+                                            
+                                            if let auth = login.user.auth {
+                                                self.settingStore.userAuth = auth
+                                            }
+                                            
+                                            if let favoritecomposers = login.favorite {
+                                                self.settingStore.favoriteComposers = favoritecomposers
+                                            }
+                                            
+                                            if let favoriteworks = login.works {
+                                                self.settingStore.favoriteWorks = favoriteworks
+                                            }
+                                            
+                                            if let composersfavoriteworks = login.composerworks {
+                                                self.settingStore.composersFavoriteWorks = composersfavoriteworks
+                                            }
+                                            
+                                            if let favoriterecordings = login.favoriterecordings {
+                                                self.settingStore.favoriteRecordings = favoriterecordings
+                                            }
+                                            
+                                            if let forbiddencomposers = login.forbidden {
+                                                self.settingStore.forbiddenComposers = forbiddencomposers
+                                            }
+                                            
+                                            if let playlists = login.playlists {
+                                                self.settingStore.playlists = playlists
+                                            }
+                                            
+                                            self.initRadio()
+                                        }
+                                    } else {
+                                        self.isLoading = false
+                                    }
+                                }
+                            }
                         }
                     },
                     label: {

@@ -19,19 +19,21 @@ struct RecordingDetail: View {
     
     func loadData() {
         loading = true
-                
-        APIget(AppConstants.concBackend+"/recording/" + (self.settingStore.country != "" ? self.settingStore.country + "/" : "") + "detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
-            if let recordingData: FullRecording = safeJSON(results) {
-                DispatchQueue.main.async {
-                    var rec = recordingData.recording
-                    rec.work = recordingData.work
-                    self.recording = [rec]
-                    self.error = false
+        
+        getStoreFront() { countryCode in
+            APIget(AppConstants.concBackend+"/recording/\(countryCode ?? "us")/detail/work/\(self.workId)/album/\(self.recordingId)/\(self.recordingSet).json") { results in
+                if let recordingData: FullRecording = safeJSON(results) {
+                    DispatchQueue.main.async {
+                        var rec = recordingData.recording
+                        rec.work = recordingData.work
+                        self.recording = [rec]
+                        self.error = false
+                        self.loading = false
+                    }
+                } else {
+                    self.error = true
                     self.loading = false
                 }
-            } else {
-                self.error = true
-                self.loading = false
             }
         }
     }

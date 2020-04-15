@@ -33,6 +33,7 @@ struct WorksList: View {
                             Text(genre)
                                 .font(.custom("Barlow-SemiBold", size: 13))
                                 .foregroundColor(Color(hex: 0xFE365E))
+                                .padding(.top, self.radioReady ? 0 : 20)
                             ){
                             ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
                                 WorkRow(work: work, composer: self.composer)
@@ -57,6 +58,7 @@ struct WorksList: View {
                             Text(rec == "1" ? "Essential" : "Other works")
                                 .font(.custom("Barlow-SemiBold", size: 13))
                                 .foregroundColor(Color(hex: 0xFE365E))
+                                .padding(.top, self.radioReady ? 0 : 20)
                             ){
                             ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
                                 WorkRow(work: work, composer: self.composer)
@@ -76,6 +78,7 @@ struct WorksList: View {
                     }
                 }
                 .padding(.bottom, 34)
+                .padding(.top, self.radioReady ? 0 : 20)
             }
         }
     }

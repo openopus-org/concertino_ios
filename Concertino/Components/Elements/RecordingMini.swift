@@ -92,13 +92,20 @@ struct RecordingMini: View {
                 if self.settingStore.userId > 0 {
                     RecordingNotAvailable(size: "min")
                 }
+                else if self.settingStore.firstUsage {
+                    HStack {
+                        Spacer()
+                        ActivityIndicator(isAnimating: true)
+                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .medium }
+                        Spacer()
+                    }
+                    .padding(.top, 4)
+                }
                 else {
                     BrowseOnlyMode(size: "min")
                 }
-                
             }
         }
-        
     }
 }
 

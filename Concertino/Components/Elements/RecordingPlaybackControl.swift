@@ -65,16 +65,6 @@ struct RecordingPlaybackControl: View {
                         
                         Button(
                             action: {
-                                /*if self.radioState.isActive && (self.mediaBridge.getCurrentTrackIndex() == self.playState.recording[0].tracks!.count - 1) {
-                                    if self.radioState.nextRecordings.count > 0 {
-                                        self.mediaBridge.stop()
-                                        self.playState.autoplay = true
-                                        self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
-                                    } else if self.radioState.isActive {
-                                        self.radioState.isActive = false
-                                    }
-                                } else {*/
-                                
                                 self.mediaBridge.nextTrack()
                             },
                             label: {
@@ -91,6 +81,7 @@ struct RecordingPlaybackControl: View {
                                     if self.radioState.nextRecordings.count > 0 {
                                         self.mediaBridge.stop()
                                         self.playState.autoplay = true
+                                        self.currentTrack[0].track_position = 0
                                         self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
                                     } else if self.radioState.isActive {
                                         self.radioState.isActive = false
@@ -114,6 +105,14 @@ struct RecordingPlaybackControl: View {
             else {
                 if self.settingStore.userId > 0 {
                     RecordingNotAvailable(size: "max")
+                }
+                else if self.settingStore.firstUsage {
+                    HStack {
+                        Spacer()
+                        ActivityIndicator(isAnimating: true)
+                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .large }
+                        Spacer()
+                    }
                 }
                 else {
                     BrowseOnlyMode(size: "max")
