@@ -72,7 +72,7 @@ struct WorksSearch: View {
             }
             else {
                 if self.works.count > 0 {
-                    WorksList(genre: search.genreName, genrelist: genresAvail, works: works, composer: self.composer, essential: hasEssential, radioReady: self.settingStore.userId > 0)
+                    WorksList(genre: search.genreName, genrelist: genresAvail, works: works, composer: self.composer, essential: hasEssential, radioReady: true)
                 }
                 else {
                     ErrorMessage(msg: "No works found.")

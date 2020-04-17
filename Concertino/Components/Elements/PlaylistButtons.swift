@@ -12,6 +12,7 @@ struct PlaylistButtons: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var mediaBridge: MediaBridge
     @State var isLoading = false
     @State private var showPlaylistSheet = false
     var recordings: [Recording]
@@ -26,6 +27,9 @@ struct PlaylistButtons: View {
                         self.radioState.playlistId = ""
                         self.radioState.nextWorks.removeAll()
                         self.radioState.nextRecordings.removeAll()
+                        
+                        self.mediaBridge.stop()
+                        self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: self.playState.recording.first!.apple_tracks!.first!, autoplay: false)
                     } else {
                         var recs = self.recordings
                         recs.shuffle()

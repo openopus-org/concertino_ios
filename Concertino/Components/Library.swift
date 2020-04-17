@@ -24,6 +24,7 @@ struct Library: View {
                 }
             }
             .padding(.top, UIDevice.current.hasNotch ? -50 : -95)
+            .padding(.bottom, -8)
         }
         .clipped()
     }

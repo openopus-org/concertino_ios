@@ -9,28 +9,34 @@
 import SwiftUI
 
 struct RecordingNotAvailable: View {
+    @EnvironmentObject var playState: PlayState
     var size: String
     
     var body: some View {
-        HStack {
-            Spacer()
-            
-            Image("forbidden")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: size == "min" ? 18 : 26)
+        Button(action: {
+            self.playState.recording = [self.playState.recording.first!]
+        },
+        label: {
+            HStack {
+                Spacer()
+                
+                Image("warning")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: size == "min" ? 18 : 26)
+                    .foregroundColor(Color(hex: size == "min" ? 0x797979 : 0xfe365e))
+                    .padding(.trailing, 2)
+                VStack(alignment: .leading) {
+                    Text("Couldn't connect to Apple Music")
+                        .font(.custom("Nunito-ExtraBold", size: size == "min" ? 11 : 15))
+                    Text("Please click here to try again")
+                        .font(.custom("Nunito", size: size == "min" ? 9 : 13))
+                }
                 .foregroundColor(Color(hex: size == "min" ? 0x797979 : 0xfe365e))
-                .padding(.trailing, 2)
-            VStack(alignment: .leading) {
-                Text("Non-playable recording")
-                    .font(.custom("Nunito-ExtraBold", size: size == "min" ? 11 : 15))
-                Text("This album isn't available in your country")
-                    .font(.custom("Nunito", size: size == "min" ? 9 : 13))
+                
+                Spacer()
             }
-            .foregroundColor(Color(hex: size == "min" ? 0x797979 : 0xfe365e))
-            
-            Spacer()
-        }
+        })
     }
 }
 

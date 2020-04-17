@@ -12,8 +12,57 @@ struct WorksRadioButton: View {
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var mediaBridge: MediaBridge
     @State var isLoading = false
     var genreId: String
+    
+    func initRadio() {
+        self.isLoading = true
+        var parameters = ["composer": self.genreId.split(separator: "-")[0]]
+        
+        if self.genreId.split(separator: "-")[1] == "Popular" {
+            parameters["popularwork"] = "1"
+        } else if self.genreId.split(separator: "-")[1] == "Recommended" {
+            parameters["recommendedwork"] = "1"
+        } else if self.genreId.split(separator: "-")[1] == "Favorites" {
+            parameters["work"] = "fav"
+        } else {
+            parameters["genre"] = self.genreId.split(separator: "-")[1]
+        }
+        
+        startRadio(userId: self.settingStore.userId, parameters: parameters) { results in
+            let worksData: Works = parseJSON(results)
+            
+            if let wrks = worksData.works {
+                DispatchQueue.main.async {
+                    self.radioState.isActive = true
+                    self.radioState.playlistId = ""
+                    self.radioState.genreId = self.genreId
+                    self.radioState.nextRecordings.removeAll()
+                    self.radioState.nextWorks = wrks
+                    
+                    getStoreFront() { countryCode in
+                        if let country = countryCode {
+                            randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
+                                if rec.count > 0 {
+                                    DispatchQueue.main.async {
+                                        self.playState.autoplay = true
+                                        self.playState.recording = rec
+                                        self.isLoading = false
+                                    }
+                                }
+                                else {
+                                    DispatchQueue.main.async {
+                                        alertError("No recordings matching your criteria were found.")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     
     var body: some View {
         Button(
@@ -24,49 +73,55 @@ struct WorksRadioButton: View {
                     self.radioState.genreId = ""
                     self.radioState.nextWorks.removeAll()
                     self.radioState.nextRecordings.removeAll()
+                    
+                    self.mediaBridge.stop()
+                    self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: self.playState.recording.first!.apple_tracks!.first!, autoplay: false)
+
                 } else {
-                    self.isLoading = true
-                    var parameters = ["composer": self.genreId.split(separator: "-")[0]]
-                    
-                    if self.genreId.split(separator: "-")[1] == "Popular" {
-                        parameters["popularwork"] = "1"
-                    } else if self.genreId.split(separator: "-")[1] == "Recommended" {
-                        parameters["recommendedwork"] = "1"
-                    } else if self.genreId.split(separator: "-")[1] == "Favorites" {
-                        parameters["work"] = "fav"
+                    if self.settingStore.userId > 0 {
+                        self.initRadio()
                     } else {
-                        parameters["genre"] = self.genreId.split(separator: "-")[1]
-                    }
-                    
-                    startRadio(userId: self.settingStore.userId, parameters: parameters) { results in
-                        let worksData: Works = parseJSON(results)
-                        
-                        if let wrks = worksData.works {
-                            DispatchQueue.main.async {
-                                self.radioState.isActive = true
-                                self.radioState.playlistId = ""
-                                self.radioState.genreId = self.genreId
-                                self.radioState.nextRecordings.removeAll()
-                                self.radioState.nextWorks = wrks
+                        self.isLoading = true
+                        userLogin(self.playState.autoplay) { country, canPlay, loginResults in
+                            if let login = loginResults {
                                 
-                                getStoreFront() { countryCode in
-                                    if let country = countryCode {
-                                        randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
-                                            if rec.count > 0 {
-                                                DispatchQueue.main.async {
-                                                    self.playState.autoplay = true
-                                                    self.playState.recording = rec
-                                                    self.isLoading = false
-                                                }
-                                            }
-                                            else {
-                                                DispatchQueue.main.async {
-                                                    alertError("No recordings matching your criteria were found.")
-                                                }
-                                            }
-                                        }
+                                DispatchQueue.main.async {
+                                    self.settingStore.userId = login.user.id
+                                    self.settingStore.lastLogged = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                                    self.settingStore.country = country
+                                    
+                                    if let auth = login.user.auth {
+                                        self.settingStore.userAuth = auth
                                     }
+                                    
+                                    if let favoritecomposers = login.favorite {
+                                        self.settingStore.favoriteComposers = favoritecomposers
+                                    }
+                                    
+                                    if let favoriteworks = login.works {
+                                        self.settingStore.favoriteWorks = favoriteworks
+                                    }
+                                    
+                                    if let composersfavoriteworks = login.composerworks {
+                                        self.settingStore.composersFavoriteWorks = composersfavoriteworks
+                                    }
+                                    
+                                    if let favoriterecordings = login.favoriterecordings {
+                                        self.settingStore.favoriteRecordings = favoriterecordings
+                                    }
+                                    
+                                    if let forbiddencomposers = login.forbidden {
+                                        self.settingStore.forbiddenComposers = forbiddencomposers
+                                    }
+                                    
+                                    if let playlists = login.playlists {
+                                        self.settingStore.playlists = playlists
+                                    }
+                                    
+                                    self.initRadio()
                                 }
+                            } else {
+                                self.isLoading = false
                             }
                         }
                     }

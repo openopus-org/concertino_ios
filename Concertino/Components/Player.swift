@@ -117,7 +117,7 @@ struct Player: View {
                         
                         if !self.playState.autoplay {
                             self.currentTrack[0].loading = false
-                            self.playState.autoplay = true
+                            //self.playState.autoplay = true
                         }
                         
                         // radio? fetch the next recording on the queue
@@ -294,6 +294,11 @@ struct Player: View {
                                 }
                             }
                             else {
+                                print("radio state: \(self.radioState.isActive)")
+                                if !self.radioState.isActive {
+                                    self.currentTrack[0].zero_index = 0
+                                }
+                                
                                 self.currentTrack[0].track_index = trackIndex as! Int
                                 self.currentTrack[0].track_position = 0
                                 self.currentTrack[0].starting_point = (self.playState.recording.first!.tracks![trackIndex as! Int - self.currentTrack[0].zero_index].starting_point)

@@ -77,7 +77,6 @@ struct WorksList: View {
                         WorkRow(work: work, composer: self.composer)
                     }
                 }
-                .padding(.bottom, 34)
                 .padding(.top, self.radioReady ? 0 : 20)
             }
         }

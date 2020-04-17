@@ -87,6 +87,7 @@ struct ComposersWorksSearch: View {
                     }
                 }
             }
+            
             Spacer()
         }
         .onReceive(omnisearch.objectWillChange, perform: loadData)
