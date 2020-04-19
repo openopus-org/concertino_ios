@@ -14,10 +14,17 @@ import StoreKit
 import UIKit
 
 final class AppState: ObservableObject  {
+    let externalUrlWillChange = PassthroughSubject<(), Never>()
+    
     @Published var currentTab = "library"
     @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
     @Published var isLoading = true
+    @Published var externalUrl = [String]() {
+        didSet {
+            externalUrlWillChange.send()
+        }
+    }
 }
 
 final class RadioState: ObservableObject {

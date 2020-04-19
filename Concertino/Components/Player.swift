@@ -192,7 +192,7 @@ struct Player: View {
                     if self.AppState.fullPlayer {
                         ScrollView(showsIndicators: false) {
                             VStack(alignment: .leading) {
-                                RecordingWorkPerformers(recording: playState.recording.first!)
+                                RecordingWorkPerformers(recording: playState.recording.first!, isSheet: false)
                                     .padding(.bottom, 30)
                                 RecordingProgressBars(recording: playState.recording.first!, currentTrack: $currentTrack)
                             }

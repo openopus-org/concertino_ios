@@ -51,7 +51,7 @@ struct RecentReleases: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(self.recordings, id: \.id) { recording in
-                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set), label: {
+                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false), label: {
                             RecordingBox(recording: recording)
                         })
                     }

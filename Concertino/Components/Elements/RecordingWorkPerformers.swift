@@ -11,6 +11,7 @@ import URLImage
 
 struct RecordingWorkPerformers: View {
     var recording: Recording
+    var isSheet: Bool
     @State private var showSheet = false
     @State private var showPlaylistSheet = false
     @State private var loadingSheet = false
@@ -103,22 +104,24 @@ struct RecordingWorkPerformers: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        self.loadingSheet = true
-                        APIget(AppConstants.concBackend+"/recording/shorturl/work/\(self.recording.work!.id)/album/\(self.recording.apple_albumid)/\(self.recording.set).json") { results in
-                            
-                            let recordingData: ShortRecordingDetail = parseJSON(results)
-                            
-                            DispatchQueue.main.async {
-                                let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
-                                ac.excludedActivityTypes = [.addToReadingList]
-                                self.loadingSheet = false
-                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
+                    if !isSheet {
+                        Button(action: {
+                            self.loadingSheet = true
+                            APIget(AppConstants.concBackend+"/recording/shorturl/work/\(self.recording.work!.id)/album/\(self.recording.apple_albumid)/\(self.recording.set).json") { results in
+                                
+                                let recordingData: ShortRecordingDetail = parseJSON(results)
+                                
+                                DispatchQueue.main.async {
+                                    let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
+                                    ac.excludedActivityTypes = [.addToReadingList]
+                                    self.loadingSheet = false
+                                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
+                                }
                             }
+                        })
+                        {
+                            ShareButton(isLoading: self.loadingSheet)
                         }
-                    })
-                    {
-                        ShareButton(isLoading: self.loadingSheet)
                     }
                     
                     if self.settingStore.userId > 0 {

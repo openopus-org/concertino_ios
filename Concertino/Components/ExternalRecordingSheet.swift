@@ -9,13 +9,36 @@
 import SwiftUI
 
 struct ExternalRecordingSheet: View {
+    var workId: String
+    var recordingId: String
+    var recordingSet: Int
+    @EnvironmentObject var AppState: AppState
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    self.AppState.externalUrl = [String]()
+                }, label: {
+                    Text("Close")
+                        .foregroundColor(Color(hex: 0xfe365e))
+                        .font(.custom("Barlow", size: 14))
+                })
+            }
+            .padding(30)
+            
+            RecordingDetail(workId: workId, recordingId: recordingId, recordingSet: recordingSet, isSheet: true)
+                .padding(.top, -55)
+            
+            Spacer()
+        }
     }
 }
 
 struct ExternalRecordingSheet_Previews: PreviewProvider {
     static var previews: some View {
-        ExternalRecordingSheet()
+        EmptyView()
     }
 }

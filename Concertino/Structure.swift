@@ -11,6 +11,9 @@ import SwiftUI
 struct Structure: View {
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var radioState: RadioState
+    @State private var showExternalDetail = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -35,6 +38,23 @@ struct Structure: View {
             
             Loader().opacity(self.AppState.isLoading ? 1 : 0)
         }
+        .sheet(isPresented: $showExternalDetail) {
+            Group {
+                if self.AppState.externalUrl.count > 2 {
+                    if self.AppState.externalUrl[1] == "u" {
+                        ExternalRecordingSheet(workId: self.AppState.externalUrl[2], recordingId: self.AppState.externalUrl[3], recordingSet: Int(self.AppState.externalUrl[4]) ?? 1)
+                            .environmentObject(self.settingStore)
+                            .environmentObject(self.playState)
+                            .environmentObject(self.radioState)
+                            .environmentObject(self.AppState)
+                    }
+                }
+            }
+        }
+        .onReceive(AppState.externalUrlWillChange, perform: {
+            print(self.AppState.externalUrl)
+            self.showExternalDetail = (self.AppState.externalUrl.count > 2)
+        })
     }
 }
 

@@ -51,7 +51,7 @@ struct PlaylistsRecordings: View {
                 List {
                     PlaylistButtons(recordings: self.recordings, playlistId: playlistSwitcher.playlist)
                     ForEach(self.recordings, id: \.id) { recording in
-                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set), label: {
+                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false), label: {
                             RecordingRow(recording: recording)
                         })
                     }

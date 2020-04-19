@@ -12,6 +12,7 @@ struct RecordingDetail: View {
     var workId: String
     var recordingId: String
     var recordingSet: Int
+    var isSheet: Bool
     @State private var error = false
     @State private var recording = [Recording]()
     @State private var loading = true
@@ -41,8 +42,10 @@ struct RecordingDetail: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                BackButton()
-                    .padding(.top, 6)
+                if !isSheet {
+                    BackButton()
+                        .padding(.top, 6)
+                }
                 
                 if (loading) {
                     Spacer()
@@ -70,8 +73,8 @@ struct RecordingDetail: View {
                 else if recording.count > 0 {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .leading) {
-                            RecordingWorkPerformers(recording: recording.first!)
-                            RecordingPlayButtons(recording: recording.first!)
+                            RecordingWorkPerformers(recording: recording.first!, isSheet: self.isSheet)
+                            RecordingPlayButtons(recording: recording.first!, isSheet: self.isSheet)
                                 .padding(.top, 16)
                                 .padding(.bottom, 12)
                             RecordingTrackList(recording: recording.first!)
@@ -86,6 +89,7 @@ struct RecordingDetail: View {
             
             Spacer()
         }
+        .padding(isSheet ? 15 : 0)
     }
 }
 
