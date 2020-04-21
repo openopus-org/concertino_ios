@@ -40,20 +40,18 @@ struct Structure: View {
         }
         .sheet(isPresented: $showExternalDetail) {
             Group {
-                if self.AppState.externalUrl.count > 2 {
-                    if self.AppState.externalUrl[1] == "u" {
-                        ExternalRecordingSheet(workId: self.AppState.externalUrl[2], recordingId: self.AppState.externalUrl[3], recordingSet: Int(self.AppState.externalUrl[4]) ?? 1)
-                            .environmentObject(self.settingStore)
-                            .environmentObject(self.playState)
-                            .environmentObject(self.radioState)
-                            .environmentObject(self.AppState)
-                    }
+                if self.AppState.externalUrl.count == 3 {
+                    ExternalRecordingSheet(workId: self.AppState.externalUrl[0], recordingId: self.AppState.externalUrl[1], recordingSet: Int(self.AppState.externalUrl[2]) ?? 1)
+                        .environmentObject(self.settingStore)
+                        .environmentObject(self.playState)
+                        .environmentObject(self.radioState)
+                        .environmentObject(self.AppState)
                 }
             }
         }
         .onReceive(AppState.externalUrlWillChange, perform: {
             print(self.AppState.externalUrl)
-            self.showExternalDetail = (self.AppState.externalUrl.count > 2)
+            self.showExternalDetail = (self.AppState.externalUrl.count == 3)
         })
     }
 }

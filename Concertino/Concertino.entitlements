@@ -5,6 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:concertino.app</string>
+		<string>applinks:cncert.in</string>
 	</array>
 </dict>
 </plist>

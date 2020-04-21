@@ -15,20 +15,38 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     lazy var appState = AppState()
     
-    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-    //  appState.externalUrl = true
-    }
-    
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
           guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
             let incomingURL = userActivity.webpageURL,
             let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
               return
           }
-        appState.externalUrl = components.path!.components(separatedBy: "/")
+        
+        let comps = components.path!.components(separatedBy: "/")
+        
+        if comps[1] == "r" {
+            if let shortId = UInt32(comps[2], radix: 16) {
+                APIget(AppConstants.concBackend+"/recording/unshorten/\(shortId).json") { results in
+                    if let recordingData: ShortRecordingDetail = safeJSON(results) {
+                        DispatchQueue.main.async {
+                            self.appState.externalUrl = [recordingData.recording.work_id ?? "0", recordingData.recording.apple_albumid ?? "0", recordingData.recording.set ?? "0"]
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.appState.externalUrl = ["0", "0", "0"]
+                        }
+                    }
+                }
+            }
+        } else if comps[1] == "u" {
+            DispatchQueue.main.async {
+                self.appState.externalUrl = [comps[2], comps[3], comps[4]]
+            }
+        }
     }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+            
         
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -55,6 +73,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
         }
+        
+        if let userActivity = connectionOptions.userActivities.first {
+            DispatchQueue.main.async {
+                self.scene(scene, continue: userActivity)
+            }
+        }
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        appState.currentTab = "settings"
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

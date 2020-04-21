@@ -263,6 +263,9 @@ struct ShortRecordingDetail: Codable {
 
 struct ShortRecording: Codable {
     var id: String
+    var work_id: String?
+    var apple_albumid: String?
+    var set: String?
 }
 
 struct PlaylistRecording: Codable {

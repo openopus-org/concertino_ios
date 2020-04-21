@@ -43,7 +43,9 @@ struct AddToPlaylist: View {
                                 self.presentationMode.wrappedValue.dismiss()
                             }
                             DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Added!")
+                                if let topMostViewController = UIApplication.shared.topMostViewController() {
+                                    topMostViewController.showToast(message: "Added!")
+                                }
                             }
                         }
                     }
