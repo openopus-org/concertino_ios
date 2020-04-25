@@ -10,11 +10,13 @@ import SwiftUI
 
 struct RecordingNotAvailable: View {
     @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var mediaBridge: MediaBridge
     var size: String
     
     var body: some View {
         Button(action: {
-            self.playState.recording = [self.playState.recording.first!]
+            //self.playState.recording = [self.playState.recording.first!]
+            self.mediaBridge.prepareToPlay(self.playState.autoplay)
         },
         label: {
             HStack {

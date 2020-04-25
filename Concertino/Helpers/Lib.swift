@@ -253,6 +253,22 @@ public func APIpost(_ url: String, parameters: [String: Any], completion: @escap
     }.resume()
 }
 
+func imageGet(url: URL, completion: @escaping (MPMediaItemArtwork) -> ()) {
+    URLSession.shared.dataTask(with: url) { data, _, error in
+        guard let data = data,
+        let image = UIImage(data: data) else {
+            
+            if let error = error {
+                print(error)
+            }
+            
+            return
+        }
+        
+        completion(.init(boundsSize: image.size) { _ in image })
+    }.resume()
+}
+
 public func safeJSON<T: Decodable>(_ data: Data) -> T? {
     do {
         let decoder = JSONDecoder()
@@ -316,14 +332,18 @@ class MediaBridge: ObservableObject {
         }
         
         player.setQueue(with: queue)
+        self.prepareToPlay(autoplay)
+    }
+    
+    func prepareToPlay(_ autoplay: Bool) {
         player.prepareToPlay(completionHandler: {(error) in
             if error != nil {
-                let status: [String : Any] = [
+                /*let status: [String : Any] = [
                     "index": 0,
                     "title": 0,
                     "success": false
                 ]
-                NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
+                NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)*/
             }
             else if autoplay {
                 DispatchQueue.main.async {

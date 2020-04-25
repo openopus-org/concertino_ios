@@ -8,6 +8,7 @@
 
 import SwiftUI
 import StoreKit
+import MediaPlayer
 
 struct Player: View {
     @State private var currentTrack = [CurrentTrack]()
@@ -32,6 +33,23 @@ struct Player: View {
                     DispatchQueue.main.async {
                         self.settingStore.lastPlayedRecording = self.playState.recording
                     }
+                }
+            }
+        }
+        
+        // apple now playing
+        
+        let center = MPNowPlayingInfoCenter.default()
+        var songInfo = [String: AnyObject]()
+        
+        if let cover = self.playState.recording.first!.cover {
+            print(cover)
+            imageGet(url: cover) { img in
+                DispatchQueue.main.async {
+                    songInfo[MPMediaItemPropertyArtist] = self.playState.recording.first!.work!.composer!.name as AnyObject
+                    songInfo[MPMediaItemPropertyAlbumTitle] = self.playState.recording.first!.work!.title as AnyObject
+                    songInfo[MPMediaItemPropertyArtwork] = img as AnyObject
+                    center.nowPlayingInfo = songInfo
                 }
             }
         }

@@ -89,10 +89,8 @@ struct RecordingMini: View {
                 }
             }
             else {
-                if self.settingStore.userId > 0 {
-                    RecordingNotAvailable(size: "min")
-                }
-                else if self.settingStore.firstUsage {
+                if self.settingStore.userId > 0 || self.settingStore.firstUsage {
+                    //RecordingNotAvailable(size: "min")
                     HStack {
                         Spacer()
                         ActivityIndicator(isAnimating: true)

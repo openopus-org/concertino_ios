@@ -98,6 +98,7 @@
 		09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E5441B23FB5734005B8AEE /* RecordingTrackList.swift */; };
 		09E5441E23FB749C005B8AEE /* RecordingDisclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E5441D23FB749C005B8AEE /* RecordingDisclaimer.swift */; };
 		09E5442023FB87B7005B8AEE /* RecordingMini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E5441F23FB87B7005B8AEE /* RecordingMini.swift */; };
+		09F53EEC24527EBB00D312B9 /* AirPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F53EEB24527EBB00D312B9 /* AirPlayButton.swift */; };
 		09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5523F9E2D800599992 /* RecordingDetail.swift */; };
 		09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */; };
 /* End PBXBuildFile section */
@@ -196,6 +197,7 @@
 		09E5441B23FB5734005B8AEE /* RecordingTrackList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTrackList.swift; sourceTree = "<group>"; };
 		09E5441D23FB749C005B8AEE /* RecordingDisclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDisclaimer.swift; sourceTree = "<group>"; };
 		09E5441F23FB87B7005B8AEE /* RecordingMini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingMini.swift; sourceTree = "<group>"; };
+		09F53EEB24527EBB00D312B9 /* AirPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayButton.swift; sourceTree = "<group>"; };
 		09FE9A5523F9E2D800599992 /* RecordingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetail.swift; sourceTree = "<group>"; };
 		09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWorkPerformers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -365,6 +367,7 @@
 				09AD2CDA2434211D00375277 /* RadioStationSuperButton.swift */,
 				093F0A22243442660039C218 /* SettingsMenuItem.swift */,
 				0919D09C2441492800EF4B50 /* RecordingProgressBar.swift */,
+				09F53EEB24527EBB00D312B9 /* AirPlayButton.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				09A0084423F4E391001C696E /* WorkRow.swift in Sources */,
 				090625622430383100E8FC3E /* RadioStationButton.swift in Sources */,
 				09A6741F23F77FDD000000D6 /* WorkDetail.swift in Sources */,
+				09F53EEC24527EBB00D312B9 /* AirPlayButton.swift in Sources */,
 				09AD2CD724341B5600375277 /* RadioBuilder.swift in Sources */,
 				090625662431707D00E8FC3E /* RecordingBox.swift in Sources */,
 				093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */,
@@ -672,7 +676,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -682,7 +686,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.410;
+				MARKETING_VERSION = 1.20.424;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -696,7 +700,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -706,7 +710,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.410;
+				MARKETING_VERSION = 1.20.424;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

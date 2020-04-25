@@ -30,9 +30,17 @@ struct RecordingPlaybackControl: View {
                     HStack {
                         Spacer()
                         
+                        AirPlayButton()
+                            .frame(width: 50)
+                            .frame(height: 50)
+                            .padding(.leading, -8)
+                            .padding(.trailing, 10)
+                        
+                        /*
                         Spacer()
                             .frame(width: 36)
                             .padding(.trailing, 22)
+                        */
                         
                         Button(
                             action: {
@@ -103,10 +111,8 @@ struct RecordingPlaybackControl: View {
                 }
             }
             else {
-                if self.settingStore.userId > 0 {
-                    RecordingNotAvailable(size: "max")
-                }
-                else if self.settingStore.firstUsage {
+                if self.settingStore.userId > 0 || self.settingStore.firstUsage {
+                    //RecordingNotAvailable(size: "max")
                     HStack {
                         Spacer()
                         ActivityIndicator(isAnimating: true)
