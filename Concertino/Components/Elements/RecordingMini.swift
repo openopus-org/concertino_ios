@@ -13,6 +13,7 @@ struct RecordingMini: View {
     var recording: Recording
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
+    @EnvironmentObject var previewBridge: PreviewBridge
     @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
@@ -62,7 +63,13 @@ struct RecordingMini: View {
                 else {
                     HStack {
                         Button(
-                            action: { self.mediaBridge.togglePlay() },
+                            action: {
+                                if self.currentTrack.first!.preview {
+                                    self.previewBridge.togglePlay()
+                                } else {
+                                    self.mediaBridge.togglePlay()
+                                }
+                        },
                         label: {
                             Image(self.currentTrack.first!.playing ? "pause" : "play")
                             .resizable()

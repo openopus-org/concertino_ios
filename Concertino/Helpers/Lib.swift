@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine
 import MediaPlayer
+import AVFoundation
 import CommonCrypto
 import StoreKit
 import UIKit
@@ -259,7 +260,7 @@ func imageGet(url: URL, completion: @escaping (MPMediaItemArtwork) -> ()) {
         let image = UIImage(data: data) else {
             
             if let error = error {
-                print(error)
+                print("🖼 \(error)")
             }
             
             return
@@ -297,6 +298,233 @@ public func convertSeconds (seconds: Int) -> String {
     }
     else {
         return String(format: "%d:%02d", min, s)
+    }
+}
+
+extension Notification.Name {
+    static let previewPlayerStatusChanged = Notification.Name("previewPlayerStatusChanged")
+    static let previewPlayerItemChanged = Notification.Name("previewPlayerItemChanged")
+}
+
+class PreviewBridge: ObservableObject {
+    let player = AVQueuePlayer()
+    var queue = [URL]()
+    var index = 0
+    
+    var audioQueueObserver: NSKeyValueObservation?
+    var audioQueueStatusObserver: NSKeyValueObservation?
+    var audioQueueBufferEmptyObserver: NSKeyValueObservation?
+    var audioQueueBufferAlmostThereObserver: NSKeyValueObservation?
+    var audioQueueBufferFullObserver: NSKeyValueObservation?
+    var audioQueueStallObserver: NSKeyValueObservation?
+    var audioQueueWaitingObserver: NSKeyValueObservation?
+    
+    init() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerItemDidReachEnd),
+            name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
+            object: player.currentItem
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerStatusChanged),
+            name: .previewPlayerStatusChanged,
+            object: player
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(playerItemChanged),
+            name: .previewPlayerItemChanged,
+            object: player
+        )
+        
+        self.audioQueueObserver = self.player.observe(\.currentItem, options: [.new]) {_,_ in
+            if self.getCurrentPlaybackState() && self.index < self.queue.count - 1 {
+                self.index = self.index + 1
+            } else if self.player.timeControlStatus != .paused && self.index == self.queue.count - 1 {
+                print("all over again")
+                self.player.pause()
+                self.setQueueAndPlay(tracks: self.queue, starttrack: 0, autoplay: false)
+            }
+            
+            DispatchQueue.main.async {
+                print("🤦🏻‍♂️ - \(self.player.currentTime().seconds) - \(self.player.rate)")
+                
+                if let currentItem = self.player.currentItem {
+                    MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                        MPMediaItemPropertyPlaybackDuration: currentItem.asset.duration.seconds,
+                        MPNowPlayingInfoPropertyElapsedPlaybackTime: 0,
+                        MPNowPlayingInfoPropertyPlaybackRate: self.player.rate,
+                        MPMediaItemPropertyArtist: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtist] ?? "",
+                        MPMediaItemPropertyAlbumTitle: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyAlbumTitle] ?? "",
+                        MPMediaItemPropertyArtwork: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtwork] ?? nil!
+                    ]
+                }
+                
+                NotificationCenter.default.post(name: .previewPlayerItemChanged, object: self.player)
+                
+                print("🤦🏻‍♂️ - \(String(describing: MPNowPlayingInfoCenter.default().nowPlayingInfo))")
+            }
+        }
+        
+        self.audioQueueStallObserver = self.player.observe(\.timeControlStatus, options: [.new, .old], changeHandler: {
+            (playerItem, change) in
+            
+            var status = ""
+            
+            switch (playerItem.timeControlStatus) {
+                case AVPlayerTimeControlStatus.paused:
+                    status = "paused"
+                case AVPlayerTimeControlStatus.playing:
+                    status = "playing"
+                case AVPlayerTimeControlStatus.waitingToPlayAtSpecifiedRate:
+                    status = "waiting"
+                @unknown default:
+                    status = "unknown"
+            }
+            
+            DispatchQueue.main.async {
+                if status == "paused" || status == "playing" {
+                    print("😱 - \(self.player.currentTime().seconds) - \(self.player.rate)")
+
+                    if let currentItem = self.player.currentItem {
+                        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+                            MPMediaItemPropertyPlaybackDuration: currentItem.asset.duration.seconds,
+                            MPNowPlayingInfoPropertyElapsedPlaybackTime: self.player.currentTime().seconds,
+                            MPNowPlayingInfoPropertyPlaybackRate: self.player.rate,
+                            MPMediaItemPropertyArtist: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtist] ?? "",
+                            MPMediaItemPropertyAlbumTitle: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyAlbumTitle] ?? "",
+                            MPMediaItemPropertyArtwork: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtwork] ?? nil!
+                        ]
+                    }
+                    
+                    NotificationCenter.default.post(name: .previewPlayerStatusChanged, object: self.player, userInfo: ["status": status])
+
+                    print("😱 - \(String(describing: MPNowPlayingInfoCenter.default().nowPlayingInfo))")
+                }
+            }
+        })
+
+        let commandCenter = MPRemoteCommandCenter.shared()
+
+        commandCenter.playCommand.addTarget { [unowned self] event in
+            self.togglePlay()
+            return .success
+        }
+        
+        commandCenter.pauseCommand.addTarget { [unowned self] event in
+            self.togglePlay()
+            return .success
+        }
+        
+        commandCenter.nextTrackCommand.addTarget { [unowned self] event in
+            self.nextTrack()
+            return .success
+        }
+        
+        commandCenter.previousTrackCommand.addTarget { [unowned self] event in
+            self.previousTrack()
+            return .success
+        }
+        
+        commandCenter.changePlaybackPositionCommand.addTarget { event -> MPRemoteCommandHandlerStatus in
+            let event = event as! MPChangePlaybackPositionCommandEvent
+            self.player.seek(to: CMTimeMake(value: Int64(event.positionTime), timescale: 1))
+            return .success
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func setQueueAndPlay(tracks: [URL], starttrack: Int, autoplay: Bool) {
+        do {
+           try AVAudioSession.sharedInstance().setCategory(.playback)
+        } catch(let error) {
+            print("set queue and play: \(error.localizedDescription)")
+        }
+        
+        player.removeAllItems()
+        self.queue = tracks
+        self.index = starttrack
+        
+        for track in tracks.suffix(from: starttrack) {
+            player.insert(AVPlayerItem(asset: AVAsset(url: track), automaticallyLoadedAssetKeys: ["playable"]), after: nil)
+        }
+        
+        if autoplay {
+            player.play()
+        }
+    }
+    
+    func addToQueue(tracks: [URL]) {
+        self.queue.append(contentsOf: tracks)
+        for track in tracks {
+            player.insert(AVPlayerItem(asset: AVAsset(url: track), automaticallyLoadedAssetKeys: ["playable"]), after: nil)
+        }
+    }
+    
+    func togglePlay() {
+        print("previewbridge.toggleplay()")
+        if (player.rate == 1.0) {
+            player.pause()
+        } else {
+            player.play()
+        }
+    }
+    
+    func getCurrentPlaybackState() -> Bool {
+        if (player.timeControlStatus == .playing) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func getCurrentPlaybackTime() -> Int {
+        if player.currentTime().seconds.isFinite {
+            return Int(player.currentTime().seconds.rounded())
+        } else {
+            return 0
+        }
+    }
+    
+    func getCurrentTrackIndex() -> Int {
+        return self.index
+    }
+    
+    func nextTrack() {
+        player.advanceToNextItem()
+    }
+    
+    func skipToBeginning() {
+        player.seek(to: CMTimeMake(value: 0, timescale: 1))
+    }
+    
+    func previousTrack() {
+        //self.stop()
+        self.setQueueAndPlay(tracks: self.queue, starttrack: (self.index > 0 ? self.index-1 : 0), autoplay: true)
+    }
+    
+    func stop() {
+        player.pause()
+        player.seek(to: CMTimeMake(value: 0, timescale: 1))
+    }
+    
+    @objc func playerItemDidReachEnd(_ notification:Notification) {
+        
+    }
+    
+    @objc func playerItemChanged(_ notification:Notification) {
+        
+    }
+    
+    @objc func playerStatusChanged(_ notification:Notification) {
+        
     }
 }
 
@@ -366,7 +594,7 @@ class MediaBridge: ObservableObject {
             "success": player.nowPlayingItem != nil
             ]
         
-        print(status)
+        print("play item changed: \(status)")
         
         if player.indexOfNowPlayingItem < 1000 {
             NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
@@ -374,7 +602,7 @@ class MediaBridge: ObservableObject {
     }
     
     @objc func playbackStateChanged(_ notification:Notification) {
-        print(player.playbackState == .playing)
+        print("playback state changed: \(player.playbackState == .playing)")
         
         NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange, object: self, userInfo: ["playing": (player.playbackState == .playing)])
     }
@@ -807,7 +1035,7 @@ func getStoreFront(completion: @escaping (String?) -> ()) {
     }
 }
 
-func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ canPlay: Bool, _ login: Login?) -> ()) {
+func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ canPlay: Bool, _ apmusEnabled: Bool, _ login: Login?) -> ()) {
     let settingStore = SettingStore()
     
     SKCloudServiceController.requestAuthorization { status in
@@ -824,27 +1052,29 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                                             print(String(decoding: results, as: UTF8.self))
                                             let login: Login = parseJSON(results)
                                 
-                                            completion(countryCode ?? "us", true, login)
+                                            completion(countryCode ?? "us", true, true, login)
                                         }
                                     }
                                 }
                             } else {
-                                completion(countryCode ?? "us", true, nil)
+                                completion(countryCode ?? "us", true, true, nil)
                             }
+/*
                     } else if capabilities.contains(.musicCatalogSubscriptionEligible) && autoplay {
                         DispatchQueue.main.async {
                             let amc = AppleMusicSubscribeController()
                             amc.showAppleMusicSignup()
                         }
                         
-                        completion(countryCode ?? "us", false, nil)
+                        completion(countryCode ?? "us", false, true, nil)
+ */
                     } else {
-                        completion(countryCode ?? "us", false, nil)
+                        completion(countryCode ?? "us", false, false, nil)
                     }
                 }
             }
         } else {
-            completion("us", false, nil)
+            completion("us", false, true, nil)
         }
     }
 }

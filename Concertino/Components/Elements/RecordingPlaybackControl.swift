@@ -11,6 +11,7 @@ import SwiftUI
 struct RecordingPlaybackControl: View {
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
+    @EnvironmentObject var previewBridge: PreviewBridge
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
     @EnvironmentObject var playState: PlayState
@@ -36,18 +37,20 @@ struct RecordingPlaybackControl: View {
                             .padding(.leading, -8)
                             .padding(.trailing, 10)
                         
-                        /*
-                        Spacer()
-                            .frame(width: 36)
-                            .padding(.trailing, 22)
-                        */
-                        
                         Button(
                             action: {
-                                if self.currentTrack.first!.track_index == 0 {
-                                    self.mediaBridge.skipToBeginning()
+                                if self.currentTrack.first!.preview {
+                                    if self.currentTrack.first!.track_index == 0 {
+                                        self.previewBridge.skipToBeginning()
+                                    } else {
+                                        self.previewBridge.previousTrack()
+                                    }
                                 } else {
-                                    self.mediaBridge.previousTrack()
+                                    if self.currentTrack.first!.track_index == 0 {
+                                        self.mediaBridge.skipToBeginning()
+                                    } else {
+                                        self.mediaBridge.previousTrack()
+                                    }
                                 }
                             },
                             label: {
@@ -60,7 +63,13 @@ struct RecordingPlaybackControl: View {
                             })
                         
                         Button(
-                            action: { self.mediaBridge.togglePlay() },
+                            action: {
+                                if self.currentTrack.first!.preview {
+                                    self.previewBridge.togglePlay()
+                                } else {
+                                    self.mediaBridge.togglePlay()
+                                }
+                            },
                             label: {
                                 Image(self.currentTrack.first!.playing ? "pause" : "play")
                                 .resizable()
@@ -73,7 +82,11 @@ struct RecordingPlaybackControl: View {
                         
                         Button(
                             action: {
-                                self.mediaBridge.nextTrack()
+                                if self.currentTrack.first!.preview {
+                                    self.previewBridge.nextTrack()
+                                } else {
+                                    self.mediaBridge.nextTrack()
+                                }
                             },
                             label: {
                                 Image("skiptrack")
@@ -87,7 +100,13 @@ struct RecordingPlaybackControl: View {
                             action: {
                                 if self.radioState.isActive && self.radioState.canSkip  {
                                     if self.radioState.nextRecordings.count > 0 {
-                                        self.mediaBridge.stop()
+                                        
+                                        if self.currentTrack.first!.preview {
+                                            self.previewBridge.stop()
+                                        } else {
+                                            self.mediaBridge.stop()
+                                        }
+                                        
                                         self.playState.autoplay = true
                                         self.currentTrack[0].track_position = 0
                                         self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
@@ -111,18 +130,22 @@ struct RecordingPlaybackControl: View {
                 }
             }
             else {
+                HStack {
+                    Spacer()
+                    ActivityIndicator(isAnimating: true)
+                        .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .large }
+                    Spacer()
+                }
+                
+                /*
                 if self.settingStore.userId > 0 || self.settingStore.firstUsage {
                     //RecordingNotAvailable(size: "max")
-                    HStack {
-                        Spacer()
-                        ActivityIndicator(isAnimating: true)
-                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .large }
-                        Spacer()
-                    }
+                    
                 }
                 else {
                     BrowseOnlyMode(size: "max")
                 }
+                */
             }
         }
         .padding(.top, 16)

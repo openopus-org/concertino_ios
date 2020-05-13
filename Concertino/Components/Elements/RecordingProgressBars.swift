@@ -12,6 +12,7 @@ struct RecordingProgressBars: View {
     var recording: Recording
     @Binding var currentTrack: [CurrentTrack]
     @EnvironmentObject var mediaBridge: MediaBridge
+    @EnvironmentObject var previewBridge: PreviewBridge
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var radioState: RadioState
     
@@ -23,10 +24,16 @@ struct RecordingProgressBars: View {
                         VStack(alignment: .leading) {
                             
                             Button(action: {
-                                self.mediaBridge.stop()
                                 self.currentTrack[0].loading = true
                                 self.currentTrack[0].zero_index = 0
-                                self.mediaBridge.setQueueAndPlay(tracks: self.radioState.nextRecordings.count > 0 ? self.playState.recording.first!.apple_tracks! + self.radioState.nextRecordings.first!.apple_tracks! : self.playState.recording.first!.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
+                                
+                                if self.currentTrack.first!.preview {
+                                    self.previewBridge.stop()
+                                    self.previewBridge.setQueueAndPlay(tracks: self.radioState.nextRecordings.count > 0 ? self.playState.recording.first!.previews! + self.radioState.nextRecordings.first!.previews! : self.playState.recording.first!.previews!, starttrack: self.recording.tracks!.firstIndex{$0.apple_trackid == track.apple_trackid} ?? 0, autoplay: true)
+                                } else {
+                                    self.mediaBridge.stop()
+                                    self.mediaBridge.setQueueAndPlay(tracks: self.radioState.nextRecordings.count > 0 ? self.playState.recording.first!.apple_tracks! + self.radioState.nextRecordings.first!.apple_tracks! : self.playState.recording.first!.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
+                                }
                             }, label: {
                                 Text(track.title)
                                     .font(.custom("Barlow", size: 14))

@@ -194,7 +194,7 @@ struct RadioBuilder: View {
                                 self.initRadio()
                             } else {
                                 self.isLoading = true
-                                userLogin(self.playState.autoplay) { country, canPlay, loginResults in
+                                userLogin(self.playState.autoplay) { country, canPlay, apmusEligible, loginResults in
                                     if let login = loginResults {
                                         
                                         DispatchQueue.main.async {

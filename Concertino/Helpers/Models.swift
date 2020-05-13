@@ -74,6 +74,7 @@ struct Track: Codable {
     var length: Int
     var title: String
     var apple_trackid: String
+    var preview: URL?
     var starting_point: Int
     
     var readableLength: String {
@@ -95,6 +96,7 @@ struct CurrentTrack: Codable {
     var track_length: Int
     var full_position: Int
     var full_length: Int
+    var preview: Bool
     
     var track_progress: CGFloat {
         get { return CGFloat(Double (track_position)/Double (track_length)) }
@@ -127,6 +129,7 @@ struct Recording: Codable {
     var length: Int?
     var tracks: [Track]?
     var apple_tracks: [String]?
+    var previews: [URL]?
     var work: Work?
     
     var isVerified: Bool {

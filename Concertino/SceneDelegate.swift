@@ -64,6 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                             .environmentObject(MediaBridge())
                             .environmentObject(SettingStore())
                             .environmentObject(RadioState())
+                            .environmentObject(PreviewBridge())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
