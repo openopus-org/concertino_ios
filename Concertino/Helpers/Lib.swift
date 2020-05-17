@@ -310,6 +310,7 @@ class PreviewBridge: ObservableObject {
     let player = AVQueuePlayer()
     var queue = [URL]()
     var index = 0
+    var zeroindex = 0
     
     var audioQueueObserver: NSKeyValueObservation?
     var audioQueueStatusObserver: NSKeyValueObservation?
@@ -347,26 +348,30 @@ class PreviewBridge: ObservableObject {
             } else if self.player.timeControlStatus != .paused && self.index == self.queue.count - 1 {
                 print("all over again")
                 self.player.pause()
-                self.setQueueAndPlay(tracks: self.queue, starttrack: 0, autoplay: false)
+                self.setQueueAndPlay(tracks: self.queue, starttrack: self.zeroindex, autoplay: false, zeroqueue: true)
             }
             
             DispatchQueue.main.async {
                 print("🤦🏻‍♂️ - \(self.player.currentTime().seconds) - \(self.player.rate)")
                 
+                let center = MPNowPlayingInfoCenter.default()
+                var songInfo = [String: AnyObject]()
+                
                 if let currentItem = self.player.currentItem {
-                    MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-                        MPMediaItemPropertyPlaybackDuration: currentItem.asset.duration.seconds,
-                        MPNowPlayingInfoPropertyElapsedPlaybackTime: 0,
-                        MPNowPlayingInfoPropertyPlaybackRate: self.player.rate,
-                        MPMediaItemPropertyArtist: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtist] ?? "",
-                        MPMediaItemPropertyAlbumTitle: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyAlbumTitle] ?? "",
-                        MPMediaItemPropertyArtwork: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtwork] ?? nil!
-                    ]
+                    songInfo[MPMediaItemPropertyPlaybackDuration] = currentItem.asset.duration.seconds as AnyObject
+                    songInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = 0 as AnyObject
+                    songInfo[MPNowPlayingInfoPropertyPlaybackRate] = self.player.rate as AnyObject
+                    
+                    if center.nowPlayingInfo?.count ?? 0 > 0 {
+                        songInfo[MPMediaItemPropertyArtist] = center.nowPlayingInfo![MPMediaItemPropertyArtist] as AnyObject?
+                        songInfo[MPMediaItemPropertyAlbumTitle] = center.nowPlayingInfo![MPMediaItemPropertyAlbumTitle] as AnyObject?
+                        songInfo[MPMediaItemPropertyArtwork] = center.nowPlayingInfo![MPMediaItemPropertyArtwork] as AnyObject?
+                    }
+                    
+                    center.nowPlayingInfo = songInfo
                 }
                 
                 NotificationCenter.default.post(name: .previewPlayerItemChanged, object: self.player)
-                
-                print("🤦🏻‍♂️ - \(String(describing: MPNowPlayingInfoCenter.default().nowPlayingInfo))")
             }
         }
         
@@ -388,17 +393,21 @@ class PreviewBridge: ObservableObject {
             
             DispatchQueue.main.async {
                 if status == "paused" || status == "playing" {
-                    print("😱 - \(self.player.currentTime().seconds) - \(self.player.rate)")
-
+                    let center = MPNowPlayingInfoCenter.default()
+                    var songInfo = [String: AnyObject]()
+                    
                     if let currentItem = self.player.currentItem {
-                        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-                            MPMediaItemPropertyPlaybackDuration: currentItem.asset.duration.seconds,
-                            MPNowPlayingInfoPropertyElapsedPlaybackTime: self.player.currentTime().seconds,
-                            MPNowPlayingInfoPropertyPlaybackRate: self.player.rate,
-                            MPMediaItemPropertyArtist: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtist] ?? "",
-                            MPMediaItemPropertyAlbumTitle: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyAlbumTitle] ?? "",
-                            MPMediaItemPropertyArtwork: MPNowPlayingInfoCenter.default().nowPlayingInfo![MPMediaItemPropertyArtwork] ?? nil!
-                        ]
+                        songInfo[MPMediaItemPropertyPlaybackDuration] = currentItem.asset.duration.seconds as AnyObject
+                        songInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] =  self.player.currentTime().seconds as AnyObject
+                        songInfo[MPNowPlayingInfoPropertyPlaybackRate] = self.player.rate as AnyObject
+                        
+                        if center.nowPlayingInfo?.count ?? 0 > 0 {
+                            songInfo[MPMediaItemPropertyArtist] = center.nowPlayingInfo![MPMediaItemPropertyArtist] as AnyObject?
+                            songInfo[MPMediaItemPropertyAlbumTitle] = center.nowPlayingInfo![MPMediaItemPropertyAlbumTitle] as AnyObject?
+                            songInfo[MPMediaItemPropertyArtwork] = center.nowPlayingInfo![MPMediaItemPropertyArtwork] as AnyObject?
+                        }
+                        
+                        center.nowPlayingInfo = songInfo
                     }
                     
                     NotificationCenter.default.post(name: .previewPlayerStatusChanged, object: self.player, userInfo: ["status": status])
@@ -441,7 +450,7 @@ class PreviewBridge: ObservableObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func setQueueAndPlay(tracks: [URL], starttrack: Int, autoplay: Bool) {
+    func setQueueAndPlay(tracks: [URL], starttrack: Int, autoplay: Bool, zeroqueue: Bool) {
         do {
            try AVAudioSession.sharedInstance().setCategory(.playback)
         } catch(let error) {
@@ -451,9 +460,14 @@ class PreviewBridge: ObservableObject {
         player.removeAllItems()
         self.queue = tracks
         self.index = starttrack
+        self.zeroindex = 0
         
         for track in tracks.suffix(from: starttrack) {
             player.insert(AVPlayerItem(asset: AVAsset(url: track), automaticallyLoadedAssetKeys: ["playable"]), after: nil)
+        }
+        
+        if zeroqueue {
+            self.queue = Array(self.queue.suffix(from: starttrack))
         }
         
         if autoplay {
@@ -462,6 +476,7 @@ class PreviewBridge: ObservableObject {
     }
     
     func addToQueue(tracks: [URL]) {
+        self.zeroindex = self.queue.count
         self.queue.append(contentsOf: tracks)
         for track in tracks {
             player.insert(AVPlayerItem(asset: AVAsset(url: track), automaticallyLoadedAssetKeys: ["playable"]), after: nil)
@@ -507,7 +522,7 @@ class PreviewBridge: ObservableObject {
     
     func previousTrack() {
         //self.stop()
-        self.setQueueAndPlay(tracks: self.queue, starttrack: (self.index > 0 ? self.index-1 : 0), autoplay: true)
+        self.setQueueAndPlay(tracks: self.queue, starttrack: (self.index > 0 ? self.index-1 : 0), autoplay: true, zeroqueue: false)
     }
     
     func stop() {
@@ -594,16 +609,12 @@ class MediaBridge: ObservableObject {
             "success": player.nowPlayingItem != nil
             ]
         
-        print("play item changed: \(status)")
-        
         if player.indexOfNowPlayingItem < 1000 {
             NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
         }
     }
     
     @objc func playbackStateChanged(_ notification:Notification) {
-        print("playback state changed: \(player.playbackState == .playing)")
-        
         NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange, object: self, userInfo: ["playing": (player.playbackState == .playing)])
     }
     
@@ -1030,7 +1041,7 @@ func getStoreFront(completion: @escaping (String?) -> ()) {
                 completion(countryCode)
             }
         } else {
-            completion(nil)
+            completion("us")
         }
     }
 }
@@ -1069,12 +1080,33 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                         completion(countryCode ?? "us", false, true, nil)
  */
                     } else {
-                        completion(countryCode ?? "us", false, false, nil)
+                        if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
+                            APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "recid": "guest-" + UUID().uuidString, "id": settingStore.userId]) { results in
+                                        print(String(decoding: results, as: UTF8.self))
+                                        let login: Login = parseJSON(results)
+                            
+                                        completion(countryCode ?? "us", false, true, login)
+                                }
+                        } else {
+                            completion(countryCode ?? "us", false, true, nil)
+                        }
+                        
                     }
                 }
             }
         } else {
-            completion("us", false, true, nil)
+            // guest login
+            
+            if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
+                APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "recid": "guest-" + UUID().uuidString, "id": settingStore.userId]) { results in
+                            print(String(decoding: results, as: UTF8.self))
+                            let login: Login = parseJSON(results)
+                
+                            completion("us", false, false, login)
+                    }
+            } else {
+                completion("us", false, false, nil)
+            }
         }
     }
 }

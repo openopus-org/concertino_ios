@@ -109,7 +109,10 @@ struct Player: View {
                 print("🔄 Radio ON, fetching a random recording!")
                 
                 let indexPlayed = self.radioState.nextWorks.firstIndex(where: { $0.id == self.playState.recording.first!.work!.id })
-                self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed!+1))
+                
+                DispatchQueue.main.async {
+                    self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed!+1))
+                }
                 randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
                     if rec.count > 0 {
                         DispatchQueue.main.async {
@@ -191,7 +194,7 @@ struct Player: View {
                     }
                 }
             } else {
-                // playing the free sample
+                // playing only samples
                 
                 if let previews = self.playState.recording.first!.previews {
                 
@@ -210,7 +213,7 @@ struct Player: View {
                             preview: true
                         )]
                         
-                        self.previewBridge.setQueueAndPlay(tracks: previews, starttrack: 0, autoplay: self.playState.autoplay)
+                        self.previewBridge.setQueueAndPlay(tracks: previews, starttrack: 0, autoplay: self.playState.autoplay, zeroqueue: false)
                     } else {
                         self.playState.keepQueue = false
                     }
@@ -281,12 +284,19 @@ struct Player: View {
         .onReceive(timerHolder.objectWillChange, perform: {
             if (self.currentTrack.count > 0) {
                 
-                self.currentTrack[0].track_position = self.mediaBridge.getCurrentPlaybackTime()
-                self.currentTrack[0].track_position = self.previewBridge.getCurrentPlaybackTime()
+                if self.currentTrack[0].preview {
+                    self.currentTrack[0].track_position = self.previewBridge.getCurrentPlaybackTime()
+                } else {
+                    self.currentTrack[0].track_position = self.mediaBridge.getCurrentPlaybackTime()
+                }
                 
                 if self.currentTrack[0].track_position < 2 {
-                    self.currentTrack[0].playing = self.mediaBridge.getCurrentPlaybackState()
-                    self.currentTrack[0].playing = self.previewBridge.getCurrentPlaybackState()
+                    if self.currentTrack[0].preview {
+                        self.currentTrack[0].playing = self.previewBridge.getCurrentPlaybackState()
+                    } else {
+                        self.currentTrack[0].playing = self.mediaBridge.getCurrentPlaybackState()
+                    }
+                    
                     self.playState.playing = self.currentTrack[0].playing
                 }  
                 
@@ -393,13 +403,13 @@ struct Player: View {
                             full_length: self.playState.recording.first!.length!,
                             preview: true
                         )]
-                        //print(self.currentTrack)
                         self.radioState.canSkip = false
                     }
                 }
                 else {
                     print("radio state: \(self.radioState.isActive)")
-                    if !self.radioState.isActive {
+                    
+                    if trackIndex == 0 {
                         self.currentTrack[0].zero_index = 0
                     }
                     

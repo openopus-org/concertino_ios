@@ -29,7 +29,7 @@ struct RecordingProgressBars: View {
                                 
                                 if self.currentTrack.first!.preview {
                                     self.previewBridge.stop()
-                                    self.previewBridge.setQueueAndPlay(tracks: self.radioState.nextRecordings.count > 0 ? self.playState.recording.first!.previews! + self.radioState.nextRecordings.first!.previews! : self.playState.recording.first!.previews!, starttrack: self.recording.tracks!.firstIndex{$0.apple_trackid == track.apple_trackid} ?? 0, autoplay: true)
+                                    self.previewBridge.setQueueAndPlay(tracks: self.radioState.nextRecordings.count > 0 ? self.playState.recording.first!.previews! + self.radioState.nextRecordings.first!.previews! : self.playState.recording.first!.previews!, starttrack: self.recording.tracks!.firstIndex{$0.apple_trackid == track.apple_trackid} ?? 0, autoplay: true, zeroqueue: false)
                                 } else {
                                     self.mediaBridge.stop()
                                     self.mediaBridge.setQueueAndPlay(tracks: self.radioState.nextRecordings.count > 0 ? self.playState.recording.first!.apple_tracks! + self.radioState.nextRecordings.first!.apple_tracks! : self.playState.recording.first!.apple_tracks!, starttrack: track.apple_trackid, autoplay: true)
