@@ -106,25 +106,32 @@ struct Player: View {
             // radio? fetch the next recording on the queue
             
             if self.radioState.nextWorks.count > 0 {
-                print("🔄 Radio ON, fetching a random recording!")
-                
-                let indexPlayed = self.radioState.nextWorks.firstIndex(where: { $0.id == self.playState.recording.first!.work!.id })
-                
                 DispatchQueue.main.async {
+                    print("🔄 Radio ON, fetching a random recording!")
+                    
+                    let indexPlayed = self.radioState.nextWorks.firstIndex(where: { $0.id == self.playState.recording.first!.work!.id })
+                    
                     self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed!+1))
-                }
-                randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
-                    if rec.count > 0 {
-                        DispatchQueue.main.async {
-                            self.radioState.nextRecordings = rec
-                            self.mediaBridge.addToQueue(tracks: rec.first!.apple_tracks!)
-                            self.radioState.nextRecordings[0] = rec.first!
-                            self.radioState.canSkip = true
+                    
+                    randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                        if rec.count > 0 {
+                            DispatchQueue.main.async {
+                                self.radioState.nextRecordings = rec
+                                
+                                if self.currentTrack[0].preview {
+                                    self.previewBridge.addToQueue(tracks: rec.first!.previews!)
+                                } else {
+                                    self.mediaBridge.addToQueue(tracks: rec.first!.apple_tracks!)
+                                }
+                                
+                                self.radioState.nextRecordings[0] = rec.first!
+                                self.radioState.canSkip = true
+                            }
                         }
-                    }
-                    else {
-                        DispatchQueue.main.async {
-                            self.radioState.isActive = false
+                        else {
+                            DispatchQueue.main.async {
+                                self.radioState.isActive = false
+                            }
                         }
                     }
                 }
@@ -134,8 +141,12 @@ struct Player: View {
                 getRecordingDetail(recording: self.radioState.nextRecordings.first!, country: self.settingStore.country) { recordingData in
                     if recordingData.count > 0 {
                         DispatchQueue.main.async {
-                            //self.mediaBridge.addToQueue(tracks: recordingData.first!.apple_tracks!)
-                            self.previewBridge.addToQueue(tracks: recordingData.first!.previews!)
+                            if self.currentTrack[0].preview {
+                                self.previewBridge.addToQueue(tracks: recordingData.first!.previews!)
+                            } else {
+                                self.mediaBridge.addToQueue(tracks: recordingData.first!.apple_tracks!)
+                            }
+                            
                             self.radioState.nextRecordings[0] = recordingData.first!
                             self.radioState.canSkip = true
                         }
