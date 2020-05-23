@@ -41,23 +41,22 @@ struct BrowseOnlyMode: View {
             }
         }, label: {
             HStack {
-                Spacer()
-                
-                Image("browseonly")
+                Image("forbidden")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: size == "min" ? 18 : 26)
-                    .foregroundColor(Color(hex: size == "min" ? 0x797979 : 0xfe365e))
-                    .padding(.trailing, 2)
-                VStack(alignment: .leading) {
-                    Text("Browse-only mode")
-                        .font(.custom("Nunito-ExtraBold", size: size == "min" ? 11 : 15))
-                    Text("Click here to allow access to Apple Music")
-                        .font(.custom("Nunito", size: size == "min" ? 9 : 13))
-                }
-                .foregroundColor(Color(hex: size == "min" ? 0x797979 : 0xfe365e))
+                    .frame(width: size == "min" ? 16 : 23)
+                    .foregroundColor(Color(hex: size == "min" ? 0xFFFFFF : 0xFFFFFF))
+                    .padding(.trailing, size == "min" ? 0 : 2)
                 
-                Spacer()
+                VStack(alignment: .leading) {
+                    Text("Preview-only mode")
+                        .font(.custom("Nunito-ExtraBold", size: size == "min" ? 10 : 13))
+                        .padding(.top, size == "min" ? 0 : 2)
+                    Text("Click to enable Apple Music")
+                        .font(.custom("Nunito", size: size == "min" ? 8 : 11))
+                        .padding(.top, size == "min" ? -2 : -2)
+                }
+                .foregroundColor(Color(hex: size == "min" ? 0xFFFFFF : 0xFFFFFF))
             }
         })
     }

@@ -99,7 +99,7 @@ struct CurrentTrack: Codable {
     var preview: Bool
     
     var track_progress: CGFloat {
-        get { return CGFloat(Double (track_position)/Double (track_length)) }
+        get { return CGFloat(Double (track_position)/(preview ? 30 : Double (track_length))) }
     }
     
     var full_progress: CGFloat {

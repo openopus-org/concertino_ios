@@ -45,7 +45,7 @@ struct RecordingProgressBars: View {
                     }
                 } else {
                     RecordingTrackList(recording: self.recording)
-                    .padding(.top, 10)
+                        .padding(.top, 10)
                 }
             } else {
                 HStack {

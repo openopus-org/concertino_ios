@@ -261,6 +261,26 @@ struct Player: View {
                                 RecordingWorkPerformers(recording: playState.recording.first!, isSheet: false)
                                     .padding(.bottom, 30)
                                 RecordingProgressBars(recording: playState.recording.first!, currentTrack: $currentTrack)
+                                
+                                if self.currentTrack.first!.preview {
+                                    HStack {
+                                        Spacer()
+                                        
+                                        HStack {
+                                            BrowseOnlyMode(size: "max")
+                                        }
+                                        .padding(.top, 6)
+                                        .padding(.bottom, 6)
+                                        .padding(.leading, 12)
+                                        .padding(.trailing, 18)
+                                        .background(Color.black)
+                                        .cornerRadius(24)
+                                        .opacity(0.4)
+                                        
+                                        Spacer()
+                                    }
+                                    .padding(.top, 10)
+                                }
                             }
                             .padding(30)
                             .padding(.top, -16)

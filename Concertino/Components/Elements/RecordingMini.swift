@@ -72,29 +72,45 @@ struct RecordingMini: View {
                         },
                         label: {
                             Image(self.currentTrack.first!.playing ? "pause" : "play")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 22)
-                            .foregroundColor(Color(hex: 0xfe365e))
-                            .padding(.leading, 18)
-                            .padding(.trailing, 22)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 22)
+                                .foregroundColor(Color(hex: 0xfe365e))
+                                .padding(.leading, 18)
+                                .padding(.trailing, 22)
                         })
                         
-                        Group {
-                            Text(self.currentTrack.first!.readable_full_position)
+                        ZStack {
+                            HStack {
+                                Text(self.currentTrack.first!.readable_full_position)
+                                
+                                ProgressBar(progress: self.currentTrack.first!.full_progress)
+                                    .padding(.leading, 6)
+                                    .padding(.trailing, 6)
+                                    .frame(height: 4)
+                                
+                                Text(self.recording.readableLength)
+                            }
+                            .font(.custom("Nunito", size: 11))
                             
-                            ProgressBar(progress: self.currentTrack.first!.full_progress)
-                                .padding(.leading, 6)
-                                .padding(.trailing, 6)
-                                .frame(height: 4)
-                            
-                            Text(self.recording.readableLength)
+                            if self.currentTrack.first!.preview {
+                                HStack {
+                                    BrowseOnlyMode(size: "min")
+                                }
+                                .padding(.top, 2)
+                                .padding(.bottom, 2)
+                                .padding(.leading, 8)
+                                .padding(.trailing, 12)
+                                .background(Color.black)
+                                .cornerRadius(14)
+                                .opacity(0.6)
+                            }
                         }
-                        .font(.custom("Nunito", size: 11))
                     }
                     .padding(.top, 4)
                 }
             }
+            /*
             else {
                 if self.settingStore.userId > 0 || self.settingStore.firstUsage {
                     //RecordingNotAvailable(size: "min")
@@ -110,6 +126,7 @@ struct RecordingMini: View {
                     BrowseOnlyMode(size: "min")
                 }
             }
+            */
         }
     }
 }
