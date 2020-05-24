@@ -37,6 +37,8 @@ struct Structure: View {
                 .padding(.bottom, UIDevice.current.hasNotch ? 0 : 12)
             
             Loader().opacity(self.AppState.isLoading ? 1 : 0)
+            
+            Warning().opacity(self.AppState.showingWarning ? 1 : 0)
         }
         .sheet(isPresented: $showExternalDetail) {
             Group {

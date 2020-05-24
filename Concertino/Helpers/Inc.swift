@@ -9,9 +9,9 @@
 import Foundation
 
 struct AppConstants {
-    static let version = "1.20.4.24"
+    static let version = "1.20.5"
     static let openOpusBackend = "https://api.openopus.org"
-    static let concBackend = "https://beta.api.concertino.app"
+    static let concBackend = "https://api.concertino.app"
     static let concFrontend = "https://concertino.app"
     static let concShortFrontend = "https://cncert.in/r"
     static let concNoCoverImg = concFrontend + "/img/nocover.png"

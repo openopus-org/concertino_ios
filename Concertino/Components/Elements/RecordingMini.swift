@@ -80,32 +80,32 @@ struct RecordingMini: View {
                                 .padding(.trailing, 22)
                         })
                         
-                        ZStack {
-                            HStack {
-                                Text(self.currentTrack.first!.readable_full_position)
-                                
+                        HStack {
+                            Text(self.currentTrack.first!.readable_full_position)
+                            
+                            ZStack {
                                 ProgressBar(progress: self.currentTrack.first!.full_progress)
                                     .padding(.leading, 6)
                                     .padding(.trailing, 6)
                                     .frame(height: 4)
                                 
-                                Text(self.recording.readableLength)
-                            }
-                            .font(.custom("Nunito", size: 11))
-                            
-                            if self.currentTrack.first!.preview {
-                                HStack {
-                                    BrowseOnlyMode(size: "min")
+                                if self.currentTrack.first!.preview {
+                                    HStack {
+                                        BrowseOnlyMode(size: "min")
+                                    }
+                                    .padding(.top, 2)
+                                    .padding(.bottom, 2)
+                                    .padding(.leading, 8)
+                                    .padding(.trailing, 12)
+                                    .background(Color.black)
+                                    .cornerRadius(14)
+                                    .opacity(0.6)
                                 }
-                                .padding(.top, 2)
-                                .padding(.bottom, 2)
-                                .padding(.leading, 8)
-                                .padding(.trailing, 12)
-                                .background(Color.black)
-                                .cornerRadius(14)
-                                .opacity(0.6)
                             }
+                            
+                            Text(self.recording.readableLength)
                         }
+                        .font(.custom("Nunito", size: 11))
                     }
                     .padding(.top, 4)
                 }

@@ -21,6 +21,8 @@ final class AppState: ObservableObject  {
     @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
     @Published var isLoading = true
+    @Published var showingWarning = false
+    @Published var apmusEligible = true
     @Published var externalUrl = [String]() {
         didSet {
             externalUrlWillChange.send()
@@ -107,6 +109,7 @@ final class PlayState: ObservableObject {
     
     var keepQueue = false
     var autoplay = true
+    var preview = false
 }
 
 class TimerHolder: ObservableObject {
@@ -234,7 +237,7 @@ public func APIpost(_ url: String, parameters: [String: Any], completion: @escap
     }
     
     print("✅ \(url)")
-    //parameters.forEach() { print("✴️ \($0)") }
+    parameters.forEach() { print("✴️ \($0)") }
     
     var request = URLRequest(url: urlR)
     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -1084,13 +1087,12 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                             APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "recid": "guest-" + UUID().uuidString, "id": settingStore.userId]) { results in
                                         print(String(decoding: results, as: UTF8.self))
                                         let login: Login = parseJSON(results)
-                            
-                                        completion(countryCode ?? "us", false, true, login)
+                                
+                                        completion(countryCode ?? "us", false, capabilities.contains(.musicCatalogSubscriptionEligible), login)
                                 }
                         } else {
-                            completion(countryCode ?? "us", false, true, nil)
+                            completion(countryCode ?? "us", false, capabilities.contains(.musicCatalogSubscriptionEligible), nil)
                         }
-                        
                     }
                 }
             }
@@ -1102,10 +1104,10 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                             print(String(decoding: results, as: UTF8.self))
                             let login: Login = parseJSON(results)
                 
-                            completion("us", false, false, login)
+                            completion("us", false, true, login)
                     }
             } else {
-                completion("us", false, false, nil)
+                completion("us", false, true, nil)
             }
         }
     }

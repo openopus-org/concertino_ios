@@ -13,6 +13,7 @@ struct WorksRadioButton: View {
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
     @EnvironmentObject var mediaBridge: MediaBridge
+    @EnvironmentObject var previewBridge: PreviewBridge
     @State var isLoading = false
     var genreId: String
     
@@ -74,9 +75,13 @@ struct WorksRadioButton: View {
                     self.radioState.nextWorks.removeAll()
                     self.radioState.nextRecordings.removeAll()
                     
-                    self.mediaBridge.stop()
-                    self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: self.playState.recording.first!.apple_tracks!.first!, autoplay: false)
-
+                    if self.playState.preview {
+                        self.previewBridge.stop()
+                        self.previewBridge.setQueueAndPlay(tracks: self.playState.recording.first!.previews!, starttrack: 0, autoplay: false, zeroqueue: false)
+                    } else {
+                        self.mediaBridge.stop()
+                        self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: self.playState.recording.first!.apple_tracks!.first!, autoplay: false)
+                    }
                 } else {
                     if self.settingStore.userId > 0 {
                         self.initRadio()

@@ -179,6 +179,7 @@ struct Player: View {
                     if let tracks = self.playState.recording.first!.apple_tracks {
                         
                         if !self.playState.keepQueue {
+                            self.playState.preview = false
                             self.currentTrack = [CurrentTrack (
                                 track_index: 0,
                                 zero_index: 0,
@@ -207,10 +208,27 @@ struct Player: View {
             } else {
                 // playing only samples
                 
+                if self.settingStore.firstUsage {
+                    if apmusEligible && self.playState.autoplay {
+                        self.playState.autoplay = false
+                        
+                        DispatchQueue.main.async {
+                            let amc = AppleMusicSubscribeController()
+                            amc.showAppleMusicSignup()
+                        }
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.AppState.apmusEligible = apmusEligible
+                        self.AppState.showingWarning = true
+                    }
+                }
+                
                 if let previews = self.playState.recording.first!.previews {
                 
                     if !self.playState.keepQueue {
                         print("🔴 playing a preview")
+                        self.playState.preview = true
                         self.currentTrack = [CurrentTrack (
                             track_index: 0,
                             zero_index: 0,

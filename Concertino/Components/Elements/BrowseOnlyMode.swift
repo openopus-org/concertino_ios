@@ -52,7 +52,7 @@ struct BrowseOnlyMode: View {
                     Text("Preview-only mode")
                         .font(.custom("Nunito-ExtraBold", size: size == "min" ? 10 : 13))
                         .padding(.top, size == "min" ? 0 : 2)
-                    Text("Click to enable Apple Music")
+                    Text("Tap to enable playback")
                         .font(.custom("Nunito", size: size == "min" ? 8 : 11))
                         .padding(.top, size == "min" ? -2 : -2)
                 }
