@@ -584,16 +584,28 @@ class MediaBridge: ObservableObject {
     func prepareToPlay(_ autoplay: Bool) {
         player.prepareToPlay(completionHandler: {(error) in
             if error != nil {
-                /*let status: [String : Any] = [
-                    "index": 0,
-                    "title": 0,
-                    "success": false
-                ]
-                NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)*/
-            }
-            else if autoplay {
+                DispatchQueue.main.async {
+                    print("error")
+                    let status: [String : Any] = [
+                        "index": 0,
+                        "title": 0,
+                        "success": false
+                    ]
+                    NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
+                }
+            } else if autoplay {
                 DispatchQueue.main.async {
                     self.player.play()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    print("alright")
+                    let status: [String : Any] = [
+                        "index": 0,
+                        "title": 0,
+                        "success": false
+                    ]
+                    NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
                 }
             }
         })

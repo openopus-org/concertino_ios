@@ -113,25 +113,31 @@ struct Player: View {
                     
                     self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed!+1))
                     
-                    randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
-                        if rec.count > 0 {
-                            DispatchQueue.main.async {
-                                self.radioState.nextRecordings = rec
-                                
-                                if self.currentTrack[0].preview {
-                                    self.previewBridge.addToQueue(tracks: rec.first!.previews!)
-                                } else {
-                                    self.mediaBridge.addToQueue(tracks: rec.first!.apple_tracks!)
+                    if self.radioState.nextWorks.count > 0 {
+                        randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
+                            if rec.count > 0 {
+                                DispatchQueue.main.async {
+                                    self.radioState.nextRecordings = rec
+                                    
+                                    if self.currentTrack[0].preview {
+                                        self.previewBridge.addToQueue(tracks: rec.first!.previews!)
+                                    } else {
+                                        self.mediaBridge.addToQueue(tracks: rec.first!.apple_tracks!)
+                                    }
+                                    
+                                    self.radioState.nextRecordings[0] = rec.first!
+                                    self.radioState.canSkip = true
                                 }
-                                
-                                self.radioState.nextRecordings[0] = rec.first!
-                                self.radioState.canSkip = true
+                            }
+                            else {
+                                DispatchQueue.main.async {
+                                    self.radioState.isActive = false
+                                }
                             }
                         }
-                        else {
-                            DispatchQueue.main.async {
-                                self.radioState.isActive = false
-                            }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.radioState.isActive = false
                         }
                     }
                 }
@@ -166,7 +172,8 @@ struct Player: View {
                     
                     // registering first recording played
                     
-                    if self.playState.autoplay {
+                    if self.settingStore.lastPlayedRecording == [] {
+                        print("first recording played and can play")
                         MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
                             DispatchQueue.main.async {
                                 self.settingStore.lastPlayedRecording = self.playState.recording
@@ -199,16 +206,17 @@ struct Player: View {
                             self.playState.keepQueue = false
                         }
                         
-                        if !self.playState.autoplay {
+                        /*if !self.playState.autoplay {
                             self.currentTrack[0].loading = false
                             //self.playState.autoplay = true
-                        }
+                        }*/
                     }
                 }
             } else {
                 // playing only samples
                 
                 if self.settingStore.firstUsage {
+                    /*
                     if apmusEligible && self.playState.autoplay {
                         self.playState.autoplay = false
                         
@@ -217,6 +225,7 @@ struct Player: View {
                             amc.showAppleMusicSignup()
                         }
                     }
+                    */
                     
                     DispatchQueue.main.async {
                         self.AppState.apmusEligible = apmusEligible
@@ -225,6 +234,17 @@ struct Player: View {
                 }
                 
                 if let previews = self.playState.recording.first!.previews {
+                    
+                    // registering first recording played
+                    
+                    if self.settingStore.lastPlayedRecording == [] {
+                        print("first recording played")
+                        MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
+                            DispatchQueue.main.async {
+                                self.settingStore.lastPlayedRecording = self.playState.recording
+                            }
+                        }
+                    }
                 
                     if !self.playState.keepQueue {
                         print("🔴 playing a preview")
@@ -376,10 +396,13 @@ struct Player: View {
                 
                 if let success = status.userInfo?["success"] {
                     if success as! Bool == false {
+                        /*
                         print("🔴 Playing Item is nil!")
                         self.currentTrack.removeAll()
                         self.playState.playing = false
                         self.radioState.isActive = false
+                        */
+                        self.currentTrack[0].loading = false
                     }
                     else {
                         if let trackIndex = status.userInfo?["index"] {
