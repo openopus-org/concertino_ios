@@ -6,15 +6,13 @@ It's splitted in several projects. **This one provides only the iOS app.** (Ther
 
 ## Usage
 
-It's an iOS app. When it's ready, you'll be able to get it from the App Store.
+It's an iOS app. You can get it directly on the [App Store](https://apps.apple.com/br/app/concertino/id1506663568?l=en).
 
 The player itself is full of features, so there is a [wiki](https://getconcertino.com/help) explaining them all.
 
 ## How to build
 
 Concertino uses SwiftUI, so you'll need MacOS Catalina and XCode 11 to build it (and iOS 13 to test it on a device).
-
-*Being tested on TestFlight. It's probably ready for production!*
 
 ## Contributing with code
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
