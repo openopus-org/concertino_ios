@@ -80,7 +80,9 @@ struct WorksRadioButton: View {
                         self.previewBridge.setQueueAndPlay(tracks: self.playState.recording.first!.previews!, starttrack: 0, autoplay: false, zeroqueue: false)
                     } else {
                         self.mediaBridge.stop()
-                        self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: self.playState.recording.first!.apple_tracks!.first!, autoplay: false)
+                        if let firstrecording = self.playState.recording.first {
+                            self.mediaBridge.setQueueAndPlay(tracks: firstrecording.apple_tracks!, starttrack: firstrecording.apple_tracks!.first!, autoplay: false)
+                        }
                     }
                 } else {
                     if self.settingStore.userId > 0 {

@@ -10,6 +10,8 @@ import SwiftUI
 
 struct PeriodDetailSearch: View {
     let period: String
+    @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var AppState: AppState
     @State private var composers = [Composer]()
     @State private var loading = true
     
@@ -53,7 +55,7 @@ struct PeriodDetailSearch: View {
             else {
                 if self.composers.count > 0 {
                     List(self.composers, id: \.id) { composer in
-                        NavigationLink(destination: ComposerDetail(composer: composer)) {
+                        NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState)) {
                             ComposerRow(composer: composer)
                         }
                     }

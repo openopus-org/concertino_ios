@@ -17,7 +17,7 @@ struct TabButton: View {
     
     var body: some View {
         Button(
-            action: { self.AppState.currentTab = self.tab },
+            action: { self.AppState.fullPlayer = false; self.AppState.currentTab = self.tab },
             label: {
                 VStack {
                     Spacer()

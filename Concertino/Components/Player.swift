@@ -109,9 +109,9 @@ struct Player: View {
                 DispatchQueue.main.async {
                     print("🔄 Radio ON, fetching a random recording!")
                     
-                    let indexPlayed = self.radioState.nextWorks.firstIndex(where: { $0.id == self.playState.recording.first!.work!.id })
-                    
-                    self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed!+1))
+                    if let indexPlayed = self.radioState.nextWorks.firstIndex(where: { $0.id == self.playState.recording.first!.work!.id }) {
+                        self.radioState.nextWorks = Array(self.radioState.nextWorks.suffix(from: indexPlayed+1))
+                    }
                     
                     if self.radioState.nextWorks.count > 0 {
                         randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete:  self.settingStore.hideIncomplete, country: self.settingStore.country) { rec in
@@ -187,20 +187,23 @@ struct Player: View {
                         
                         if !self.playState.keepQueue {
                             self.playState.preview = false
-                            self.currentTrack = [CurrentTrack (
-                                track_index: 0,
-                                zero_index: 0,
-                                playing: false,
-                                loading: true,
-                                starting_point: 0,
-                                track_position: 0,
-                                track_length: (self.playState.recording.first!.tracks!.first?.length)!,
-                                full_position: 0,
-                                full_length: self.playState.recording.first!.length!,
-                                preview: false
-                            )]
                             
-                            self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
+                            if let firstrecording = self.playState.recording.first {
+                                self.currentTrack = [CurrentTrack (
+                                    track_index: 0,
+                                    zero_index: 0,
+                                    playing: false,
+                                    loading: true,
+                                    starting_point: 0,
+                                    track_position: 0,
+                                    track_length: (firstrecording.tracks!.first?.length)!,
+                                    full_position: 0,
+                                    full_length: firstrecording.length!,
+                                    preview: false
+                                )]
+                                
+                                self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
+                            }
                         }
                         else {
                             self.playState.keepQueue = false
@@ -283,15 +286,21 @@ struct Player: View {
                 Button(
                     action: { self.AppState.fullPlayer.toggle() },
                     label: {
-                        Image("handle")
-                            .resizable()
-                            .frame(width: 7, height: 32)
-                            .foregroundColor(Color(hex: 0x696969))
-                            .rotationEffect(.degrees(self.AppState.fullPlayer ? 90 : 270))
+                        HStack {
+                            Spacer()
+                            
+                            Image("handle")
+                                .resizable()
+                                .frame(width: 7, height: 32)
+                                .foregroundColor(Color(hex: 0x696969))
+                                .rotationEffect(.degrees(self.AppState.fullPlayer ? 90 : 270))
+                            
+                            Spacer()
+                        }
                     })
                     .frame(height: 7)
                     .padding(.top, (self.AppState.fullPlayer ? 14 : 10))
-                
+                    
                 if (playState.recording.count > 0) {
                     if self.AppState.fullPlayer {
                         ScrollView(showsIndicators: false) {
@@ -300,24 +309,26 @@ struct Player: View {
                                     .padding(.bottom, 30)
                                 RecordingProgressBars(recording: playState.recording.first!, currentTrack: $currentTrack)
                                 
-                                if self.currentTrack.first!.preview {
-                                    HStack {
-                                        Spacer()
-                                        
+                                if self.currentTrack.count > 0 {
+                                    if self.currentTrack.first!.preview {
                                         HStack {
-                                            BrowseOnlyMode(size: "max")
+                                            Spacer()
+                                            
+                                            HStack {
+                                                BrowseOnlyMode(size: "max")
+                                            }
+                                            .padding(.top, 6)
+                                            .padding(.bottom, 6)
+                                            .padding(.leading, 12)
+                                            .padding(.trailing, 18)
+                                            .background(Color.black)
+                                            .cornerRadius(24)
+                                            .opacity(0.4)
+                                            
+                                            Spacer()
                                         }
-                                        .padding(.top, 6)
-                                        .padding(.bottom, 6)
-                                        .padding(.leading, 12)
-                                        .padding(.trailing, 18)
-                                        .background(Color.black)
-                                        .cornerRadius(24)
-                                        .opacity(0.4)
-                                        
-                                        Spacer()
+                                        .padding(.top, 10)
                                     }
-                                    .padding(.top, 10)
                                 }
                             }
                             .padding(30)
@@ -345,9 +356,11 @@ struct Player: View {
             }
         })
         .onReceive(playState.objectWillChange, perform: {
-            if self.playState.recording.first!.tracks != nil {
-                print("playmusic()")
-                self.playMusic()
+            if let firstrecording = self.playState.recording.first {
+                if firstrecording.tracks != nil {
+                    print("playmusic()")
+                    self.playMusic()
+                }
             }
         })
         .onReceive(timerHolder.objectWillChange, perform: {

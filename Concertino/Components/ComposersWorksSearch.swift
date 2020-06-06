@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ComposersWorksSearch: View {
+    @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var AppState: AppState
     @EnvironmentObject var omnisearch: OmnisearchString
     @State private var results = [OmniResults]()
     @State private var offset = 0
@@ -72,7 +74,7 @@ struct ComposersWorksSearch: View {
                                             .padding(.bottom, 6)
                                     }
                                 } else {
-                                    NavigationLink(destination: ComposerDetail(composer: result.composer)) {
+                                    NavigationLink(destination: ComposerDetail(composer: result.composer).environmentObject(self.settingStore).environmentObject(self.AppState)) {
                                         ComposerRow(composer: result.composer)
                                             .padding(.top, 6)
                                             .padding(.bottom, 6)

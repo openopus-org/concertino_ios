@@ -919,41 +919,49 @@ public func startRadio(userId: Int, parameters: [String: Any], completion: @esca
 
 func randomRecording(workQueue: [Work], hideIncomplete: Bool, country: String, completion: @escaping ([Recording]) -> ()) {
     var workQ = workQueue
-    let work = workQ.removeFirst()
     
-    APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
-        if let recsData: Recordings = parseJSON(results) {
-            if let recds = recsData.recordings {
-                print("found, everything OK")
-                if let rec = recds.filter({
-                    ($0.isCompilation == false) || (hideIncomplete == false)
-                }).randomElement() {
-                    print("*️⃣ Compilation: \(rec.isCompilation)")
-                    APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(work.id)/album/\(rec.apple_albumid)/\(rec.set).json") { results in
-                        if let recordingData: FullRecording = safeJSON(results) {
-                            var rec = recordingData.recording
-                            rec.work = recordingData.work
-                            completion([rec])
+    if workQ.count > 0 {
+        let work = workQ.removeFirst()
+        
+        APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
+            if let recsData: Recordings = parseJSON(results) {
+                if let recds = recsData.recordings {
+                    print("found, everything OK")
+                    if let rec = recds.filter({
+                        ($0.isCompilation == false) || (hideIncomplete == false)
+                    }).randomElement() {
+                        print("*️⃣ Compilation: \(rec.isCompilation)")
+                        APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(work.id)/album/\(rec.apple_albumid)/\(rec.set).json") { results in
+                            if let recordingData: FullRecording = safeJSON(results) {
+                                var rec = recordingData.recording
+                                rec.work = recordingData.work
+                                completion([rec])
+                            }
                         }
                     }
                 }
-            }
-            else {
-                print("nothing found, starting again")
-                randomRecording(workQueue: workQ, hideIncomplete: hideIncomplete, country: country) { rec in
-                    completion(rec)
+                else {
+                    print("nothing found, starting again")
+                    randomRecording(workQueue: workQ, hideIncomplete: hideIncomplete, country: country) { rec in
+                        completion(rec)
+                    }
                 }
             }
         }
+    } else {
+        print("error, returning void")
+        completion([Recording]())
     }
 }
 
 func getRecordingDetail(recording: Recording, country: String, completion: @escaping ([Recording]) -> ()) {
     APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "detail/work/\(recording.work!.id)/album/\(recording.apple_albumid)/\(recording.set).json") { results in
-        if let recordingData: FullRecording = parseJSON(results) {
+        if let recordingData: FullRecording = safeJSON(results) {
             var rec = recordingData.recording
             rec.work = recordingData.work
             completion([rec])
+        } else {
+            completion([Recording]())
         }
     }
 }
@@ -1076,9 +1084,11 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                                     controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
                                         APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "country": countryCode ?? ""]) { results in
                                             print(String(decoding: results, as: UTF8.self))
-                                            let login: Login = parseJSON(results)
-                                
-                                            completion(countryCode ?? "us", true, true, login)
+                                            if let login: Login = safeJSON(results) {
+                                                completion(countryCode ?? "us", true, true, login)
+                                            } else {
+                                                completion(countryCode ?? "us", true, true, nil)
+                                            }
                                         }
                                     }
                                 }
