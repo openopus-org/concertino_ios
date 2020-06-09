@@ -36,7 +36,7 @@ struct WorkHeader: View {
     
     var body: some View {
         HStack {
-            BackButton()
+            PresentationBackButton()
             VStack {
                 VStack(alignment: .leading) {
                     

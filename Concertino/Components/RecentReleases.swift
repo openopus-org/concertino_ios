@@ -9,12 +9,14 @@
 import SwiftUI
 
 struct RecentReleases: View {
+    let navigationLevel: Int
     @State private var loading = true
     @State private var recordings = [Recording]()
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var playState: PlayState
     @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var navigation: NavigationState
     
     func loadData() {
         self.recordings.removeAll()
@@ -52,10 +54,13 @@ struct RecentReleases: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
-                    ForEach(self.recordings, id: \.id) { recording in
-                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.appState).environmentObject(self.playState).environmentObject(self.radioState), label: {
+                    ForEach(self.recordings) { recording in
+                        NavigationLink(
+                            destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.appState).environmentObject(self.playState).environmentObject(self.radioState),
+                                    tag: String(describing: Self.self) + recording.id,
+                              selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
                             RecordingBox(recording: recording)
-                        })
+                        }
                     }
                 }
                 .frame(minHeight: 270)

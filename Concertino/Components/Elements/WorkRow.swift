@@ -11,10 +11,15 @@ import SwiftUI
 struct WorkRow: View {
     var work: Work
     var composer: Composer
+    let navigationLevel: Int
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var navigation: NavigationState
     
     var body: some View {
-        NavigationLink(destination: WorkDetail(work: work, composer: composer).environmentObject(self.settingStore), label: {
+        NavigationLink(
+            destination: WorkDetail(work: work, composer: composer).environmentObject(self.settingStore),
+                    tag: String(describing: Self.self) + work.id,
+              selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
             VStack(alignment: .leading) {
                 Text(work.title)
                     .font(.custom("Barlow", size: 15))
@@ -24,7 +29,7 @@ struct WorkRow: View {
                 }
             }
             .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 0))
-        })
+        }
     }
 }
 

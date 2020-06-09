@@ -27,11 +27,13 @@ class ComposersData: ObservableObject {
 }
 
 struct ComposersList: View {
+    let navigationLevel: Int
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var search: WorkSearch
+    @EnvironmentObject var navigation: NavigationState
     @ObservedObject var composers = ComposersData()
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Most Requested Composers".uppercased())
@@ -40,9 +42,12 @@ struct ComposersList: View {
                 .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
-                    ForEach(composers.composers, id: \.id) { composer in
-                        NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
-                            ComposerBox(composer: composer)
+                    ForEach(composers.composers) { composer in
+                        NavigationLink(
+                            destination: ComposerDetail(composer: composer, navigationLevel: self.navigationLevel + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
+                                    tag: String(describing: Self.self) + composer.id,
+                              selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
+                                ComposerBox(composer: composer)
                         }
                     }
                 }
@@ -55,6 +60,6 @@ struct ComposersList: View {
 
 struct ComposersList_Previews: PreviewProvider {
     static var previews: some View {
-        ComposersList()
+        ComposersList(navigationLevel: 0)
     }
 }

@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ComposersSearch: View {
+    let navigationLevel: Int
     @EnvironmentObject var composersSearch: ComposerSearchString
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
@@ -16,9 +17,11 @@ struct ComposersSearch: View {
     @State private var composers = [Composer]()
     @State private var loading = true
     
-    init() {
+    init(navigationLevel: Int) {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
+
+        self.navigationLevel = navigationLevel
     }
     
     func loadData() {
@@ -68,7 +71,7 @@ struct ComposersSearch: View {
                         .font(.custom("Nunito", size: 12))
                         .padding(EdgeInsets(top: 7, leading: 20, bottom: 0, trailing: 0))
                         List(self.composers, id: \.id) { composer in
-                            NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
+                            NavigationLink(destination: ComposerDetail(composer: composer, navigationLevel: self.navigationLevel + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
                                 ComposerRow(composer: composer)
                             }
                         }

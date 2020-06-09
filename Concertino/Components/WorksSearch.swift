@@ -10,6 +10,7 @@ import SwiftUI
 
 struct WorksSearch: View {
     var composer: Composer
+    var navigationLevel: Int
     @EnvironmentObject var search: WorkSearch
     @EnvironmentObject var settingStore: SettingStore
     @State private var loading = true
@@ -17,10 +18,11 @@ struct WorksSearch: View {
     @State private var genresAvail = [String]()
     @State private var hasEssential = false
     
-    init(composer: Composer) {
+    init(composer: Composer, navigationLevel: Int) {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
         self.composer = composer
+        self.navigationLevel = navigationLevel
     }
     
     func loadData() {
@@ -72,7 +74,7 @@ struct WorksSearch: View {
             }
             else {
                 if self.works.count > 0 {
-                    WorksList(genre: search.genreName, genrelist: genresAvail, works: works, composer: self.composer, essential: hasEssential, radioReady: true)
+                    WorksList(genre: search.genreName, genrelist: genresAvail, works: works, composer: self.composer, essential: hasEssential, radioReady: true, navigationLevel: self.navigationLevel)
                 }
                 else {
                     ErrorMessage(msg: "No works found.")

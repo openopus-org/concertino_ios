@@ -23,6 +23,7 @@ struct Library: View {
                     }
                 }
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             .padding(.top, UIDevice.current.hasNotch ? -50 : -95)
             .padding(.bottom, -8)
         }

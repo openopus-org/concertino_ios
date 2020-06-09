@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PeriodDetail: View {
     var period: String
+    var navigationLevel: Int
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -19,7 +20,7 @@ struct PeriodDetail: View {
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
 
-            PeriodDetailSearch(period: period)
+            PeriodDetailSearch(period: period, navigationLevel: self.navigationLevel)
                 
             Spacer()
         }

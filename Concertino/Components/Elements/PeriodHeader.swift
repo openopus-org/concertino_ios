@@ -14,7 +14,7 @@ struct PeriodHeader: View {
     
     var body: some View {
         HStack {
-            BackButton()
+            NavigationBackButton()
             Text(period)
                 .font(.custom("Barlow-SemiBold", size: 17))
         }

@@ -59,6 +59,7 @@ struct RecordingsList: View {
         VStack(alignment: .leading) {
             
                 List {
+                    // FIXME: There is a error in which navigation view freaks out here
                     ForEach(self.recordings, id: \.id) { recording in
                         Group {
                             if !recording.isCompilation || !self.settingStore.hideIncomplete {

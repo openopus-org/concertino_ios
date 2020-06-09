@@ -10,15 +10,16 @@ import SwiftUI
 
 struct Home: View {
     @EnvironmentObject var settingStore: SettingStore
+    var navigationLevel = 0
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
-                ComposersList()
-                PeriodList()
-                FavoriteComposersList()
+                ComposersList(navigationLevel: navigationLevel)
+                PeriodList(navigationLevel: navigationLevel)
+                FavoriteComposersList(navigationLevel: navigationLevel)
                 RadioStations()
-                RecentReleases()
+                RecentReleases(navigationLevel: navigationLevel)
                 Spacer()
                     .frame(height: 26)
             }

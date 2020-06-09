@@ -43,7 +43,7 @@ struct RecordingDetail: View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 if !isSheet {
-                    BackButton()
+                    PresentationBackButton()
                         .padding(.top, 6)
                 }
                 

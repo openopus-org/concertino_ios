@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ComposerDetail: View {
     var composer: Composer
+    var navigationLevel: Int
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,7 +21,7 @@ struct ComposerDetail: View {
             }
             .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             
-            WorksSearch(composer: composer)
+            WorksSearch(composer: composer, navigationLevel: self.navigationLevel)
             
             Spacer()
         }

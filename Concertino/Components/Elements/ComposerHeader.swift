@@ -49,7 +49,7 @@ struct ComposerHeader: View {
     
     var body: some View {
         HStack {
-            BackButton()
+            PresentationBackButton()
             
             URLImage(composer.portrait!, placeholder: { _ in
                 Circle()

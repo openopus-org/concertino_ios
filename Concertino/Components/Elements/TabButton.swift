@@ -14,10 +14,11 @@ struct TabButton: View {
     var icon: String
     var label: String
     var tab: String
-    
+    var action: (String) -> Void
+
     var body: some View {
         Button(
-            action: { self.AppState.fullPlayer = false; self.AppState.currentTab = self.tab },
+            action: { self.action(self.tab) },
             label: {
                 VStack {
                     Spacer()
@@ -47,6 +48,6 @@ struct TabButton: View {
 
 struct TabButton_Previews: PreviewProvider {
     static var previews: some View {
-        TabButton(icon: "radio", label: "Radio", tab: "radio")
+        TabButton(icon: "radio", label: "Radio", tab: "radio", action: { _ in })
     }
 }
