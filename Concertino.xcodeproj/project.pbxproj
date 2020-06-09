@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09043E302436C9A300F07C57 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 09043E2F2436C9A300F07C57 /* AppIcon.appiconset */; };
 		09043E322436DA5200F07C57 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09043E312436DA5200F07C57 /* Loader.swift */; };
 		090625602430308500E8FC3E /* RadioStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0906255F2430308500E8FC3E /* RadioStations.swift */; };
 		090625622430383100E8FC3E /* RadioStationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090625612430383100E8FC3E /* RadioStationButton.swift */; };
@@ -105,7 +104,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		09043E2F2436C9A300F07C57 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = ../../../../../Downloads/concertino/ios/AppIcon.appiconset; sourceTree = "<group>"; };
 		09043E312436DA5200F07C57 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		0906255F2430308500E8FC3E /* RadioStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStations.swift; sourceTree = "<group>"; };
 		090625612430383100E8FC3E /* RadioStationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStationButton.swift; sourceTree = "<group>"; };
@@ -125,10 +123,10 @@
 		0922D4752410A0C6001E8DFE /* FavoritesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesButton.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
-		095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-SemiBold.ttf"; path = "../../../../../../Library/Fonts/Barlow-SemiBold.ttf"; sourceTree = "<group>"; };
-		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-ExtraBold.ttf"; path = "../../../../../../Library/Fonts/Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
-		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Barlow-Regular.ttf"; path = "../../../../../../Library/Fonts/Barlow-Regular.ttf"; sourceTree = "<group>"; };
-		095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "../../../../../../Library/Fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-SemiBold.ttf"; sourceTree = "<group>"; };
+		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
+		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-Regular.ttf"; sourceTree = "<group>"; };
+		095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		095A9CC023E50E400010E150 /* OmnisearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmnisearchField.swift; sourceTree = "<group>"; };
 		097325E723FC406E00A1C9E6 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		097325E92404560900A1C9E6 /* RecordingProgressBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingProgressBars.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 			isa = PBXGroup;
 			children = (
 				09E19F3423E24F1F0011D718 /* AppDelegate.swift */,
-				09043E2F2436C9A300F07C57 /* AppIcon.appiconset */,
 				09E19F3A23E24F210011D718 /* Assets.xcassets */,
 				09E19F4B23E253660011D718 /* Components */,
 				093F0A2424357BFD0039C218 /* Concertino.entitlements */,
@@ -439,7 +436,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09043E302436C9A300F07C57 /* AppIcon.appiconset in Resources */,
 				09E19F4123E24F210011D718 /* LaunchScreen.storyboard in Resources */,
 				09E19F3E23E24F210011D718 /* Preview Assets.xcassets in Resources */,
 				095A9CBD23E4E2400010E150 /* Nunito-ExtraBold.ttf in Resources */,
