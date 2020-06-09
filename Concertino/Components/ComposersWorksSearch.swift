@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct ComposersWorksSearch: View {
+    @Environment(\.navigationLevel) var level
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var omnisearch: OmnisearchString
@@ -80,7 +81,7 @@ struct ComposersWorksSearch: View {
                                     }
                                 } else {
                                     NavigationLink(
-                                        destination: ComposerDetail(composer: result.composer, navigationLevel: self.navigationLevel + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
+                                        destination: ComposerDetail(composer: result.composer).environment(\.navigationLevel, self.level + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
                                                 tag: String(describing: Self.self) + String(describing: WorkDetail.self) + result.id,
                                           selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
                                         ComposerRow(composer: result.composer).padding(.vertical, 6)

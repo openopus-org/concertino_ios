@@ -15,9 +15,9 @@ struct Home: View {
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
-                ComposersList(navigationLevel: navigationLevel)
-                PeriodList(navigationLevel: navigationLevel)
-                FavoriteComposersList(navigationLevel: navigationLevel)
+                ComposersList()
+                PeriodList()
+                FavoriteComposersList()
                 RadioStations()
                 RecentReleases(navigationLevel: navigationLevel)
                 Spacer()

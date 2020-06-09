@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PeriodDetailSearch: View {
     let period: String
-    let navigationLevel: Int
+    @Environment(\.navigationLevel) var level
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var search: WorkSearch
@@ -18,12 +18,11 @@ struct PeriodDetailSearch: View {
     @State private var composers = [Composer]()
     @State private var loading = true
     
-    init(period: String, navigationLevel: Int) {
+    init(period: String) {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
         
         self.period = period
-        self.navigationLevel = navigationLevel
     }
     
     func loadData() {
@@ -60,9 +59,9 @@ struct PeriodDetailSearch: View {
                 if self.composers.count > 0 {
                     List(self.composers) { composer in
                         NavigationLink(
-                            destination: ComposerDetail(composer: composer, navigationLevel: self.navigationLevel + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
+                            destination: ComposerDetail(composer: composer).environment(\.navigationLevel, self.level + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
                                     tag: String(describing: Self.self) + composer.id,
-                              selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
+                              selection: self.navigation.bindingForIdentifier(at: self.level)) {
                             ComposerRow(composer: composer)
                         }
                     }

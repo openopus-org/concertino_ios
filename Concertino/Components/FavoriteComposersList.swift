@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct FavoriteComposersList: View {
-    let navigationLevel: Int
+    @Environment(\.navigationLevel) var level
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var navigation: NavigationState
@@ -38,9 +38,9 @@ struct FavoriteComposersList: View {
                     HStack(alignment: .top, spacing: 14) {
                         ForEach(self.composers, id: \.id) { composer in
                             NavigationLink(
-                                destination: ComposerDetail(composer: composer, navigationLevel: self.navigationLevel + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
+                                destination: ComposerDetail(composer: composer).environment(\.navigationLevel, self.level + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
                                         tag: String(describing: Self.self) + composer.id,
-                                  selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
+                                  selection: self.navigation.bindingForIdentifier(at: self.level)) {
                                 TinyComposerBox(composer: composer)
                             }
                         }

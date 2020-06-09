@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct PeriodList: View {
-    var navigationLevel: Int
+    @Environment(\.navigationLevel) var level
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var search: WorkSearch
@@ -26,9 +26,9 @@ struct PeriodList: View {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(AppConstants.periodList, id: \.self) { period in
                         NavigationLink(
-                            destination: PeriodDetail(period: period, navigationLevel: self.navigationLevel + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search), 
+                            destination: PeriodDetail(period: period).environment(\.navigationLevel, self.level + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search), 
                                     tag: String(describing: Self.self) + period,
-                              selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
+                              selection: self.navigation.bindingForIdentifier(at: self.level)) {
                             PeriodBox(period: period)
                         }
                     }
@@ -42,7 +42,7 @@ struct PeriodList: View {
 
 struct PeriodList_Previews: PreviewProvider {
     static var previews: some View {
-        PeriodList(navigationLevel: 0)
+        PeriodList()
     }
 }
 

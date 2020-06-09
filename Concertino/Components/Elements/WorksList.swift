@@ -15,7 +15,6 @@ struct WorksList: View {
     var composer: Composer
     var essential: Bool
     var radioReady: Bool
-    let navigationLevel: Int
     
     var body: some View {
         Group {
@@ -37,7 +36,7 @@ struct WorksList: View {
                                 .padding(.top, self.radioReady ? 0 : 20)
                             ){
                             ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
-                                WorkRow(work: work, composer: self.composer, navigationLevel: self.navigationLevel)
+                                WorkRow(work: work, composer: self.composer)
                             }
                         }
                     }
@@ -62,7 +61,7 @@ struct WorksList: View {
                                 .padding(.top, self.radioReady ? 0 : 20)
                             ){
                             ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
-                                WorkRow(work: work, composer: self.composer, navigationLevel: self.navigationLevel)
+                                WorkRow(work: work, composer: self.composer)
                             }
                         }
                     }
@@ -75,7 +74,7 @@ struct WorksList: View {
                         WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
                     }
                     ForEach(self.works, id: \.id) { work in
-                        WorkRow(work: work, composer: self.composer, navigationLevel: self.navigationLevel)
+                        WorkRow(work: work, composer: self.composer)
                     }
                 }
                 .padding(.top, self.radioReady ? 0 : 20)
