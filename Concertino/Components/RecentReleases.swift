@@ -13,6 +13,8 @@ struct RecentReleases: View {
     @State private var recordings = [Recording]()
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var radioState: RadioState
     
     func loadData() {
         self.recordings.removeAll()
@@ -51,7 +53,7 @@ struct RecentReleases: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(self.recordings, id: \.id) { recording in
-                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false), label: {
+                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.appState).environmentObject(self.playState).environmentObject(self.radioState), label: {
                             RecordingBox(recording: recording)
                         })
                     }

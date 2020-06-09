@@ -9,6 +9,10 @@
 import SwiftUI
 
 struct PeriodList: View {
+    @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var search: WorkSearch
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Browse by period".uppercased())
@@ -19,7 +23,7 @@ struct PeriodList: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(AppConstants.periodList, id: \.self) { period in
-                        NavigationLink(destination: PeriodDetail(period: period)) {
+                        NavigationLink(destination: PeriodDetail(period: period).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
                             PeriodBox(period: period)
                         }
                     }

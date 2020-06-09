@@ -13,6 +13,9 @@ struct PlaylistsRecordings: View {
     @State private var loading = true
     @State private var recordings = [Recording]()
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var radioState: RadioState
     
     func loadData() {
         self.recordings.removeAll()
@@ -51,7 +54,7 @@ struct PlaylistsRecordings: View {
                 List {
                     PlaylistButtons(recordings: self.recordings, playlistId: playlistSwitcher.playlist)
                     ForEach(self.recordings, id: \.id) { recording in
-                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false), label: {
+                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
                             RecordingRow(recording: recording)
                         })
                     }

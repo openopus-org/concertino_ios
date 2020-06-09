@@ -12,6 +12,7 @@ struct PeriodDetailSearch: View {
     let period: String
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var search: WorkSearch
     @State private var composers = [Composer]()
     @State private var loading = true
     
@@ -55,7 +56,7 @@ struct PeriodDetailSearch: View {
             else {
                 if self.composers.count > 0 {
                     List(self.composers, id: \.id) { composer in
-                        NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState)) {
+                        NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
                             ComposerRow(composer: composer)
                         }
                     }

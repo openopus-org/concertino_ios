@@ -15,6 +15,9 @@ struct RecordingsList: View {
     @State private var nextpage = "0"
     @State private var recordings = [Recording]()
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var radioState: RadioState
     
     init(work: Work) {
         UITableView.appearance().backgroundColor = .clear
@@ -59,7 +62,7 @@ struct RecordingsList: View {
                     ForEach(self.recordings, id: \.id) { recording in
                         Group {
                             if !recording.isCompilation || !self.settingStore.hideIncomplete {
-                                NavigationLink(destination: RecordingDetail(workId: self.work.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false), label: {
+                                NavigationLink(destination: RecordingDetail(workId: self.work.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
                                     RecordingRow(recording: recording)
                                 })
                             }

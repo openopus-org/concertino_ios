@@ -12,6 +12,7 @@ struct ComposersWorksSearch: View {
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var omnisearch: OmnisearchString
+    @EnvironmentObject var search: WorkSearch
     @State private var results = [OmniResults]()
     @State private var offset = 0
     @State private var loading = true
@@ -68,13 +69,13 @@ struct ComposersWorksSearch: View {
                         List(self.results, id: \.id) { result in
                             Group {
                                 if result.work != nil {
-                                    NavigationLink(destination: WorkDetail(work: result.work!, composer: result.composer)) {
+                                    NavigationLink(destination: WorkDetail(work: result.work!, composer: result.composer).environmentObject(self.settingStore)) {
                                         WorkSearchRow(work: result.work!, composer: result.composer)
                                             .padding(.top, 6)
                                             .padding(.bottom, 6)
                                     }
                                 } else {
-                                    NavigationLink(destination: ComposerDetail(composer: result.composer).environmentObject(self.settingStore).environmentObject(self.AppState)) {
+                                    NavigationLink(destination: ComposerDetail(composer: result.composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
                                         ComposerRow(composer: result.composer)
                                             .padding(.top, 6)
                                             .padding(.bottom, 6)

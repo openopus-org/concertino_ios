@@ -29,6 +29,7 @@ class ComposersData: ObservableObject {
 struct ComposersList: View {
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var search: WorkSearch
     @ObservedObject var composers = ComposersData()
     
     var body: some View {
@@ -40,7 +41,7 @@ struct ComposersList: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(composers.composers, id: \.id) { composer in
-                        NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState)) {
+                        NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
                             ComposerBox(composer: composer)
                         }
                     }

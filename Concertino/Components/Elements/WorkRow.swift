@@ -11,9 +11,10 @@ import SwiftUI
 struct WorkRow: View {
     var work: Work
     var composer: Composer
+    @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
-        NavigationLink(destination: WorkDetail(work: work, composer: composer), label: {
+        NavigationLink(destination: WorkDetail(work: work, composer: composer).environmentObject(self.settingStore), label: {
             VStack(alignment: .leading) {
                 Text(work.title)
                     .font(.custom("Barlow", size: 15))
