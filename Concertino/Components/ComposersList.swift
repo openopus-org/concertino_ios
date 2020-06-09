@@ -26,17 +26,6 @@ class ComposersData: ObservableObject {
     }
 }
 
-struct NavigationIndex: EnvironmentKey {
-    static var defaultValue: Int = 0
-}
-
-extension EnvironmentValues {
-    var navigationLevel: Int {
-        get { self[NavigationIndex.self] }
-        set { self[NavigationIndex.self] = newValue }
-    }
-}
-
 struct ComposersList: View {
     @Environment(\.navigationLevel) var level
     @EnvironmentObject var settingStore: SettingStore

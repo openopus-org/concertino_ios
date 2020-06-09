@@ -9,6 +9,17 @@
 import SwiftUI
 import Combine
 
+struct NavigationIndex: EnvironmentKey {
+    static var defaultValue: Int = 0
+}
+
+extension EnvironmentValues {
+    var navigationLevel: Int {
+        get { self[NavigationIndex.self] }
+        set { self[NavigationIndex.self] = newValue }
+    }
+}
+
 final class NavigationState: ObservableObject  {
     @Published var identifierStack: [Int:String] = [:]
     func popAll() {

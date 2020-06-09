@@ -17,7 +17,7 @@ struct ComposersSearch: View {
     @State private var composers = [Composer]()
     @State private var loading = true
     
-    init(navigationLevel: Int) {
+    init() {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
     }

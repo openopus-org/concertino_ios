@@ -10,7 +10,6 @@ import SwiftUI
 
 struct Home: View {
     @EnvironmentObject var settingStore: SettingStore
-    var navigationLevel = 0
     
     var body: some View {
         ScrollView(showsIndicators: false) {

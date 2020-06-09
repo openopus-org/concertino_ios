@@ -19,8 +19,6 @@ struct ComposersWorksSearch: View {
     @State private var offset = 0
     @State private var loading = true
 
-    let navigationLevel = 0
-
     init() {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
