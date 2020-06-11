@@ -18,7 +18,7 @@ struct ComposersWorksSearch: View {
     @State private var results = [OmniResults]()
     @State private var offset = 0
     @State private var loading = true
-
+    
     init() {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
@@ -72,16 +72,16 @@ struct ComposersWorksSearch: View {
                             Group {
                                 if result.work != nil {
                                     NavigationLink(
-                                        destination: WorkDetail(work: result.work!, composer: result.composer).environmentObject(self.settingStore),
+                                        destination: WorkDetail(work: result.work!, composer: result.composer).environment(\.navigationLevel, self.level + 1).environmentObject(self.settingStore),
                                                 tag: String(describing: Self.self) + String(describing: WorkDetail.self) + result.id,
-                                          selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
+                                          selection: self.navigation.bindingForIdentifier(at: self.level)) {
                                         WorkSearchRow(work: result.work!, composer: result.composer).padding(.vertical, 6)
                                     }
                                 } else {
                                     NavigationLink(
                                         destination: ComposerDetail(composer: result.composer).environment(\.navigationLevel, self.level + 1).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search),
                                                 tag: String(describing: Self.self) + String(describing: WorkDetail.self) + result.id,
-                                          selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
+                                          selection: self.navigation.bindingForIdentifier(at: self.level)) {
                                         ComposerRow(composer: result.composer).padding(.vertical, 6)
                                     }
                                 }

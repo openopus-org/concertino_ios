@@ -18,7 +18,7 @@ struct Home: View {
                 PeriodList()
                 FavoriteComposersList()
                 RadioStations()
-                RecentReleases(navigationLevel: navigationLevel)
+                RecentReleases()
                 Spacer()
                     .frame(height: 26)
             }

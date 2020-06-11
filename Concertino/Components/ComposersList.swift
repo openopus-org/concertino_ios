@@ -33,7 +33,7 @@ struct ComposersList: View {
     @EnvironmentObject var search: WorkSearch
     @EnvironmentObject var navigation: NavigationState
     @ObservedObject var composers = ComposersData()
-
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Most Requested Composers".uppercased())

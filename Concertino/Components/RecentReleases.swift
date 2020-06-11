@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct RecentReleases: View {
-    let navigationLevel: Int
+    @Environment(\.navigationLevel) var level
     @State private var loading = true
     @State private var recordings = [Recording]()
     @EnvironmentObject var settingStore: SettingStore
@@ -56,9 +56,9 @@ struct RecentReleases: View {
                 HStack(alignment: .top, spacing: 14) {
                     ForEach(self.recordings) { recording in
                         NavigationLink(
-                            destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.appState).environmentObject(self.playState).environmentObject(self.radioState),
+                            destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environment(\.navigationLevel, self.level + 1).environmentObject(self.settingStore).environmentObject(self.appState).environmentObject(self.playState).environmentObject(self.radioState),
                                     tag: String(describing: Self.self) + recording.id,
-                              selection: self.navigation.bindingForIdentifier(at: self.navigationLevel)) {
+                              selection: self.navigation.bindingForIdentifier(at: self.level)) {
                             RecordingBox(recording: recording)
                         }
                     }
