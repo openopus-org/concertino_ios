@@ -18,8 +18,13 @@ struct Structure: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                Header()
-                Spacer()
+                if UIDevice.current.isLarge {
+                    Header()
+                    Spacer()
+                } else {
+                    Spacer()
+                        .frame(height: 2)
+                }
                 
                 ZStack(alignment: .top) {
                     Library().opacity(self.AppState.currentTab == "library" ? 1 : 0)
@@ -27,14 +32,16 @@ struct Structure: View {
                     Radio().opacity(self.AppState.currentTab == "radio" ? 1 : 0)
                     Settings().opacity(self.AppState.currentTab == "settings" ? 1 : 0)
                 }
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: self.playState.recording.count > 0 ? 130 : 0, trailing: 0))
+                .padding(EdgeInsets(top: UIDevice.current.isLarge ? 0 : 0, leading: 0, bottom: self.playState.recording.count > 0 ? 130 : 0, trailing: 0))
                     
                 Spacer()
                 TabMenu()
             }
+            
             Player()
                 .opacity(self.playState.recording.count > 0 ? 1 : 0)
                 .padding(.bottom, UIDevice.current.hasNotch ? 0 : 12)
+                .padding(.top, UIDevice.current.isLarge ? 0 : 0)
             
             Loader().opacity(self.AppState.isLoading ? 1 : 0)
             

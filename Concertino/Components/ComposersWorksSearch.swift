@@ -30,7 +30,6 @@ struct ComposersWorksSearch: View {
                 let omniData: Omnisearch = parseJSON(results)
                 
                 DispatchQueue.main.async {
-                    
                     self.results.removeAll()
                     if let results = omniData.results {
                         self.results = results
@@ -83,6 +82,7 @@ struct ComposersWorksSearch: View {
                                 }
                             }
                         }
+                        .id(UUID())
                         .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                     }
                     else {

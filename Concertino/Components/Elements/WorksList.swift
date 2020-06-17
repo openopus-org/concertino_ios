@@ -24,6 +24,7 @@ struct WorksList: View {
                         Section(header:
                             WorksRadioButton(genreId: "\(self.composer.id)-\(self.genre)")
                                 .padding(.bottom, -20)
+
                         ){
                             EmptyView()
                         }

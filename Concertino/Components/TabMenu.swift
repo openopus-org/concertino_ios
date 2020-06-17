@@ -21,7 +21,7 @@ struct TabMenu: View {
             TabButton(icon: "settings", label: "Settings", tab: "settings")
             Spacer()
         }
-        .padding(.bottom, UIDevice.current.hasNotch ? 0 : 12)
+        .padding(.bottom, UIDevice.current.hasNotch ? 0 : UIDevice.current.isLarge ? 12 : 6)
     }
 }
 

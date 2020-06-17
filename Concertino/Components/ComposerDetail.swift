@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ComposerDetail: View {
+struct ComposerDetailv1: View {
     var composer: Composer
     
     var body: some View {
@@ -27,7 +27,7 @@ struct ComposerDetail: View {
     }
 }
 
-struct ComposerDetail_Previews: PreviewProvider {
+struct ComposerDetailv1_Previews: PreviewProvider {
     static var previews: some View {
         EmptyView()
     }

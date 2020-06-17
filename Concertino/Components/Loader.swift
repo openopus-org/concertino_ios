@@ -37,7 +37,7 @@ struct Loader: View {
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .background(Color.black)
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(UIDevice.current.isLarge ? .all : .bottom)
     }
 }
 

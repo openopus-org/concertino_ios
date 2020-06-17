@@ -10,7 +10,21 @@ import SwiftUI
 
 struct FullLoader: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .center) {
+            Spacer()
+            
+            HStack(alignment: .top) {
+                Spacer()
+                
+                ActivityIndicator(isAnimating: true)
+                    .configure { $0.color = .white; $0.style = .large }
+                
+                Spacer()
+            }
+            
+            Spacer()
+        }
+        .background(Color.black)
     }
 }
 
