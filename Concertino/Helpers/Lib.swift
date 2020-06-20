@@ -1140,6 +1140,10 @@ extension UIDevice {
         let bottom = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.bottom ?? 0
         return bottom > 0
     }
+    
+    var isLarge: Bool {
+        return UIScreen.main.bounds.height > 700
+    }
 }
 
 extension UIViewController {

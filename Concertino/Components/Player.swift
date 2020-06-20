@@ -347,7 +347,7 @@ struct Player: View {
                 }
             }
         }
-        .padding(EdgeInsets(top: 28, leading: 0, bottom: 46, trailing: 0))
+        .padding(EdgeInsets(top: UIDevice.current.isLarge ? 28 : 0, leading: 0, bottom: UIDevice.current.isLarge ? 46 : 40, trailing: 0))
         .clipped()
         .onAppear(perform: {
             if (self.currentTrack.count == 0 && self.settingStore.lastPlayState.count > 0) {

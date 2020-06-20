@@ -25,6 +25,8 @@
 		0922D4742410A067001E8DFE /* PlaylistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D4732410A067001E8DFE /* PlaylistButton.swift */; };
 		0922D4762410A0C6001E8DFE /* FavoritesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D4752410A0C6001E8DFE /* FavoritesButton.swift */; };
 		093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F0A22243442660039C218 /* SettingsMenuItem.swift */; };
+		095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F2249988E900A3E224 /* ComposerDetailWorks.swift */; };
+		095590F52499A49900A3E224 /* FullLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F42499A49900A3E224 /* FullLoader.swift */; };
 		095A9CBC23E4E2400010E150 /* Barlow-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */; };
 		095A9CBD23E4E2400010E150 /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */; };
 		095A9CBE23E4E2400010E150 /* Barlow-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */; };
@@ -123,6 +125,8 @@
 		0922D4752410A0C6001E8DFE /* FavoritesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesButton.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
+		095590F2249988E900A3E224 /* ComposerDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerDetailWorks.swift; sourceTree = "<group>"; };
+		095590F42499A49900A3E224 /* FullLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullLoader.swift; sourceTree = "<group>"; };
 		095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-SemiBold.ttf"; sourceTree = "<group>"; };
 		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-Regular.ttf"; sourceTree = "<group>"; };
@@ -309,6 +313,7 @@
 				09F417B2247989E8008CF53E /* Warning.swift */,
 				09A6741E23F77FDD000000D6 /* WorkDetail.swift */,
 				09A0084123F4E056001C696E /* WorksSearch.swift */,
+				095590F2249988E900A3E224 /* ComposerDetailWorks.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -368,6 +373,7 @@
 				097325F52408B5E000A1C9E6 /* WorkSearchRow.swift */,
 				09A6741A23F7606F000000D6 /* WorksList.swift */,
 				09DEEB142425A09300350397 /* WorksRadioButton.swift */,
+				095590F42499A49900A3E224 /* FullLoader.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -477,6 +483,7 @@
 				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
 				097325F224089FA200A1C9E6 /* ComposersSearch.swift in Sources */,
 				099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */,
+				095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
 				09DEEB112421830C00350397 /* PlaylistButtons.swift in Sources */,
 				095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */,
@@ -537,6 +544,7 @@
 				09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
 				09E5441A23FB571E005B8AEE /* RecordingPlayButtons.swift in Sources */,
+				095590F52499A49900A3E224 /* FullLoader.swift in Sources */,
 				09043E322436DA5200F07C57 /* Loader.swift in Sources */,
 				09DEEB21242C2C2600350397 /* PlaylistChooser.swift in Sources */,
 			);

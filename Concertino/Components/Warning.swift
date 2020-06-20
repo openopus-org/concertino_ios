@@ -120,7 +120,7 @@ struct Warning: View {
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .background(Color.black.opacity(0.8))
-        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(UIDevice.current.isLarge ? .all : .bottom)
     }
 }
 
