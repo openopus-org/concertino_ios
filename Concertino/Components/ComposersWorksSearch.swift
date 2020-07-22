@@ -13,7 +13,9 @@ struct ComposersWorksSearch: View {
     @EnvironmentObject var AppState: AppState
     @EnvironmentObject var omnisearch: OmnisearchString
     @EnvironmentObject var search: WorkSearch
-    @State private var results = [OmniResults]()
+    @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var radioState: RadioState
+    @State private var results = [Recording]()
     @State private var offset = 0
     @State private var loading = true
     
@@ -26,25 +28,25 @@ struct ComposersWorksSearch: View {
         loading = true
         
         if self.omnisearch.searchstring.count > 3 {
-            APIget(AppConstants.openOpusBackend+"/omnisearch/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
-                let omniData: Omnisearch = parseJSON(results)
-                
-                DispatchQueue.main.async {
-                    self.results.removeAll()
-                    if let results = omniData.results {
-                        self.results = results
-                    }
-                    else {
-                        self.results = [OmniResults]()
-                    }
+            getStoreFront() { countryCode in
+                APIget(AppConstants.concBackend+"/omnisearch/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
+                    let omniData: Omnisearch = parseJSON(results)
                     
-                    self.loading = false
+                    DispatchQueue.main.async {
+                        if let recordings = omniData.recordings {
+                            self.results.removeAll()
+                            self.results = recordings
+                            self.loading = false
+                        } else {
+                            self.results = [Recording]()
+                        }
+                    }
                 }
             }
         }
         else {
             DispatchQueue.main.async {
-                self.results = [OmniResults]()
+                self.results = [Recording]()
                 self.loading = false
             }
         }
@@ -52,46 +54,15 @@ struct ComposersWorksSearch: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if self.omnisearch.searchstring != "" {
-                
-                if self.loading {
-                    HStack {
-                        Spacer()
-                        ActivityIndicator(isAnimating: loading)
-                        .configure { $0.color = .white; $0.style = .large }
-                        Spacer()
-                    }
-                    .padding(40)
-                }
-                else {
-                    if self.results.count > 0 {
-                        List(self.results, id: \.id) { result in
-                            Group {
-                                if result.work != nil {
-                                    NavigationLink(destination: WorkDetail(work: result.work!, composer: result.composer).environmentObject(self.settingStore)) {
-                                        WorkSearchRow(work: result.work!, composer: result.composer)
-                                            .padding(.top, 6)
-                                            .padding(.bottom, 6)
-                                    }
-                                } else {
-                                    NavigationLink(destination: ComposerDetail(composer: result.composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
-                                        ComposerRow(composer: result.composer)
-                                            .padding(.top, 6)
-                                            .padding(.bottom, 6)
-                                    }
-                                }
-                            }
-                        }
-                        .id(UUID())
-                        .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
-                    }
-                    else {
-                        ErrorMessage(msg: (self.omnisearch.searchstring.count > 3 ? "No matches for: \(self.omnisearch.searchstring)" : "Search term too short"))
-                    }
-                }
-            }
             
-            Spacer()
+            List(self.results, id: \.id) { recording in
+                        NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
+                            RecordingRow(recording: recording)
+                        })
+                    }
+                    .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
+                    
+        
         }
         .onReceive(omnisearch.objectWillChange, perform: loadData)
         .onAppear(perform: {

@@ -41,7 +41,10 @@ struct Work: Codable, Identifiable {
 }
 
 struct Omnisearch: Codable {
-    var results: [OmniResults]?
+    var recordings: [Recording]?
+    var composers: [Composer]?
+    var works: [Work]?
+    var next: Int?
 }
 
 struct OmniResults: Codable {

@@ -11,6 +11,7 @@ import SwiftUI
 struct OmnisearchField: View {
     @EnvironmentObject var omnisearch: OmnisearchString
     @EnvironmentObject var AppState: AppState
+    @State private var searchString = ""
     
     var body: some View {
         HStack {
@@ -23,24 +24,27 @@ struct OmnisearchField: View {
                     .frame(maxHeight: 15)
                 
                 ZStack(alignment: .leading) {
-                    if self.omnisearch.searchstring.isEmpty {
+                    if self.searchString.isEmpty {
                         Text("Search composers and works")
                             .foregroundColor(.black)
                             .font(.custom("Nunito", size: 15))
                             .padding(1)
                     }
-                    TextField("", text: $omnisearch.searchstring, onEditingChanged: { isEditing in
+                    TextField("", text: $searchString, onEditingChanged: { isEditing in
                             if (isEditing) {
                                 self.AppState.currentLibraryTab = "composersearch"
                             }
-                    })
+                        }, onCommit: {
+                            self.omnisearch.searchstring = self.searchString
+                        })
+                        .keyboardType(.webSearch)
                         .textFieldStyle(SearchStyle())
                         .disableAutocorrection(true)
                 }
                 
-                if self.AppState.currentLibraryTab == "composersearch" && !self.omnisearch.searchstring.isEmpty {
+                if self.AppState.currentLibraryTab == "composersearch" && !self.searchString.isEmpty {
                     Button(action: {
-                        self.omnisearch.searchstring = ""
+                        self.searchString = ""
                     }, label: {
                         Image(systemName: "xmark.circle.fill")
                             .resizable()
@@ -60,8 +64,8 @@ struct OmnisearchField: View {
                 Button(action: {
                         self.AppState.currentLibraryTab = "home"
                         self.omnisearch.searchstring = ""
+                        self.searchString = ""
                         self.endEditing(true)
-                    
                 },
                        label: { Text("Cancel")
                         .foregroundColor(Color(hex: 0xfe365e))

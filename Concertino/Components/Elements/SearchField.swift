@@ -11,6 +11,7 @@ import SwiftUI
 struct SearchField: View {
     @EnvironmentObject var composersSearch: ComposerSearchString
     @EnvironmentObject var AppState: AppState
+    @State private var searchString = ""
     
     var body: some View {
         HStack {
@@ -29,11 +30,13 @@ struct SearchField: View {
                             .font(.custom("Nunito", size: 15))
                             .padding(1)
                     }
-                    TextField("", text: $composersSearch.searchstring, onEditingChanged: { isEditing in
+                    TextField("", text: $searchString, onEditingChanged: { isEditing in
                             if (isEditing) {
                                 self.AppState.currentLibraryTab = "composersearch"
                             }
-                    })
+                        }, onCommit: {
+                            self.composersSearch.searchstring = self.searchString
+                        })
                         .textFieldStyle(SearchStyle())
                         .disableAutocorrection(true)
                 }

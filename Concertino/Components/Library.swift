@@ -19,7 +19,7 @@ struct Library: View {
                     
                     ZStack(alignment: .top) {
                         Home().opacity(self.AppState.currentLibraryTab == "home" ? 1 : 0)
-                        ComposersWorksSearch().opacity(self.AppState.currentLibraryTab == "composersearch" ? 1 : 0)
+                        FreeSearch().opacity(self.AppState.currentLibraryTab == "composersearch" ? 1 : 0)
                     }
                 }
             }
