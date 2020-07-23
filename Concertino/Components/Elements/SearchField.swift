@@ -6,6 +6,7 @@
 //  Copyright © 2020 Open Opus. All rights reserved.
 //
 
+/*
 import SwiftUI
 
 struct SearchField: View {
@@ -72,3 +73,4 @@ struct SearchField_Previews: PreviewProvider {
         //SearchField(composersSearch: "")
     }
 }
+*/

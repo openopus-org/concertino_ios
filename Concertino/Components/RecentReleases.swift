@@ -58,7 +58,7 @@ struct RecentReleases: View {
                         })
                     }
                 }
-                .frame(minHeight: 270)
+                .frame(minHeight: 300)
                 .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
             }
         }

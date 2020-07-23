@@ -12,14 +12,18 @@ struct TabMenu: View {
     var body: some View {
         HStack {
             Spacer()
-            TabButton(icon: "library", label: "Library", tab: "library")
-            Spacer()
-            TabButton(icon: "favorites", label: "Favorites", tab: "favorites")
-            Spacer()
-            TabButton(icon: "radio", label: "Radio", tab: "radio")
-            Spacer()
-            TabButton(icon: "settings", label: "Settings", tab: "settings")
-            Spacer()
+            Group {
+                TabButton(icon: "library", label: "Library", tab: "library")
+                Spacer()
+                TabButton(icon: "search", label: "Search", tab: "search")
+                Spacer()
+                TabButton(icon: "favorites", label: "Favorites", tab: "favorites")
+                Spacer()
+                TabButton(icon: "radio", label: "Radio", tab: "radio")
+                Spacer()
+                TabButton(icon: "settings", label: "Settings", tab: "settings")
+                Spacer()
+            }
         }
         .padding(.bottom, UIDevice.current.hasNotch ? 0 : UIDevice.current.isLarge ? 12 : 6)
     }

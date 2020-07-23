@@ -22,6 +22,8 @@ struct FavoriteComposersList: View {
                     self.composers = composersData.composers ?? []
                 }
             }
+        } else {
+            self.composers = []
         }
     }
     

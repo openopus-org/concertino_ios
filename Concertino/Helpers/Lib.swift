@@ -18,7 +18,6 @@ final class AppState: ObservableObject  {
     let externalUrlWillChange = PassthroughSubject<(), Never>()
     
     @Published var currentTab = "library"
-    @Published var currentLibraryTab = "home"
     @Published var fullPlayer = false
     @Published var isLoading = true
     @Published var showingWarning = false

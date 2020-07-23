@@ -24,6 +24,7 @@
 		0922D47224105981001E8DFE /* PlaylistsRecordings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D47124105981001E8DFE /* PlaylistsRecordings.swift */; };
 		0922D4742410A067001E8DFE /* PlaylistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D4732410A067001E8DFE /* PlaylistButton.swift */; };
 		0922D4762410A0C6001E8DFE /* FavoritesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D4752410A0C6001E8DFE /* FavoritesButton.swift */; };
+		0923104124C8BE5600E721B5 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104024C8BE5500E721B5 /* Search.swift */; };
 		093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F0A22243442660039C218 /* SettingsMenuItem.swift */; };
 		095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F2249988E900A3E224 /* ComposerDetailWorks.swift */; };
 		095590F52499A49900A3E224 /* FullLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F42499A49900A3E224 /* FullLoader.swift */; };
@@ -124,6 +125,7 @@
 		0922D47124105981001E8DFE /* PlaylistsRecordings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsRecordings.swift; sourceTree = "<group>"; };
 		0922D4732410A067001E8DFE /* PlaylistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistButton.swift; sourceTree = "<group>"; };
 		0922D4752410A0C6001E8DFE /* FavoritesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesButton.swift; sourceTree = "<group>"; };
+		0923104024C8BE5500E721B5 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
 		095590F2249988E900A3E224 /* ComposerDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerDetailWorks.swift; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				09A0084123F4E056001C696E /* WorksSearch.swift */,
 				095590F2249988E900A3E224 /* ComposerDetailWorks.swift */,
 				095590F624B120A800A3E224 /* FreeSearch.swift */,
+				0923104024C8BE5500E721B5 /* Search.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
 				09DEEB112421830C00350397 /* PlaylistButtons.swift in Sources */,
+				0923104124C8BE5600E721B5 /* Search.swift in Sources */,
 				095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */,
 				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,
 				097325FA240A19D600A1C9E6 /* TinyComposerBox.swift in Sources */,

@@ -69,7 +69,7 @@ struct RecordingBox: View {
             Spacer()
         }
         .padding(20)
-        .frame(minWidth: 165, maxWidth: 165, minHeight: 270,  maxHeight: 270, alignment: .top)
+        .frame(minWidth: 165, maxWidth: 165, minHeight: 300,  maxHeight: 300, alignment: .top)
         .background(Color(hex: 0x202023))
         .cornerRadius(20)
     }

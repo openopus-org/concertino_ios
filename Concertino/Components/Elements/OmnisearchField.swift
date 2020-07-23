@@ -25,14 +25,14 @@ struct OmnisearchField: View {
                 
                 ZStack(alignment: .leading) {
                     if self.searchString.isEmpty {
-                        Text("Search composers and works")
+                        Text("Composers, works, and recordings")
                             .foregroundColor(.black)
                             .font(.custom("Nunito", size: 15))
                             .padding(1)
                     }
                     TextField("", text: $searchString, onEditingChanged: { isEditing in
                             if (isEditing) {
-                                self.AppState.currentLibraryTab = "composersearch"
+                                self.AppState.currentTab = "search"
                             }
                         }, onCommit: {
                             self.omnisearch.searchstring = self.searchString
@@ -42,7 +42,7 @@ struct OmnisearchField: View {
                         .disableAutocorrection(true)
                 }
                 
-                if self.AppState.currentLibraryTab == "composersearch" && !self.searchString.isEmpty {
+                if self.AppState.currentTab == "search" && !self.searchString.isEmpty {
                     Button(action: {
                         self.searchString = ""
                     }, label: {
@@ -60,9 +60,8 @@ struct OmnisearchField: View {
             .cornerRadius(12)
             .clipped()
             
-            if self.AppState.currentLibraryTab == "composersearch" {
+            if self.AppState.currentTab == "search" {
                 Button(action: {
-                        self.AppState.currentLibraryTab = "home"
                         self.omnisearch.searchstring = ""
                         self.searchString = ""
                         self.endEditing(true)
@@ -74,7 +73,6 @@ struct OmnisearchField: View {
                 })
             }
         }
-        
     }
 }
 

@@ -11,10 +11,10 @@ import SwiftUI
 struct Header: View {
     var body: some View {
         Image("logo")
-        .resizable()
-        .scaledToFit()
-        .frame(height: UIDevice.current.hasNotch ? 22 : 18)
-        .padding(.top, UIDevice.current.hasNotch ? 0 : 6)
+            .resizable()
+            .scaledToFit()
+            .frame(height: UIDevice.current.hasNotch ? 22 : 18)
+            .padding(.top, UIDevice.current.hasNotch ? 0 : 6)
     }
 }
 
