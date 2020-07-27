@@ -185,7 +185,7 @@ struct FreeSearch: View {
                                     ){
                                         ForEach(self.composers, id: \.id) { composer in
                                             Group {
-                                                NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
+                                                NavigationLink(destination: ComposerDetail(composer: composer, isSearch: true).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
                                                     ComposerRow(composer: composer)
                                                 }
                                             }
@@ -202,7 +202,7 @@ struct FreeSearch: View {
                                             .foregroundColor(Color(hex: 0xFE365E))
                                     ){
                                         ForEach(self.works, id: \.id) { work in
-                                            NavigationLink(destination: WorkDetail(work: work, composer: work.composer!).environmentObject(self.settingStore)) {
+                                            NavigationLink(destination: WorkDetail(work: work, composer: work.composer!, isSearch: true).environmentObject(self.settingStore)) {
                                                 WorkSearchRow(work: work, composer: work.composer!)
                                                     .padding(.top, 6)
                                                     .padding(.bottom, 6)
@@ -222,7 +222,7 @@ struct FreeSearch: View {
                                         ForEach(self.recordings, id: \.id) { recording in
                                             Group {
                                                 if !recording.isCompilation || !self.settingStore.hideIncomplete {
-                                                    NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
+                                                    NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false, isSearch: true).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
                                                         RecordingRow(recording: recording)
                                                     })
                                                 }
@@ -251,10 +251,19 @@ struct FreeSearch: View {
                         .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                     }
                 }
+            } else {
+                ScrollView(showsIndicators: false) {
+                    if self.settingStore.recentSearches.count > 0 {
+                        RecentSearches()
+                    }
+                }
+                .padding(.leading, 20)
+                .padding(.trailing, 10)
             }
         }
         .onReceive(omnisearch.objectWillChange, perform: loadData)
         .onAppear(perform: {
+            print(self.settingStore.recentSearches)
             self.endEditing(true)
         })
         .frame(maxWidth: .infinity)

@@ -25,6 +25,10 @@
 		0922D4742410A067001E8DFE /* PlaylistButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D4732410A067001E8DFE /* PlaylistButton.swift */; };
 		0922D4762410A0C6001E8DFE /* FavoritesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0922D4752410A0C6001E8DFE /* FavoritesButton.swift */; };
 		0923104124C8BE5600E721B5 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104024C8BE5500E721B5 /* Search.swift */; };
+		0923104624CDED3B00E721B5 /* RecentSearches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104524CDED3B00E721B5 /* RecentSearches.swift */; };
+		0923104824CE00BE00E721B5 /* MiniWorkSearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104724CE00BE00E721B5 /* MiniWorkSearchRow.swift */; };
+		0923104A24CE015A00E721B5 /* MiniComposerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104924CE015A00E721B5 /* MiniComposerRow.swift */; };
+		0923104C24CF8A3000E721B5 /* MicroRecordingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */; };
 		093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F0A22243442660039C218 /* SettingsMenuItem.swift */; };
 		095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F2249988E900A3E224 /* ComposerDetailWorks.swift */; };
 		095590F52499A49900A3E224 /* FullLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F42499A49900A3E224 /* FullLoader.swift */; };
@@ -126,6 +130,10 @@
 		0922D4732410A067001E8DFE /* PlaylistButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistButton.swift; sourceTree = "<group>"; };
 		0922D4752410A0C6001E8DFE /* FavoritesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesButton.swift; sourceTree = "<group>"; };
 		0923104024C8BE5500E721B5 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		0923104524CDED3B00E721B5 /* RecentSearches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearches.swift; sourceTree = "<group>"; };
+		0923104724CE00BE00E721B5 /* MiniWorkSearchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniWorkSearchRow.swift; sourceTree = "<group>"; };
+		0923104924CE015A00E721B5 /* MiniComposerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniComposerRow.swift; sourceTree = "<group>"; };
+		0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroRecordingRow.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
 		095590F2249988E900A3E224 /* ComposerDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerDetailWorks.swift; sourceTree = "<group>"; };
@@ -380,6 +388,10 @@
 				09A6741A23F7606F000000D6 /* WorksList.swift */,
 				09DEEB142425A09300350397 /* WorksRadioButton.swift */,
 				095590F42499A49900A3E224 /* FullLoader.swift */,
+				0923104524CDED3B00E721B5 /* RecentSearches.swift */,
+				0923104724CE00BE00E721B5 /* MiniWorkSearchRow.swift */,
+				0923104924CE015A00E721B5 /* MiniComposerRow.swift */,
+				0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -468,10 +480,12 @@
 				09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */,
 				0922D46C240F3449001E8DFE /* PeriodHeader.swift in Sources */,
 				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
+				0923104624CDED3B00E721B5 /* RecentSearches.swift in Sources */,
 				097C15DB242D70F9006FBBEE /* RecordingRemover.swift in Sources */,
 				0922D46E240F34BC001E8DFE /* PeriodDetail.swift in Sources */,
 				09E19F5123E254480011D718 /* Home.swift in Sources */,
 				09DEEB152425A09300350397 /* WorksRadioButton.swift in Sources */,
+				0923104824CE00BE00E721B5 /* MiniWorkSearchRow.swift in Sources */,
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
 				097325F02404C10700A1C9E6 /* DotsAnimation.swift in Sources */,
 				0906256424316E6200E8FC3E /* RecentReleases.swift in Sources */,
@@ -526,9 +540,11 @@
 				09E19F5B23E254810011D718 /* Favorites.swift in Sources */,
 				09A0083E23F35C16001C696E /* GenreBar.swift in Sources */,
 				09A6742323F78171000000D6 /* BackButton.swift in Sources */,
+				0923104C24CF8A3000E721B5 /* MicroRecordingRow.swift in Sources */,
 				09E19F4F23E2543E0011D718 /* Header.swift in Sources */,
 				097C15DD242DB75C006FBBEE /* MiniRecordingRow.swift in Sources */,
 				09AAD65123E62121004CDAB6 /* Inc.swift in Sources */,
+				0923104A24CE015A00E721B5 /* MiniComposerRow.swift in Sources */,
 				09AD2CD924341E6600375277 /* RadioStationsGrid.swift in Sources */,
 				097325EC24047D0600A1C9E6 /* RecordingPlaybackControl.swift in Sources */,
 				09A0084223F4E056001C696E /* WorksSearch.swift in Sources */,

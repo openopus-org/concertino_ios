@@ -56,7 +56,7 @@ struct PeriodDetailSearch: View {
             else {
                 if self.composers.count > 0 {
                     List(self.composers, id: \.id) { composer in
-                        NavigationLink(destination: ComposerDetail(composer: composer).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
+                        NavigationLink(destination: ComposerDetail(composer: composer, isSearch: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
                             ComposerRow(composer: composer)
                         }
                     }

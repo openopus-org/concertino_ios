@@ -62,7 +62,7 @@ struct RecordingsList: View {
                     ForEach(self.recordings, id: \.id) { recording in
                         Group {
                             if !recording.isCompilation || !self.settingStore.hideIncomplete {
-                                NavigationLink(destination: RecordingDetail(workId: self.work.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
+                                NavigationLink(destination: RecordingDetail(workId: self.work.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false, isSearch: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
                                     RecordingRow(recording: recording)
                                 })
                             }

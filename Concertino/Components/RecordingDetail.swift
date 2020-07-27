@@ -13,6 +13,7 @@ struct RecordingDetail: View {
     var recordingId: String
     var recordingSet: Int
     var isSheet: Bool
+    var isSearch: Bool
     @State private var error = false
     @State private var recording = [Recording]()
     @State private var loading = true
@@ -28,6 +29,9 @@ struct RecordingDetail: View {
                         var rec = recordingData.recording
                         rec.work = recordingData.work
                         self.recording = [rec]
+                        
+                        if self.isSearch { self.settingStore.recentSearches = MarkSearched(allSearches: self.settingStore.recentSearches, recentSearch: RecentSearch (recording: self.recording.first!)) }
+                        
                         self.error = false
                         self.loading = false
                     }
@@ -85,7 +89,9 @@ struct RecordingDetail: View {
                 }
             }
             .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 22))
-            .onAppear(perform: loadData)
+            .onAppear(perform: {
+                self.loadData()
+            })
             
             Spacer()
         }

@@ -9,8 +9,10 @@
 import SwiftUI
 
 struct WorkDetail: View {
+    @EnvironmentObject var settingStore: SettingStore
     var work: Work
     var composer: Composer
+    var isSearch: Bool
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -21,6 +23,12 @@ struct WorkDetail: View {
             RecordingsList(work: work)
             Spacer()
         }
+        .onAppear(perform: {
+            var compwork: Work
+            compwork = self.work
+            compwork.composer = self.composer
+            if self.isSearch { self.settingStore.recentSearches = MarkSearched(allSearches: self.settingStore.recentSearches, recentSearch: RecentSearch (work: compwork)) }
+        })
     }
 }
 

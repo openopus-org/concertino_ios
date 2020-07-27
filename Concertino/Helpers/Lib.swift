@@ -706,6 +706,30 @@ struct UserDefault<T> {
 }
 
 @propertyWrapper
+struct RecentSearchesUserDefault {
+    let key: String
+
+    init(_ key: String) {
+        self.key = key
+    }
+
+    var wrappedValue: [RecentSearch] {
+        get {
+            var ret = [RecentSearch]()
+            
+            if let data = UserDefaults.standard.value(forKey: key) as? Data {
+                ret = try! PropertyListDecoder().decode(Array<RecentSearch>.self, from: data)
+            }
+            
+            return ret
+        }
+        set {
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(newValue), forKey: key)
+        }
+    }
+}
+
+@propertyWrapper
 struct RecordingUserDefault {
     let key: String
 
@@ -764,6 +788,7 @@ final class SettingStore: ObservableObject {
     let composersFavoriteWorksDidChange = PassthroughSubject<Void, Never>()
     let recordingsWillChange = PassthroughSubject<Void, Never>()
     let recordingsDidChange = PassthroughSubject<Void, Never>()
+    let recentSearchesDidChange = PassthroughSubject<Void, Never>()
     
     var lastPlayedRecording = [Recording]() {
         didSet {
@@ -779,6 +804,11 @@ final class SettingStore: ObservableObject {
     @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
     @UserDefault("concertino.country", defaultValue: "") var country: String
     
+    @RecentSearchesUserDefault("concertino.recentlySearched") var recentSearches: [RecentSearch] {
+        didSet {
+            recentSearchesDidChange.send()
+        }
+    }
     @RecordingUserDefault("concertino.lastPlayState") var lastPlayState: [Recording] {
         willSet {
             playstateWillChange.send()
@@ -890,6 +920,12 @@ func MarkPlayed(settingStore: SettingStore, playState: PlayState, completion: @e
     APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work!.id, "aid": playState.recording.first!.apple_albumid, "set": playState.recording.first!.set, "cover": playState.recording.first!.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.jsonPerformers, "work": (playState.recording.first!.work!.composer!.id == "0" ? playState.recording.first!.work!.title : ""), "composer": (playState.recording.first!.work!.composer!.id == "0" ? playState.recording.first!.work!.composer!.complete_name : "")]) { results in
             completion(results)
     }
+}
+
+func MarkSearched(allSearches: [RecentSearch], recentSearch: RecentSearch) -> [RecentSearch] {
+    var asearch = allSearches.filter(){$0 != recentSearch}
+    asearch.insert(recentSearch, at: 0)
+    return Array(asearch.prefix(10))
 }
 
 class AppleMusicSubscribeController: UIViewController {

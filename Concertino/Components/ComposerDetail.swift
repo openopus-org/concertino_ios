@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ComposerDetailv1: View {
     var composer: Composer
+    @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
         VStack(alignment: .leading) {

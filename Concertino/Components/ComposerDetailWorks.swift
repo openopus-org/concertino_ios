@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ComposerDetail: View {
     var composer: Composer
+    var isSearch: Bool
     @EnvironmentObject var search: WorkSearch
     @EnvironmentObject var settingStore: SettingStore
     @State private var loading = true
@@ -17,10 +18,11 @@ struct ComposerDetail: View {
     @State private var genresAvail = [String]()
     @State private var hasEssential = false
     
-    init(composer: Composer) {
+    init(composer: Composer, isSearch: Bool) {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
         self.composer = composer
+        self.isSearch = isSearch
     }
     
     func loadData() {
@@ -131,6 +133,8 @@ struct ComposerDetail: View {
             }
         }
         .onAppear(perform: {
+            if self.isSearch { self.settingStore.recentSearches = MarkSearched(allSearches: self.settingStore.recentSearches, recentSearch: RecentSearch (composer: self.composer)) }
+            
             self.endEditing(true)
             if self.loading {
                 self.loadData()

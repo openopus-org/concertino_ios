@@ -47,6 +47,24 @@ struct Omnisearch: Codable {
     var next: Int?
 }
 
+struct RecentSearch: Codable {
+    var recording: Recording?
+    var composer: Composer?
+    var work: Work?
+}
+
+extension RecentSearch: Identifiable, Equatable {
+    var id: String { return "albumid_\(recording?.apple_albumid ?? "0")_work_\(work?.id ?? "0")_composer_\(composer?.id ?? "0")" }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: RecentSearch, rhs: RecentSearch) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
 struct OmniResults: Codable {
     var composer: Composer
     var work: Work?

@@ -12,6 +12,7 @@ struct OmnisearchField: View {
     @EnvironmentObject var omnisearch: OmnisearchString
     @EnvironmentObject var AppState: AppState
     @State private var searchString = ""
+    @State private var isActive = false
     
     var body: some View {
         HStack {
@@ -31,9 +32,7 @@ struct OmnisearchField: View {
                             .padding(1)
                     }
                     TextField("", text: $searchString, onEditingChanged: { isEditing in
-                            if (isEditing) {
-                                self.AppState.currentTab = "search"
-                            }
+                            self.isActive = isEditing
                         }, onCommit: {
                             self.omnisearch.searchstring = self.searchString
                         })
@@ -42,7 +41,7 @@ struct OmnisearchField: View {
                         .disableAutocorrection(true)
                 }
                 
-                if self.AppState.currentTab == "search" && !self.searchString.isEmpty {
+                if !self.searchString.isEmpty {
                     Button(action: {
                         self.searchString = ""
                     }, label: {
@@ -60,7 +59,7 @@ struct OmnisearchField: View {
             .cornerRadius(12)
             .clipped()
             
-            if self.AppState.currentTab == "search" {
+            if self.isActive || !self.omnisearch.searchstring.isEmpty {
                 Button(action: {
                         self.omnisearch.searchstring = ""
                         self.searchString = ""

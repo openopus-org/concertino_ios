@@ -29,7 +29,7 @@ struct ExternalRecordingSheet: View {
             }
             .padding(30)
             
-            RecordingDetail(workId: workId, recordingId: recordingId, recordingSet: recordingSet, isSheet: true)
+            RecordingDetail(workId: workId, recordingId: recordingId, recordingSet: recordingSet, isSheet: true, isSearch: false)
                 .padding(.top, -55)
             
             Spacer()

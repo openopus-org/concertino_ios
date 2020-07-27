@@ -14,7 +14,7 @@ struct WorkRow: View {
     @EnvironmentObject var settingStore: SettingStore
     
     var body: some View {
-        NavigationLink(destination: WorkDetail(work: work, composer: composer).environmentObject(self.settingStore), label: {
+        NavigationLink(destination: WorkDetail(work: work, composer: composer, isSearch: false).environmentObject(self.settingStore), label: {
             VStack(alignment: .leading) {
                 Text(work.title)
                     .font(.custom("Barlow", size: 15))
