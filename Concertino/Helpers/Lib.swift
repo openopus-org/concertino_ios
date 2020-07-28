@@ -50,10 +50,17 @@ final class ComposerSearchString: ObservableObject {
 
 final class OmnisearchString: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
+    let editingFocusChanged = PassthroughSubject<(), Never>()
     
     @Published var searchstring: String = "" {
         didSet {
             objectWillChange.send()
+        }
+    }
+    
+    @Published var isEditing: Bool = false {
+        didSet {
+            editingFocusChanged.send()
         }
     }
 }

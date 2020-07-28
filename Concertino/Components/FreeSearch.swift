@@ -23,6 +23,7 @@ struct FreeSearch: View {
     @State private var canPaginate = true
     @State private var paginating = false
     @State private var nextSource = "omnisearch"
+    @State private var isEditing = false
     
     init() {
         UITableView.appearance().backgroundColor = .clear
@@ -179,9 +180,9 @@ struct FreeSearch: View {
                             Group {
                                 if self.composers.count > 0 {
                                     Section(header:
-                                        Text("Composers")
-                                            .font(.custom("Barlow-SemiBold", size: 13))
-                                            .foregroundColor(Color(hex: 0xFE365E))
+                                        Text("Composers".uppercased())
+                                            .foregroundColor(Color(hex: 0x717171))
+                                            .font(.custom("Nunito", size: 12))
                                     ){
                                         ForEach(self.composers, id: \.id) { composer in
                                             Group {
@@ -197,9 +198,9 @@ struct FreeSearch: View {
                             Group {
                                 if self.works.count > 0 {
                                     Section(header:
-                                        Text("Works")
-                                            .font(.custom("Barlow-SemiBold", size: 13))
-                                            .foregroundColor(Color(hex: 0xFE365E))
+                                        Text("Works".uppercased())
+                                            .foregroundColor(Color(hex: 0x717171))
+                                            .font(.custom("Nunito", size: 12))
                                     ){
                                         ForEach(self.works, id: \.id) { work in
                                             NavigationLink(destination: WorkDetail(work: work, composer: work.composer!, isSearch: true).environmentObject(self.settingStore)) {
@@ -215,9 +216,9 @@ struct FreeSearch: View {
                             Group {
                                 if self.recordings.count > 0 {
                                     Section(header:
-                                        Text("Recordings")
-                                            .font(.custom("Barlow-SemiBold", size: 13))
-                                            .foregroundColor(Color(hex: 0xFE365E))
+                                        Text("Recordings".uppercased())
+                                            .foregroundColor(Color(hex: 0x717171))
+                                            .font(.custom("Nunito", size: 12))
                                     ){
                                         ForEach(self.recordings, id: \.id) { recording in
                                             Group {
@@ -251,19 +252,27 @@ struct FreeSearch: View {
                         .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                     }
                 }
-            } else {
-                ScrollView(showsIndicators: false) {
+            } else if !self.isEditing {
+                List {
                     if self.settingStore.recentSearches.count > 0 {
-                        RecentSearches()
+                        Section(header:
+                            Text("Recent searches".uppercased())
+                                .font(.custom("Nunito-ExtraBold", size: 13))
+                                .foregroundColor(Color(hex: 0xfe365e))
+                        ){
+                            RecentSearches()
+                        }
                     }
                 }
-                .padding(.leading, 20)
-                .padding(.trailing, 10)
+                .listStyle(GroupedListStyle())
+                .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
             }
         }
         .onReceive(omnisearch.objectWillChange, perform: loadData)
+        .onReceive(omnisearch.editingFocusChanged, perform: {
+            self.isEditing = self.omnisearch.isEditing
+        })
         .onAppear(perform: {
-            print(self.settingStore.recentSearches)
             self.endEditing(true)
         })
         .frame(maxWidth: .infinity)
