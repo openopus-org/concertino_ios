@@ -152,6 +152,7 @@ struct Recording: Codable {
     var apple_tracks: [String]?
     var previews: [URL]?
     var work: Work?
+    var position: Int?
     
     var isVerified: Bool {
         get { return verified == "true" }

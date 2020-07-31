@@ -67,7 +67,7 @@ struct MicroRecordingRow: View {
             }
             Spacer()
         }
-        .padding(EdgeInsets(top: 14, leading: 20, bottom: 14, trailing: 14))
+        .padding(EdgeInsets(top: 14, leading: 0, bottom: 14, trailing: 14))
     }
 }
 

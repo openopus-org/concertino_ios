@@ -18,6 +18,7 @@ struct FreeSearch: View {
     @State private var composers = [Composer]()
     @State private var works = [Work]()
     @State private var recordings = [Recording]()
+    @State private var trendingRecordings = [Recording]()
     @State private var offset = 0
     @State private var loading = true
     @State private var canPaginate = true
@@ -28,6 +29,23 @@ struct FreeSearch: View {
     init() {
         UITableView.appearance().backgroundColor = .clear
         UITableViewCell.appearance().backgroundColor = .clear
+    }
+    
+    func loadTrendingData() {
+        self.recordings.removeAll()
+        
+        APIget(AppConstants.concBackend+"/recording/list/trending.json") { results in
+            let recsData: PlaylistRecordings = parseJSON(results)
+            
+            DispatchQueue.main.async {
+                if let recds = recsData.recordings {
+                    self.trendingRecordings = recds
+                }
+                else {
+                    self.trendingRecordings = [Recording]()
+                }
+            }
+        }
     }
     
     func loadMoreData() {
@@ -259,8 +277,38 @@ struct FreeSearch: View {
                             Text("Recent searches".uppercased())
                                 .font(.custom("Nunito-ExtraBold", size: 13))
                                 .foregroundColor(Color(hex: 0xfe365e))
+                                .padding(.top, 10)
                         ){
                             RecentSearches()
+                        }
+                    }
+                    
+                    Section(header:
+                        Text("Trending recordings".uppercased())
+                            .font(.custom("Nunito-ExtraBold", size: 13))
+                            .foregroundColor(Color(hex: 0xfe365e))
+                    ){
+                        ForEach(self.trendingRecordings, id: \.id) { recording in
+                            HStack(alignment: .top) {
+                                VStack {
+                                    Text("\(recording.position ?? 0)")
+                                        .font(.custom("Barlow", size: 15))
+                                        .foregroundColor(Color(hex: 0xffffff))
+                                }
+                                .frame(width: 36, height: 36)
+                                .background(Color(hex: 0xfe365e))
+                                .clipped()
+                                .clipShape(Circle())
+                                .padding(.top, 14)
+                                .padding(.trailing, 10)
+                                
+                                NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false, isSearch: true).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
+                                    MicroRecordingRow(recording: recording)
+                                })
+                                
+                                Spacer()
+                            }
+                            
                         }
                     }
                 }
@@ -274,6 +322,10 @@ struct FreeSearch: View {
         })
         .onAppear(perform: {
             self.endEditing(true)
+            
+            if self.trendingRecordings.count == 0 {
+                self.loadTrendingData()
+            }
         })
         .frame(maxWidth: .infinity)
     }

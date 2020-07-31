@@ -65,6 +65,16 @@ final class OmnisearchString: ObservableObject {
     }
 }
 
+final class WorkSearchString: ObservableObject {
+    let workSearchWillChange = PassthroughSubject<(), Never>()
+    
+    @Published var string = "" {
+        didSet {
+            workSearchWillChange.send()
+        }
+    }
+}
+
 final class PlaylistSwitcher: ObservableObject {
     let objectWillChange = PassthroughSubject<(), Never>()
     
