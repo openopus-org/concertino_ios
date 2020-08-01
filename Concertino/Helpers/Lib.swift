@@ -1222,3 +1222,9 @@ extension UIApplication {
         return UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.topMostViewController()
     }
 }
+
+func RequestAppStoreReview() {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+        SKStoreReviewController.requestReview()
+    }
+}

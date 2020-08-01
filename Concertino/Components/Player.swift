@@ -100,6 +100,12 @@ struct Player: View {
                     if let playlists = login.playlists {
                         self.settingStore.playlists = playlists
                     }
+                    
+                    if let heavyuser = login.user.heavyuser {
+                        if heavyuser == 1 {
+                            RequestAppStoreReview()
+                        }
+                    }
                 }
             }
             

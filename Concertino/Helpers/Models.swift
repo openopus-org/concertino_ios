@@ -235,6 +235,7 @@ struct User: Codable, Identifiable {
     var apple_recid: String
     var id: Int
     var auth: String?
+    var heavyuser: Int?
 }
 
 struct Token: Codable {
