@@ -31,9 +31,9 @@ struct Player: View {
 
             if self.settingStore.userId > 0 {
                 MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
-                    DispatchQueue.main.async {
+                    /*DispatchQueue.main.async {
                         self.settingStore.lastPlayedRecording = self.playState.recording
-                    }
+                    }*/
                 }
             }
         }
@@ -178,12 +178,12 @@ struct Player: View {
                     
                     // registering first recording played
                     
-                    if self.settingStore.lastPlayedRecording == [] {
+                    if self.settingStore.lastPlayState.isEmpty {
                         print("first recording played and can play")
                         MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
-                            DispatchQueue.main.async {
+                            /*DispatchQueue.main.async {
                                 self.settingStore.lastPlayedRecording = self.playState.recording
-                            }
+                            }*/
                         }
                     }
                     
@@ -246,12 +246,12 @@ struct Player: View {
                     
                     // registering first recording played
                     
-                    if self.settingStore.lastPlayedRecording == [] {
+                    if self.settingStore.lastPlayedRecording.isEmpty {
                         print("first recording played")
                         MarkPlayed(settingStore: self.settingStore, playState: self.playState) { results in
-                            DispatchQueue.main.async {
+                            /*DispatchQueue.main.async {
                                 self.settingStore.lastPlayedRecording = self.playState.recording
-                            }
+                            }*/
                         }
                     }
                 

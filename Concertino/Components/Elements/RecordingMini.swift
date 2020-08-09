@@ -41,7 +41,7 @@ struct RecordingMini: View {
                         .foregroundColor(Color(hex: 0xfe365e))
                     
                     Text(recording.work!.title)
-                        .font(.custom("Barlow", size: 13))
+                        .font(.custom("Barlow-Regular", size: 13))
                         .padding(.bottom, 4)
                         .lineLimit(20)
                         .fixedSize(horizontal: false, vertical: true)
@@ -105,7 +105,7 @@ struct RecordingMini: View {
                             
                             Text(self.recording.readableLength)
                         }
-                        .font(.custom("Nunito", size: 11))
+                        .font(.custom("Nunito-Regular", size: 11))
                     }
                     .padding(.top, 4)
                 }

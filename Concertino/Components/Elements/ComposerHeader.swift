@@ -24,9 +24,10 @@ struct ComposerHeader: View {
                     print(String(decoding: results, as: UTF8.self))
                     
                     DispatchQueue.main.async {
-                        let addComposer: AddComposer = parseJSON(results)
-                        self.settingStore.favoriteComposers = addComposer.list
-                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteComposers.contains(self.composer.id) ? "Added!" : "Removed!")")
+                        if let addComposer: AddComposer = safeJSON(results) {
+                            self.settingStore.favoriteComposers = addComposer.list
+                            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteComposers.contains(self.composer.id) ? "Added!" : "Removed!")", image: "checked", text: nil)
+                        }
                     }
                 }
             }),
@@ -37,9 +38,10 @@ struct ComposerHeader: View {
                     print(String(decoding: results, as: UTF8.self))
                     
                     DispatchQueue.main.async {
-                        let addComposer: AddComposer = parseJSON(results)
-                        self.settingStore.forbiddenComposers = addComposer.list
-                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.forbiddenComposers.contains(self.composer.id) ? "Added!" : "Removed!")")
+                        if let addComposer: AddComposer = safeJSON(results) {
+                            self.settingStore.forbiddenComposers = addComposer.list
+                            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.forbiddenComposers.contains(self.composer.id) ? "Added!" : "Removed!")", image: "checked", text: nil)
+                        }
                     }
                 }
             }),
@@ -78,7 +80,7 @@ struct ComposerHeader: View {
                     }
                     .foregroundColor(.white)
                     .lineLimit(20)
-                    .font(.custom("Nunito", size: 14))
+                    .font(.custom("Nunito-Regular", size: 14))
                 }
                 .padding(8)
             }

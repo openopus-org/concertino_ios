@@ -23,10 +23,11 @@ struct WorkHeader: View {
                     print(String(decoding: results, as: UTF8.self))
                     
                     DispatchQueue.main.async {
-                        let addWork: AddWork = parseJSON(results)
-                        self.settingStore.favoriteWorks = addWork.list
-                        self.settingStore.composersFavoriteWorks = addWork.composerworks
-                        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteWorks.contains(self.work.id) ? "Added!" : "Removed!")")
+                        if let addWork: AddWork = safeJSON(results) {
+                            self.settingStore.favoriteWorks = addWork.list
+                            self.settingStore.composersFavoriteWorks = addWork.composerworks
+                            UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "\(self.settingStore.favoriteWorks.contains(self.work.id) ? "Added!" : "Removed!")", image: "checked", text: nil)
+                        }
                     }
                 }
             }),
@@ -49,7 +50,7 @@ struct WorkHeader: View {
                         .font(.custom("Barlow-SemiBold", size: 17))
                         if work.subtitle != "" {
                             Text(work.subtitle!)
-                            .font(.custom("Barlow", size: 14))
+                            .font(.custom("Barlow-Regular", size: 14))
                         }
                     }
                     .foregroundColor(.white)

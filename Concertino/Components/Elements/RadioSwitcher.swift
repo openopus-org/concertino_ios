@@ -39,7 +39,8 @@ struct RadioSwitcher: View {
             .padding(.bottom, -6)
             
             Text(name)
-                .font(.custom("Nunito", size: 9))
+                
+                .font(.custom("Nunito-Regular", size: 9))
                 .foregroundColor(.white)
             
             Spacer()

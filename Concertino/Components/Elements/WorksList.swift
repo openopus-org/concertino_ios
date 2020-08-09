@@ -39,6 +39,7 @@ struct WorksList: View {
                             ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
                                 WorkRow(work: work, composer: self.composer)
                             }
+                            .listRowBackground(Color.black)
                         }
                     }
                 }
@@ -63,7 +64,9 @@ struct WorksList: View {
                             ){
                             ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
                                 WorkRow(work: work, composer: self.composer)
+                                    .listRowBackground(Color.black)
                             }
+                            .listRowBackground(Color.black)
                         }
                     }
                 }
@@ -77,6 +80,7 @@ struct WorksList: View {
                     ForEach(self.works, id: \.id) { work in
                         WorkRow(work: work, composer: self.composer)
                     }
+                    .listRowBackground(Color.black)
                 }
                 .padding(.top, self.radioReady ? 0 : 20)
             }

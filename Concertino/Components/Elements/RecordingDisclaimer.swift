@@ -19,7 +19,7 @@ struct RecordingDisclaimer: View {
                 .frame(width: 18, height: 18)
                     
             Text(isVerified ? "This recording was verified by a human and its metadata were considered right." : "This recording was fetched automatically with no human verification.")
-                .font(.custom("Nunito", size: 10))
+                .font(.custom("Nunito-Regular", size: 10))
                 .lineLimit(20)
                 .fixedSize(horizontal: false, vertical: true)
         }

@@ -27,7 +27,7 @@ struct EditPlaylist: View {
                 }, label: {
                     Text("Cancel")
                         .foregroundColor(Color(hex: 0xfe365e))
-                        .font(.custom("Barlow", size: 14))
+                        .font(.custom("Barlow-Regular", size: 14))
                 })
                 
                 Spacer()
@@ -38,15 +38,15 @@ struct EditPlaylist: View {
                         APIpost("\(AppConstants.concBackend)/dyn/playlist/delete/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId]) { results in
                         
                             print(String(decoding: results, as: UTF8.self))
-                            let playlistRecording: PlaylistRecording = parseJSON(results)
-                            
-                            DispatchQueue.main.async {
-                                self.isLoading = false
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                                self.settingStore.playlists = playlistRecording.list
-                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Deleted!")
+                            if let playlistRecording: PlaylistRecording = safeJSON(results) {
+                                DispatchQueue.main.async {
+                                    self.isLoading = false
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                                    self.settingStore.playlists = playlistRecording.list
+                                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Deleted!", image: "checked", text: nil)
+                                }
                             }
                         }
                     } else if self.selectedRecordings.count > 0 || (self.editPlaylistName != "" && self.editPlaylistName != self.playlistName) {
@@ -54,15 +54,15 @@ struct EditPlaylist: View {
                         APIpost("\(AppConstants.concBackend)/dyn/playlist/edit/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "pid": self.playlistId, "rid": (self.selectedRecordings.count > 0 ? self.selectedRecordings.map({$0.id}).joined(separator:",") : ""), "name": (self.editPlaylistName != "" && self.editPlaylistName != self.playlistName ? self.editPlaylistName : "")]) { results in
                         
                             print(String(decoding: results, as: UTF8.self))
-                            let playlistRecording: PlaylistRecording = parseJSON(results)
-                            
-                            DispatchQueue.main.async {
-                                self.isLoading = false
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                                self.settingStore.playlists = playlistRecording.list
-                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Edited!")
+                            if let playlistRecording: PlaylistRecording = safeJSON(results) {
+                                DispatchQueue.main.async {
+                                    self.isLoading = false
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                                    self.settingStore.playlists = playlistRecording.list
+                                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.showToast(message: "Edited!", image: "checked", text: nil)
+                                }
                             }
                         }
                     }
@@ -86,7 +86,7 @@ struct EditPlaylist: View {
                 .foregroundColor(Color(hex: 0xfe365e))
                 .padding(.top, 26)
             Text("Change the name of this playlist")
-                .font(.custom("Barlow", size: 16))
+                .font(.custom("Barlow-Regular", size: 16))
                 .padding(.bottom, 4)
             TextField(self.playlistName, text: $editPlaylistName)
                 .textFieldStyle(EditFieldStyle())
@@ -102,7 +102,7 @@ struct EditPlaylist: View {
             HStack {
                 Toggle(isOn: $deletePlaylist) {
                     Text("Permanently remove this playlist")
-                    .font(.custom("Barlow", size: 16))
+                    .font(.custom("Barlow-Regular", size: 16))
                 }
                 .padding(.bottom, 4)
                 .padding(.top, -16)
@@ -113,7 +113,7 @@ struct EditPlaylist: View {
                 .foregroundColor(Color(hex: 0xfe365e))
                 .padding(.top, 26)
             Text("Remove selected recordings from this playlist")
-                .font(.custom("Barlow", size: 16))
+                .font(.custom("Barlow-Regular", size: 16))
                 .padding(.bottom, 4)
             
             ScrollView(showsIndicators: false) {

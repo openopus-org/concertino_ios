@@ -31,10 +31,10 @@ struct WorkSearchRow: View {
                     .foregroundColor(Color(hex: 0xfe365e))
                     .font(.custom("Nunito-ExtraBold", size: 12))
                 Text(work.title)
-                    .font(.custom("Barlow", size: 16))
+                    .font(.custom("Barlow-Regular", size: 16))
                 if work.subtitle != "" {
                     Text(work.subtitle!)
-                        .font(.custom("Barlow", size: 12))
+                        .font(.custom("Barlow-Regular", size: 12))
                 }
             }
             .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 0))

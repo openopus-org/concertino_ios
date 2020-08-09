@@ -32,18 +32,18 @@ struct PlaylistsRecordings: View {
         }
         
         APIget(url) { results in
-            let recsData: PlaylistRecordings = parseJSON(results)
-            
-            DispatchQueue.main.async {
-                
-                if let recds = recsData.recordings {
-                    self.recordings = recds
+            if let recsData: PlaylistRecordings = safeJSON(results) {
+                DispatchQueue.main.async {
+                    
+                    if let recds = recsData.recordings {
+                        self.recordings = recds
+                    }
+                    else {
+                        self.recordings = [Recording]()
+                    }
+                    
+                    self.loading = false
                 }
-                else {
-                    self.recordings = [Recording]()
-                }
-                
-                self.loading = false
             }
         }
     }
@@ -53,13 +53,15 @@ struct PlaylistsRecordings: View {
             if self.recordings.count > 0 {
                 List {
                     PlaylistButtons(recordings: self.recordings, playlistId: playlistSwitcher.playlist)
+                        .listRowBackground(Color.black)
                     ForEach(self.recordings, id: \.id) { recording in
                         NavigationLink(destination: RecordingDetail(workId: recording.work!.id, recordingId: recording.apple_albumid, recordingSet: recording.set, isSheet: false, isSearch: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
                             RecordingRow(recording: recording)
                         })
                     }
+                    .listRowBackground(Color.black)
                 }
-                .listStyle(DefaultListStyle())
+                //.listStyle(GroupedListStyle())
             }
             else {
                 

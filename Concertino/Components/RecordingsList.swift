@@ -30,39 +30,45 @@ struct RecordingsList: View {
         loading = true
         
         APIget(AppConstants.concBackend+"/recording/" + (self.settingStore.country != "" ? self.settingStore.country + "/" : "") + "list/work/\(self.work.id)/\(self.workSearch.string)/\(self.page).json") { results in
-            let recsData: Recordings = parseJSON(results)
-            
-            DispatchQueue.main.async {
-                if let recds = recsData.recordings {
-                    for rec in recds {
-                        if !self.recordings.contains(rec) {
-                            self.recordings.append(rec)
+            if let recsData: Recordings = safeJSON(results) {
+                DispatchQueue.main.async {
+                    if let recds = recsData.recordings {
+                        for rec in recds {
+                            if !self.recordings.contains(rec) {
+                                self.recordings.append(rec)
+                            }
                         }
                     }
+                    else {
+                        self.recordings += [Recording]()
+                    }
+                    
+                    if let nextpg = recsData.next {
+                        self.nextpage = nextpg
+                    }
+                    else {
+                        self.nextpage = "0"
+                    }
+                    
+                    self.loading = false
                 }
-                else {
-                    self.recordings += [Recording]()
-                }
-                
-                if let nextpg = recsData.next {
-                    self.nextpage = nextpg
-                }
-                else {
-                    self.nextpage = "0"
-                }
-                
-                self.loading = false
             }
         }
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            WorkSearchField(workSearch: self.$workSearch.string)
-                .padding(.leading, 14)
-                .padding(.trailing, 14)
-            
             List {
+                Section(header:
+                    WorkSearchField(workSearch: self.$workSearch.string)
+                        .padding(.bottom, -20)
+                    //.padding(.leading, 14)
+                    //.padding(.trailing, 14)
+                ){
+                    EmptyView()
+                }
+                .listRowBackground(Color.black)
+                
                 ForEach(self.recordings, id: \.id) { recording in
                     Group {
                         if !recording.isCompilation || !self.settingStore.hideIncomplete {
@@ -72,6 +78,7 @@ struct RecordingsList: View {
                         }
                     }
                 }
+                .listRowBackground(Color.black)
                 
                 HStack {
                     Spacer()
@@ -93,7 +100,7 @@ struct RecordingsList: View {
                     }
                 }
             }
-            .listStyle(DefaultListStyle())
+            .listStyle(GroupedListStyle())
             .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
         }
         .frame(maxWidth: .infinity)

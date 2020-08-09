@@ -33,11 +33,12 @@ struct ComposerBox: View {
                     .font(.custom("Nunito-ExtraBold", size: 13))
                 Group{
                     Text(composer.complete_name)
+                        
                     Text("(" + composer.birth!.prefix(4)) + Text(composer.death != nil ? "-" : "") + Text((composer.death?.prefix(4) ?? "")) + Text(")")
                 }
                 .foregroundColor(.white)
                 .lineLimit(20)
-                .font(.custom("Nunito", size: 11))
+                .font(.custom("Nunito-Regular", size: 11))
             }
             .padding(12)
         }

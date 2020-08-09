@@ -21,23 +21,23 @@ struct RecentReleases: View {
         loading = true
         
         APIget(AppConstants.concBackend+"/recording/list/recent.json") { results in
-            let recsData: PlaylistRecordings = parseJSON(results)
-            
-            DispatchQueue.main.async {
-                
-                if let recds = recsData.recordings {
-                    var recods = recds
-                    recods.shuffle()
-                    self.recordings = Array(recods.prefix(10))
-                }
-                else {
-                    self.recordings = [Recording]()
-                }
-                
-                self.loading = false
-                
-                Timer.scheduledTimer(withTimeInterval: 2, repeats: false) {_ in 
-                    self.appState.isLoading = false
+            if let recsData: PlaylistRecordings = safeJSON(results) {
+                DispatchQueue.main.async {
+                    
+                    if let recds = recsData.recordings {
+                        var recods = recds
+                        recods.shuffle()
+                        self.recordings = Array(recods.prefix(10))
+                    }
+                    else {
+                        self.recordings = [Recording]()
+                    }
+                    
+                    self.loading = false
+                    
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false) {_ in
+                        self.appState.isLoading = false
+                    }
                 }
             }
         }
@@ -46,8 +46,9 @@ struct RecentReleases: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Recent releases".uppercased())
+                
                 .foregroundColor(Color(hex: 0x717171))
-                .font(.custom("Nunito", size: 12))
+                .font(.custom("Nunito-Regular", size: 12))
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
             
             ScrollView(.horizontal, showsIndicators: false) {

@@ -27,17 +27,17 @@ struct PeriodDetailSearch: View {
         loading = true
         
         APIget(AppConstants.openOpusBackend+"/composer/list/epoch/\(self.period).json") { results in
-            let composersData: Composers = parseJSON(results)
-            
-            DispatchQueue.main.async {
-                if let compo = composersData.composers {
-                    self.composers = compo
+            if let composersData: Composers = safeJSON(results) {
+                DispatchQueue.main.async {
+                    if let compo = composersData.composers {
+                        self.composers = compo
+                    }
+                    else {
+                        self.composers = [Composer]()
+                    }
+                    
+                    self.loading = false
                 }
-                else {
-                    self.composers = [Composer]()
-                }
-                
-                self.loading = false
             }
         }
     }
@@ -55,11 +55,17 @@ struct PeriodDetailSearch: View {
             }
             else {
                 if self.composers.count > 0 {
-                    List(self.composers, id: \.id) { composer in
-                        NavigationLink(destination: ComposerDetail(composer: composer, isSearch: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
-                            ComposerRow(composer: composer)
+                    List {
+                        ForEach(self.composers, id: \.id) { composer in
+                            NavigationLink(destination: ComposerDetail(composer: composer, isSearch: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.search)) {
+                                ComposerRow(composer: composer)
+                            }
                         }
+                        
+                        RecordingsDisclaimer(msg: "This list is only a curated selection of composers of the period. You can find recordings of works by several other composers on the search tab below.")
+                            .padding(15)
                     }
+                    .listStyle(DefaultListStyle())
                 }
             }
 

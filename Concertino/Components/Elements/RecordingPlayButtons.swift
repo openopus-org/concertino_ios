@@ -36,7 +36,7 @@ struct RecordingPlayButtons: View {
                                     DotsAnimation()
                                         .padding(.trailing, 3)
                                     Text("playing".uppercased())
-                                        .font(.custom("Nunito", size: 11))
+                                        .font(.custom("Nunito-Regular", size: 11))
                                 }
                                 else {
                                     Image("handle")
@@ -47,7 +47,7 @@ struct RecordingPlayButtons: View {
                                         .padding(.trailing, 6)
                                     Text("in the player".uppercased())
                                         .foregroundColor(Color(hex: 0x696969))
-                                        .font(.custom("Nunito", size: 10))
+                                        .font(.custom("Nunito-Regular", size: 10))
                                 }
                                 Spacer()
                             }
@@ -79,7 +79,7 @@ struct RecordingPlayButtons: View {
                                     .aspectRatio(contentMode: .fit)
                                     .frame(height: 20)
                                 Text("play".uppercased())
-                                    .font(.custom("Nunito", size: 14))
+                                    .font(.custom("Nunito-Regular", size: 14))
                                 Spacer()
                             }
                         }

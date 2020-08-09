@@ -15,7 +15,7 @@ struct PeriodBox: View {
         VStack(alignment: .leading) {
             Text(period)
                 .foregroundColor(Color.white)
-                .font(.custom("Barlow", size: 13))
+                .font(.custom("Barlow-Regular", size: 13))
                 .padding(12)
             
             Spacer()

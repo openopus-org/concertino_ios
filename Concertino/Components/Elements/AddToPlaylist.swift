@@ -24,7 +24,7 @@ struct AddToPlaylist: View {
                 }, label: {
                     Text("Cancel")
                         .foregroundColor(Color(hex: 0xfe365e))
-                        .font(.custom("Barlow", size: 14))
+                        .font(.custom("Barlow-Regular", size: 14))
                 })
                 
                 Spacer()
@@ -32,19 +32,19 @@ struct AddToPlaylist: View {
                 Button(action: {
                     if !self.playlistActive.isEmpty || !self.newPlaylistName.isEmpty {
                         self.isLoading = true
-                        APIpost("\(AppConstants.concBackend)/dyn/recording/addplaylist/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "wid": self.recording.work!.id, "aid": self.recording.apple_albumid, "set": self.recording.set, "cover": self.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.recording.jsonPerformers, "pid": (!self.playlistActive.isEmpty ? self.playlistActive : "new"), "name": (!self.newPlaylistName.isEmpty ? self.newPlaylistName : "useless"), "work": (self.recording.work!.composer!.id == "0" ? self.recording.work!.title : ""), "composer": (self.recording.work!.composer!.id == "0" ? self.recording.work!.composer!.complete_name : "")]) { results in
+                        APIpost("\(AppConstants.concBackend)/dyn/recording/addplaylist/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "wid": self.recording.work!.id, "aid": self.recording.apple_albumid, "set": self.recording.set, "cover": self.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.recording.jsonPerformers, "pid": (!self.playlistActive.isEmpty ? self.playlistActive : "new"), "name": (!self.newPlaylistName.isEmpty ? self.newPlaylistName : "useless"), "work": (self.recording.work!.id.contains("at*") ? self.recording.work!.title : ""), "composer": (self.recording.work!.composer!.id == "0" ? self.recording.work!.composer!.complete_name : (self.recording.work!.id.contains("at*") ? self.recording.work!.composer!.name : ""))]) { results in
                         
                             print(String(decoding: results, as: UTF8.self))
-                            let playlistRecording: PlaylistRecording = parseJSON(results)
-                        
-                            DispatchQueue.main.async {
-                                self.settingStore.playlists = playlistRecording.list
-                                self.isLoading = false
-                                self.presentationMode.wrappedValue.dismiss()
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-                                if let topMostViewController = UIApplication.shared.topMostViewController() {
-                                    topMostViewController.showToast(message: "Added!")
+                            if let playlistRecording: PlaylistRecording = safeJSON(results) {
+                                DispatchQueue.main.async {
+                                    self.settingStore.playlists = playlistRecording.list
+                                    self.isLoading = false
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                                    if let topMostViewController = UIApplication.shared.topMostViewController() {
+                                        topMostViewController.showToast(message: "Added!", image: "checked", text: nil)
+                                    }
                                 }
                             }
                         }
@@ -66,7 +66,7 @@ struct AddToPlaylist: View {
                 .foregroundColor(Color(hex: 0xfe365e))
                 .padding(.top, 26)
             Text("Create a new playlist and add this recording to it")
-                .font(.custom("Barlow", size: 16))
+                .font(.custom("Barlow-Regular", size: 16))
                 .padding(.bottom, 4)
             TextField("Playlist name", text: $newPlaylistName, onEditingChanged: { isEditing in
                     self.playlistActive = ""
@@ -79,7 +79,7 @@ struct AddToPlaylist: View {
             
             Text("or".uppercased())
                 .foregroundColor(Color(hex: 0x717171))
-                .font(.custom("Nunito", size: 12))
+                .font(.custom("Nunito-Regular", size: 12))
                 .padding(4)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
@@ -93,7 +93,7 @@ struct AddToPlaylist: View {
                 .font(.custom("Nunito-ExtraBold", size: 13))
                 .foregroundColor(Color(hex: 0xfe365e))
             Text("Add this recording to an existing playlist")
-                .font(.custom("Barlow", size: 16))
+                .font(.custom("Barlow-Regular", size: 16))
                 .padding(.bottom, 4)
             
             ScrollView(showsIndicators: false) {

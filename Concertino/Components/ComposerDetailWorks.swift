@@ -42,26 +42,26 @@ struct ComposerDetail: View {
             }
             
             APIget(url) { results in
-                let worksData: Works = parseJSON(results)
-                
-                DispatchQueue.main.async {
-                    self.genresAvail.removeAll()
-                    if let wrks = worksData.works {
-                        self.works = wrks
-                        self.hasEssential = (self.works.filter({$0.recommended == "1"}).count > 0)
-                        
-                        for genre in AppConstants.genreList {
-                            if self.works.filter({$0.genre == genre}).count > 0 {
-                                self.genresAvail.append(genre)
+                if let worksData: Works = safeJSON(results) {
+                    DispatchQueue.main.async {
+                        self.genresAvail.removeAll()
+                        if let wrks = worksData.works {
+                            self.works = wrks
+                            self.hasEssential = (self.works.filter({$0.recommended == "1"}).count > 0)
+                            
+                            for genre in AppConstants.genreList {
+                                if self.works.filter({$0.genre == genre}).count > 0 {
+                                    self.genresAvail.append(genre)
+                                }
                             }
                         }
-                    }
-                    else {
-                        self.works = [Work]()
-                    }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-                        self.loading = false
+                        else {
+                            self.works = [Work]()
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            self.loading = false
+                        }
                     }
                 }
             }
@@ -102,6 +102,7 @@ struct ComposerDetail: View {
                                     ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
                                         WorkRow(work: work, composer: self.composer)
                                     }
+                                    .listRowBackground(Color.black)
                                 }
                             }
                         } else if self.hasEssential {
@@ -115,12 +116,14 @@ struct ComposerDetail: View {
                                     ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
                                         WorkRow(work: work, composer: self.composer)
                                     }
+                                    .listRowBackground(Color.black)
                                 }
                             }
                         } else {
                             ForEach(self.works, id: \.id) { work in
                                 WorkRow(work: work, composer: self.composer)
                             }
+                            .listRowBackground(Color.black)
                         }
                     }
                     .opacity(self.loading ? 0.0 : 1.0)

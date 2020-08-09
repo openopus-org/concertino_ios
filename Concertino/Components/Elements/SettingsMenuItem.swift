@@ -21,7 +21,7 @@ struct SettingsMenuItem: View {
             
             if description != nil {
                 Text(description ?? "")
-                    .font(.custom("Barlow", size: 13))
+                    .font(.custom("Barlow-Regular", size: 13))
                     .lineLimit(20)
                     .foregroundColor(.white)
             }

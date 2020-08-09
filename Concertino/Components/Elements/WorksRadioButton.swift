@@ -32,29 +32,29 @@ struct WorksRadioButton: View {
         }
         
         startRadio(userId: self.settingStore.userId, parameters: parameters) { results in
-            let worksData: Works = parseJSON(results)
-            
-            if let wrks = worksData.works {
-                DispatchQueue.main.async {
-                    self.radioState.isActive = true
-                    self.radioState.playlistId = ""
-                    self.radioState.genreId = self.genreId
-                    self.radioState.nextRecordings.removeAll()
-                    self.radioState.nextWorks = wrks
-                    
-                    getStoreFront() { countryCode in
-                        if let country = countryCode {
-                            randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
-                                if rec.count > 0 {
-                                    DispatchQueue.main.async {
-                                        self.playState.autoplay = true
-                                        self.playState.recording = rec
-                                        self.isLoading = false
+            if let worksData: Works = safeJSON(results) {
+              if let wrks = worksData.works {
+                    DispatchQueue.main.async {
+                        self.radioState.isActive = true
+                        self.radioState.playlistId = ""
+                        self.radioState.genreId = self.genreId
+                        self.radioState.nextRecordings.removeAll()
+                        self.radioState.nextWorks = wrks
+                        
+                        getStoreFront() { countryCode in
+                            if let country = countryCode {
+                                randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
+                                    if rec.count > 0 {
+                                        DispatchQueue.main.async {
+                                            self.playState.autoplay = true
+                                            self.playState.recording = rec
+                                            self.isLoading = false
+                                        }
                                     }
-                                }
-                                else {
-                                    DispatchQueue.main.async {
-                                        alertError("No recordings matching your criteria were found.")
+                                    else {
+                                        DispatchQueue.main.async {
+                                            alertError("No recordings matching your criteria were found.")
+                                        }
                                     }
                                 }
                             }
@@ -156,7 +156,8 @@ struct WorksRadioButton: View {
                                 
                             Text((self.radioState.isActive && self.radioState.genreId == self.genreId ? "stop radio" : "start radio").uppercased())
                                 .foregroundColor(.white)
-                                .font(.custom("Nunito", size: self.radioState.isActive && self.radioState.genreId == self.genreId ? 11 : 13))
+                                .font(.custom("Nunito-Regular", size: self.radioState.isActive && self.radioState.genreId == self.genreId ? 11 : 13))
+                                
                         }
                         
                         Spacer()

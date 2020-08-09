@@ -198,7 +198,9 @@ extension Collection {
 
 extension View {
     func endEditing(_ force: Bool) {
-        UIApplication.shared.windows.forEach { $0.endEditing(force)}
+        if UIApplication.shared.windows.count > 0 {
+            UIApplication.shared.windows.forEach { $0.endEditing(force)}
+        }
     }
 }
 
@@ -206,7 +208,7 @@ public struct SearchStyle: TextFieldStyle {
   public func _body(configuration: TextField<Self._Label>) -> some View {
     configuration
         .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-        .font(.custom("Nunito", size: 15))
+        .font(.custom("Nunito-Regular", size: 15))
         .foregroundColor(.black)
   }
 }
@@ -215,7 +217,7 @@ public struct EditFieldStyle: TextFieldStyle {
   public func _body(configuration: TextField<Self._Label>) -> some View {
     configuration
         .padding(12)
-        .font(.custom("Nunito", size: 15))
+        .font(.custom("Nunito-Regular", size: 15))
         .cornerRadius(12)
   }
 }
@@ -294,16 +296,12 @@ public func safeJSON<T: Decodable>(_ data: Data) -> T? {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     } catch {
+        DispatchQueue.main.async {
+            if let topMostViewController = UIApplication.shared.topMostViewController() {
+                topMostViewController.showToast(message: "Error", image: "warning", text: "Please try again")
+            }
+        }
         return nil
-    }
-}
-
-public func parseJSON<T: Decodable>(_ data: Data) -> T {
-    do {
-        let decoder = JSONDecoder()
-        return try decoder.decode(T.self, from: data)
-    } catch {
-        fatalError("Couldn't parse as \(T.self):\n\(error)")
     }
 }
 
@@ -934,7 +932,7 @@ public func timeframe(timestamp: Int, minutes: Int) -> Bool {
 }
 
 func MarkPlayed(settingStore: SettingStore, playState: PlayState, completion: @escaping (Data) -> ()) {
-    APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work!.id, "aid": playState.recording.first!.apple_albumid, "set": playState.recording.first!.set, "cover": playState.recording.first!.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.jsonPerformers, "work": (playState.recording.first!.work!.composer!.id == "0" ? playState.recording.first!.work!.title : ""), "composer": (playState.recording.first!.work!.composer!.id == "0" ? playState.recording.first!.work!.composer!.complete_name : "")]) { results in
+    APIpost("\(AppConstants.concBackend)/dyn/user/recording/played/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "wid": playState.recording.first!.work!.id, "aid": playState.recording.first!.apple_albumid, "set": playState.recording.first!.set, "cover": playState.recording.first!.cover ?? AppConstants.concNoCoverImg, "performers": playState.recording.first!.jsonPerformers, "work": (playState.recording.first!.work!.id.contains("at*") ? playState.recording.first!.work!.title : ""), "composer": (playState.recording.first!.work!.composer!.id == "0" ? playState.recording.first!.work!.composer!.complete_name : (playState.recording.first!.work!.id.contains("at*") ? playState.recording.first!.work!.composer!.name : ""))]) { results in
             completion(results)
     }
 }
@@ -976,7 +974,7 @@ func randomRecording(workQueue: [Work], hideIncomplete: Bool, country: String, c
         let work = workQ.removeFirst()
         
         APIget(AppConstants.concBackend+"/recording/" + (country != "" ? country + "/" : "") + "list/work/\(work.id)/0.json") { results in
-            if let recsData: Recordings = parseJSON(results) {
+            if let recsData: Recordings = safeJSON(results) {
                 if let recds = recsData.recordings {
                     print("found, everything OK")
                     if let rec = recds.filter({
@@ -1026,7 +1024,7 @@ public func alertError(_ msg: String) {
 }
 
 extension UIViewController {
-    func showToast(message: String) {
+    func showToast(message: String, image: String, text: String?) {
         let toastView = UIView(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height/2 - 75, width: 150, height: 150))
         //toastView.backgroundColor = Color(hex: 0xFE365E).uiColor().withAlphaComponent(1.0)
         toastView.backgroundColor = Color(hex: 0x7d7f82).uiColor().withAlphaComponent(0.7)
@@ -1052,12 +1050,27 @@ extension UIViewController {
             toastLabel.centerXAnchor.constraint(equalTo: toastView.layoutMarginsGuide.centerXAnchor),
         ])
         
-        let toastImage = UIImageView(frame: CGRect(x: (150/2)-(48/2), y: (150/2)-(36/2), width: 48, height: 36))
+        if let subtext = text {
+            let toastSubLabel = UILabel()
+            toastSubLabel.textColor = UIColor.white
+            toastSubLabel.font = UIFont(name: "Nunito-Regular", size: 9.0)
+            toastSubLabel.translatesAutoresizingMaskIntoConstraints = false
+            toastSubLabel.textAlignment = .center
+            toastSubLabel.text = subtext
+            toastView.addSubview(toastSubLabel)
+            
+            NSLayoutConstraint.activate([
+                toastSubLabel.topAnchor.constraint(equalTo: toastView.layoutMarginsGuide.centerYAnchor, constant: 48),
+                toastSubLabel.centerXAnchor.constraint(equalTo: toastView.layoutMarginsGuide.centerXAnchor),
+            ])
+        }
+        
+        let toastImage = UIImageView(frame: CGRect(x: (150/2)-(58/2), y: (150/2)-(46/2)-6, width: 58, height: 46))
         toastImage.clipsToBounds = true
         toastImage.autoresizesSubviews = true
         toastImage.contentMode = UIView.ContentMode.scaleAspectFit
         toastImage.tintColor = UIColor.white
-        toastImage.image = UIImage(named: "checked")
+        toastImage.image = UIImage(named: image)
         toastView.addSubview(toastImage)
         
         self.view.addSubview(toastView)
@@ -1132,14 +1145,15 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                     if capabilities.contains(.musicCatalogPlayback) {
                             if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
                                 APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
-                                    let token: Token = parseJSON(results)
-                                    controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
-                                        APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "country": countryCode ?? ""]) { results in
-                                            print(String(decoding: results, as: UTF8.self))
-                                            if let login: Login = safeJSON(results) {
-                                                completion(countryCode ?? "us", true, true, login)
-                                            } else {
-                                                completion(countryCode ?? "us", true, true, nil)
+                                    if let token: Token = safeJSON(results) {
+                                        controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
+                                            APIpost("\(AppConstants.concBackend)/dyn/user/sslogin/", parameters: ["token": userToken ?? "", "auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "country": countryCode ?? ""]) { results in
+                                                print(String(decoding: results, as: UTF8.self))
+                                                if let login: Login = safeJSON(results) {
+                                                    completion(countryCode ?? "us", true, true, login)
+                                                } else {
+                                                    completion(countryCode ?? "us", true, true, nil)
+                                                }
                                             }
                                         }
                                     }
@@ -1160,9 +1174,9 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                         if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
                             APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "recid": "guest-" + UUID().uuidString, "id": settingStore.userId]) { results in
                                         print(String(decoding: results, as: UTF8.self))
-                                        let login: Login = parseJSON(results)
-                                
+                                    if let login: Login = safeJSON(results) {
                                         completion(countryCode ?? "us", false, capabilities.contains(.musicCatalogSubscriptionEligible), login)
+                                    }
                                 }
                         } else {
                             completion(countryCode ?? "us", false, capabilities.contains(.musicCatalogSubscriptionEligible), nil)
@@ -1176,9 +1190,9 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
             if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
                 APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "recid": "guest-" + UUID().uuidString, "id": settingStore.userId]) { results in
                             print(String(decoding: results, as: UTF8.self))
-                            let login: Login = parseJSON(results)
-                
+                        if let login: Login = safeJSON(results) {
                             completion("us", false, true, login)
+                        }
                     }
             } else {
                 completion("us", false, true, nil)

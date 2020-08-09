@@ -13,10 +13,11 @@ struct RadioStationsGrid: View {
     
     func loadData() {
         APIget(AppConstants.concBackend+"/playlist/public/list.json") { results in
-            var stationsData: RadioStationPlaylists = parseJSON(results)
-            DispatchQueue.main.async {
-                stationsData.playlists.shuffle()
-                self.stations = Array(stationsData.playlists.chunked(into: 2))
+            if var stationsData: RadioStationPlaylists = safeJSON(results) {
+                DispatchQueue.main.async {
+                    stationsData.playlists.shuffle()
+                    self.stations = Array(stationsData.playlists.chunked(into: 2))
+                }
             }
         }
     }

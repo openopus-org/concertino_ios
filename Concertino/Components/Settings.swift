@@ -14,10 +14,11 @@ struct Settings: View {
     
     func loadData() {
         APIget(AppConstants.openOpusBackend+"/patron/list.json") { results in
-            var supportersData: Supporters = parseJSON(results)
-            DispatchQueue.main.async {
-                supportersData.patrons.shuffle()
-                self.supporters = supportersData.patrons
+            if var supportersData: Supporters = safeJSON(results) {
+                DispatchQueue.main.async {
+                    supportersData.patrons.shuffle()
+                    self.supporters = supportersData.patrons
+                }
             }
         }
     }
@@ -30,22 +31,35 @@ struct Settings: View {
                         Text("Library filters".uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 13))
                             .foregroundColor(Color(hex: 0xfe365e))
-                        Text("Automatic filters that try to eliminate bad or undesirable recordings from the library. They are not perfect, but definitely can improve your playing experience.")
-                            .font(.custom("Barlow", size: 13))
-                            .foregroundColor(.white)
-                            .lineLimit(20)
+                        /*if #available(iOS 14.0, *) {
+                            Text("Automatic filters that try to eliminate bad or undesirable recordings from the library. They are not perfect, but definitely can improve your playing experience.")
+                                .textCase(.none)
+                                .font(.custom("Barlow-Regular", size: 13))
+                                .foregroundColor(.white)
+                                .lineLimit(20)
+                        } else {*/
+                            // Fallback on earlier versions
+                            
+                            Text("Automatic filters that try to eliminate bad or undesirable recordings from the library. They are not perfect, but definitely can improve your playing experience.")
+                                .font(.custom("Barlow-Regular", size: 13))
+                                .foregroundColor(.white)
+                                .lineLimit(20)
+                        //}
                     }
                     .padding(.top, 12)
                     .padding(.bottom, 16)
                     ){
                         Toggle(isOn: self.$settingStore.hideIncomplete) {
                             Text("Hide incomplete recordings")
-                            .font(.custom("Barlow", size: 16))
+                            .font(.custom("Barlow-Regular", size: 16))
                         }
+                        .listRowBackground(Color.black)
+                    
                         Toggle(isOn: self.$settingStore.hideHistorical) {
                             Text("Hide old, historical recordings")
-                            .font(.custom("Barlow", size: 16))
+                            .font(.custom("Barlow-Regular", size: 16))
                         }
+                        .listRowBackground(Color.black)
                 }
                 
                 Section(header:
@@ -54,21 +68,27 @@ struct Settings: View {
                         .foregroundColor(Color(hex: 0xFE365E))
                     ){
                         SettingsMenuItem(title: "Version", description: AppConstants.version)
+                            .listRowBackground(Color.black)
                         Button(
                             action: { UIApplication.shared.open(URL(string: "https://patreon.com/openopus")!) },
                             label: {
                                 SettingsMenuItem(title: "Support our projects", description: "Help us keeping Concertino free! Donate and back our development and hosting costs.")
                         })
+                            .listRowBackground(Color.black)
+                    
                         Button(
                             action: { UIApplication.shared.open(URL(string: "https://github.com/openopus-org/concertino_ios")!) },
                             label: {
                                 SettingsMenuItem(title: "Contribute with code", description: "Concertino is an open source project. You may fork it or help us with code!")
                         })
+                            .listRowBackground(Color.black)
+                    
                         Button(
                             action: { UIApplication.shared.open(URL(string: "https://twitter.com/concertinoapp")!) },
                             label: {
                                 SettingsMenuItem(title: "Find us on Twitter", description: "And tell us how has been your experience with Concertino so far!")
                         })
+                            .listRowBackground(Color.black)
                 }
                 
                 Section(header:
@@ -79,6 +99,7 @@ struct Settings: View {
                         ForEach(supporters, id: \.self) { supporter in
                             SettingsMenuItem(title: supporter)
                         }
+                        .listRowBackground(Color.black)
                 }
             }
             .listStyle(GroupedListStyle())

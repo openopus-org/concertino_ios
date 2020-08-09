@@ -39,44 +39,45 @@ struct RadioBuilder: View {
         
         self.isLoading = true
         startRadio(userId: self.settingStore.userId, parameters: parameters) { results in
-            let worksData: Works = parseJSON(results)
-            
-            print(String(decoding: results, as: UTF8.self))
-            
-            if let wrks = worksData.works {
-                DispatchQueue.main.async {
-                    self.radioState.playlistId = ""
-                    self.radioState.genreId = ""
-                    self.radioState.nextRecordings.removeAll()
-                    self.radioState.nextWorks = wrks
-                    
-                    getStoreFront() { countryCode in
-                        if let country = countryCode {
-                            randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
-                                if rec.count > 0 {
-                                    DispatchQueue.main.async {
-                                        self.isLoading = false
-                                        self.radioState.isActive = true
-                                        self.playState.autoplay = true
-                                        self.playState.recording = rec
+            if let worksData: Works = safeJSON(results) {
+                print(String(decoding: results, as: UTF8.self))
+                
+                if let wrks = worksData.works {
+                    DispatchQueue.main.async {
+                        self.radioState.playlistId = ""
+                        self.radioState.genreId = ""
+                        self.radioState.nextRecordings.removeAll()
+                        self.radioState.nextWorks = wrks
+                        
+                        getStoreFront() { countryCode in
+                            if let country = countryCode {
+                                randomRecording(workQueue: self.radioState.nextWorks, hideIncomplete: self.settingStore.hideIncomplete, country: country) { rec in
+                                    if rec.count > 0 {
+                                        DispatchQueue.main.async {
+                                            self.isLoading = false
+                                            self.radioState.isActive = true
+                                            self.playState.autoplay = true
+                                            self.playState.recording = rec
+                                        }
                                     }
-                                }
-                                else {
-                                    DispatchQueue.main.async {
-                                        self.isLoading = false
-                                        alertError("No recordings were found.")
+                                    else {
+                                        DispatchQueue.main.async {
+                                            self.isLoading = false
+                                            alertError("No recordings were found.")
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                } else {
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        alertError("No works matching your criteria were found.")
+                    }
                 }
-            } else {
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                    alertError("No works matching your criteria were found.")
-                }
-            }
+
+            }    
         }
     }
     
@@ -85,8 +86,9 @@ struct RadioBuilder: View {
                 
                 Group {
                     Text("Composers and works".uppercased())
+                        
                         .foregroundColor(Color(hex: 0x717171))
-                        .font(.custom("Nunito", size: 12))
+                        .font(.custom("Nunito-Regular", size: 12))
                         .padding(.top, 20)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -116,8 +118,9 @@ struct RadioBuilder: View {
                     }
                     
                     Text("and".uppercased())
+                        
                         .foregroundColor(Color(hex: 0x717171))
-                        .font(.custom("Nunito", size: 8))
+                        .font(.custom("Nunito-Regular", size: 8))
                         .padding(4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
@@ -130,7 +133,8 @@ struct RadioBuilder: View {
                 Group {
                     Text("Periods".uppercased())
                         .foregroundColor(Color(hex: 0x717171))
-                        .font(.custom("Nunito", size: 12))
+                        .font(.custom("Nunito-Regular", size: 12))
+                        
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 14) {
@@ -149,21 +153,23 @@ struct RadioBuilder: View {
                     }
                     
                     Text("and".uppercased())
-                    .foregroundColor(Color(hex: 0x717171))
-                    .font(.custom("Nunito", size: 8))
-                    .padding(4)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color(hex: 0x717171), lineWidth: 1)
-                    )
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                        
+                        .foregroundColor(Color(hex: 0x717171))
+                        .font(.custom("Nunito-Regular", size: 8))
+                        .padding(4)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color(hex: 0x717171), lineWidth: 1)
+                            )
+                            .padding(.top, 10)
+                            .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
                 Group {
                     Text("Genres".uppercased())
+                        
                         .foregroundColor(Color(hex: 0x717171))
-                        .font(.custom("Nunito", size: 12))
+                        .font(.custom("Nunito-Regular", size: 12))
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 14) {
@@ -270,8 +276,9 @@ struct RadioBuilder: View {
                                         .padding(.leading, self.radioState.isActive ? 0 : -10)
                                         
                                     Text((self.radioState.isActive ? "stop radio" : "start radio").uppercased())
+                                        
                                         .foregroundColor(.white)
-                                        .font(.custom("Nunito", size: self.radioState.isActive ? 11 : 13))
+                                        .font(.custom("Nunito-Regular", size: self.radioState.isActive ? 11 : 13))
                                 }
                                 
                                 Spacer()

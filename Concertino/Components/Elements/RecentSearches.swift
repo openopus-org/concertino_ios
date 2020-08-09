@@ -40,6 +40,7 @@ struct RecentSearches: View {
                 }
                 
             }
+            .listRowBackground(Color.black)
         }
     }
 }

@@ -17,7 +17,7 @@ struct Radio: View {
                     .font(.custom("Nunito-ExtraBold", size: 13))
                     .foregroundColor(Color(hex: 0xfe365e))
                 Text("Build your no-nonsense classical radio! Start a continuous stream of music based on what you want to hear.")
-                    .font(.custom("Barlow", size: 13))
+                    .font(.custom("Barlow-Regular", size: 13))
                 
                 RadioBuilder()
                     .padding(.trailing, -20)
@@ -27,7 +27,7 @@ struct Radio: View {
                     .foregroundColor(Color(hex: 0xfe365e))
                     .padding(.top, 20)
                 Text("Try one of our carefully curated radio stations. Good for any mood!")
-                    .font(.custom("Barlow", size: 13))
+                    .font(.custom("Barlow-Regular", size: 13))
                 
                 RadioStationsGrid()
                     .padding(.top, 12)

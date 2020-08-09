@@ -20,7 +20,7 @@ struct Warning: View {
             VStack {
                 Text("warning".uppercased())
                     .foregroundColor(Color(hex: 0x717171))
-                    .font(.custom("Nunito", size: 10))
+                    .font(.custom("Nunito-Regular", size: 10))
                     .multilineTextAlignment(.leading)
                 
                 Text("Concertino needs an active Apple Music subscription to play music")
@@ -32,14 +32,14 @@ struct Warning: View {
                 if !appState.apmusEligible {
                     Text("Unfortunately, this device is not eligible for Apple Music.")
                         .foregroundColor(Color.white)
-                        .font(.custom("Barlow", size: 14))
+                        .font(.custom("Barlow-Regular", size: 14))
                         .padding(.top, 10)
                         .multilineTextAlignment(.center)
                 }
                 
                 Text("You can browse Concertino's catalogue, create playlists, favorite works, composers and recordings, but playback is restricted to 30 seconds samples.")
                     .foregroundColor(Color.white)
-                    .font(.custom("Barlow", size: 11))
+                    .font(.custom("Barlow-Regular", size: 11))
                     .padding(.top, 10)
                     .padding(.bottom, 18)
                     .multilineTextAlignment(.center)
@@ -99,7 +99,7 @@ struct Warning: View {
                                 HStack {
                                     Spacer()
                                     Text("close".uppercased())
-                                        .font(.custom("Nunito", size: 10))
+                                        .font(.custom("Nunito-Regular", size: 10))
                                     Spacer()
                                 }
                             }

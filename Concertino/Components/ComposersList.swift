@@ -18,9 +18,10 @@ class ComposersData: ObservableObject {
     
     func loadData() {
         APIget(AppConstants.openOpusBackend+"/composer/list/pop.json") { results in
-            let composersData: Composers = parseJSON(results)
-            DispatchQueue.main.async {
-                self.composers = composersData.composers ?? []
+            if let composersData: Composers = safeJSON(results) {
+                DispatchQueue.main.async {
+                    self.composers = composersData.composers ?? []
+                }
             }
         }
     }
@@ -35,8 +36,9 @@ struct ComposersList: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Most Requested Composers".uppercased())
+                
                 .foregroundColor(Color(hex: 0x717171))
-                .font(.custom("Nunito", size: 12))
+                .font(.custom("Nunito-Regular", size: 12))
                 .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 14) {

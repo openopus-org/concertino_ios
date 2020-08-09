@@ -36,16 +36,17 @@ struct MiniComposerRow: View {
                         .font(.custom("Nunito-ExtraBold", size: 12))
                     
                     Text(composer.complete_name)
+                        
                         .foregroundColor(.white)
                         .lineLimit(20)
-                        .font(.custom("Nunito", size: 11))
+                        .font(.custom("Nunito-Regular", size: 11))
                     
                     Group {
                         Text("(" + composer.birth!.prefix(4)) + Text(composer.death != nil ? "-" : "") + Text((composer.death?.prefix(4) ?? "")) + Text(")")
                     }
                     .foregroundColor(.white)
                     .lineLimit(20)
-                    .font(.custom("Nunito", size: 9))
+                    .font(.custom("Nunito-Regular", size: 9))
                 }
                 .padding(.leading, 10)
             }

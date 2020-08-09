@@ -23,37 +23,37 @@ struct GenreBar: View {
         }
         
         APIget(AppConstants.openOpusBackend+"/genre/list/composer/\(self.composerId).json") { results in
-            let genresData: Genres = parseJSON(results)
-            
-            DispatchQueue.main.async {
-                if let genr = genresData.genres {
-                    var genreslist = genr.filter(){$0 != "Popular"}
-                    
-                    if self.settingStore.composersFavoriteWorks.contains(self.composerId) {
-                        genreslist.insert("Favorites", at: 0)
-                    }
-                    
-                    self.genres = genreslist
-                    
-                    if (self.search.composerId != self.composerId || (self.search.genreName == "Favorites" && !self.settingStore.composersFavoriteWorks.contains(self.composerId))) {
-                        if genr.contains("Favorites") {
-                            self.search.genreName = "Favorites"
-                        } else if genr.contains("Recommended") {
-                            self.search.genreName = "Recommended"
-                        } else {
-                            self.search.genreName = genr[0]
+            if let genresData: Genres = safeJSON(results) {
+                DispatchQueue.main.async {
+                    if let genr = genresData.genres {
+                        var genreslist = genr.filter(){$0 != "Popular"}
+                        
+                        if self.settingStore.composersFavoriteWorks.contains(self.composerId) {
+                            genreslist.insert("Favorites", at: 0)
+                        }
+                        
+                        self.genres = genreslist
+                        
+                        if (self.search.composerId != self.composerId || (self.search.genreName == "Favorites" && !self.settingStore.composersFavoriteWorks.contains(self.composerId))) {
+                            if genr.contains("Favorites") {
+                                self.search.genreName = "Favorites"
+                            } else if genr.contains("Recommended") {
+                                self.search.genreName = "Recommended"
+                            } else {
+                                self.search.genreName = genr[0]
+                            }
                         }
                     }
+                    else {
+                        self.genres = [String]()
+                    }
+                    
+                    if (self.search.composerId != self.composerId) {
+                        self.search.composerId = self.composerId
+                        self.search.loadingGenres = false
+                    }
+                    self.loading = false
                 }
-                else {
-                    self.genres = [String]()
-                }
-                
-                if (self.search.composerId != self.composerId) {
-                    self.search.composerId = self.composerId
-                    self.search.loadingGenres = false
-                }
-                self.loading = false
             }
         }
     }

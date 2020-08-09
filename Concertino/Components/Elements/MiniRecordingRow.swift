@@ -34,12 +34,14 @@ struct MiniRecordingRow: View {
             }
             VStack(alignment: .leading) {
                 if recording.work != nil {
-                    Text(recording.work!.composer!.name.uppercased())
+                    ForEach(recording.work!.composer!.name.components(separatedBy: "&"), id: \.self) { composer in
+                        Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                         .font(.custom("Nunito-ExtraBold", size: 12))
-                        .foregroundColor(accentColor)
+                        .foregroundColor(self.accentColor)
+                    }
                     
                     Text(recording.work!.title)
-                        .font(.custom("Barlow", size: 14))
+                        .font(.custom("Barlow-Regular", size: 14))
                         .padding(.bottom, 6)
                         .lineLimit(20)
                         .fixedSize(horizontal: false, vertical: true)
@@ -47,7 +49,7 @@ struct MiniRecordingRow: View {
                 
                 if recording.observation != "" && recording.observation != nil {
                     Text(recording.observation ?? "")
-                    .font(.custom("Barlow", size: 9))
+                    .font(.custom("Barlow-Regular", size: 9))
                     .padding(.bottom, 6)
                 }
                 
@@ -58,7 +60,7 @@ struct MiniRecordingRow: View {
                                     .font(.custom("Barlow-SemiBold", size: (self.recording.work != nil ? 11 : 12)))
                                 +
                                 Text(performer.readableRole)
-                                    .font(.custom("Barlow", size: (self.recording.work != nil ? 11 : 12)))
+                                    .font(.custom("Barlow-Regular", size: (self.recording.work != nil ? 11 : 12)))
                         }
                     }
                 }

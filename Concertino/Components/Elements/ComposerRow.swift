@@ -31,6 +31,7 @@ struct ComposerRow: View {
                 VStack(alignment: .leading) {
                     
                     Text(composer.name.uppercased())
+                        
                         .foregroundColor(Color(hex: 0xfe365e))
                         .font(.custom("Nunito-ExtraBold", size: 15))
                     Group{
@@ -39,7 +40,7 @@ struct ComposerRow: View {
                     }
                     .foregroundColor(.white)
                     .lineLimit(20)
-                    .font(.custom("Nunito", size: 12))
+                    .font(.custom("Nunito-Regular", size: 12))
                 }
                 .padding(8)
             }

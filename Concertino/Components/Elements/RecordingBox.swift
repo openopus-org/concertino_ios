@@ -32,12 +32,14 @@ struct RecordingBox: View {
                 .padding(.bottom, 10)
                  
                 if recording.work != nil {
-                    Text(recording.work!.composer!.name.uppercased())
+                    ForEach(recording.work!.composer!.name.components(separatedBy: "&"), id: \.self) { composer in
+                        Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                         .font(.custom("Nunito-ExtraBold", size: 12))
                         .foregroundColor(Color(hex: 0xfe365e))
+                    }
                     
                     Text(recording.work!.title)
-                        .font(.custom("Barlow", size: 11))
+                        .font(.custom("Barlow-Regular", size: 11))
                         .foregroundColor(.white)
                         .padding(.bottom, 6)
                         .lineLimit(20)
@@ -46,7 +48,7 @@ struct RecordingBox: View {
                 
                 if recording.observation != "" && recording.observation != nil {
                     Text(recording.observation ?? "")
-                    .font(.custom("Barlow", size: 8))
+                    .font(.custom("Barlow-Regular", size: 8))
                     .padding(.bottom, 6)
                 }
                 
@@ -57,7 +59,7 @@ struct RecordingBox: View {
                                     .font(.custom("Barlow-SemiBold", size: (self.recording.work != nil ? 9 : 9)))
                                 +
                                 Text(performer.readableRole)
-                                    .font(.custom("Barlow", size: (self.recording.work != nil ? 9 : 9)))
+                                    .font(.custom("Barlow-Regular", size: (self.recording.work != nil ? 9 : 9)))
                         }
                     }
                 }

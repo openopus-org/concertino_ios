@@ -38,7 +38,7 @@ struct PlaylistChooser: View {
                     
                     Text(playlist.name)
                         .foregroundColor(Color(hex: (self.active ? 0xFFFFFF : 0xfe365e)))
-                        .font(.custom("Nunito", size: 16))
+                        .font(.custom("Nunito-Regular", size: 16))
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(20)
                 }

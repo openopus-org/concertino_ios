@@ -53,7 +53,7 @@ struct BrowseOnlyMode: View {
                         .font(.custom("Nunito-ExtraBold", size: size == "min" ? 10 : 13))
                         .padding(.top, size == "min" ? 0 : 2)
                     Text("Tap to enable playback")
-                        .font(.custom("Nunito", size: size == "min" ? 8 : 11))
+                        .font(.custom("Nunito-Regular", size: size == "min" ? 8 : 11))
                         .padding(.top, size == "min" ? -2 : -2)
                 }
                 .foregroundColor(Color(hex: size == "min" ? 0xFFFFFF : 0xFFFFFF))

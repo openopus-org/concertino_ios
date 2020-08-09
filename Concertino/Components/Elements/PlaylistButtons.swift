@@ -77,7 +77,7 @@ struct PlaylistButtons: View {
                                     
                                 Text((self.radioState.isActive && self.radioState.playlistId == self.playlistId ? "stop radio" : "start radio").uppercased())
                                     .foregroundColor(.white)
-                                    .font(.custom("Nunito", size: self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 11 : 13))
+                                    .font(.custom("Nunito-Regular", size: self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 11 : 13))
                             }
                             
                             Spacer()
@@ -107,7 +107,7 @@ struct PlaylistButtons: View {
                                 
                                 Text("edit playlist".uppercased())
                                     .foregroundColor(.white)
-                                    .font(.custom("Nunito", size: 12))
+                                    .font(.custom("Nunito-Regular", size: 12))
                                 
                                 Spacer()
                             }

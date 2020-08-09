@@ -13,10 +13,11 @@ struct RadioStations: View {
     
     func loadData() {
         APIget(AppConstants.concBackend+"/playlist/public/list.json") { results in
-            var stationsData: RadioStationPlaylists = parseJSON(results)
-            DispatchQueue.main.async {
-                stationsData.playlists.shuffle()
-                self.stations = Array(stationsData.playlists.prefix(6))
+            if var stationsData: RadioStationPlaylists = safeJSON(results) {
+                DispatchQueue.main.async {
+                    stationsData.playlists.shuffle()
+                    self.stations = Array(stationsData.playlists.prefix(6))
+                }
             }
         }
     }
@@ -24,8 +25,9 @@ struct RadioStations: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("Suggested radio stations".uppercased())
+                
                 .foregroundColor(Color(hex: 0x717171))
-                .font(.custom("Nunito", size: 12))
+                .font(.custom("Nunito-Regular", size: 12))
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
             
             ScrollView(.horizontal, showsIndicators: false) {

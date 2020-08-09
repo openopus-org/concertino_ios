@@ -35,25 +35,25 @@ struct WorksSearch: View {
             }
             
             APIget(url) { results in
-                let worksData: Works = parseJSON(results)
-                
-                DispatchQueue.main.async {
-                    self.genresAvail.removeAll()
-                    if let wrks = worksData.works {
-                        self.works = wrks
-                        self.hasEssential = (self.works.filter({$0.recommended == "1"}).count > 0)
-                        
-                        for genre in AppConstants.genreList {
-                            if self.works.filter({$0.genre == genre}).count > 0 {
-                                self.genresAvail.append(genre)
+                if let worksData: Works = safeJSON(results) {
+                    DispatchQueue.main.async {
+                        self.genresAvail.removeAll()
+                        if let wrks = worksData.works {
+                            self.works = wrks
+                            self.hasEssential = (self.works.filter({$0.recommended == "1"}).count > 0)
+                            
+                            for genre in AppConstants.genreList {
+                                if self.works.filter({$0.genre == genre}).count > 0 {
+                                    self.genresAvail.append(genre)
+                                }
                             }
                         }
+                        else {
+                            self.works = [Work]()
+                        }
+                        
+                        self.loading = false
                     }
-                    else {
-                        self.works = [Work]()
-                    }
-                    
-                    self.loading = false
                 }
             }
         }

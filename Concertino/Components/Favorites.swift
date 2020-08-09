@@ -13,15 +13,28 @@ struct Favorites: View {
     
     var body: some View {
         VStack {
-            NavigationView {
-                VStack {
-                    PlaylistsMenu(playlistSwitcher: $playlistSwitcher)
-                    PlaylistsRecordings(playlistSwitcher: $playlistSwitcher)
-                    Spacer()
+            /*
+            if #available(iOS 14.0, *) {
+                NavigationView {
+                    VStack {
+                        PlaylistsMenu(playlistSwitcher: $playlistSwitcher)
+                        PlaylistsRecordings(playlistSwitcher: $playlistSwitcher)
+                        Spacer()
+                    }
                 }
-            }
-            .padding(.top, UIDevice.current.hasNotch ? -50 : -95)
-            .padding(.bottom, -8)
+                .padding(.top, UIDevice.current.hasNotch ? -100 : -145)
+                .padding(.bottom, -8)
+            } else {*/
+                NavigationView {
+                    VStack {
+                        PlaylistsMenu(playlistSwitcher: $playlistSwitcher)
+                        PlaylistsRecordings(playlistSwitcher: $playlistSwitcher)
+                        Spacer()
+                    }
+                }
+                .padding(.top, UIDevice.current.hasNotch ? -50 : -95)
+                .padding(.bottom, -8)
+            //}
         }
         .clipped()
     }

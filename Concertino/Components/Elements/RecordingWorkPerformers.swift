@@ -20,15 +20,15 @@ struct RecordingWorkPerformers: View {
     var actionSheet: ActionSheet {
         ActionSheet(title: Text("Select an action"), message: nil, buttons: [
             .default(Text(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "Remove recording from favorites" : "Add recording to favorites"), action: {
-                APIpost("\(AppConstants.concBackend)/dyn/user/recording/\(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "unfavorite" : "favorite")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "wid": self.recording.work!.id, "aid": self.recording.apple_albumid, "set": self.recording.set, "cover": self.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.recording.jsonPerformers, "work": (self.recording.work!.composer!.id == "0" ? self.recording.work!.title : ""), "composer": (self.recording.work!.composer!.id == "0" ? self.recording.work!.composer!.complete_name : "")]) { results in
+                APIpost("\(AppConstants.concBackend)/dyn/user/recording/\(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "unfavorite" : "favorite")/", parameters: ["id": self.settingStore.userId, "auth": authGen(userId: self.settingStore.userId, userAuth: self.settingStore.userAuth) ?? "", "wid": self.recording.work!.id, "aid": self.recording.apple_albumid, "set": self.recording.set, "cover": self.recording.cover ?? AppConstants.concNoCoverImg, "performers": self.recording.jsonPerformers, "work": (self.recording.work!.id.contains("at*") ? self.recording.work!.title : ""), "composer": (self.recording.work!.composer!.id == "0" ? self.recording.work!.composer!.complete_name : (self.recording.work!.id.contains("at*") ? self.recording.work!.composer!.name : ""))]) { results in
                     
-                    let addRecordings: AddRecordings = parseJSON(results)
-                    
-                    DispatchQueue.main.async {
-                        self.settingStore.favoriteRecordings = addRecordings.favoriterecordings
-                        
-                        if let topMostViewController = UIApplication.shared.topMostViewController() {
-                            topMostViewController.showToast(message: "\(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "Added!" : "Removed!")")
+                    if let addRecordings: AddRecordings = safeJSON(results) {
+                        DispatchQueue.main.async {
+                            self.settingStore.favoriteRecordings = addRecordings.favoriterecordings
+                            
+                            if let topMostViewController = UIApplication.shared.topMostViewController() {
+                                topMostViewController.showToast(message: "\(self.settingStore.favoriteRecordings.contains("\(self.recording.id)") ? "Added!" : "Removed!")", image: "checked", text: nil)
+                            }
                         }
                     }
                 }
@@ -60,9 +60,11 @@ struct RecordingWorkPerformers: View {
                 .padding(.trailing, 8)
                 
                 VStack(alignment: .leading) {
-                    Text(recording.work!.composer!.name.uppercased())
+                    ForEach(recording.work!.composer!.name.components(separatedBy: "&"), id: \.self) { composer in
+                        Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                         .font(.custom("Nunito-ExtraBold", size: 15))
                         .foregroundColor(Color(hex: 0xfe365e))
+                    }
                     
                     Text(recording.work!.title)
                         .font(.custom("Barlow-SemiBold", size: 16))
@@ -78,7 +80,7 @@ struct RecordingWorkPerformers: View {
                             Text(recording.work!.subtitle!)
                         }
                     }
-                    .font(.custom("Barlow", size: 14))
+                    .font(.custom("Barlow-Regular", size: 14))
                     .lineLimit(20)
                     .fixedSize(horizontal: false, vertical: true)
                 }
@@ -94,12 +96,12 @@ struct RecordingWorkPerformers: View {
                             .font(.custom("Barlow-SemiBold", size: 14))
                         +
                         Text(performer.readableRole)
-                            .font(.custom("Barlow", size: 13))
+                            .font(.custom("Barlow-Regular", size: 13))
                     }
                     .foregroundColor(.white)
                     
                     Text(recording.label ?? "")
-                        .font(.custom("Nunito", size: 11))
+                        .font(.custom("Nunito-Regular", size: 11))
                         .padding(.top, 6)
                 }
                 
@@ -110,13 +112,13 @@ struct RecordingWorkPerformers: View {
                         self.loadingSheet = true
                         APIget(AppConstants.concBackend+"/recording/shorturl/work/\(self.recording.work!.id)/album/\(self.recording.apple_albumid)/\(self.recording.set).json") { results in
                             
-                            let recordingData: ShortRecordingDetail = parseJSON(results)
-                            
-                            DispatchQueue.main.async {
-                                let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
-                                ac.excludedActivityTypes = [.addToReadingList]
-                                self.loadingSheet = false
-                                UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
+                            if let recordingData: ShortRecordingDetail = safeJSON(results) {
+                                DispatchQueue.main.async {
+                                    let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
+                                    ac.excludedActivityTypes = [.addToReadingList]
+                                    self.loadingSheet = false
+                                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
+                                }
                             }
                         }
                     })

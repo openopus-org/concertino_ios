@@ -32,7 +32,7 @@ struct RecordingNotAvailable: View {
                     Text("Couldn't connect to Apple Music")
                         .font(.custom("Nunito-ExtraBold", size: size == "min" ? 11 : 15))
                     Text("Please tap here to try again")
-                        .font(.custom("Nunito", size: size == "min" ? 9 : 13))
+                        .font(.custom("Nunito-Regular", size: size == "min" ? 9 : 13))
                 }
                 .foregroundColor(Color(hex: size == "min" ? 0x797979 : 0xfe365e))
                 

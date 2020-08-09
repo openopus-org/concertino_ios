@@ -37,14 +37,16 @@ struct PlaylistButton: View {
                 .padding(.top, 10)
                 
                 Text(playlist.name)
+                    
                     .foregroundColor(Color(hex: (self.active ? 0xFFFFFF : 0xfe365e)))
                     .font(.custom("Nunito-ExtraBold", size: 12))
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(20)
                 
                 Text("\(playlist.summary.works.rows) work\(self.playlist.summary.works.rows > 1 ? "s" : "") by \(playlist.summary.composers.nameList)")
+                    
                     .foregroundColor(Color.white)
-                    .font(.custom("Nunito", size: 9))
+                    .font(.custom("Nunito-Regular", size: 9))
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(20)
             }

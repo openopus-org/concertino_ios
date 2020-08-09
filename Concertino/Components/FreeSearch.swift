@@ -35,14 +35,14 @@ struct FreeSearch: View {
         self.recordings.removeAll()
         
         APIget(AppConstants.concBackend+"/recording/list/trending.json") { results in
-            let recsData: PlaylistRecordings = parseJSON(results)
-            
-            DispatchQueue.main.async {
-                if let recds = recsData.recordings {
-                    self.trendingRecordings = recds
-                }
-                else {
-                    self.trendingRecordings = [Recording]()
+            if let recsData: PlaylistRecordings = safeJSON(results) {
+                DispatchQueue.main.async {
+                    if let recds = recsData.recordings {
+                        self.trendingRecordings = recds
+                    }
+                    else {
+                        self.trendingRecordings = [Recording]()
+                    }
                 }
             }
         }
@@ -53,35 +53,35 @@ struct FreeSearch: View {
         
         getStoreFront() { countryCode in
             APIget(AppConstants.concBackend+"/\(self.nextSource)/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
-                let omniData: Omnisearch = parseJSON(results)
-                
-                DispatchQueue.main.async {
-                    if let recordings = omniData.recordings {
-                        
-                        for rec in recordings {
-                            if !self.recordings.contains(rec) {
-                                self.recordings.append(rec)
+                if let omniData: Omnisearch = safeJSON(results) {
+                    DispatchQueue.main.async {
+                        if let recordings = omniData.recordings {
+                            
+                            for rec in recordings {
+                                if !self.recordings.contains(rec) {
+                                    self.recordings.append(rec)
+                                }
                             }
-                        }
-                        
-                        if let next = omniData.next {
-                            self.offset = next
-                        } else if self.nextSource == "omnisearch" {
-                            self.offset = 0
-                            self.nextSource = "freesearch"
+                            
+                            if let next = omniData.next {
+                                self.offset = next
+                            } else if self.nextSource == "omnisearch" {
+                                self.offset = 0
+                                self.nextSource = "freesearch"
+                            } else {
+                                self.canPaginate = false
+                            }
+                            
+                            self.paginating = false
                         } else {
-                            self.canPaginate = false
-                        }
-                        
-                        self.paginating = false
-                    } else {
-                        self.paginating = false
-                        
-                        if self.nextSource == "omnisearch" {
-                            self.offset = 0
-                            self.nextSource = "freesearch"
-                        } else {
-                            self.canPaginate = false
+                            self.paginating = false
+                            
+                            if self.nextSource == "omnisearch" {
+                                self.offset = 0
+                                self.nextSource = "freesearch"
+                            } else {
+                                self.canPaginate = false
+                            }
                         }
                     }
                 }
@@ -98,71 +98,71 @@ struct FreeSearch: View {
         if self.omnisearch.searchstring.count > 3 {
             getStoreFront() { countryCode in
                 APIget(AppConstants.concBackend+"/omnisearch/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
-                    let omniData: Omnisearch = parseJSON(results)
-                    
-                    DispatchQueue.main.async {
-                        if let recordings = omniData.recordings {
-                            if let next = omniData.next {
-                                self.offset = next
-                            } else if self.nextSource == "omnisearch" {
-                                self.nextSource = "freesearch"
+                    if let omniData: Omnisearch = safeJSON(results) {
+                        DispatchQueue.main.async {
+                            if let recordings = omniData.recordings {
+                                if let next = omniData.next {
+                                    self.offset = next
+                                } else if self.nextSource == "omnisearch" {
+                                    self.nextSource = "freesearch"
+                                }
+                                
+                                self.recordings.removeAll()
+                                self.recordings = recordings
+                                self.loading = false
+                            } else {
+                                APIget(AppConstants.concBackend+"/freesearch/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
+                                    if let omniData: Omnisearch = safeJSON(results) {
+                                        if let recordings = omniData.recordings {
+                                            self.nextSource = "freesearch"
+                                            
+                                            if let next = omniData.next {
+                                                self.offset = next
+                                            } else {
+                                                self.canPaginate = false
+                                            }
+                                            
+                                            self.recordings.removeAll()
+                                            self.recordings = recordings
+                                            self.loading = false
+                                        } else {
+                                            self.recordings = [Recording]()
+                                        }
+                                        
+                                        if let composers = omniData.composers {
+                                            self.composers.removeAll()
+                                            self.composers = composers
+                                            self.loading = false
+                                        } else {
+                                            self.composers = [Composer]()
+                                        }
+                                        
+                                        if let works = omniData.works {
+                                            self.works.removeAll()
+                                            self.works = works
+                                            self.loading = false
+                                        } else {
+                                            self.works = [Work]()
+                                        }
+                                    }
+                                }
                             }
                             
-                            self.recordings.removeAll()
-                            self.recordings = recordings
-                            self.loading = false
-                        } else {
-                            APIget(AppConstants.concBackend+"/freesearch/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
-                                let omniData: Omnisearch = parseJSON(results)
-                                
-                                if let recordings = omniData.recordings {
-                                    self.nextSource = "freesearch"
-                                    
-                                    if let next = omniData.next {
-                                        self.offset = next
-                                    } else {
-                                        self.canPaginate = false
-                                    }
-                                    
-                                    self.recordings.removeAll()
-                                    self.recordings = recordings
-                                    self.loading = false
-                                } else {
-                                    self.recordings = [Recording]()
-                                }
-                                
-                                if let composers = omniData.composers {
-                                    self.composers.removeAll()
-                                    self.composers = composers
-                                    self.loading = false
-                                } else {
-                                    self.composers = [Composer]()
-                                }
-                                
-                                if let works = omniData.works {
-                                    self.works.removeAll()
-                                    self.works = works
-                                    self.loading = false
-                                } else {
-                                    self.works = [Work]()
-                                }
+                            if let composers = omniData.composers {
+                                self.composers.removeAll()
+                                self.composers = composers
+                                self.loading = false
+                            } else {
+                                self.composers = [Composer]()
                             }
-                        }
-                        
-                        if let composers = omniData.composers {
-                            self.composers.removeAll()
-                            self.composers = composers
-                            self.loading = false
-                        } else {
-                            self.composers = [Composer]()
-                        }
-                        
-                        if let works = omniData.works {
-                            self.works.removeAll()
-                            self.works = works
-                            self.loading = false
-                        } else {
-                            self.works = [Work]()
+                            
+                            if let works = omniData.works {
+                                self.works.removeAll()
+                                self.works = works
+                                self.loading = false
+                            } else {
+                                self.works = [Work]()
+                            }
                         }
                     }
                 }
@@ -199,8 +199,9 @@ struct FreeSearch: View {
                                 if self.composers.count > 0 {
                                     Section(header:
                                         Text("Composers".uppercased())
+                                            
                                             .foregroundColor(Color(hex: 0x717171))
-                                            .font(.custom("Nunito", size: 12))
+                                            .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.composers, id: \.id) { composer in
                                             Group {
@@ -209,6 +210,7 @@ struct FreeSearch: View {
                                                 }
                                             }
                                         }
+                                        .listRowBackground(Color.black)
                                     }
                                 }
                             }
@@ -217,8 +219,9 @@ struct FreeSearch: View {
                                 if self.works.count > 0 {
                                     Section(header:
                                         Text("Works".uppercased())
+                                            
                                             .foregroundColor(Color(hex: 0x717171))
-                                            .font(.custom("Nunito", size: 12))
+                                            .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.works, id: \.id) { work in
                                             NavigationLink(destination: WorkDetail(work: work, composer: work.composer!, isSearch: true).environmentObject(self.settingStore)) {
@@ -227,6 +230,7 @@ struct FreeSearch: View {
                                                     .padding(.bottom, 6)
                                             }
                                         }
+                                        .listRowBackground(Color.black)
                                     }
                                 }
                             }
@@ -235,8 +239,9 @@ struct FreeSearch: View {
                                 if self.recordings.count > 0 {
                                     Section(header:
                                         Text("Recordings".uppercased())
+                                            
                                             .foregroundColor(Color(hex: 0x717171))
-                                            .font(.custom("Nunito", size: 12))
+                                            .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.recordings, id: \.id) { recording in
                                             Group {
@@ -247,6 +252,7 @@ struct FreeSearch: View {
                                                 }
                                             }
                                         }
+                                        .listRowBackground(Color.black)
                                         
                                         if canPaginate {
                                             HStack {
@@ -257,6 +263,7 @@ struct FreeSearch: View {
                                                 }
                                                 Spacer()
                                             }
+                                            .listRowBackground(Color.black)
                                             .padding(40)
                                             .onAppear() {
                                                 self.loadMoreData()
@@ -292,7 +299,7 @@ struct FreeSearch: View {
                             HStack(alignment: .top) {
                                 VStack {
                                     Text("\(recording.position ?? 0)")
-                                        .font(.custom("Barlow", size: 15))
+                                        .font(.custom("Barlow-Regular", size: 15))
                                         .foregroundColor(Color(hex: 0xffffff))
                                 }
                                 .frame(width: 36, height: 36)
@@ -310,6 +317,7 @@ struct FreeSearch: View {
                             }
                             
                         }
+                        .listRowBackground(Color.black)
                     }
                 }
                 .listStyle(GroupedListStyle())

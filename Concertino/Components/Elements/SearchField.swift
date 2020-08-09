@@ -28,7 +28,7 @@ struct SearchField: View {
                     if self.composersSearch.searchstring.isEmpty {
                         Text("Search composer by name")
                             .foregroundColor(.black)
-                            .font(.custom("Nunito", size: 15))
+                            .font(.custom("Nunito-Regular", size: 15))
                             .padding(1)
                     }
                     TextField("", text: $searchString, onEditingChanged: { isEditing in
@@ -58,7 +58,7 @@ struct SearchField: View {
                 },
                        label: { Text("Cancel")
                         .foregroundColor(Color(hex: 0xfe365e))
-                        .font(.custom("Nunito", size: 13))
+                        .font(.custom("Nunito-Regular", size: 13))
                         .padding(4)
                 })
             }
