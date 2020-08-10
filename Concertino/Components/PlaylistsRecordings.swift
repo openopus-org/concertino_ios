@@ -61,7 +61,7 @@ struct PlaylistsRecordings: View {
                     }
                     .listRowBackground(Color.black)
                 }
-                //.listStyle(GroupedListStyle())
+                .listStyle(PlainListStyle())
             }
             else {
                 

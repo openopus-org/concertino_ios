@@ -21,4 +21,8 @@ struct AppConstants {
     static let maxPerformers = 5
     static let mainPerformersList = ["Orchestra", "Ensemble", "Piano", "Conductor", "Violin", "Cello"]
     static let appleLink = "https://geo.music.apple.com/%%COUNTRY%%/album/-/"
+    static let strucTopPadding = 50
+    static let strucTopPadding14Offset = 50
+    static let strucTopPaddingNoNotchOffset = 45
+    static let strucTopPaddingSmallOffset = 10
 }

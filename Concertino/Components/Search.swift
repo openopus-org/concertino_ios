@@ -13,27 +13,15 @@ struct Search: View {
     
     var body: some View {
         VStack {
-            /*if #available(iOS 14.0, *) {
-                NavigationView {
-                    VStack {
-                        OmnisearchField().padding(EdgeInsets(top: UIDevice.current.isLarge ? 9 : 14, leading: 10, bottom: UIDevice.current.isLarge ? 6 : 0, trailing: 10))
-                        FreeSearch()
-                        Spacer()
-                    }
+            NavigationView {
+                VStack {
+                    OmnisearchField().padding(EdgeInsets(top: UIDevice.current.isLarge ? 9 : 14, leading: 10, bottom: UIDevice.current.isLarge ? 6 : 0, trailing: 10))
+                    FreeSearch()
+                    Spacer()
                 }
-                .padding(.top, UIDevice.current.hasNotch ? -100 : -145)
-                .padding(.bottom, -8)
-            } else {*/
-                NavigationView {
-                    VStack {
-                        OmnisearchField().padding(EdgeInsets(top: UIDevice.current.isLarge ? 9 : 14, leading: 10, bottom: UIDevice.current.isLarge ? 6 : 0, trailing: 10))
-                        FreeSearch()
-                        Spacer()
-                    }
-                }
-                .padding(.top, UIDevice.current.hasNotch ? -50 : -95)
-                .padding(.bottom, -8)
-            //}
+            }
+            .padding(.top, paddingCalc())
+            .padding(.bottom, -8)
         }
         .clipped()
     }

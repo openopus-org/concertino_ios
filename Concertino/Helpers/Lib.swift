@@ -1242,3 +1242,21 @@ func RequestAppStoreReview() {
         SKStoreReviewController.requestReview()
     }
 }
+
+public func paddingCalc() -> CGFloat {
+    var padding = AppConstants.strucTopPadding
+    
+    if (UIDevice.current.systemVersion as NSString).intValue >= 14 {
+        padding = padding + AppConstants.strucTopPadding14Offset
+    }
+    
+    if !UIDevice.current.hasNotch {
+        padding = padding + AppConstants.strucTopPaddingNoNotchOffset
+    }
+    
+    if !UIDevice.current.isLarge {
+        padding = padding + AppConstants.strucTopPaddingSmallOffset
+    }
+    
+    return CGFloat(-1 * padding)
+}
