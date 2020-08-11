@@ -393,11 +393,11 @@ struct Player: View {
         })
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange)) { status in
                 if self.currentTrack.count > 0 {
-                    if let isPlaying = status.userInfo?["playing"] {
+                    if let isPlaying = status.userInfo?["playing"] as? Bool {
                         
                         // removing loading
                         
-                        if isPlaying as! Bool {
+                        if isPlaying {
                             self.currentTrack[0].loading = false
                             self.timerHolder.start()
                         }
@@ -405,16 +405,16 @@ struct Player: View {
                             self.timerHolder.stop()
                         }
                         
-                        self.currentTrack[0].playing = isPlaying as! Bool
-                        self.playState.playing = isPlaying as! Bool
+                        self.currentTrack[0].playing = isPlaying
+                        self.playState.playing = isPlaying
                     }
                 }
             }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange)) { status in
             if self.currentTrack.count > 0 {
                 
-                if let success = status.userInfo?["success"] {
-                    if success as! Bool == false {
+                if let success = status.userInfo?["success"] as? Bool {
+                    if !success {
                         /*
                         print("🔴 Playing Item is nil!")
                         self.currentTrack.removeAll()
@@ -424,10 +424,10 @@ struct Player: View {
                         self.currentTrack[0].loading = false
                     }
                     else {
-                        if let trackIndex = status.userInfo?["index"] {
+                        if let trackIndex = status.userInfo?["index"] as? Int {
                             //print(self.playState.recording)
                             
-                            if trackIndex as! Int >= self.currentTrack.first!.zero_index + self.playState.recording.first!.apple_tracks!.count {
+                            if trackIndex >= self.currentTrack.first!.zero_index + self.playState.recording.first!.apple_tracks!.count {
                                 // next recording
                                 
                                 if self.radioState.nextRecordings.count > 0 {
@@ -436,8 +436,8 @@ struct Player: View {
                                     print("🆗 next recording")
                                     //print(self.playState.recording)
                                     self.currentTrack = [CurrentTrack (
-                                        track_index: trackIndex as! Int,
-                                        zero_index: trackIndex as! Int,
+                                        track_index: trackIndex,
+                                        zero_index: trackIndex,
                                         playing: false,
                                         loading: false,
                                         starting_point: 0,
@@ -457,11 +457,11 @@ struct Player: View {
                                     self.currentTrack[0].zero_index = 0
                                 }
                                 
-                                self.currentTrack[0].track_index = trackIndex as! Int
+                                self.currentTrack[0].track_index = trackIndex
                                 self.currentTrack[0].track_position = 0
-                                self.currentTrack[0].starting_point = (self.playState.recording.first!.tracks![trackIndex as! Int - self.currentTrack[0].zero_index].starting_point)
-                                self.currentTrack[0].full_position = (self.playState.recording.first!.tracks![trackIndex as! Int - self.currentTrack[0].zero_index].starting_point)
-                                self.currentTrack[0].track_length = (self.playState.recording.first!.tracks![trackIndex as! Int - self.currentTrack[0].zero_index].length)
+                                self.currentTrack[0].starting_point = (self.playState.recording.first!.tracks![trackIndex - self.currentTrack[0].zero_index].starting_point)
+                                self.currentTrack[0].full_position = (self.playState.recording.first!.tracks![trackIndex - self.currentTrack[0].zero_index].starting_point)
+                                self.currentTrack[0].track_length = (self.playState.recording.first!.tracks![trackIndex - self.currentTrack[0].zero_index].length)
                             }
                         }
                     }
@@ -514,23 +514,23 @@ struct Player: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name.previewPlayerStatusChanged)) { status in
             if self.currentTrack.count > 0 {
-                if let isPlaying = status.userInfo?["status"] {
+                if let isPlaying = status.userInfo?["status"] as? String {
                     
                     // removing loading
                     
-                    if isPlaying as! String == "playing" {
+                    if isPlaying  == "playing" {
                         print("🆗 started")
                         self.currentTrack[0].loading = false
                         self.timerHolder.start()
                     }
-                    else if isPlaying as! String == "paused" {
+                    else if isPlaying == "paused" {
                         self.currentTrack[0].loading = false
                         print("⛔️ stopped")
                         self.timerHolder.stop()
                     }
                     
-                    self.currentTrack[0].playing = (isPlaying as! String == "playing")
-                    self.playState.playing = (isPlaying as! String == "playing")
+                    self.currentTrack[0].playing = (isPlaying == "playing")
+                    self.playState.playing = (isPlaying == "playing")
                     
                     //print(self.currentTrack)
                     //print(self.playState)

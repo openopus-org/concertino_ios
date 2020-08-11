@@ -457,9 +457,12 @@ class PreviewBridge: ObservableObject {
         }
         
         commandCenter.changePlaybackPositionCommand.addTarget { event -> MPRemoteCommandHandlerStatus in
-            let event = event as! MPChangePlaybackPositionCommandEvent
-            self.player.seek(to: CMTimeMake(value: Int64(event.positionTime), timescale: 1))
-            return .success
+            if let event = event as? MPChangePlaybackPositionCommandEvent {
+                self.player.seek(to: CMTimeMake(value: Int64(event.positionTime), timescale: 1))
+                return .success
+            } else {
+                return .commandFailed
+            }
         }
     }
     

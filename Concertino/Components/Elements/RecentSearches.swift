@@ -32,7 +32,7 @@ struct RecentSearches: View {
                             }
                         }
                     } else if search.recording != nil {
-                        NavigationLink(destination: RecordingDetail(workId: search.recording!.work!.id, recordingId: search.recording!.apple_albumid, recordingSet: search.recording!.set, isSheet: false, isSearch: true).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
+                        NavigationLink(destination: RecordingDetail(workId: search.recording!.work!.id, recordingId: search.recording!.apple_albumid, recordingSet: search.recording!.set, isSheet: false, isSearch: false).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
                             MicroRecordingRow(recording: search.recording!)
                                 
                         })
