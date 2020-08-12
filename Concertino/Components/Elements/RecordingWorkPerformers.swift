@@ -60,7 +60,7 @@ struct RecordingWorkPerformers: View {
                 .padding(.trailing, 8)
                 
                 VStack(alignment: .leading) {
-                    ForEach(recording.work!.composer!.name.components(separatedBy: "&"), id: \.self) { composer in
+                    ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
                         Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                         .font(.custom("Nunito-ExtraBold", size: 15))
                         .foregroundColor(Color(hex: 0xfe365e))

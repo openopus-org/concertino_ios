@@ -595,20 +595,36 @@ class MediaBridge: ObservableObject {
         }
         
         player.setQueue(with: queue)
-        self.prepareToPlay(autoplay)
+        
+        if !player.isPreparedToPlay {
+            print("preparing to play...")
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+                self.prepareToPlay(autoplay)
+            }
+        } else if autoplay {
+            self.player.play()
+        }
     }
     
     func prepareToPlay(_ autoplay: Bool) {
         player.prepareToPlay(completionHandler: {(error) in
             if error != nil {
                 DispatchQueue.main.async {
-                    print("error")
+                    print("⛔️ error while preparing to play")
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        print("⛔️ trying again")
+                        self.prepareToPlay(autoplay)
+                    }
+                    
+                    /*
                     let status: [String : Any] = [
                         "index": 0,
                         "title": 0,
                         "success": false
                     ]
                     NotificationCenter.default.post(name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange, object: self, userInfo: status)
+                    */
                 }
             } else if autoplay {
                 DispatchQueue.main.async {
@@ -616,7 +632,7 @@ class MediaBridge: ObservableObject {
                 }
             } else {
                 DispatchQueue.main.async {
-                    print("alright")
+                    print("👍🏻 preparation to play succedeed")
                     let status: [String : Any] = [
                         "index": 0,
                         "title": 0,
@@ -1213,6 +1229,10 @@ extension UIDevice {
     var isLarge: Bool {
         return UIScreen.main.bounds.height > 700
     }
+    
+    var is14: Bool {
+        return (UIDevice.current.systemVersion as NSString).intValue >= 14
+    }
 }
 
 extension UIViewController {
@@ -1249,7 +1269,7 @@ func RequestAppStoreReview() {
 public func paddingCalc() -> CGFloat {
     var padding = AppConstants.strucTopPadding
     
-    if (UIDevice.current.systemVersion as NSString).intValue >= 14 {
+    if UIDevice.current.is14 {
         padding = padding + AppConstants.strucTopPadding14Offset
     }
     
