@@ -48,10 +48,16 @@ struct RecordingRow: View {
             }
             VStack(alignment: .leading) {
                 if recording.work != nil {
-                    ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
-                        Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
-                        .font(.custom("Nunito-ExtraBold", size: 13))
-                        .foregroundColor(Color(hex: 0xfe365e))
+                    if recording.work!.composer!.id != "0" {
+                        Text(recording.work!.composer!.name.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
+                            .font(.custom("Nunito-ExtraBold", size: 13))
+                            .foregroundColor(Color(hex: 0xfe365e))
+                    } else {
+                        ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
+                            Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
+                            .font(.custom("Nunito-ExtraBold", size: 13))
+                            .foregroundColor(Color(hex: 0xfe365e))
+                        }
                     }
                     
                     Text(recording.work!.title)

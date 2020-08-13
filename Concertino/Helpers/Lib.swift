@@ -691,10 +691,14 @@ class MediaBridge: ObservableObject {
     }
     
     func togglePlay() {
-        if (player.playbackState == .playing) {
-            player.pause()
+        if player.isPreparedToPlay {
+            if (player.playbackState == .playing) {
+                player.pause()
+            } else {
+                player.play()
+            }
         } else {
-            player.play()
+            self.prepareToPlay(true)
         }
     }
     

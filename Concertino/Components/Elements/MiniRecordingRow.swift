@@ -34,10 +34,16 @@ struct MiniRecordingRow: View {
             }
             VStack(alignment: .leading) {
                 if recording.work != nil {
-                    ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
-                        Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
-                        .font(.custom("Nunito-ExtraBold", size: 12))
-                        .foregroundColor(self.accentColor)
+                    if recording.work!.composer!.id != "0" {
+                        Text(recording.work!.composer!.name.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
+                            .font(.custom("Nunito-ExtraBold", size: 12))
+                            .foregroundColor(self.accentColor)
+                    } else {
+                        ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
+                            Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
+                            .font(.custom("Nunito-ExtraBold", size: 12))
+                            .foregroundColor(self.accentColor)
+                        }
                     }
                     
                     Text(recording.work!.title)
