@@ -20,6 +20,7 @@ struct Favorites: View {
                     Spacer()
                 }
             }
+            .navigationViewStyle(StackNavigationViewStyle())
             .padding(.top, paddingCalc())
             .padding(.bottom, -8)
         }

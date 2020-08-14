@@ -10,13 +10,14 @@ import SwiftUI
 
 struct RadioStationsGrid: View {
     @State private var stations = [[RadioStationPlaylist]]()
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
     func loadData() {
         APIget(AppConstants.concBackend+"/playlist/public/list.json") { results in
             if var stationsData: RadioStationPlaylists = safeJSON(results) {
                 DispatchQueue.main.async {
                     stationsData.playlists.shuffle()
-                    self.stations = Array(stationsData.playlists.chunked(into: 2))
+                    self.stations = Array(stationsData.playlists.chunked(into: self.horizontalSizeClass == .compact ? 2 : 3))
                 }
             }
         }
