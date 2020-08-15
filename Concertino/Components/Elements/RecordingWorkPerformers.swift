@@ -153,11 +153,11 @@ struct RecordingWorkPerformers: View {
                     })
                     {
                         EllipsisButton()
+                            .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
                     }
                 }
             }
         }
-        .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
         .sheet(isPresented: $showPlaylistSheet) {
             AddToPlaylist(recording: self.recording).environmentObject(self.settingStore)
         }

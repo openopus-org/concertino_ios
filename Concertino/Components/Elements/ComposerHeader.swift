@@ -93,11 +93,11 @@ struct ComposerHeader: View {
                 })
                 {
                     EllipsisButton()
+                        .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
                 }
             }
         }
         .onAppear(perform: { self.endEditing(true) })
-        .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
     }
 }
 
