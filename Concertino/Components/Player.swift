@@ -195,20 +195,24 @@ struct Player: View {
                             self.playState.preview = false
                             
                             if let firstrecording = self.playState.recording.first {
-                                self.currentTrack = [CurrentTrack (
-                                    track_index: 0,
-                                    zero_index: 0,
-                                    playing: false,
-                                    loading: true,
-                                    starting_point: 0,
-                                    track_position: 0,
-                                    track_length: (firstrecording.tracks!.first?.length)!,
-                                    full_position: 0,
-                                    full_length: firstrecording.length!,
-                                    preview: false
-                                )]
-                                
-                                self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
+                                if let firstrecordingtracks = firstrecording.tracks {
+                                    if let firsttrack = firstrecordingtracks.first {
+                                        self.currentTrack = [CurrentTrack (
+                                            track_index: 0,
+                                            zero_index: 0,
+                                            playing: false,
+                                            loading: true,
+                                            starting_point: 0,
+                                            track_position: 0,
+                                            track_length: firsttrack.length,
+                                            full_position: 0,
+                                            full_length: firstrecording.length ?? 0,
+                                            preview: false
+                                        )]
+                                        
+                                        self.mediaBridge.setQueueAndPlay(tracks: tracks, starttrack: nil, autoplay: self.playState.autoplay)
+                                    }
+                                }
                             }
                         }
                         else {
@@ -427,41 +431,52 @@ struct Player: View {
                         if let trackIndex = status.userInfo?["index"] as? Int {
                             //print(self.playState.recording)
                             
-                            if trackIndex >= self.currentTrack.first!.zero_index + self.playState.recording.first!.apple_tracks!.count {
-                                // next recording
-                                
-                                if self.radioState.nextRecordings.count > 0 {
-                                    self.playState.keepQueue = true
-                                    self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
-                                    print("🆗 next recording")
-                                    //print(self.playState.recording)
-                                    self.currentTrack = [CurrentTrack (
-                                        track_index: trackIndex,
-                                        zero_index: trackIndex,
-                                        playing: false,
-                                        loading: false,
-                                        starting_point: 0,
-                                        track_position: 0,
-                                        track_length: (self.playState.recording.first!.tracks!.first?.length)!,
-                                        full_position: 0,
-                                        full_length: self.playState.recording.first!.length!,
-                                        preview: false
-                                    )]
-                                    //print(self.currentTrack)
-                                    self.radioState.canSkip = false
+                            if let currenttrackfirst = self.currentTrack.first {
+                                if let playstaterecordingfirst = self.playState.recording.first {
+                                    if let appletracks = playstaterecordingfirst.apple_tracks {
+                                        if let playstaterecordingfirsttracks = playstaterecordingfirst.tracks {
+                                            if trackIndex >= currenttrackfirst.zero_index + appletracks.count {
+                                                // next recording
+                                                
+                                                if self.radioState.nextRecordings.count > 0 {
+                                                    self.playState.keepQueue = true
+                                                    self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
+                                                    print("🆗 next recording")
+                                                    //print(self.playState.recording)
+                                                    
+                                                    if let playstaterecordingfirsttracksfirst = playstaterecordingfirsttracks.first {
+                                                        self.currentTrack = [CurrentTrack (
+                                                            track_index: trackIndex,
+                                                            zero_index: trackIndex,
+                                                            playing: false,
+                                                            loading: false,
+                                                            starting_point: 0,
+                                                            track_position: 0,
+                                                            track_length: playstaterecordingfirsttracksfirst.length,
+                                                            full_position: 0,
+                                                            full_length: playstaterecordingfirst.length ?? 0,
+                                                            preview: false
+                                                        )]
+                                                        //print(self.currentTrack)
+                                                        self.radioState.canSkip = false
+                                                    }
+                                                }
+                                            }
+                                            else {
+                                                    print("radio state: \(self.radioState.isActive)")
+                                                    if !self.radioState.isActive {
+                                                        self.currentTrack[0].zero_index = 0
+                                                    }
+                                                    
+                                                    self.currentTrack[0].track_index = trackIndex
+                                                    self.currentTrack[0].track_position = 0
+                                                    self.currentTrack[0].starting_point = (playstaterecordingfirsttracks[trackIndex - self.currentTrack[0].zero_index].starting_point)
+                                                    self.currentTrack[0].full_position = (playstaterecordingfirsttracks[trackIndex - self.currentTrack[0].zero_index].starting_point)
+                                                    self.currentTrack[0].track_length = (playstaterecordingfirsttracks[trackIndex - self.currentTrack[0].zero_index].length)
+                                            }
+                                        }
+                                    }
                                 }
-                            }
-                            else {
-                                print("radio state: \(self.radioState.isActive)")
-                                if !self.radioState.isActive {
-                                    self.currentTrack[0].zero_index = 0
-                                }
-                                
-                                self.currentTrack[0].track_index = trackIndex
-                                self.currentTrack[0].track_position = 0
-                                self.currentTrack[0].starting_point = (self.playState.recording.first!.tracks![trackIndex - self.currentTrack[0].zero_index].starting_point)
-                                self.currentTrack[0].full_position = (self.playState.recording.first!.tracks![trackIndex - self.currentTrack[0].zero_index].starting_point)
-                                self.currentTrack[0].track_length = (self.playState.recording.first!.tracks![trackIndex - self.currentTrack[0].zero_index].length)
                             }
                         }
                     }

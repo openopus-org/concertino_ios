@@ -126,14 +126,8 @@ struct RecordingWorkPerformers: View {
                                     let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
                                     ac.excludedActivityTypes = [.addToReadingList]
                                     
-                                    if UIDevice.current.userInterfaceIdiom == .pad {
-                                        ac.popoverPresentationController?.sourceView = UIApplication.shared.windows.first
-                                        ac.popoverPresentationController?.sourceRect = CGRect(
-                                            //x: UIScreen.main.bounds.width / 2.1,
-                                            x: UIScreen.main.bounds.width,
-                                            y: UIScreen.main.bounds.height / 2.3,
-                                            width: UIScreen.main.bounds.width, height: 200)
-                                    }
+                                    print(self.body)
+                                    //ac.popoverPresentationController?.sourceView = self.body as? UIView
                                     
                                     self.loadingSheet = false
                                     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
@@ -153,11 +147,11 @@ struct RecordingWorkPerformers: View {
                     })
                     {
                         EllipsisButton()
-                            .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
                     }
                 }
             }
         }
+        .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
         .sheet(isPresented: $showPlaylistSheet) {
             AddToPlaylist(recording: self.recording).environmentObject(self.settingStore)
         }
