@@ -15,6 +15,8 @@ struct Favorites: View {
         VStack {
             NavigationView {
                 VStack {
+                    Spacer()
+                        .frame(height: UIDevice.current.isLarge ? 0 : 10)
                     PlaylistsMenu(playlistSwitcher: $playlistSwitcher)
                     PlaylistsRecordings(playlistSwitcher: $playlistSwitcher)
                     Spacer()

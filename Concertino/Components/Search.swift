@@ -15,6 +15,8 @@ struct Search: View {
         VStack {
             NavigationView {
                 VStack {
+                    Spacer()
+                        .frame(height: UIDevice.current.isLarge ? 0 : 10)
                     OmnisearchField().padding(EdgeInsets(top: UIDevice.current.isLarge ? 9 : 14, leading: 10, bottom: UIDevice.current.isLarge ? 6 : 0, trailing: 10))
                     FreeSearch()
                     Spacer()

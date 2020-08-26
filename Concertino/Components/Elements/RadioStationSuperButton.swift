@@ -77,7 +77,7 @@ struct RadioStationSuperButton: View {
                             Text(self.name)
                                 
                                 .foregroundColor(Color.white)
-                                .font(.custom("Nunito-Regular", size: 16))
+                                .font(.custom("Nunito-Regular", size: UIDevice.current.isLarge ? 16 : 13))
                                 .padding(12)
                         }
                     }

@@ -15,6 +15,8 @@ struct Library: View {
         VStack {
             NavigationView {
                 VStack {
+                    Spacer()
+                        .frame(height: UIDevice.current.isLarge ? 0 : 10)
                     Home()
                     Spacer()
                 }

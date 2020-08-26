@@ -71,10 +71,10 @@ struct AddToPlaylist: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if !UIDevice.current.is14 {
+            //if !UIDevice.current.is14 {
                 AddToPlaylistButtons(newPlaylistName: self.$newPlaylistName, playlistActive: self.$playlistActive, recording: self.recording)
                 .padding(.bottom, 26)
-            }
+            //}
             
             Text("New Playlist".uppercased())
                 .font(.custom("Nunito-ExtraBold", size: 13))
@@ -124,10 +124,12 @@ struct AddToPlaylist: View {
                     
             Spacer()
             
+            /*
             if UIDevice.current.is14 {
                 AddToPlaylistButtons(newPlaylistName: self.$newPlaylistName, playlistActive: self.$playlistActive, recording: self.recording)
                 .padding(.top, 26)
             }
+            */
         }
         .padding(30)
     }

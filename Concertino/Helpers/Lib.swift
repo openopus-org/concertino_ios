@@ -1276,7 +1276,7 @@ func RequestAppStoreReview() {
 public func paddingCalc() -> CGFloat {
     var padding = AppConstants.strucTopPadding
     
-    if UIDevice.current.is14 {
+    if UIDevice.current.is14 && UIDevice.current.hasNotch {
         padding = padding + AppConstants.strucTopPadding14Offset
     }
     

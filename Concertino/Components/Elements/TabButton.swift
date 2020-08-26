@@ -32,7 +32,7 @@ struct TabButton: View {
                             .resizable()
                             .scaledToFit()
                             .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E))
-                            .frame(width: 60, height: 20)
+                            .frame(width: UIDevice.current.isLarge ? 60 : 40, height: UIDevice.current.isLarge ? 20 : 16)
                     }
                     
                     Text(label)

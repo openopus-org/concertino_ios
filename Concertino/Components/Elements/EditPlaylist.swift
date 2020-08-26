@@ -93,10 +93,10 @@ struct EditPlaylist: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            if !UIDevice.current.is14 {
+            //if !UIDevice.current.is14 {
                 EditPlaylistButtons(deletePlaylist: self.$deletePlaylist, selectedRecordings: self.$selectedRecordings, editPlaylistName: self.$editPlaylistName, playlistId: self.playlistId, playlistName: self.playlistName)
                     .padding(.bottom, 26)
-            }
+            //}
             
             Text("Rename playlist".uppercased())
                 .font(.custom("Nunito-ExtraBold", size: 13))
@@ -139,14 +139,18 @@ struct EditPlaylist: View {
             }
             .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
             
+            Spacer()
+            
+            /*
             Group {
-                Spacer()
+                
                 
                 if UIDevice.current.is14 {
                     EditPlaylistButtons(deletePlaylist: self.$deletePlaylist, selectedRecordings: self.$selectedRecordings, editPlaylistName: self.$editPlaylistName, playlistId: self.playlistId, playlistName: self.playlistName)
                         .padding(.top, 26)
                 }
             }
+            */
         }
         .padding(30)
         .onAppear(perform: {
