@@ -1240,6 +1240,10 @@ extension UIDevice {
     var is14: Bool {
         return (UIDevice.current.systemVersion as NSString).intValue >= 14
     }
+    
+    var isPad: Bool {
+        return (UIDevice.current.userInterfaceIdiom == .pad)
+    }
 }
 
 extension UIViewController {
@@ -1286,6 +1290,10 @@ public func paddingCalc() -> CGFloat {
     
     if !UIDevice.current.isLarge {
         padding = padding + AppConstants.strucTopPaddingSmallOffset
+    }
+    
+    if UIDevice.current.is14 && UIDevice.current.isPad {
+        padding = padding - AppConstants.strucTopPaddingiPad14Offset
     }
     
     return CGFloat(-1 * padding)

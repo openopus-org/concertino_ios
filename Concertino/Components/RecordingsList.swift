@@ -92,6 +92,7 @@ struct RecordingsList: View {
                     }
                     Spacer()
                 }
+                .listRowBackground(Color.black)
                 .padding(40)
                 .onAppear() {
                     if (self.nextpage != "0") {

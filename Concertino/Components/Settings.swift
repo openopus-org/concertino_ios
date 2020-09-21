@@ -31,20 +31,18 @@ struct Settings: View {
                         Text("Library filters".uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 13))
                             .foregroundColor(Color(hex: 0xfe365e))
-                        /*if #available(iOS 14.0, *) {
+                        if #available(iOS 14.0, *) {
                             Text("Automatic filters that try to eliminate bad or undesirable recordings from the library. They are not perfect, but definitely can improve your playing experience.")
                                 .textCase(.none)
                                 .font(.custom("Barlow-Regular", size: 13))
                                 .foregroundColor(.white)
                                 .lineLimit(20)
-                        } else {*/
-                            // Fallback on earlier versions
-                            
+                        } else {
                             Text("Automatic filters that try to eliminate bad or undesirable recordings from the library. They are not perfect, but definitely can improve your playing experience.")
                                 .font(.custom("Barlow-Regular", size: 13))
                                 .foregroundColor(.white)
                                 .lineLimit(20)
-                        //}
+                        }
                     }
                     .padding(.top, 12)
                     .padding(.bottom, 16)

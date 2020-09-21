@@ -30,16 +30,31 @@ struct WorksList: View {
                         }
                     }
                     ForEach(self.genrelist, id: \.self) { genre in
-                        Section(header:
-                            Text(genre)
-                                .font(.custom("Barlow-SemiBold", size: 13))
-                                .foregroundColor(Color(hex: 0xFE365E))
-                                .padding(.top, self.radioReady ? 0 : 20)
+                        if #available(iOS 14.0, *) {
+                            Section(header:
+                                Text(genre)
+                                    .font(.custom("Barlow-SemiBold", size: 13))
+                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .padding(.top, self.radioReady ? 0 : 20)
+                                    .textCase(.none)
                             ){
-                            ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
-                                WorkRow(work: work, composer: self.composer)
+                                ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
+                                    WorkRow(work: work, composer: self.composer)
+                                }
+                                .listRowBackground(Color.black)
                             }
-                            .listRowBackground(Color.black)
+                        } else {
+                            Section(header:
+                                Text(genre)
+                                    .font(.custom("Barlow-SemiBold", size: 13))
+                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .padding(.top, self.radioReady ? 0 : 20)
+                            ){
+                                ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
+                                    WorkRow(work: work, composer: self.composer)
+                                }
+                                .listRowBackground(Color.black)
+                            }
                         }
                     }
                 }
@@ -56,17 +71,33 @@ struct WorksList: View {
                         }
                     }
                     ForEach(["1", "0"], id: \.self) { rec in
-                        Section(header:
-                            Text(rec == "1" ? "Essential" : "Other works")
-                                .font(.custom("Barlow-SemiBold", size: 13))
-                                .foregroundColor(Color(hex: 0xFE365E))
-                                .padding(.top, self.radioReady ? 0 : 20)
+                        if #available(iOS 14.0, *) {
+                            Section(header:
+                                Text(rec == "1" ? "Essential" : "Other works")
+                                    .font(.custom("Barlow-SemiBold", size: 13))
+                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .padding(.top, self.radioReady ? 0 : 20)
+                                    .textCase(.none)
                             ){
-                            ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
-                                WorkRow(work: work, composer: self.composer)
-                                    .listRowBackground(Color.black)
+                                ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
+                                    WorkRow(work: work, composer: self.composer)
+                                        .listRowBackground(Color.black)
+                                }
+                                .listRowBackground(Color.black)
                             }
-                            .listRowBackground(Color.black)
+                        } else {
+                            Section(header:
+                                Text(rec == "1" ? "Essential" : "Other works")
+                                    .font(.custom("Barlow-SemiBold", size: 13))
+                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .padding(.top, self.radioReady ? 0 : 20)
+                            ){
+                                ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in
+                                    WorkRow(work: work, composer: self.composer)
+                                        .listRowBackground(Color.black)
+                                }
+                                .listRowBackground(Color.black)
+                            }
                         }
                     }
                 }

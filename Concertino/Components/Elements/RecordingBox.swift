@@ -36,11 +36,13 @@ struct RecordingBox: View {
                         Text(recording.work!.composer!.name.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                             .font(.custom("Nunito-ExtraBold", size: 12))
                             .foregroundColor(Color(hex: 0xfe365e))
+                            .lineLimit(20)
                     } else {
                         ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
                             Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                             .font(.custom("Nunito-ExtraBold", size: 12))
                             .foregroundColor(Color(hex: 0xfe365e))
+                            .lineLimit(20)
                         }
                     }
                     
@@ -49,7 +51,7 @@ struct RecordingBox: View {
                         .foregroundColor(.white)
                         .padding(.bottom, 6)
                         .lineLimit(20)
-                        .fixedSize(horizontal: false, vertical: true)
+                        //.fixedSize(horizontal: false, vertical: true)
                 }
                 
                 if recording.observation != "" && recording.observation != nil {
@@ -74,7 +76,7 @@ struct RecordingBox: View {
             }
             .frame(maxWidth: 125)
             
-            Spacer()
+            //Spacer()
         }
         .padding(20)
         .frame(minWidth: 165, maxWidth: 165, minHeight: 300,  maxHeight: 300, alignment: .top)

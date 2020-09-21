@@ -32,15 +32,16 @@ struct OmnisearchField: View {
                             .font(.custom("Nunito-Regular", size: 15))
                             .padding(1)
                     }
+                    
                     TextField("", text: $searchString, onEditingChanged: { isEditing in
-                            self.omnisearch.isEditing = isEditing
-                            self.isEditing = isEditing
-                        }, onCommit: {
-                            self.omnisearch.searchstring = self.searchString
-                        })
-                        .keyboardType(.webSearch)
-                        .textFieldStyle(SearchStyle())
-                        .disableAutocorrection(true)
+                        self.omnisearch.isEditing = isEditing
+                        self.isEditing = isEditing
+                    }, onCommit: {
+                        self.omnisearch.searchstring = self.searchString
+                    })
+                    .keyboardType(.webSearch)
+                    .textFieldStyle(SearchStyle())
+                    .disableAutocorrection(true)
                 }
                 
                 if !self.searchString.isEmpty {

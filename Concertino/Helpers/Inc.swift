@@ -9,9 +9,9 @@
 import Foundation
 
 struct AppConstants {
-    static let version = "1.20.817"
-    static let openOpusBackend = "https://api.openopus.org"
-    static let concBackend = "https://api.concertino.app"
+    static let version = "1.20.826"
+    static let openOpusBackend = "https://beta.api.openopus.org"
+    static let concBackend = "https://beta.api.concertino.app"
     static let concFrontend = "https://concertino.app"
     static let concShortFrontend = "https://cncert.in/r"
     static let concNoCoverImg = concFrontend + "/img/nocover.png"
@@ -25,4 +25,5 @@ struct AppConstants {
     static let strucTopPadding14Offset = 50
     static let strucTopPaddingNoNotchOffset = 45
     static let strucTopPaddingSmallOffset = 10
+    static let strucTopPaddingiPad14Offset = 0
 }

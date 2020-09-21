@@ -9,10 +9,10 @@
 import SwiftUI
 
 var images: [UIImage]! = [
-    UIImage(named: "radio-animated-1")!,
-    UIImage(named: "radio-animated-2")!,
-    UIImage(named: "radio-animated-3")!,
-    UIImage(named: "radio-animated-4")!
+    UIImage(named: "radio-animated-1")!.withRenderingMode(.alwaysTemplate),
+    UIImage(named: "radio-animated-2")!.withRenderingMode(.alwaysTemplate),
+    UIImage(named: "radio-animated-3")!.withRenderingMode(.alwaysTemplate),
+    UIImage(named: "radio-animated-4")!.withRenderingMode(.alwaysTemplate)
 ]
 let animatedImage = UIImage.animatedImage(with: images, duration: 0.8)
 
@@ -28,7 +28,12 @@ struct radioIconAnimation: UIViewRepresentable {
         someImage.clipsToBounds = true
         someImage.autoresizesSubviews = true
         someImage.contentMode = UIView.ContentMode.scaleAspectFit
-        someImage.tintColor = self.color.uiColor()
+        
+        if #available(iOS 14.0, *) {
+            someImage.tintColor = UIColor(self.color)
+        } else {
+            someImage.tintColor = self.color.uiColor()
+        }
         
         if isAnimated {
             someImage.image = animatedImage
@@ -47,7 +52,12 @@ struct radioIconAnimation: UIViewRepresentable {
         someImage.clipsToBounds = true
         someImage.autoresizesSubviews = true
         someImage.contentMode = UIView.ContentMode.scaleAspectFit
-        someImage.tintColor = self.color.uiColor()
+        
+        if #available(iOS 14.0, *) {
+            someImage.tintColor = UIColor(self.color)
+        } else {
+            someImage.tintColor = self.color.uiColor()
+        }
         
         if isAnimated {
             someImage.image = animatedImage

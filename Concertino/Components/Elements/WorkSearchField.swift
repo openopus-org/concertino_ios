@@ -26,23 +26,32 @@ struct WorkSearchField: View {
                 
                 ZStack(alignment: .leading) {
                     if self.searchString.isEmpty {
-                        Text("Search for performers")
-                            .foregroundColor(.black)
-                            .font(.custom("Nunito-Regular", size: 15))
-                            .padding(1)
+                        if #available(iOS 14.0, *) {
+                            Text("Search for performers")
+                                .foregroundColor(.black)
+                                .font(.custom("Nunito-Regular", size: 15))
+                                .padding(1)
+                                .textCase(.none)
+                        } else {
+                            Text("Search for performers")
+                                .foregroundColor(.black)
+                                .font(.custom("Nunito-Regular", size: 15))
+                                .padding(1)
+                        }
                     }
+                    
                     TextField("", text: $searchString, onEditingChanged: { isEditing in
-                            self.isEditing = isEditing
+                        self.isEditing = isEditing
                         
-                            if !isEditing && self.searchString.isEmpty {
-                                self.searchString = self.workSearch
-                            }
-                        }, onCommit: {
-                            self.workSearch = self.searchString
-                        })
-                        .keyboardType(.webSearch)
-                        .textFieldStyle(SearchStyle())
-                        .disableAutocorrection(true)
+                        if !isEditing && self.searchString.isEmpty {
+                            self.searchString = self.workSearch
+                        }
+                    }, onCommit: {
+                        self.workSearch = self.searchString
+                    })
+                    .keyboardType(.webSearch)
+                    .textFieldStyle(SearchStyle())
+                    .disableAutocorrection(true)
                 }
                 
                 if !self.searchString.isEmpty {
@@ -65,14 +74,26 @@ struct WorkSearchField: View {
             
             if !self.workSearch.isEmpty || self.isEditing {
                 Button(action: {
+                    if !self.workSearch.isEmpty {
                         self.workSearch = ""
                         self.searchString = ""
-                        self.endEditing(true)
+                    }
+                    
+                    self.endEditing(true)
                 },
-                       label: { Text("Cancel")
-                        .foregroundColor(Color(hex: 0xfe365e))
-                        .font(.custom("Nunito-Regular", size: 13))
-                        .padding(4)
+                label: {
+                    if #available(iOS 14.0, *) {
+                        Text("Cancel")
+                            .foregroundColor(Color(hex: 0xfe365e))
+                            .font(.custom("Nunito-Regular", size: 13))
+                            .padding(4)
+                            .textCase(.none)
+                    } else {
+                        Text("Cancel")
+                            .foregroundColor(Color(hex: 0xfe365e))
+                            .font(.custom("Nunito-Regular", size: 13))
+                            .padding(4)
+                    }
                 })
             }
         }

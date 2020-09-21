@@ -7,5 +7,9 @@
 		<string>applinks:concertino.app</string>
 		<string>applinks:cncert.in</string>
 	</array>
+	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<key>com.apple.security.network.client</key>
+	<true/>
 </dict>
 </plist>

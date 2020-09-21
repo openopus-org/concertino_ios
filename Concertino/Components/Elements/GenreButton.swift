@@ -26,18 +26,16 @@ struct GenreButton: View {
             .clipped()
             .clipShape(Circle())
             
-            /*if #available(iOS 14.0, *) {
+            if #available(iOS 14.0, *) {
                 Text(genre == "Recommended" ? "Essential" : genre)
-                    
                     .font(.custom("Nunito-Regular", size: 9))
                     .foregroundColor(.white)
                     .textCase(.none)
-            } else {*/
-                Text(genre == "Recommended" ? "Essential" : genre)
-                    
+            } else {
+                Text(genre == "Recommended" ? "Essential" : genre)                    
                     .font(.custom("Nunito-Regular", size: 9))
                     .foregroundColor(.white)
-            //}
+            }
         }
         
     }

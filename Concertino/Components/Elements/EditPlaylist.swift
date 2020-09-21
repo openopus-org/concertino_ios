@@ -104,6 +104,7 @@ struct EditPlaylist: View {
             Text("Change the name of this playlist")
                 .font(.custom("Barlow-Regular", size: 16))
                 .padding(.bottom, 4)
+            
             TextField(self.playlistName, text: $editPlaylistName)
                 .textFieldStyle(EditFieldStyle())
                 .background(

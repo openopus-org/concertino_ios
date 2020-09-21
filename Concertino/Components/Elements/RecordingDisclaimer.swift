@@ -13,6 +13,8 @@ struct RecordingDisclaimer: View {
     
     var body: some View {
         HStack {
+            Spacer()
+            
             Image(isVerified ? "checked" : "warning")
                 .resizable()
                 .scaledToFit()
@@ -22,6 +24,8 @@ struct RecordingDisclaimer: View {
                 .font(.custom("Nunito-Regular", size: 10))
                 .lineLimit(20)
                 .fixedSize(horizontal: false, vertical: true)
+            
+            Spacer()
         }
         .foregroundColor(Color(hex: 0xa7a6a6))
         .padding(EdgeInsets(top: 20, leading: 30, bottom: 30, trailing: 30))

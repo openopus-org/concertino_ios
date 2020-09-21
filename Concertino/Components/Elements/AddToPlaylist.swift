@@ -81,9 +81,11 @@ struct AddToPlaylist: View {
                 .foregroundColor(Color(hex: 0xfe365e))
             Text("Create a new playlist and add this recording to it")
                 .font(.custom("Barlow-Regular", size: 16))
+                .foregroundColor(Color.white)
                 .padding(.bottom, 4)
+            
             TextField("Playlist name", text: $newPlaylistName, onEditingChanged: { isEditing in
-                    self.playlistActive = ""
+                self.playlistActive = ""
             })
                 .textFieldStyle(EditFieldStyle())
                 .background(
@@ -108,6 +110,7 @@ struct AddToPlaylist: View {
                 .foregroundColor(Color(hex: 0xfe365e))
             Text("Add this recording to an existing playlist")
                 .font(.custom("Barlow-Regular", size: 16))
+                .foregroundColor(Color.white)
                 .padding(.bottom, 4)
             
             ScrollView(showsIndicators: false) {
@@ -123,13 +126,6 @@ struct AddToPlaylist: View {
             .gesture(DragGesture().onChanged{_ in self.endEditing(true) })
                     
             Spacer()
-            
-            /*
-            if UIDevice.current.is14 {
-                AddToPlaylistButtons(newPlaylistName: self.$newPlaylistName, playlistActive: self.$playlistActive, recording: self.recording)
-                .padding(.top, 26)
-            }
-            */
         }
         .padding(30)
     }

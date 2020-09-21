@@ -9,10 +9,28 @@
 import SwiftUI
 import URLImage
 
+struct ActivityView: UIViewControllerRepresentable {
+
+    let activityItems: [Any]
+    let applicationActivities: [UIActivity]?
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityView>) -> UIActivityViewController {
+        return UIActivityViewController(activityItems: activityItems,
+                                        applicationActivities: applicationActivities)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController,
+                                context: UIViewControllerRepresentableContext<ActivityView>) {
+
+    }
+}
+
 struct RecordingWorkPerformers: View {
     var recording: Recording
     var isSheet: Bool
     @State private var showSheet = false
+    @State private var shareURL = ""
+    @State private var showShareSheet = false
     @State private var showPlaylistSheet = false
     @State private var loadingSheet = false
     @State private var showShare = false
@@ -123,15 +141,23 @@ struct RecordingWorkPerformers: View {
                             if let recordingData: ShortRecordingDetail = safeJSON(results) {
                                 DispatchQueue.main.async {
                                     
+                                    /*
                                     let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
                                     ac.excludedActivityTypes = [.addToReadingList]
                                     
-                                    print(self.body)
+                                    //print(self.body)
                                     //ac.popoverPresentationController?.sourceView = self.body as? UIView
                                     
-                                    self.loadingSheet = false
-                                    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.rootViewController?.present(ac, animated: true)
                                     
+                                    
+                                    if let rvc = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController {
+                                        rvc.present(ac, animated: true)
+                                    }
+                                    */
+                                    
+                                    self.shareURL = "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))"
+                                    self.loadingSheet = false
+                                    self.showShareSheet = true
                                 }
                             }
                         }
@@ -139,6 +165,9 @@ struct RecordingWorkPerformers: View {
                     {
                         ShareButton(isLoading: self.loadingSheet)
                     }
+                    .sheet(isPresented: $showShareSheet, content: {
+                        ActivityView(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: self.shareURL)!] as [Any], applicationActivities: nil)
+                    })
                 }
                 
                 if self.settingStore.userId > 0 {
@@ -147,13 +176,13 @@ struct RecordingWorkPerformers: View {
                     })
                     {
                         EllipsisButton()
+                            .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
+                            .sheet(isPresented: $showPlaylistSheet) {
+                                AddToPlaylist(recording: self.recording).environmentObject(self.settingStore)
+                            }
                     }
                 }
             }
-        }
-        .actionSheet(isPresented: $showSheet, content: { self.actionSheet })
-        .sheet(isPresented: $showPlaylistSheet) {
-            AddToPlaylist(recording: self.recording).environmentObject(self.settingStore)
         }
     }
 }
