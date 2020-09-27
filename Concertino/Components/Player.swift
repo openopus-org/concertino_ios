@@ -291,7 +291,7 @@ struct Player: View {
             LinearGradient(gradient: Gradient(colors: [Color(hex: 0x4F4F4F), Color(hex: 0x2B2B2F)]), startPoint: .top, endPoint: .bottom)
                 .frame(minHeight: 130, maxHeight: self.AppState.fullPlayer ? .infinity : 130)
                 .cornerRadius(25)
-            
+
             VStack {
                 Button(
                     action: { self.AppState.fullPlayer.toggle() },

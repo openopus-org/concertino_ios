@@ -7,10 +7,17 @@
 //
 
 import SwiftUI
+import UIKit
+import AuthenticationServices
 
 struct Settings: View {
+    @Environment(\.window) var window: UIWindow?
     @EnvironmentObject var settingStore: SettingStore
+    @State var appleSignInDelegates: SignInWithAppleDelegates! = nil
     @State private var supporters = [String]()
+    @State private var showSignIn = false
+    @State private var alreadyLogged = false
+    @State private var signInLoading = false
     
     func loadData() {
         APIget(AppConstants.openOpusBackend+"/patron/list.json") { results in
@@ -21,6 +28,70 @@ struct Settings: View {
                 }
             }
         }
+    }
+    
+    private func performSignIn(using requests: [ASAuthorizationRequest]) {
+      self.signInLoading = true
+        
+      appleSignInDelegates = SignInWithAppleDelegates(window: window) { appleId in
+        if appleId != "error" {
+            APIpost("\(AppConstants.concBackend)/dyn/user/sync/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "id": settingStore.userId, "recid": appleId]) { results in
+                
+                if let login: Login = safeJSON(results) {
+                    
+                    DispatchQueue.main.async {
+                        self.settingStore.userId = login.user.id
+                        self.settingStore.appleId = appleId
+                        
+                        if let auth = login.user.auth {
+                            self.settingStore.userAuth = auth
+                        }
+                        
+                        if let favoritecomposers = login.favorite {
+                            self.settingStore.favoriteComposers = favoritecomposers
+                        }
+                        
+                        if let favoriteworks = login.works {
+                            self.settingStore.favoriteWorks = favoriteworks
+                        }
+                        
+                        if let composersfavoriteworks = login.composerworks {
+                            self.settingStore.composersFavoriteWorks = composersfavoriteworks
+                        }
+                        
+                        if let favoriterecordings = login.favoriterecordings {
+                            self.settingStore.favoriteRecordings = favoriterecordings
+                        }
+                        
+                        if let forbiddencomposers = login.forbidden {
+                            self.settingStore.forbiddenComposers = forbiddencomposers
+                        }
+                        
+                        if let playlists = login.playlists {
+                            self.settingStore.playlists = playlists
+                        }
+                        
+                        self.signInLoading = false
+                        self.alreadyLogged = true
+                    }
+                }
+            }
+        } else {
+            self.signInLoading = false
+        }
+      }
+
+      let controller = ASAuthorizationController(authorizationRequests: requests)
+      controller.delegate = appleSignInDelegates
+      controller.presentationContextProvider = appleSignInDelegates
+
+      controller.performRequests()
+    }
+
+    private func showAppleLogin() {
+        let request = ASAuthorizationAppleIDProvider().createRequest()
+        
+        performSignIn(using: [request])
     }
     
     var body: some View {
@@ -58,6 +129,64 @@ struct Settings: View {
                             .font(.custom("Barlow-Regular", size: 16))
                         }
                         .listRowBackground(Color.black)
+                }
+                
+                if showSignIn {
+                    Section(header:
+                        VStack(alignment: .leading) {
+                            Text("Device sync".uppercased())
+                                .font(.custom("Nunito-ExtraBold", size: 13))
+                                .foregroundColor(Color(hex: 0xfe365e))
+                            if #available(iOS 14.0, *) {
+                                Text("Signed-in users have their favorites, playlists and playing history synchronized between multiple devices.")
+                                    .textCase(.none)
+                                    .font(.custom("Barlow-Regular", size: 13))
+                                    .foregroundColor(.white)
+                                    .lineLimit(20)
+                            } else {
+                                Text("Signed-in users have their favorites, playlists and playing history synchronized between multiple devices.")
+                                    .font(.custom("Barlow-Regular", size: 13))
+                                    .foregroundColor(.white)
+                                    .lineLimit(20)
+                            }
+                        }
+                        .padding(.top, 12)
+                        .padding(.bottom, 16)
+                        ){
+                            HStack {
+                                Spacer()
+                                
+                                if self.signInLoading {
+                                    ActivityIndicator(isAnimating: signInLoading)
+                                        .configure { $0.color = .white; $0.style = .medium }
+                                } else {
+                                    if !self.alreadyLogged {
+                                        SignInWithApple()
+                                            .frame(width: 200, height: 36)
+                                            .onTapGesture(perform: showAppleLogin)
+                                    } else {
+                                        VStack {
+                                            Image("checked")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 12, height: 12)
+                                            .foregroundColor(Color.black)
+                                        }
+                                        .frame(width: 22, height: 22)
+                                        .background(Color(hex: 0xfe365e))
+                                        .clipped()
+                                        .clipShape(Circle())
+                                        .padding(.trailing, 4)
+                                        
+                                        Text("Logged-in, devices synced!")
+                                            .font(.custom("Barlow-Regular", size: 16))
+                                    }
+                                }
+                                
+                                Spacer()
+                            }
+                            .listRowBackground(Color.black)
+                    }
                 }
                 
                 Section(header:
@@ -107,6 +236,14 @@ struct Settings: View {
                 print("🆗 supporters loaded from appearance")
                 self.loadData()
             }
+            
+            self.showSignIn = (self.settingStore.userId > 0)
+            self.alreadyLogged = !self.settingStore.appleId.isEmpty
+        })
+        .onReceive(settingStore.userIdDidChange, perform: {
+            print("🆗 user id changed")
+            self.showSignIn = (self.settingStore.userId > 0)
+            self.alreadyLogged = !self.settingStore.appleId.isEmpty
         })
     }
 }

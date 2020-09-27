@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct Radio: View {
+    @State private var showSheet = false
     
     var body: some View {
         ScrollView(showsIndicators: false) {

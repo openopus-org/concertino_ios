@@ -38,6 +38,21 @@ struct Structure: View {
                     
                     Spacer()
                     TabMenu()
+                        .sheet(isPresented: $showExternalDetail) {
+                            Group {
+                                if self.AppState.externalUrl.count == 3 {
+                                    ExternalRecordingSheet(workId: self.AppState.externalUrl[0], recordingId: self.AppState.externalUrl[1], recordingSet: Int(self.AppState.externalUrl[2]) ?? 1)
+                                        .environmentObject(self.settingStore)
+                                        .environmentObject(self.playState)
+                                        .environmentObject(self.radioState)
+                                        .environmentObject(self.AppState)
+                                }
+                            }
+                        }
+                        .onReceive(AppState.externalUrlWillChange, perform: {
+                            //print(self.AppState.externalUrl)
+                            self.showExternalDetail = (self.AppState.externalUrl.count == 3)
+                        })
                 }
                 
                 Player()
@@ -50,21 +65,7 @@ struct Structure: View {
                 Warning().opacity(self.AppState.showingWarning ? 1 : 0)
             }
             .ignoresSafeArea(.keyboard, edges: .all)
-            .sheet(isPresented: $showExternalDetail) {
-                Group {
-                    if self.AppState.externalUrl.count == 3 {
-                        ExternalRecordingSheet(workId: self.AppState.externalUrl[0], recordingId: self.AppState.externalUrl[1], recordingSet: Int(self.AppState.externalUrl[2]) ?? 1)
-                            .environmentObject(self.settingStore)
-                            .environmentObject(self.playState)
-                            .environmentObject(self.radioState)
-                            .environmentObject(self.AppState)
-                    }
-                }
-            }
-            .onReceive(AppState.externalUrlWillChange, perform: {
-                print(self.AppState.externalUrl)
-                self.showExternalDetail = (self.AppState.externalUrl.count == 3)
-            })
+            
         } else {
             ZStack(alignment: .bottom) {
                 VStack {
@@ -110,7 +111,7 @@ struct Structure: View {
                 }
             }
             .onReceive(AppState.externalUrlWillChange, perform: {
-                print(self.AppState.externalUrl)
+                //print(self.AppState.externalUrl)
                 self.showExternalDetail = (self.AppState.externalUrl.count == 3)
             })
         }

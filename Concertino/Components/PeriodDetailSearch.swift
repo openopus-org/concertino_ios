@@ -62,7 +62,7 @@ struct PeriodDetailSearch: View {
                             }
                         }
                         
-                        RecordingsDisclaimer(msg: "This list is only a curated selection of composers of the period. You can find recordings of works by several other composers on the search tab below.")
+                        RecordingsDisclaimer(msg: "This list is only a curated selection of composers of the period. You can find recordings of works by several other composers in the search tab below.")
                             .padding(15)
                     }
                     .listStyle(DefaultListStyle())

@@ -13,6 +13,7 @@ import AVFoundation
 import CommonCrypto
 import StoreKit
 import UIKit
+import AuthenticationServices
 
 final class AppState: ObservableObject  {
     let externalUrlWillChange = PassthroughSubject<(), Never>()
@@ -301,6 +302,7 @@ public func safeJSON<T: Decodable>(_ data: Data) -> T? {
                 topMostViewController.showToast(message: "Error", image: "warning", text: "Please try again")
             }
         }
+        print("Couldn't parse as \(T.self):\n\(error)")
         return nil
     }
 }
@@ -827,6 +829,7 @@ final class SettingStore: ObservableObject {
     let recordingsWillChange = PassthroughSubject<Void, Never>()
     let recordingsDidChange = PassthroughSubject<Void, Never>()
     let recentSearchesDidChange = PassthroughSubject<Void, Never>()
+    let userIdDidChange = PassthroughSubject<Void, Never>()
     
     var lastPlayedRecording = [Recording]() {
         didSet {
@@ -837,10 +840,15 @@ final class SettingStore: ObservableObject {
     @UserDefault("concertino.firstUsage", defaultValue: true) var firstUsage: Bool
     @UserDefault("concertino.hideIncomplete", defaultValue: true) var hideIncomplete: Bool
     @UserDefault("concertino.hideHistorical", defaultValue: true) var hideHistorical: Bool
-    @UserDefault("concertino.userId", defaultValue: 0) var userId: Int
+    @UserDefault("concertino.userId", defaultValue: 0) var userId: Int {
+        didSet {
+            userIdDidChange.send()
+        }
+    }
     @UserDefault("concertino.lastLogged", defaultValue: 0) var lastLogged: Int
     @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
     @UserDefault("concertino.country", defaultValue: "") var country: String
+    @UserDefault("concertino.appleId", defaultValue: "") var appleId: String 
     
     @RecentSearchesUserDefault("concertino.recentlySearched") var recentSearches: [RecentSearch] {
         didSet {
@@ -1297,4 +1305,65 @@ public func paddingCalc() -> CGFloat {
     }
     
     return CGFloat(-1 * padding)
+}
+
+final class SignInWithApple: UIViewRepresentable {
+  func makeUIView(context: Context) -> ASAuthorizationAppleIDButton {
+    let button = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .white)
+    button.cornerRadius = 10
+    return button
+  }
+  
+  func updateUIView(_ uiView: ASAuthorizationAppleIDButton, context: Context) {
+  }
+}
+
+class SignInWithAppleDelegates: NSObject {
+  private let appleId: (String) -> Void
+  private weak var window: UIWindow!
+  
+  init(window: UIWindow?, appleId: @escaping (_ appleId: String) -> Void) {
+    self.window = window
+    self.appleId = appleId
+  }
+}
+
+extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
+  
+  func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    switch authorization.credential {
+        case let appleIdCredential as ASAuthorizationAppleIDCredential:
+            self.appleId(appleIdCredential.user)
+          break
+          
+        default:
+            self.appleId("error")
+          break
+    }
+  }
+  
+  func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    self.appleId("error")
+  }
+}
+
+extension SignInWithAppleDelegates: ASAuthorizationControllerPresentationContextProviding {
+  func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    return self.window
+  }
+}
+
+struct WindowKey: EnvironmentKey {
+  struct Value {
+    weak var value: UIWindow?
+  }
+  
+  static let defaultValue: Value = .init(value: nil)
+}
+
+extension EnvironmentValues {
+  var window: UIWindow? {
+    get { return self[WindowKey.self].value }
+    set { self[WindowKey.self] = .init(value: newValue) }
+  }
 }

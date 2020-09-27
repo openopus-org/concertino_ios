@@ -9,7 +9,7 @@
 import Foundation
 
 struct AppConstants {
-    static let version = "1.20.826"
+    static let version = "1.20.1001 beta"
     static let openOpusBackend = "https://beta.api.openopus.org"
     static let concBackend = "https://beta.api.concertino.app"
     static let concFrontend = "https://concertino.app"

@@ -140,21 +140,6 @@ struct RecordingWorkPerformers: View {
                             
                             if let recordingData: ShortRecordingDetail = safeJSON(results) {
                                 DispatchQueue.main.async {
-                                    
-                                    /*
-                                    let ac = UIActivityViewController(activityItems: ["\(self.recording.work!.composer!.name): \(self.recording.work!.title)", URL(string: "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))")!], applicationActivities: nil)
-                                    ac.excludedActivityTypes = [.addToReadingList]
-                                    
-                                    //print(self.body)
-                                    //ac.popoverPresentationController?.sourceView = self.body as? UIView
-                                    
-                                    
-                                    
-                                    if let rvc = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController {
-                                        rvc.present(ac, animated: true)
-                                    }
-                                    */
-                                    
                                     self.shareURL = "\(AppConstants.concShortFrontend)/\( String(Int(recordingData.recording.id) ?? 0, radix: 16))"
                                     self.loadingSheet = false
                                     self.showShareSheet = true
