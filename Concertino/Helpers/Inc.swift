@@ -9,6 +9,7 @@
 import Foundation
 
 struct AppConstants {
+    // pls change the userlogin func
     static let version = "1.20.1001 beta"
     static let openOpusBackend = "https://beta.api.openopus.org"
     static let concBackend = "https://beta.api.concertino.app"
@@ -26,4 +27,5 @@ struct AppConstants {
     static let strucTopPaddingNoNotchOffset = 45
     static let strucTopPaddingSmallOffset = 10
     static let strucTopPaddingiPad14Offset = 0
+    static let inAppPurchases = ["org.openopus.concertino.ios.tip", "org.openopus.concertino.ios.vgtip", "org.openopus.concertino.ios.sgtip"]
 }

@@ -14,6 +14,7 @@ struct Structure: View {
     @EnvironmentObject var settingStore: SettingStore
     @EnvironmentObject var radioState: RadioState
     @State private var showExternalDetail = false
+    @State private var AsksCoffee = false
     
     var body: some View {
         if #available(iOS 14.0, *) {
@@ -37,6 +38,17 @@ struct Structure: View {
                     .padding(EdgeInsets(top: UIDevice.current.isLarge ? 0 : 0, leading: 0, bottom: self.playState.recording.count > 0 ? 130 : 0, trailing: 0))
                     
                     Spacer()
+                        .sheet(isPresented: $AsksCoffee) {
+                            Text("Dá um cafezinho aí")
+                        }
+                        .onReceive(AppState.askCoffeeChanged, perform: {
+                            print("Asking for a coffee")
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 15) {
+                                self.settingStore.lastAskedCoffee = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                                self.AsksCoffee = self.AppState.askCoffee
+                            }
+                        })
+                    
                     TabMenu()
                         .sheet(isPresented: $showExternalDetail) {
                             Group {

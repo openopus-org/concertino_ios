@@ -14,6 +14,7 @@ struct WorksRadioButton: View {
     @EnvironmentObject var radioState: RadioState
     @EnvironmentObject var mediaBridge: MediaBridge
     @EnvironmentObject var previewBridge: PreviewBridge
+    @EnvironmentObject var AppState: AppState
     @State var isLoading = false
     var genreId: String
     
@@ -127,7 +128,11 @@ struct WorksRadioButton: View {
                                     
                                     if let heavyuser = login.user.heavyuser {
                                         if heavyuser == 1 {
-                                            RequestAppStoreReview()
+                                            if timeframe(timestamp: settingStore.lastAskedCoffee, minutes: 30 * 24 * 60)  {
+                                                self.AppState.askCoffee = true
+                                            } else {
+                                                RequestAppStoreReview()
+                                            }
                                         }
                                     }
                                     

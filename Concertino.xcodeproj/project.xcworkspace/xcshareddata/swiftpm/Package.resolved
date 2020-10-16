@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "SwiftyStoreKit",
+        "repositoryURL": "https://github.com/bizz84/SwiftyStoreKit.git",
+        "state": {
+          "branch": null,
+          "revision": "9974acf07b31b6f5bf363d5118dc1bd4fcac6122",
+          "version": "0.16.1"
+        }
+      },
+      {
         "package": "URLImage",
         "repositoryURL": "https://github.com/dmytro-anokhin/url-image.git",
         "state": {

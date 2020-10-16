@@ -248,7 +248,11 @@ struct RadioBuilder: View {
                                             
                                             if let heavyuser = login.user.heavyuser {
                                                 if heavyuser == 1 {
-                                                    RequestAppStoreReview()
+                                                    if timeframe(timestamp: settingStore.lastAskedCoffee, minutes: 30 * 24 * 60)  {
+                                                        self.AppState.askCoffee = true
+                                                    } else {
+                                                        RequestAppStoreReview()
+                                                    }
                                                 }
                                             }
                                             

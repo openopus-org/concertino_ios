@@ -17,12 +17,18 @@ import AuthenticationServices
 
 final class AppState: ObservableObject  {
     let externalUrlWillChange = PassthroughSubject<(), Never>()
+    let askCoffeeChanged = PassthroughSubject<(), Never>()
     
     @Published var currentTab = "library"
     @Published var fullPlayer = false
     @Published var isLoading = true
     @Published var showingWarning = false
     @Published var apmusEligible = true
+    @Published var askCoffee = false {
+        didSet {
+            askCoffeeChanged.send()
+        }
+    }
     @Published var externalUrl = [String]() {
         didSet {
             externalUrlWillChange.send()
@@ -846,6 +852,7 @@ final class SettingStore: ObservableObject {
         }
     }
     @UserDefault("concertino.lastLogged", defaultValue: 0) var lastLogged: Int
+    @UserDefault("concertino.lastAskedCoffee", defaultValue: 0) var lastAskedCoffee: Int 
     @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
     @UserDefault("concertino.country", defaultValue: "") var country: String
     @UserDefault("concertino.appleId", defaultValue: "") var appleId: String 
@@ -1177,7 +1184,8 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
             controller.requestStorefrontCountryCode { countryCode, error in
                 controller.requestCapabilities { capabilities, error in
                     if capabilities.contains(.musicCatalogPlayback) {
-                            if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
+                            //if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
+                            if timeframe(timestamp: settingStore.lastLogged, minutes: 0)  {
                                 APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
                                     if let token: Token = safeJSON(results) {
                                         controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in
@@ -1367,3 +1375,15 @@ extension EnvironmentValues {
     set { self[WindowKey.self] = .init(value: newValue) }
   }
 }
+
+/*
+extension SKProduct {
+    func localizedPrice() -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        //formatter.locale = self.priceLocale
+        formatter.locale = Locale(identifier: "en_BR")
+        print("PRECO ____ \(self.priceLocale)")
+        return formatter.string(from: self.price)!
+    }
+}*/

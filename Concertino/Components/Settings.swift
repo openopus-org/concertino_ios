@@ -7,8 +7,10 @@
 //
 
 import SwiftUI
+import SwiftyStoreKit
 import UIKit
 import AuthenticationServices
+import StoreKit
 
 struct Settings: View {
     @Environment(\.window) var window: UIWindow?
@@ -18,6 +20,7 @@ struct Settings: View {
     @State private var showSignIn = false
     @State private var alreadyLogged = false
     @State private var signInLoading = false
+    @State private var inAppOffers = [SKProduct]()
     
     func loadData() {
         APIget(AppConstants.openOpusBackend+"/patron/list.json") { results in
@@ -190,19 +193,75 @@ struct Settings: View {
                 }
                 
                 Section(header:
+                    VStack(alignment: .leading) {
+                        Text("Support us!".uppercased())
+                            .font(.custom("Nunito-ExtraBold", size: 13))
+                            .foregroundColor(Color(hex: 0xfe365e))
+                        if #available(iOS 14.0, *) {
+                            Text("Help us keeping Concertino free! Donate and back our development and hosting costs.")
+                                .textCase(.none)
+                                .font(.custom("Barlow-Regular", size: 13))
+                                .foregroundColor(.white)
+                                .lineLimit(20)
+                        } else {
+                            Text("Help us keeping Concertino free! Donate and back our development and hosting costs.")
+                                .font(.custom("Barlow-Regular", size: 13))
+                                .foregroundColor(.white)
+                                .lineLimit(20)
+                        }
+                    }
+                    .padding(.top, 12)
+                    .padding(.bottom, 16)
+                ) {
+                    HStack {
+                        ForEach (self.inAppOffers.sorted { $0.price.decimalValue < $1.price.decimalValue }, id: \.self) { product in
+                            Button(
+                                action: {
+                                    SwiftyStoreKit.purchaseProduct(product, quantity: 1, atomically: true) { result in
+                                        switch result {
+                                            case .success(let purchase):
+                                                print("Purchase Success: \(purchase.productId)")
+                                            case .error(let error):
+                                                switch error.code {
+                                                    case .unknown: print("Unknown error. Please contact support")
+                                                    case .clientInvalid: print("Not allowed to make the payment")
+                                                    case .paymentCancelled: break
+                                                    case .paymentInvalid: print("The purchase identifier was invalid")
+                                                    case .paymentNotAllowed: print("The device is not allowed to make the payment")
+                                                    case .storeProductNotAvailable: print("The product is not available in the current storefront")
+                                                    case .cloudServicePermissionDenied: print("Access to cloud service information is not allowed")
+                                                    case .cloudServiceNetworkConnectionFailed: print("Could not connect to the network")
+                                                    case .cloudServiceRevoked: print("User has revoked permission to use this cloud service")
+                                                    default: print((error as NSError).localizedDescription)
+                                                }
+                                        }
+                                    }
+                                },
+                                label: {
+                                    Text("\(product.localizedPrice!)")
+                                })
+                                .buttonStyle(BorderlessButtonStyle())
+                        }
+                    }
+                    .listRowBackground(Color.black)
+                }
+                
+                Section(header:
                     Text("About".uppercased())
                         .font(.custom("Nunito-ExtraBold", size: 13))
                         .foregroundColor(Color(hex: 0xFE365E))
                     ){
                         SettingsMenuItem(title: "Version", description: AppConstants.version)
                             .listRowBackground(Color.black)
+                        /*
                         Button(
                             action: { UIApplication.shared.open(URL(string: "https://patreon.com/openopus")!) },
                             label: {
                                 SettingsMenuItem(title: "Support our projects", description: "Help us keeping Concertino free! Donate and back our development and hosting costs.")
                         })
                             .listRowBackground(Color.black)
-                    
+                        */
+                        
                         Button(
                             action: { UIApplication.shared.open(URL(string: "https://github.com/openopus-org/concertino_ios")!) },
                             label: {
@@ -239,6 +298,14 @@ struct Settings: View {
             
             self.showSignIn = (self.settingStore.userId > 0)
             self.alreadyLogged = !self.settingStore.appleId.isEmpty
+            
+            SwiftyStoreKit.retrieveProductsInfo(Set(AppConstants.inAppPurchases)) { result in
+                if result.retrievedProducts.first != nil {
+                    for prod in result.retrievedProducts {
+                        self.inAppOffers.append(prod)
+                    }
+                }
+            }
         })
         .onReceive(settingStore.userIdDidChange, perform: {
             print("🆗 user id changed")

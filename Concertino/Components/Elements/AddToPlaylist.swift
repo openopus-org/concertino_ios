@@ -87,6 +87,7 @@ struct AddToPlaylist: View {
             TextField("Playlist name", text: $newPlaylistName, onEditingChanged: { isEditing in
                 self.playlistActive = ""
             })
+                .foregroundColor(Color.white)
                 .textFieldStyle(EditFieldStyle())
                 .background(
                     RoundedRectangle(cornerRadius: 12)
