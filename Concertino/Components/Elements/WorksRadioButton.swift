@@ -128,8 +128,8 @@ struct WorksRadioButton: View {
                                     
                                     if let heavyuser = login.user.heavyuser {
                                         if heavyuser == 1 {
-                                            if timeframe(timestamp: settingStore.lastAskedCoffee, minutes: 30 * 24 * 60)  {
-                                                self.AppState.askCoffee = true
+                                            if timeframe(timestamp: settingStore.lastAskedDonation, minutes: 30 * 24 * 60)  {
+                                                self.AppState.askDonation = true
                                             } else {
                                                 RequestAppStoreReview()
                                             }

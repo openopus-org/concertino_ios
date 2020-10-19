@@ -33,6 +33,7 @@
 		0923105024D4916E00E721B5 /* WorkSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104F24D4916E00E721B5 /* WorkSearchField.swift */; };
 		093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F0A22243442660039C218 /* SettingsMenuItem.swift */; };
 		094B25CC2537A45200A65113 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 094B25CB2537A45200A65113 /* SwiftyStoreKit */; };
+		094B25D0253E087200A65113 /* DonationModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094B25CF253E087200A65113 /* DonationModal.swift */; };
 		095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F2249988E900A3E224 /* ComposerDetailWorks.swift */; };
 		095590F52499A49900A3E224 /* FullLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F42499A49900A3E224 /* FullLoader.swift */; };
 		095590F724B120A800A3E224 /* FreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F624B120A800A3E224 /* FreeSearch.swift */; };
@@ -141,6 +142,7 @@
 		0923104F24D4916E00E721B5 /* WorkSearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSearchField.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
+		094B25CF253E087200A65113 /* DonationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationModal.swift; sourceTree = "<group>"; };
 		095590F2249988E900A3E224 /* ComposerDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerDetailWorks.swift; sourceTree = "<group>"; };
 		095590F42499A49900A3E224 /* FullLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullLoader.swift; sourceTree = "<group>"; };
 		095590F624B120A800A3E224 /* FreeSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeSearch.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				095590F2249988E900A3E224 /* ComposerDetailWorks.swift */,
 				095590F624B120A800A3E224 /* FreeSearch.swift */,
 				0923104024C8BE5500E721B5 /* Search.swift */,
+				094B25CF253E087200A65113 /* DonationModal.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */,
 				09E5442023FB87B7005B8AEE /* RecordingMini.swift in Sources */,
 				0922D466240F1E9B001E8DFE /* PeriodList.swift in Sources */,
+				094B25D0253E087200A65113 /* DonationModal.swift in Sources */,
 				09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */,
 				09BAA81423E9C53F00157611 /* ComposersWorksSearch.swift in Sources */,
 				09DEEB0F241EF9F800350397 /* RecordingNotAvailable.swift in Sources */,

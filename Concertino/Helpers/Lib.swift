@@ -17,16 +17,16 @@ import AuthenticationServices
 
 final class AppState: ObservableObject  {
     let externalUrlWillChange = PassthroughSubject<(), Never>()
-    let askCoffeeChanged = PassthroughSubject<(), Never>()
+    let askDonationChanged = PassthroughSubject<(), Never>()
     
     @Published var currentTab = "library"
     @Published var fullPlayer = false
     @Published var isLoading = true
     @Published var showingWarning = false
     @Published var apmusEligible = true
-    @Published var askCoffee = false {
+    @Published var askDonation = false {
         didSet {
-            askCoffeeChanged.send()
+            askDonationChanged.send()
         }
     }
     @Published var externalUrl = [String]() {
@@ -852,7 +852,7 @@ final class SettingStore: ObservableObject {
         }
     }
     @UserDefault("concertino.lastLogged", defaultValue: 0) var lastLogged: Int
-    @UserDefault("concertino.lastAskedCoffee", defaultValue: 0) var lastAskedCoffee: Int 
+    @UserDefault("concertino.lastAskedDonation", defaultValue: 0) var lastAskedDonation: Int
     @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
     @UserDefault("concertino.country", defaultValue: "") var country: String
     @UserDefault("concertino.appleId", defaultValue: "") var appleId: String 
@@ -1375,15 +1375,3 @@ extension EnvironmentValues {
     set { self[WindowKey.self] = .init(value: newValue) }
   }
 }
-
-/*
-extension SKProduct {
-    func localizedPrice() -> String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        //formatter.locale = self.priceLocale
-        formatter.locale = Locale(identifier: "en_BR")
-        print("PRECO ____ \(self.priceLocale)")
-        return formatter.string(from: self.price)!
-    }
-}*/
