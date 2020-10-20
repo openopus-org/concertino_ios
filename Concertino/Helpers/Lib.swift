@@ -852,6 +852,7 @@ final class SettingStore: ObservableObject {
         }
     }
     @UserDefault("concertino.lastLogged", defaultValue: 0) var lastLogged: Int
+    @UserDefault("concertino.hasDonated", defaultValue: false) var hasDonated: Bool
     @UserDefault("concertino.lastAskedDonation", defaultValue: 0) var lastAskedDonation: Int
     @UserDefault("concertino.userAuth", defaultValue: "") var userAuth: String
     @UserDefault("concertino.country", defaultValue: "") var country: String
@@ -1184,8 +1185,7 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
             controller.requestStorefrontCountryCode { countryCode, error in
                 controller.requestCapabilities { capabilities, error in
                     if capabilities.contains(.musicCatalogPlayback) {
-                            //if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
-                            if timeframe(timestamp: settingStore.lastLogged, minutes: 0)  {
+                            if timeframe(timestamp: settingStore.lastLogged, minutes: AppConstants.minsToLogin)  {
                                 APIget(AppConstants.concBackend+"/applemusic/token.json") { results in
                                     if let token: Token = safeJSON(results) {
                                         controller.requestUserToken(forDeveloperToken: token.token) { userToken, error in

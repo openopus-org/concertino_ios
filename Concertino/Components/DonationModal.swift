@@ -14,6 +14,7 @@ struct DonationModal: View {
     @State private var donationIsLoading = true
     @State private var donationDone = false
     @State private var inAppOffers = [SKProduct]()
+    @EnvironmentObject var settingStore: SettingStore
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -37,27 +38,32 @@ struct DonationModal: View {
                         .foregroundColor(Color(hex: 0xfe365e))
                         .font(.custom("Nunito-ExtraBold", size: 20))
                         .multilineTextAlignment(.center)
+                        .lineLimit(20)
                     
                     Text("We're very glad that Concertino is useful and fun for you. Now we need your help.")
                         .foregroundColor(Color.white)
                         .font(.custom("Barlow-SemiBold", size: 18))
                         .multilineTextAlignment(.center)
+                        .lineLimit(20)
                     
                     Text("Concertino is a completely free and open project based on sheer love for classical music. But it runs on web servers that cost money, and its maintenance takes a lot of time.")
                         .foregroundColor(Color.white)
                         .font(.custom("Nunito-Regular", size: 14))
                         .multilineTextAlignment(.center)
+                        .lineLimit(20)
                     
-                    Text("Donate and back our development and hosting costs!")
+                    Text("Help keeping Concertino free. Please donate and back our development and hosting costs!")
                         .foregroundColor(Color(hex: 0xfe365e))
                         .font(.custom("Barlow-SemiBold", size: 14))
                         .multilineTextAlignment(.center)
-                        .padding(.bottom, 40)
+                        .lineLimit(20)
                     
                     Text("Choose a tip value below".uppercased())
                         .foregroundColor(Color(hex: 0x717171))
                         .font(.custom("Nunito-Regular", size: 12))
                         .multilineTextAlignment(.center)
+                        .lineLimit(20)
+                        .padding(.top, 40)
                 }
             
                 HStack {
@@ -91,6 +97,7 @@ struct DonationModal: View {
                                             switch result {
                                                 case .success(let purchase):
                                                     self.donationDone = true
+                                                    self.settingStore.hasDonated = true
                                                     print("Purchase Success: \(purchase.productId)")
                                                 case .error(let error):
                                                     switch error.code {

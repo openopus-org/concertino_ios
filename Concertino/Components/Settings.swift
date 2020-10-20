@@ -44,6 +44,8 @@ struct Settings: View {
                 
                 if let login: Login = safeJSON(results) {
                     
+                    print(login)
+                    
                     DispatchQueue.main.async {
                         self.settingStore.userId = login.user.id
                         self.settingStore.appleId = appleId
@@ -242,6 +244,8 @@ struct Settings: View {
                                                 switch result {
                                                     case .success(let purchase):
                                                         self.donationDone = true
+                                                        self.settingStore.lastAskedDonation = Int(Date().millisecondsSince1970 / (60 * 1000) | 0)
+                                                        self.settingStore.hasDonated = true
                                                         print("Purchase Success: \(purchase.productId)")
                                                     case .error(let error):
                                                         switch error.code {

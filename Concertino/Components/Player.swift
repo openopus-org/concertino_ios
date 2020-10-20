@@ -103,8 +103,8 @@ struct Player: View {
                     
                     if let heavyuser = login.user.heavyuser {
                         if heavyuser == 1 {
-                            //if timeframe(timestamp: settingStore.lastAskedDonation, minutes: 30 * 24 * 60)  {
-                            if timeframe(timestamp: settingStore.lastAskedDonation, minutes: 0)  {
+                            if timeframe(timestamp: settingStore.lastAskedDonation, minutes: self.settingStore.hasDonated ? AppConstants.minsToAskDonationHasDonated : AppConstants.minsToAskDonation)  {
+                                self.settingStore.hasDonated = false
                                 self.AppState.askDonation = true
                             } else {
                                 RequestAppStoreReview()
