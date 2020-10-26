@@ -42,6 +42,10 @@
 		095A9CBE23E4E2400010E150 /* Barlow-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */; };
 		095A9CBF23E4E2400010E150 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */; };
 		095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A9CC023E50E400010E150 /* OmnisearchField.swift */; };
+		09647BEF2545DEEA00B14DD0 /* AlbumDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BEE2545DEE900B14DD0 /* AlbumDetail.swift */; };
+		09647BF225460ABF00B14DD0 /* AlbumCoverTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BF125460ABF00B14DD0 /* AlbumCoverTitle.swift */; };
+		09647BF525460AD100B14DD0 /* AlbumPlayButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BF425460AD100B14DD0 /* AlbumPlayButtons.swift */; };
+		09647BFB2546144900B14DD0 /* RecordingDetailTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BFA2546144900B14DD0 /* RecordingDetailTracks.swift */; };
 		097325E823FC406E00A1C9E6 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325E723FC406E00A1C9E6 /* ProgressBar.swift */; };
 		097325EA2404560900A1C9E6 /* RecordingProgressBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325E92404560900A1C9E6 /* RecordingProgressBars.swift */; };
 		097325EC24047D0600A1C9E6 /* RecordingPlaybackControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325EB24047D0600A1C9E6 /* RecordingPlaybackControl.swift */; };
@@ -151,6 +155,10 @@
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-Regular.ttf"; sourceTree = "<group>"; };
 		095A9CBB23E4E2400010E150 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		095A9CC023E50E400010E150 /* OmnisearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmnisearchField.swift; sourceTree = "<group>"; };
+		09647BEE2545DEE900B14DD0 /* AlbumDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetail.swift; sourceTree = "<group>"; };
+		09647BF125460ABF00B14DD0 /* AlbumCoverTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverTitle.swift; sourceTree = "<group>"; };
+		09647BF425460AD100B14DD0 /* AlbumPlayButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPlayButtons.swift; sourceTree = "<group>"; };
+		09647BFA2546144900B14DD0 /* RecordingDetailTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetailTracks.swift; sourceTree = "<group>"; };
 		097325E723FC406E00A1C9E6 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		097325E92404560900A1C9E6 /* RecordingProgressBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingProgressBars.swift; sourceTree = "<group>"; };
 		097325EB24047D0600A1C9E6 /* RecordingPlaybackControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPlaybackControl.swift; sourceTree = "<group>"; };
@@ -347,6 +355,7 @@
 				095590F624B120A800A3E224 /* FreeSearch.swift */,
 				0923104024C8BE5500E721B5 /* Search.swift */,
 				094B25CF253E087200A65113 /* DonationModal.swift */,
+				09647BEE2545DEE900B14DD0 /* AlbumDetail.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -412,6 +421,9 @@
 				0923104924CE015A00E721B5 /* MiniComposerRow.swift */,
 				0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */,
 				0923104F24D4916E00E721B5 /* WorkSearchField.swift */,
+				09647BF125460ABF00B14DD0 /* AlbumCoverTitle.swift */,
+				09647BF425460AD100B14DD0 /* AlbumPlayButtons.swift */,
+				09647BFA2546144900B14DD0 /* RecordingDetailTracks.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -499,12 +511,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09647BF525460AD100B14DD0 /* AlbumPlayButtons.swift in Sources */,
 				09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */,
 				0922D46C240F3449001E8DFE /* PeriodHeader.swift in Sources */,
 				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
 				0923104624CDED3B00E721B5 /* RecentSearches.swift in Sources */,
 				097C15DB242D70F9006FBBEE /* RecordingRemover.swift in Sources */,
 				0922D46E240F34BC001E8DFE /* PeriodDetail.swift in Sources */,
+				09647BF225460ABF00B14DD0 /* AlbumCoverTitle.swift in Sources */,
 				09E19F5123E254480011D718 /* Home.swift in Sources */,
 				09DEEB152425A09300350397 /* WorksRadioButton.swift in Sources */,
 				0923104824CE00BE00E721B5 /* MiniWorkSearchRow.swift in Sources */,
@@ -567,6 +581,7 @@
 				0923104C24CF8A3000E721B5 /* MicroRecordingRow.swift in Sources */,
 				09E19F4F23E2543E0011D718 /* Header.swift in Sources */,
 				097C15DD242DB75C006FBBEE /* MiniRecordingRow.swift in Sources */,
+				09647BEF2545DEEA00B14DD0 /* AlbumDetail.swift in Sources */,
 				09AAD65123E62121004CDAB6 /* Inc.swift in Sources */,
 				0923104A24CE015A00E721B5 /* MiniComposerRow.swift in Sources */,
 				09AD2CD924341E6600375277 /* RadioStationsGrid.swift in Sources */,
@@ -588,6 +603,7 @@
 				09E19F4A23E251320011D718 /* Lib.swift in Sources */,
 				09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */,
 				097C15D9242D6511006FBBEE /* EditPlaylist.swift in Sources */,
+				09647BFB2546144900B14DD0 /* RecordingDetailTracks.swift in Sources */,
 				09F417B3247989E8008CF53E /* Warning.swift in Sources */,
 				09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
@@ -734,7 +750,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -744,7 +760,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.922;
+				MARKETING_VERSION = 1.20.1022;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -759,7 +775,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -769,7 +785,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.922;
+				MARKETING_VERSION = 1.20.1022;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;

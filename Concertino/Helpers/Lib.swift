@@ -1213,7 +1213,7 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
                         completion(countryCode ?? "us", false, true, nil)
  */
                     } else {
-                        if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
+                        if timeframe(timestamp: settingStore.lastLogged, minutes: AppConstants.minsToLogin)  {
                             APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "recid": "guest-" + UUID().uuidString, "id": settingStore.userId]) { results in
                                         print(String(decoding: results, as: UTF8.self))
                                     if let login: Login = safeJSON(results) {
@@ -1229,7 +1229,7 @@ func userLogin(_ autoplay: Bool, completion: @escaping (_ country: String, _ can
         } else {
             // guest login
             
-            if timeframe(timestamp: settingStore.lastLogged, minutes: 120)  {
+            if timeframe(timestamp: settingStore.lastLogged, minutes: AppConstants.minsToLogin)  {
                 APIpost("\(AppConstants.concBackend)/dyn/user/login/", parameters: ["auth": authGen(userId: settingStore.userId, userAuth: settingStore.userAuth) ?? "", "recid": "guest-" + UUID().uuidString, "id": settingStore.userId]) { results in
                             print(String(decoding: results, as: UTF8.self))
                         if let login: Login = safeJSON(results) {

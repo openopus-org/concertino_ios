@@ -28,6 +28,7 @@ struct ActivityView: UIViewControllerRepresentable {
 struct RecordingWorkPerformers: View {
     var recording: Recording
     var isSheet: Bool
+    var isPlayer: Bool
     @State private var showSheet = false
     @State private var shareURL = ""
     @State private var showShareSheet = false
@@ -36,6 +37,9 @@ struct RecordingWorkPerformers: View {
     @State private var showShare = false
     @State private var shareItem = ""
     @EnvironmentObject var settingStore: SettingStore
+    @EnvironmentObject var AppState: AppState
+    @EnvironmentObject var playState: PlayState
+    @EnvironmentObject var radioState: RadioState
     
     var actionSheet: ActionSheet {
         ActionSheet(title: Text("Select an action"), message: nil, buttons: [
@@ -63,21 +67,56 @@ struct RecordingWorkPerformers: View {
     var body: some View {
     VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
-                    Rectangle()
-                        .fill(Color(hex: 0x2B2B2F))
-                        .frame(width: 110, height: 110)
-                        .cornerRadius(20)
-                }) { img in
-                    img.image
-                        .renderingMode(.original)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .clipped()
-                        .cornerRadius(20)
+                if isSheet || isPlayer {
+                    URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
+                        Rectangle()
+                            .fill(Color(hex: 0x2B2B2F))
+                            .frame(width: 110, height: 110)
+                            .cornerRadius(20)
+                    }) { img in
+                        img.image
+                            .renderingMode(.original)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipped()
+                            .cornerRadius(20)
+                    }
+                    .frame(width: 110, height: 110)
+                    .padding(.trailing, 8)
+                } else {
+                    NavigationLink(destination: AlbumDetail(albumId: recording.apple_albumid).environmentObject(self.settingStore).environmentObject(self.AppState).environmentObject(self.playState).environmentObject(self.radioState), label: {
+                        VStack {
+                            URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
+                                Rectangle()
+                                    .fill(Color(hex: 0x2B2B2F))
+                                    .frame(width: 110, height: 110)
+                                    .cornerRadius(20)
+                            }) { img in
+                                img.image
+                                    .renderingMode(.original)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .clipped()
+                                    .cornerRadius(20)
+                            }
+                            .frame(width: 110, height: 110)
+                            
+                            HStack {
+                                Spacer()
+                                Text("view album".uppercased())
+                                    .font(.custom("Nunito-Regular", size: 8))
+                                Spacer()
+                            }
+                            .frame(width: 110)
+                            .padding(.bottom, 4)
+                            .padding(.top, 4)
+                            .foregroundColor(.white)
+                            .background(Color(hex: 0x4F4F4F))
+                            .cornerRadius(16)
+                        }
+                        .padding(.trailing, 8)
+                    })
                 }
-                .frame(width: 110, height: 110)
-                .padding(.trailing, 8)
                 
                 VStack(alignment: .leading) {
                     if recording.work!.composer!.id != "0" {

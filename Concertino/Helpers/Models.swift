@@ -84,6 +84,18 @@ struct FullRecording: Codable {
     var recording: Recording
 }
 
+extension FullRecording: Identifiable, Equatable {
+    var id: String { return "\(work.id)-\(recording.apple_albumid)-\(recording.set)" }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func ==(lhs: FullRecording, rhs: FullRecording) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
 struct Recordings: Codable {
     var recordings: [Recording]?
     var next: String?
@@ -209,6 +221,26 @@ struct Performer: Codable {
             return ret
         }
     }
+}
+
+struct Album: Codable {
+    var cover: URL?
+    var apple_albumid: String
+    var title: String
+    var label: String
+    var length: Int?
+    var apple_tracks: [String]?
+    var previews: [URL]?
+    var year: String
+    
+    var readableLength: String {
+        get { return convertSeconds(seconds: length ?? 0) }
+    }
+}
+
+struct FullAlbum: Codable {
+    var album: Album
+    var recordings: [FullRecording]
 }
 
 struct Recommendations: Codable {

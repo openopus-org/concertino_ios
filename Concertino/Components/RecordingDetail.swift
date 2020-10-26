@@ -77,7 +77,7 @@ struct RecordingDetail: View {
                 else if recording.count > 0 {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .leading) {
-                            RecordingWorkPerformers(recording: recording.first!, isSheet: self.isSheet)
+                            RecordingWorkPerformers(recording: recording.first!, isSheet: self.isSheet, isPlayer: false)
                             RecordingPlayButtons(recording: recording.first!, isSheet: self.isSheet)
                                 .padding(.top, 16)
                                 .padding(.bottom, 12)
