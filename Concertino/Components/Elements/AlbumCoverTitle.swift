@@ -46,11 +46,13 @@ struct AlbumCoverTitle: View {
                         .lineLimit(20)
                         .font(.custom("Nunito-Regular", size: 12))
                         .padding(.top, 6)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     VStack {
                         Text("playing time".uppercased())
-                            .font(.custom("Nunito-Regular", size: 6))
+                            .font(.custom("Nunito-Regular", size: 5))
                         Text("\(album.readableLength)")
+                            .padding(.top, -10)
                     }
                     .foregroundColor(Color(hex: 0x717171))
                     .font(.custom("Nunito-Regular", size: 12))
@@ -59,8 +61,7 @@ struct AlbumCoverTitle: View {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(Color(hex: 0x717171), lineWidth: 1)
                     )
-                    .padding(.top, 10)
-                    .frame(maxWidth: .infinity)
+                    .padding(.top, 12)
                 }
             }
         }

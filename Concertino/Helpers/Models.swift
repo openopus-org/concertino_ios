@@ -85,7 +85,7 @@ struct FullRecording: Codable {
 }
 
 extension FullRecording: Identifiable, Equatable {
-    var id: String { return "\(work.id)-\(recording.apple_albumid)-\(recording.set)" }
+    var id: String { return "\(recording.tracks!.first!.apple_trackid)-\(work.id)-\(recording.apple_albumid)-\(recording.set)" }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

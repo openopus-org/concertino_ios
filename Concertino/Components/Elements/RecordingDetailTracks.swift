@@ -44,11 +44,13 @@ struct RecordingDetailTracks: View {
         
         if let tracks = recording.recording.tracks {
             VStack {
+                Divider()
+                
                 ForEach(tracks, id: \.id) { track in
                     Group {
                         HStack {
                             Text(track.title)
-                                .font(.custom("Barlow-Regular", size: 14))
+                                .font(.custom("Barlow-Regular", size: 12))
                             
                             Spacer()
                             
