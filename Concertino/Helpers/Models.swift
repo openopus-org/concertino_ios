@@ -165,6 +165,7 @@ struct Recording: Codable {
     var previews: [URL]?
     var work: Work?
     var position: Int?
+    var recording_id: String?
     
     var isVerified: Bool {
         get { return verified == "true" }
@@ -193,7 +194,14 @@ struct Recording: Codable {
 }
 
 extension Recording: Identifiable, Equatable {
-    var id: String { return "\(work?.id ?? "0")-\(apple_albumid)-\(set)" }
+    var id: String {
+        if let rid = recording_id {
+            return rid
+        }
+        else {
+            return "\(work?.id ?? "0")-\(apple_albumid)-\(set)"
+        }
+    }
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
