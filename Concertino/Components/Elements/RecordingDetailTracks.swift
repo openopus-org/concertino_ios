@@ -12,35 +12,45 @@ struct RecordingDetailTracks: View {
     var recording: FullRecording
     
     var body: some View {
-        VStack {
-            if recording.work.composer!.id != "0" {
-                Text(recording.work.composer!.name.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
-                    .font(.custom("Nunito-ExtraBold", size: 13))
-                    .foregroundColor(Color(hex: 0xfe365e))
-            } else {
-                ForEach(recording.work.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
-                    Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
-                    .font(.custom("Nunito-ExtraBold", size: 13))
-                    .foregroundColor(Color(hex: 0xfe365e))
+        HStack(alignment: .center) {
+            VStack(alignment: .leading) {
+                VStack {
+                    if recording.work.composer!.id != "0" {
+                        Text(recording.work.composer!.name.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
+                            .font(.custom("Nunito-ExtraBold", size: 13))
+                            .foregroundColor(Color(hex: 0xfe365e))
+                    } else {
+                        ForEach(recording.work.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
+                            Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
+                            .font(.custom("Nunito-ExtraBold", size: 13))
+                            .foregroundColor(Color(hex: 0xfe365e))
+                        }
+                    }
                 }
+                .padding(.top, 12)
+                
+                Text(recording.work.title)
+                    .font(.custom("Barlow-Regular", size: 15))
+                    .padding(.bottom, 6)
+                    .lineLimit(20)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                ForEach(recording.recording.performers, id: \.name) { performer in
+                    Text(performer.name)
+                        .font(.custom("Barlow-SemiBold", size: 14))
+                    +
+                    Text(performer.readableRole)
+                        .font(.custom("Barlow-Regular", size: 13))
+                }
+                .foregroundColor(.white)
             }
+            
+            Spacer()
+            
+            RecordingPlayButton (recording: recording)
+                .frame(width: 44)
         }
-        .padding(.top, 12)
         
-        Text(recording.work.title)
-            .font(.custom("Barlow-Regular", size: 15))
-            .padding(.bottom, 6)
-            .lineLimit(20)
-            .fixedSize(horizontal: false, vertical: true)
-        
-        ForEach(recording.recording.performers, id: \.name) { performer in
-            Text(performer.name)
-                .font(.custom("Barlow-SemiBold", size: 14))
-            +
-            Text(performer.readableRole)
-                .font(.custom("Barlow-Regular", size: 13))
-        }
-        .foregroundColor(.white)
         
         if let tracks = recording.recording.tracks {
             VStack {

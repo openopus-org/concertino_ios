@@ -31,6 +31,7 @@
 		0923104A24CE015A00E721B5 /* MiniComposerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104924CE015A00E721B5 /* MiniComposerRow.swift */; };
 		0923104C24CF8A3000E721B5 /* MicroRecordingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */; };
 		0923105024D4916E00E721B5 /* WorkSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104F24D4916E00E721B5 /* WorkSearchField.swift */; };
+		093093652558B2D1005FB69E /* RecordingPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093093642558B2D1005FB69E /* RecordingPlayButton.swift */; };
 		093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F0A22243442660039C218 /* SettingsMenuItem.swift */; };
 		094B25CC2537A45200A65113 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 094B25CB2537A45200A65113 /* SwiftyStoreKit */; };
 		094B25D0253E087200A65113 /* DonationModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094B25CF253E087200A65113 /* DonationModal.swift */; };
@@ -144,6 +145,7 @@
 		0923104924CE015A00E721B5 /* MiniComposerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniComposerRow.swift; sourceTree = "<group>"; };
 		0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroRecordingRow.swift; sourceTree = "<group>"; };
 		0923104F24D4916E00E721B5 /* WorkSearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSearchField.swift; sourceTree = "<group>"; };
+		093093642558B2D1005FB69E /* RecordingPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPlayButton.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
 		094B25CF253E087200A65113 /* DonationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationModal.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				09647BF125460ABF00B14DD0 /* AlbumCoverTitle.swift */,
 				09647BF425460AD100B14DD0 /* AlbumPlayButtons.swift */,
 				09647BFA2546144900B14DD0 /* RecordingDetailTracks.swift */,
+				093093642558B2D1005FB69E /* RecordingPlayButton.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				09E19F4A23E251320011D718 /* Lib.swift in Sources */,
 				09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */,
 				097C15D9242D6511006FBBEE /* EditPlaylist.swift in Sources */,
+				093093652558B2D1005FB69E /* RecordingPlayButton.swift in Sources */,
 				09647BFB2546144900B14DD0 /* RecordingDetailTracks.swift in Sources */,
 				09F417B3247989E8008CF53E /* Warning.swift in Sources */,
 				09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */,
