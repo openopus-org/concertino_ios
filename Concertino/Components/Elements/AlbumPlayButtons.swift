@@ -1,88 +1,90 @@
 //
-//  AlbumPlayButtons.swift
+//  AlbumPlayButton.swift
 //  Concertino
 //
-//  Created by Adriano Brandao on 25/10/20.
+//  Created by Adriano Brandao on 09/11/20.
 //  Copyright © 2020 Open Opus. All rights reserved.
 //
 
 import SwiftUI
 
 struct AlbumPlayButtons: View {
-    var album: Album
-    
-    @State private var isPlaying = true
     @EnvironmentObject var playState: PlayState
-    @EnvironmentObject var AppState: AppState
-    @EnvironmentObject var radioState: RadioState
     @EnvironmentObject var settingStore: SettingStore
-    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var radioState: RadioState
+    @EnvironmentObject var mediaBridge: MediaBridge
+    @EnvironmentObject var previewBridge: PreviewBridge
+    @State var isLoading = false
+    @State private var showPlaylistSheet = false
+    var album: Album
+    var recordings: [Recording]
     
     var body: some View {
-        HStack(spacing: 6) {
-            if self.playState.recording.count > 0 && false {
-                Button(
-                    action: {
-                        self.AppState.fullPlayer = true
-                    },
-                    label: {
-                        HStack {
-                            HStack {
-                                Spacer()
-                                if self.isPlaying {
-                                    DotsAnimation()
-                                        .padding(.trailing, 3)
-                                    Text("playing".uppercased())
-                                        .font(.custom("Nunito-Regular", size: 11))
-                                }
-                                else {
-                                    Image("handle")
-                                        .resizable()
-                                        .frame(width: 6, height: 12)
-                                        .foregroundColor(Color(hex: 0x696969))
-                                        .rotationEffect(.degrees(90))
-                                        .padding(.trailing, 6)
-                                    Text("in the player".uppercased())
-                                        .foregroundColor(Color(hex: 0x696969))
-                                        .font(.custom("Nunito-Regular", size: 10))
-                                }
-                                Spacer()
-                            }
-                        }
-                        .padding(15)
-                        .foregroundColor(.white)
-                        .background(Color(hex: 0x4F4F4F))
-                        .cornerRadius(16)
-                })
-            } else {
-                Button(
-                    action: {
-                        self.playState.autoplay = true
+        HStack {
+            Button(
+                action: {
+                    if self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" {
                         self.radioState.isActive = false
                         self.radioState.playlistId = ""
                         self.radioState.nextWorks.removeAll()
                         self.radioState.nextRecordings.removeAll()
-                    },
-                    label: {
-                        HStack {
-                            HStack {
-                                Spacer()
-                                Image("play")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 20)
-                                Text("play album".uppercased())
-                                    .font(.custom("Nunito-Regular", size: 14))
-                                Spacer()
+                        
+                        if self.playState.preview {
+                            self.previewBridge.stop()
+                            self.previewBridge.setQueueAndPlay(tracks: self.playState.recording.first!.previews!, starttrack: 0, autoplay: false, zeroqueue: false)
+                        } else {
+                            self.mediaBridge.stop()
+                            self.mediaBridge.setQueueAndPlay(tracks: self.playState.recording.first!.apple_tracks!, starttrack: self.playState.recording.first!.apple_tracks!.first!, autoplay: false)
+                        }
+                    } else {
+                        self.isLoading = true
+                        self.radioState.isActive = true
+                        self.radioState.playlistId = "album-\(self.album.apple_albumid)"
+                        self.radioState.nextWorks.removeAll()
+                        self.radioState.nextRecordings = self.recordings
+                        
+                        let rec = self.radioState.nextRecordings.removeFirst()
+                        
+                        getStoreFront() { countryCode in
+                            if let country = countryCode {
+                                getRecordingDetail(recording: rec, country: country) { recordingData in
+                                    DispatchQueue.main.async {
+                                        self.playState.autoplay = true
+                                        self.playState.recording = recordingData
+                                        self.isLoading = false
+                                    }
+                                }
                             }
                         }
-                        .padding(14)
-                        .foregroundColor(.white)
-                        .background(Color(hex: 0xfe365e))
-                        .cornerRadius(16)
-                })
-            }
-            
+                    }
+                },
+                label: {
+                    HStack {
+                        HStack {
+                            Spacer()
+                            
+                            if self.isLoading {
+                                ActivityIndicator(isAnimating: self.isLoading)
+                                .configure { $0.color = .white; $0.style = .medium }
+                            } else {
+                                AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)")
+                                    .frame(width: 40, height: 20)
+                                    .padding(.trailing, self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 3 : -10)
+                                    .padding(.leading, self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 0 : -10)
+                                    
+                                Text((self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? "stop radio" : "start radio").uppercased())
+                                    .foregroundColor(.white)
+                                    .font(.custom("Nunito-Regular", size: self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 11 : 13))
+                            }
+                            
+                            Spacer()
+                        }
+                    }
+                    .padding(13)
+                    .foregroundColor(.white)
+                    .background(Color(hex: self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 0x696969 : 0xfe365e))
+                    .cornerRadius(16)
+            })
             
             Button(
                 action: { UIApplication.shared.open(URL(string: AppConstants.appleLink.replacingOccurrences(of: "%%COUNTRY%%", with: self.settingStore.country.isEmpty ? "us" : self.settingStore.country) + album.apple_albumid)!) },
@@ -100,8 +102,6 @@ struct AlbumPlayButtons: View {
                     .cornerRadius(16)
             })
         }
-        .onAppear(perform: { self.isPlaying = self.playState.playing })
-        .onReceive(self.playState.playingstateWillChange, perform: { self.isPlaying = self.playState.playing })
     }
 }
 
