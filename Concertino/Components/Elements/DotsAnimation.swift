@@ -12,7 +12,7 @@ struct DotsAnimation: View {
     @State private var isAnimated = false
     
     var body: some View {
-        HStack {
+        HStack(spacing: 3) {
             ForEach(0...2, id: \.self) { index in
                 Circle()
                     .frame(width: 6, height: 6)

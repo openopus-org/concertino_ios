@@ -48,9 +48,9 @@ struct RecordingDetailTracks: View {
             Spacer()
             
             RecordingPlayButton (recording: recording)
-                .frame(width: 44)
+                .frame(width: 33)
+                .padding(.leading, 8)
         }
-        
         
         if let tracks = recording.recording.tracks {
             VStack {

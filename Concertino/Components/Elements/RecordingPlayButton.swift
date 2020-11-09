@@ -31,6 +31,7 @@ struct RecordingPlayButton: View {
                                 if self.isPlaying {
                                     DotsAnimation()
                                         .padding(.trailing, 3)
+                                        .frame(width: 10)
                                 }
                                 else {
                                     Image("handle")
@@ -44,7 +45,7 @@ struct RecordingPlayButton: View {
                                 Spacer()
                             }
                         }
-                        .frame(width: 44, height: 44)
+                        .frame(width: 33, height: 33)
                         .foregroundColor(.white)
                         .background(Color(hex: 0x4F4F4F))
                         .clipped()
@@ -76,7 +77,7 @@ struct RecordingPlayButton: View {
                                 Spacer()
                             }
                         }
-                        .frame(width: 44, height: 44)
+                        .frame(width: 33, height: 33)
                         .foregroundColor(.white)
                         .background(Color(hex: 0xfe365e))
                         .clipped()

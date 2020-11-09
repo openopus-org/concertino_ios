@@ -32,6 +32,7 @@
 		0923104C24CF8A3000E721B5 /* MicroRecordingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */; };
 		0923105024D4916E00E721B5 /* WorkSearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0923104F24D4916E00E721B5 /* WorkSearchField.swift */; };
 		093093652558B2D1005FB69E /* RecordingPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093093642558B2D1005FB69E /* RecordingPlayButton.swift */; };
+		093093682559E311005FB69E /* AlbumPlayButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093093672559E311005FB69E /* AlbumPlayButtons.swift */; };
 		093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093F0A22243442660039C218 /* SettingsMenuItem.swift */; };
 		094B25CC2537A45200A65113 /* SwiftyStoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = 094B25CB2537A45200A65113 /* SwiftyStoreKit */; };
 		094B25D0253E087200A65113 /* DonationModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094B25CF253E087200A65113 /* DonationModal.swift */; };
@@ -45,7 +46,6 @@
 		095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095A9CC023E50E400010E150 /* OmnisearchField.swift */; };
 		09647BEF2545DEEA00B14DD0 /* AlbumDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BEE2545DEE900B14DD0 /* AlbumDetail.swift */; };
 		09647BF225460ABF00B14DD0 /* AlbumCoverTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BF125460ABF00B14DD0 /* AlbumCoverTitle.swift */; };
-		09647BF525460AD100B14DD0 /* AlbumPlayButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BF425460AD100B14DD0 /* AlbumPlayButtons.swift */; };
 		09647BFB2546144900B14DD0 /* RecordingDetailTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09647BFA2546144900B14DD0 /* RecordingDetailTracks.swift */; };
 		097325E823FC406E00A1C9E6 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325E723FC406E00A1C9E6 /* ProgressBar.swift */; };
 		097325EA2404560900A1C9E6 /* RecordingProgressBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097325E92404560900A1C9E6 /* RecordingProgressBars.swift */; };
@@ -146,6 +146,7 @@
 		0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicroRecordingRow.swift; sourceTree = "<group>"; };
 		0923104F24D4916E00E721B5 /* WorkSearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSearchField.swift; sourceTree = "<group>"; };
 		093093642558B2D1005FB69E /* RecordingPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPlayButton.swift; sourceTree = "<group>"; };
+		093093672559E311005FB69E /* AlbumPlayButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPlayButtons.swift; sourceTree = "<group>"; };
 		093F0A22243442660039C218 /* SettingsMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMenuItem.swift; sourceTree = "<group>"; };
 		093F0A2424357BFD0039C218 /* Concertino.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Concertino.entitlements; sourceTree = "<group>"; };
 		094B25CF253E087200A65113 /* DonationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationModal.swift; sourceTree = "<group>"; };
@@ -159,7 +160,6 @@
 		095A9CC023E50E400010E150 /* OmnisearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OmnisearchField.swift; sourceTree = "<group>"; };
 		09647BEE2545DEE900B14DD0 /* AlbumDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetail.swift; sourceTree = "<group>"; };
 		09647BF125460ABF00B14DD0 /* AlbumCoverTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCoverTitle.swift; sourceTree = "<group>"; };
-		09647BF425460AD100B14DD0 /* AlbumPlayButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPlayButtons.swift; sourceTree = "<group>"; };
 		09647BFA2546144900B14DD0 /* RecordingDetailTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetailTracks.swift; sourceTree = "<group>"; };
 		097325E723FC406E00A1C9E6 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		097325E92404560900A1C9E6 /* RecordingProgressBars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingProgressBars.swift; sourceTree = "<group>"; };
@@ -424,9 +424,9 @@
 				0923104B24CF8A3000E721B5 /* MicroRecordingRow.swift */,
 				0923104F24D4916E00E721B5 /* WorkSearchField.swift */,
 				09647BF125460ABF00B14DD0 /* AlbumCoverTitle.swift */,
-				09647BF425460AD100B14DD0 /* AlbumPlayButtons.swift */,
 				09647BFA2546144900B14DD0 /* RecordingDetailTracks.swift */,
 				093093642558B2D1005FB69E /* RecordingPlayButton.swift */,
+				093093672559E311005FB69E /* AlbumPlayButtons.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -514,7 +514,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09647BF525460AD100B14DD0 /* AlbumPlayButtons.swift in Sources */,
 				09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */,
 				0922D46C240F3449001E8DFE /* PeriodHeader.swift in Sources */,
 				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
@@ -545,6 +544,7 @@
 				095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
 				09DEEB112421830C00350397 /* PlaylistButtons.swift in Sources */,
+				093093682559E311005FB69E /* AlbumPlayButtons.swift in Sources */,
 				0923104124C8BE5600E721B5 /* Search.swift in Sources */,
 				095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */,
 				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,

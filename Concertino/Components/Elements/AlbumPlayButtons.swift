@@ -66,15 +66,22 @@ struct AlbumPlayButtons: View {
                             if self.isLoading {
                                 ActivityIndicator(isAnimating: self.isLoading)
                                 .configure { $0.color = .white; $0.style = .medium }
-                            } else {
-                                AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)")
+                            } else if self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" {
+                                AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: true)
                                     .frame(width: 40, height: 20)
-                                    .padding(.trailing, self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 3 : -10)
-                                    .padding(.leading, self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 0 : -10)
+                                    .padding(.trailing, 3)
+                                    .padding(.leading, 0)
                                     
-                                Text((self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? "stop radio" : "start radio").uppercased())
+                                Text(("stop radio").uppercased())
                                     .foregroundColor(.white)
-                                    .font(.custom("Nunito-Regular", size: self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 11 : 13))
+                                    .font(.custom("Nunito-Regular", size: self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 11 : 12))
+                            } else {
+                                Image("play")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 20)
+                                Text("play album".uppercased())
+                                    .font(.custom("Nunito-Regular", size: 14))
                             }
                             
                             Spacer()

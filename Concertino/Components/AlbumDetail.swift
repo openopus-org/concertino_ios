@@ -69,7 +69,8 @@ struct AlbumDetail: View {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .leading) {
                             AlbumCoverTitle(album: album.first!)
-                            AlbumPlayButtons(album: album.first!)
+                            
+                            AlbumPlayButtons(album: album.first!, recordings: FullRecToRec (recordings: recordings))
                                 .padding(.top, 16)
                                 .padding(.bottom, 12)
                             

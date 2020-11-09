@@ -1375,3 +1375,15 @@ extension EnvironmentValues {
     set { self[WindowKey.self] = .init(value: newValue) }
   }
 }
+
+func FullRecToRec (recordings: [FullRecording]) -> [Recording] {
+    var returnRecordings = [Recording]()
+    
+    for recording in recordings {
+        var rec = recording.recording
+        rec.work = recording.work
+        returnRecordings.append(rec)
+    }
+    
+    return returnRecordings
+}
