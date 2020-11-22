@@ -36,9 +36,11 @@ struct RecordingMini: View {
                 .padding(.trailing, 8)
                 
                 VStack(alignment: .leading) {
-                    Text(recording.work!.composer!.name.uppercased())
-                        .font(.custom("Nunito-ExtraBold", size: 12))
-                        .foregroundColor(Color(hex: 0xfe365e))
+                    if recording.work!.composer!.name != "None" {
+                        Text(recording.work!.composer!.name.uppercased())
+                            .font(.custom("Nunito-ExtraBold", size: 12))
+                            .foregroundColor(Color(hex: 0xfe365e))
+                    }
                     
                     Text(recording.work!.title)
                         .font(.custom("Barlow-Regular", size: 13))

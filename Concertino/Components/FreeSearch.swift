@@ -51,7 +51,7 @@ struct FreeSearch: View {
         paginating = true
         
         getStoreFront() { countryCode in
-            APIget(AppConstants.concBackend+"/freesearch/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
+            APIget(AppConstants.concBackend+"/search/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
                 if let omniData: Omnisearch = safeJSON(results) {
                     DispatchQueue.main.async {
                         if let recordings = omniData.recordings {
@@ -86,7 +86,7 @@ struct FreeSearch: View {
         
         if self.omnisearch.searchstring.count > 3 {
             getStoreFront() { countryCode in
-                APIget(AppConstants.concBackend+"/freesearch/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
+                APIget(AppConstants.concBackend+"/search/\(countryCode ?? "us")/\(self.omnisearch.searchstring)/\(self.offset).json") { results in
                     if let omniData: Omnisearch = safeJSON(results) {
                         DispatchQueue.main.async {
                             if let recordings = omniData.recordings {
