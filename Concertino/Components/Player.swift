@@ -444,26 +444,30 @@ struct Player: View {
                                                 // next recording
                                                 
                                                 if self.radioState.nextRecordings.count > 0 {
+                                                    
                                                     self.playState.keepQueue = true
                                                     self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
-                                                    print("🆗 next recording")
-                                                    //print(self.playState.recording)
+                                                    print("🆗 next recording APPLE MUSIC")
                                                     
-                                                    if let playstaterecordingfirsttracksfirst = playstaterecordingfirsttracks.first {
-                                                        self.currentTrack = [CurrentTrack (
-                                                            track_index: trackIndex,
-                                                            zero_index: trackIndex,
-                                                            playing: false,
-                                                            loading: false,
-                                                            starting_point: 0,
-                                                            track_position: 0,
-                                                            track_length: playstaterecordingfirsttracksfirst.length,
-                                                            full_position: 0,
-                                                            full_length: playstaterecordingfirst.length ?? 0,
-                                                            preview: false
-                                                        )]
-                                                        //print(self.currentTrack)
-                                                        self.radioState.canSkip = false
+                                                    if let newplaystaterecordingfirst = self.playState.recording.first {
+                                                        if let newplaystaterecordingfirsttracks = newplaystaterecordingfirst.tracks {
+                                                            if let newplaystaterecordingfirsttracksfirst = newplaystaterecordingfirsttracks.first {
+                                                                self.currentTrack = [CurrentTrack (
+                                                                    track_index: trackIndex,
+                                                                    zero_index: trackIndex,
+                                                                    playing: false,
+                                                                    loading: false,
+                                                                    starting_point: 0,
+                                                                    track_position: 0,
+                                                                    track_length: newplaystaterecordingfirsttracksfirst.length,
+                                                                    full_position: 0,
+                                                                    full_length: newplaystaterecordingfirst.length ?? 0,
+                                                                    preview: false
+                                                                )]
+                                                                //print(self.currentTrack)
+                                                                self.radioState.canSkip = false
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -500,7 +504,7 @@ struct Player: View {
                     if self.radioState.nextRecordings.count > 0 {
                         self.playState.keepQueue = true
                         self.playState.recording = [self.radioState.nextRecordings.removeFirst()]
-                        print("🆗 next recording")
+                        print("🆗 next recording PREVIEW")
                         //print(self.playState.recording)
                         self.currentTrack = [CurrentTrack (
                             track_index: trackIndex,
@@ -514,6 +518,8 @@ struct Player: View {
                             full_length: self.playState.recording.first!.length!,
                             preview: true
                         )]
+                        print("current track:")
+                        print(self.currentTrack)
                         self.radioState.canSkip = false
                     }
                 }
