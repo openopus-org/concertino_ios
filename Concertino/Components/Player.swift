@@ -473,10 +473,13 @@ struct Player: View {
                                             }
                                             else {
                                                     print("radio state: \(self.radioState.isActive)")
-                                                    if !self.radioState.isActive {
+                                                
+                                                    if trackIndex == 0 && self.currentTrack[0].zero_index != 0 {
                                                         self.currentTrack[0].zero_index = 0
+                                                        
+                                                        self.mediaBridge.setQueue(tracks: appletracks)
                                                     }
-                                                    
+                                                
                                                     self.currentTrack[0].track_index = trackIndex
                                                     self.currentTrack[0].track_position = 0
                                                     self.currentTrack[0].starting_point = (playstaterecordingfirsttracks[trackIndex - self.currentTrack[0].zero_index].starting_point)

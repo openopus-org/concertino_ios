@@ -595,6 +595,12 @@ class MediaBridge: ObservableObject {
       player.stop()
     }
     
+    func setQueue(tracks: [String]) {
+        let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
+        
+        player.setQueue(with: queue)
+    }
+    
     func setQueueAndPlay(tracks: [String], starttrack: String?, autoplay: Bool) {
         let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
         
