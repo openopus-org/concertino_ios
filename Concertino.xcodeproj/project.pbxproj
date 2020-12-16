@@ -39,6 +39,7 @@
 		095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F2249988E900A3E224 /* ComposerDetailWorks.swift */; };
 		095590F52499A49900A3E224 /* FullLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F42499A49900A3E224 /* FullLoader.swift */; };
 		095590F724B120A800A3E224 /* FreeSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095590F624B120A800A3E224 /* FreeSearch.swift */; };
+		09599D76257DAC29007DF896 /* Lib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09599D75257DAC29007DF896 /* Lib.swift */; };
 		095A9CBC23E4E2400010E150 /* Barlow-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */; };
 		095A9CBD23E4E2400010E150 /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */; };
 		095A9CBE23E4E2400010E150 /* Barlow-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */; };
@@ -100,7 +101,6 @@
 		09E19F3B23E24F210011D718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3A23E24F210011D718 /* Assets.xcassets */; };
 		09E19F3E23E24F210011D718 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3D23E24F210011D718 /* Preview Assets.xcassets */; };
 		09E19F4123E24F210011D718 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09E19F3F23E24F210011D718 /* LaunchScreen.storyboard */; };
-		09E19F4A23E251320011D718 /* Lib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F4923E251320011D718 /* Lib.swift */; };
 		09E19F4D23E253780011D718 /* Structure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F4C23E253780011D718 /* Structure.swift */; };
 		09E19F4F23E2543E0011D718 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F4E23E2543E0011D718 /* Header.swift */; };
 		09E19F5123E254480011D718 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E19F5023E254480011D718 /* Home.swift */; };
@@ -153,6 +153,7 @@
 		095590F2249988E900A3E224 /* ComposerDetailWorks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerDetailWorks.swift; sourceTree = "<group>"; };
 		095590F42499A49900A3E224 /* FullLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullLoader.swift; sourceTree = "<group>"; };
 		095590F624B120A800A3E224 /* FreeSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreeSearch.swift; sourceTree = "<group>"; };
+		09599D75257DAC29007DF896 /* Lib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lib.swift; sourceTree = "<group>"; };
 		095A9CB823E4E2400010E150 /* Barlow-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-SemiBold.ttf"; sourceTree = "<group>"; };
 		095A9CB923E4E2400010E150 /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
 		095A9CBA23E4E2400010E150 /* Barlow-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Barlow-Regular.ttf"; sourceTree = "<group>"; };
@@ -215,7 +216,6 @@
 		09E19F3D23E24F210011D718 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		09E19F4023E24F210011D718 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		09E19F4223E24F210011D718 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09E19F4923E251320011D718 /* Lib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lib.swift; sourceTree = "<group>"; };
 		09E19F4C23E253780011D718 /* Structure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Structure.swift; sourceTree = "<group>"; };
 		09E19F4E23E2543E0011D718 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		09E19F5023E254480011D718 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -315,8 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				09AAD65023E62120004CDAB6 /* Inc.swift */,
-				09E19F4923E251320011D718 /* Lib.swift */,
 				09AAD64E23E61E9F004CDAB6 /* Models.swift */,
+				09599D75257DAC29007DF896 /* Lib.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -528,6 +528,7 @@
 				097325F02404C10700A1C9E6 /* DotsAnimation.swift in Sources */,
 				0906256424316E6200E8FC3E /* RecentReleases.swift in Sources */,
 				0922D4742410A067001E8DFE /* PlaylistButton.swift in Sources */,
+				09599D76257DAC29007DF896 /* Lib.swift in Sources */,
 				0922D468240F1FAC001E8DFE /* PeriodBox.swift in Sources */,
 				09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */,
 				0919D09F244BE10700EF4B50 /* ExternalRecordingSheet.swift in Sources */,
@@ -603,7 +604,6 @@
 				090625682431910500E8FC3E /* RadioSwitcher.swift in Sources */,
 				09A6741D23F778C4000000D6 /* ErrorMessage.swift in Sources */,
 				0922D47024105973001E8DFE /* PlaylistsMenu.swift in Sources */,
-				09E19F4A23E251320011D718 /* Lib.swift in Sources */,
 				09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */,
 				097C15D9242D6511006FBBEE /* EditPlaylist.swift in Sources */,
 				093093652558B2D1005FB69E /* RecordingPlayButton.swift in Sources */,
@@ -754,7 +754,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -764,7 +764,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.1022;
+				MARKETING_VERSION = 1.20.1216;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -779,7 +779,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Concertino/Concertino.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Concertino/Preview Content\"";
 				DEVELOPMENT_TEAM = TXW2W532B9;
 				ENABLE_PREVIEWS = YES;
@@ -789,7 +789,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.1022;
+				MARKETING_VERSION = 1.20.1216;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openopus.concertino.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
