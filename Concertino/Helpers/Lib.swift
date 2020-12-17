@@ -572,6 +572,7 @@ class PreviewBridge: ObservableObject {
 
 class MediaBridge: ObservableObject {
     let player = MPMusicPlayerController.applicationQueuePlayer
+    var stopped = true
 
     init() {
       NotificationCenter.default.addObserver(
@@ -600,6 +601,9 @@ class MediaBridge: ObservableObject {
     func setQueue(tracks: [String]) {
         let queue = MPMusicPlayerStoreQueueDescriptor(storeIDs: tracks)
         
+        self.stopped = true
+        player.repeatMode = .none
+        player.shuffleMode = .off
         player.setQueue(with: queue)
     }
     
@@ -610,6 +614,7 @@ class MediaBridge: ObservableObject {
             queue.startItemID = sttrack
         }
         
+        self.stopped = true
         player.repeatMode = .none
         player.shuffleMode = .off
         player.setQueue(with: queue)
@@ -617,6 +622,8 @@ class MediaBridge: ObservableObject {
         if !player.isPreparedToPlay {
             print("preparing to play...")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0) {
+                self.player.repeatMode = .none
+                self.player.shuffleMode = .off
                 self.prepareToPlay(autoplay)
             }
         } else if autoplay {
@@ -625,6 +632,9 @@ class MediaBridge: ObservableObject {
     }
     
     func prepareToPlay(_ autoplay: Bool) {
+        player.repeatMode = .none
+        player.shuffleMode = .off
+        
         player.prepareToPlay(completionHandler: {(error) in
             if error != nil {
                 DispatchQueue.main.async {
@@ -648,7 +658,7 @@ class MediaBridge: ObservableObject {
                 DispatchQueue.main.async {
                     self.player.repeatMode = .none
                     self.player.shuffleMode = .off
-                    self.player.play()
+                    self.play()
                 }
             } else {
                 DispatchQueue.main.async {
@@ -698,7 +708,11 @@ class MediaBridge: ObservableObject {
     
     func getCurrentPlaybackTime() -> Int {
         if (player.nowPlayingItem != nil) {
-            return Int(player.currentPlaybackTime)
+            if self.stopped {
+                return 0
+            } else {
+                return Int(player.currentPlaybackTime)
+            }
         } else {
             return 0
         }
@@ -717,7 +731,7 @@ class MediaBridge: ObservableObject {
             if (player.playbackState == .playing) {
                 player.pause()
             } else {
-                player.play()
+                self.play()
             }
         } else {
             self.prepareToPlay(true)
@@ -742,6 +756,17 @@ class MediaBridge: ObservableObject {
     
     func stop() {
         player.stop()
+        self.stopped = true
+    }
+    
+    func play() {
+        player.repeatMode = .none
+        player.shuffleMode = .off
+        player.play()
+        
+        print("\(player.repeatMode.rawValue)")
+        print("\(player.shuffleMode.rawValue)")
+        self.stopped = false
     }
 }
 
