@@ -78,7 +78,6 @@
 		09A6742523F79239000000D6 /* RecordingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742423F79239000000D6 /* RecordingsList.swift */; };
 		09A6742723F79392000000D6 /* RecordingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742623F79392000000D6 /* RecordingRow.swift */; };
 		09A6742923F7B341000000D6 /* RecordingsDisclaimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A6742823F7B341000000D6 /* RecordingsDisclaimer.swift */; };
-		09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD64E23E61E9F004CDAB6 /* Models.swift */; };
 		09AAD65123E62121004CDAB6 /* Inc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65023E62120004CDAB6 /* Inc.swift */; };
 		09AAD65323E6226F004CDAB6 /* ComposersList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65223E6226F004CDAB6 /* ComposersList.swift */; };
 		09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AAD65423E628C6004CDAB6 /* ComposerRow.swift */; };
@@ -118,6 +117,44 @@
 		09F53EEC24527EBB00D312B9 /* AirPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F53EEB24527EBB00D312B9 /* AirPlayButton.swift */; };
 		09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5523F9E2D800599992 /* RecordingDetail.swift */; };
 		09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */; };
+		D189F4A825A9FC18005BFB49 /* PlaylistComposers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48225A9FC16005BFB49 /* PlaylistComposers.swift */; };
+		D189F4A925A9FC18005BFB49 /* PlaylistSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48325A9FC16005BFB49 /* PlaylistSummary.swift */; };
+		D189F4AA25A9FC18005BFB49 /* CurrentTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48425A9FC16005BFB49 /* CurrentTrack.swift */; };
+		D189F4AB25A9FC18005BFB49 /* RadioStationPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48525A9FC16005BFB49 /* RadioStationPlaylist.swift */; };
+		D189F4AC25A9FC18005BFB49 /* Performer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48625A9FC16005BFB49 /* Performer.swift */; };
+		D189F4AD25A9FC18005BFB49 /* TrackQueued.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48725A9FC16005BFB49 /* TrackQueued.swift */; };
+		D189F4AE25A9FC18005BFB49 /* Works.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48825A9FC16005BFB49 /* Works.swift */; };
+		D189F4AF25A9FC18005BFB49 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48925A9FC16005BFB49 /* Recommendation.swift */; };
+		D189F4B025A9FC18005BFB49 /* Omnisearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48A25A9FC16005BFB49 /* Omnisearch.swift */; };
+		D189F4B125A9FC18005BFB49 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48B25A9FC16005BFB49 /* Album.swift */; };
+		D189F4B225A9FC18005BFB49 /* ShortRecordingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48C25A9FC16005BFB49 /* ShortRecordingDetail.swift */; };
+		D189F4B325A9FC18005BFB49 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48D25A9FC16005BFB49 /* Token.swift */; };
+		D189F4B425A9FC18005BFB49 /* AddWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48E25A9FC16005BFB49 /* AddWork.swift */; };
+		D189F4B525A9FC18005BFB49 /* RecordingQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48F25A9FC16005BFB49 /* RecordingQueue.swift */; };
+		D189F4B625A9FC18005BFB49 /* TrackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49025A9FC16005BFB49 /* TrackQueue.swift */; };
+		D189F4B725A9FC18005BFB49 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49125A9FC16005BFB49 /* Login.swift */; };
+		D189F4B825A9FC18005BFB49 /* OmniResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49225A9FC16005BFB49 /* OmniResults.swift */; };
+		D189F4B925A9FC18005BFB49 /* Recordings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49325A9FC16005BFB49 /* Recordings.swift */; };
+		D189F4BA25A9FC18005BFB49 /* Work.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49425A9FC16005BFB49 /* Work.swift */; };
+		D189F4BB25A9FC18005BFB49 /* PlaylistRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49525A9FC17005BFB49 /* PlaylistRecording.swift */; };
+		D189F4BC25A9FC18005BFB49 /* Composer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49625A9FC17005BFB49 /* Composer.swift */; };
+		D189F4BD25A9FC18005BFB49 /* FullRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49725A9FC17005BFB49 /* FullRecording.swift */; };
+		D189F4BE25A9FC18005BFB49 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49825A9FC17005BFB49 /* Playlist.swift */; };
+		D189F4BF25A9FC18005BFB49 /* RadioStationPlaylists.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49925A9FC17005BFB49 /* RadioStationPlaylists.swift */; };
+		D189F4C025A9FC18005BFB49 /* RecentSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49A25A9FC17005BFB49 /* RecentSearch.swift */; };
+		D189F4C125A9FC18005BFB49 /* Composers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49B25A9FC17005BFB49 /* Composers.swift */; };
+		D189F4C225A9FC18005BFB49 /* Supporters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49C25A9FC17005BFB49 /* Supporters.swift */; };
+		D189F4C325A9FC18005BFB49 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49D25A9FC17005BFB49 /* User.swift */; };
+		D189F4C425A9FC18005BFB49 /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49E25A9FC17005BFB49 /* Recording.swift */; };
+		D189F4C525A9FC18005BFB49 /* ShortRecording.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F49F25A9FC17005BFB49 /* ShortRecording.swift */; };
+		D189F4C625A9FC18005BFB49 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A025A9FC17005BFB49 /* Genres.swift */; };
+		D189F4C725A9FC18005BFB49 /* FullAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A125A9FC17005BFB49 /* FullAlbum.swift */; };
+		D189F4C825A9FC18005BFB49 /* PlaylistWorks.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A225A9FC17005BFB49 /* PlaylistWorks.swift */; };
+		D189F4C925A9FC18005BFB49 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A325A9FC18005BFB49 /* Track.swift */; };
+		D189F4CA25A9FC18005BFB49 /* PlaylistRecordings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A425A9FC18005BFB49 /* PlaylistRecordings.swift */; };
+		D189F4CB25A9FC18005BFB49 /* AddComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A525A9FC18005BFB49 /* AddComposer.swift */; };
+		D189F4CC25A9FC18005BFB49 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A625A9FC18005BFB49 /* Recommendations.swift */; };
+		D189F4CD25A9FC18005BFB49 /* AddRecordings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F4A725A9FC18005BFB49 /* AddRecordings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -192,7 +229,6 @@
 		09A6742423F79239000000D6 /* RecordingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsList.swift; sourceTree = "<group>"; };
 		09A6742623F79392000000D6 /* RecordingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingRow.swift; sourceTree = "<group>"; };
 		09A6742823F7B341000000D6 /* RecordingsDisclaimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsDisclaimer.swift; sourceTree = "<group>"; };
-		09AAD64E23E61E9F004CDAB6 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		09AAD65023E62120004CDAB6 /* Inc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inc.swift; sourceTree = "<group>"; };
 		09AAD65223E6226F004CDAB6 /* ComposersList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposersList.swift; sourceTree = "<group>"; };
 		09AAD65423E628C6004CDAB6 /* ComposerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposerRow.swift; sourceTree = "<group>"; };
@@ -233,6 +269,44 @@
 		09F53EEB24527EBB00D312B9 /* AirPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayButton.swift; sourceTree = "<group>"; };
 		09FE9A5523F9E2D800599992 /* RecordingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetail.swift; sourceTree = "<group>"; };
 		09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWorkPerformers.swift; sourceTree = "<group>"; };
+		D189F48225A9FC16005BFB49 /* PlaylistComposers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistComposers.swift; sourceTree = "<group>"; };
+		D189F48325A9FC16005BFB49 /* PlaylistSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistSummary.swift; sourceTree = "<group>"; };
+		D189F48425A9FC16005BFB49 /* CurrentTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentTrack.swift; sourceTree = "<group>"; };
+		D189F48525A9FC16005BFB49 /* RadioStationPlaylist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioStationPlaylist.swift; sourceTree = "<group>"; };
+		D189F48625A9FC16005BFB49 /* Performer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Performer.swift; sourceTree = "<group>"; };
+		D189F48725A9FC16005BFB49 /* TrackQueued.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackQueued.swift; sourceTree = "<group>"; };
+		D189F48825A9FC16005BFB49 /* Works.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Works.swift; sourceTree = "<group>"; };
+		D189F48925A9FC16005BFB49 /* Recommendation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
+		D189F48A25A9FC16005BFB49 /* Omnisearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Omnisearch.swift; sourceTree = "<group>"; };
+		D189F48B25A9FC16005BFB49 /* Album.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
+		D189F48C25A9FC16005BFB49 /* ShortRecordingDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortRecordingDetail.swift; sourceTree = "<group>"; };
+		D189F48D25A9FC16005BFB49 /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		D189F48E25A9FC16005BFB49 /* AddWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddWork.swift; sourceTree = "<group>"; };
+		D189F48F25A9FC16005BFB49 /* RecordingQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingQueue.swift; sourceTree = "<group>"; };
+		D189F49025A9FC16005BFB49 /* TrackQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackQueue.swift; sourceTree = "<group>"; };
+		D189F49125A9FC16005BFB49 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		D189F49225A9FC16005BFB49 /* OmniResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OmniResults.swift; sourceTree = "<group>"; };
+		D189F49325A9FC16005BFB49 /* Recordings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recordings.swift; sourceTree = "<group>"; };
+		D189F49425A9FC16005BFB49 /* Work.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Work.swift; sourceTree = "<group>"; };
+		D189F49525A9FC17005BFB49 /* PlaylistRecording.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistRecording.swift; sourceTree = "<group>"; };
+		D189F49625A9FC17005BFB49 /* Composer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Composer.swift; sourceTree = "<group>"; };
+		D189F49725A9FC17005BFB49 /* FullRecording.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullRecording.swift; sourceTree = "<group>"; };
+		D189F49825A9FC17005BFB49 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		D189F49925A9FC17005BFB49 /* RadioStationPlaylists.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioStationPlaylists.swift; sourceTree = "<group>"; };
+		D189F49A25A9FC17005BFB49 /* RecentSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentSearch.swift; sourceTree = "<group>"; };
+		D189F49B25A9FC17005BFB49 /* Composers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Composers.swift; sourceTree = "<group>"; };
+		D189F49C25A9FC17005BFB49 /* Supporters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Supporters.swift; sourceTree = "<group>"; };
+		D189F49D25A9FC17005BFB49 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D189F49E25A9FC17005BFB49 /* Recording.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
+		D189F49F25A9FC17005BFB49 /* ShortRecording.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortRecording.swift; sourceTree = "<group>"; };
+		D189F4A025A9FC17005BFB49 /* Genres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
+		D189F4A125A9FC17005BFB49 /* FullAlbum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullAlbum.swift; sourceTree = "<group>"; };
+		D189F4A225A9FC17005BFB49 /* PlaylistWorks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistWorks.swift; sourceTree = "<group>"; };
+		D189F4A325A9FC18005BFB49 /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		D189F4A425A9FC18005BFB49 /* PlaylistRecordings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistRecordings.swift; sourceTree = "<group>"; };
+		D189F4A525A9FC18005BFB49 /* AddComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddComposer.swift; sourceTree = "<group>"; };
+		D189F4A625A9FC18005BFB49 /* Recommendations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
+		D189F4A725A9FC18005BFB49 /* AddRecordings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddRecordings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +370,7 @@
 				09E19F4823E2510B0011D718 /* Helpers */,
 				09E19F4223E24F210011D718 /* Info.plist */,
 				09E19F3F23E24F210011D718 /* LaunchScreen.storyboard */,
+				D189F43425A9FBDD005BFB49 /* Models */,
 				09E19F3C23E24F210011D718 /* Preview Content */,
 				09E19F3623E24F1F0011D718 /* SceneDelegate.swift */,
 				09E19F4C23E253780011D718 /* Structure.swift */,
@@ -315,7 +390,6 @@
 			isa = PBXGroup;
 			children = (
 				09AAD65023E62120004CDAB6 /* Inc.swift */,
-				09AAD64E23E61E9F004CDAB6 /* Models.swift */,
 				09599D75257DAC29007DF896 /* Lib.swift */,
 			);
 			path = Helpers;
@@ -431,6 +505,51 @@
 			path = Elements;
 			sourceTree = "<group>";
 		};
+		D189F43425A9FBDD005BFB49 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D189F4A525A9FC18005BFB49 /* AddComposer.swift */,
+				D189F4A725A9FC18005BFB49 /* AddRecordings.swift */,
+				D189F48E25A9FC16005BFB49 /* AddWork.swift */,
+				D189F48B25A9FC16005BFB49 /* Album.swift */,
+				D189F49625A9FC17005BFB49 /* Composer.swift */,
+				D189F49B25A9FC17005BFB49 /* Composers.swift */,
+				D189F48425A9FC16005BFB49 /* CurrentTrack.swift */,
+				D189F4A125A9FC17005BFB49 /* FullAlbum.swift */,
+				D189F49725A9FC17005BFB49 /* FullRecording.swift */,
+				D189F4A025A9FC17005BFB49 /* Genres.swift */,
+				D189F49125A9FC16005BFB49 /* Login.swift */,
+				D189F49225A9FC16005BFB49 /* OmniResults.swift */,
+				D189F48A25A9FC16005BFB49 /* Omnisearch.swift */,
+				D189F48625A9FC16005BFB49 /* Performer.swift */,
+				D189F49825A9FC17005BFB49 /* Playlist.swift */,
+				D189F48225A9FC16005BFB49 /* PlaylistComposers.swift */,
+				D189F49525A9FC17005BFB49 /* PlaylistRecording.swift */,
+				D189F4A425A9FC18005BFB49 /* PlaylistRecordings.swift */,
+				D189F48325A9FC16005BFB49 /* PlaylistSummary.swift */,
+				D189F4A225A9FC17005BFB49 /* PlaylistWorks.swift */,
+				D189F48525A9FC16005BFB49 /* RadioStationPlaylist.swift */,
+				D189F49925A9FC17005BFB49 /* RadioStationPlaylists.swift */,
+				D189F49A25A9FC17005BFB49 /* RecentSearch.swift */,
+				D189F48925A9FC16005BFB49 /* Recommendation.swift */,
+				D189F4A625A9FC18005BFB49 /* Recommendations.swift */,
+				D189F49E25A9FC17005BFB49 /* Recording.swift */,
+				D189F48F25A9FC16005BFB49 /* RecordingQueue.swift */,
+				D189F49325A9FC16005BFB49 /* Recordings.swift */,
+				D189F49F25A9FC17005BFB49 /* ShortRecording.swift */,
+				D189F48C25A9FC16005BFB49 /* ShortRecordingDetail.swift */,
+				D189F49C25A9FC17005BFB49 /* Supporters.swift */,
+				D189F48D25A9FC16005BFB49 /* Token.swift */,
+				D189F4A325A9FC18005BFB49 /* Track.swift */,
+				D189F49025A9FC16005BFB49 /* TrackQueue.swift */,
+				D189F48725A9FC16005BFB49 /* TrackQueued.swift */,
+				D189F49D25A9FC17005BFB49 /* User.swift */,
+				D189F49425A9FC16005BFB49 /* Work.swift */,
+				D189F48825A9FC16005BFB49 /* Works.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -514,9 +633,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D189F4AF25A9FC18005BFB49 /* Recommendation.swift in Sources */,
 				09E19F3523E24F1F0011D718 /* AppDelegate.swift in Sources */,
+				D189F4AC25A9FC18005BFB49 /* Performer.swift in Sources */,
+				D189F4B725A9FC18005BFB49 /* Login.swift in Sources */,
+				D189F4C325A9FC18005BFB49 /* User.swift in Sources */,
 				0922D46C240F3449001E8DFE /* PeriodHeader.swift in Sources */,
+				D189F4B925A9FC18005BFB49 /* Recordings.swift in Sources */,
 				099F90CB23EE15AF004A7021 /* ComposerBox.swift in Sources */,
+				D189F4C225A9FC18005BFB49 /* Supporters.swift in Sources */,
+				D189F4AD25A9FC18005BFB49 /* TrackQueued.swift in Sources */,
+				D189F4B425A9FC18005BFB49 /* AddWork.swift in Sources */,
 				0923104624CDED3B00E721B5 /* RecentSearches.swift in Sources */,
 				097C15DB242D70F9006FBBEE /* RecordingRemover.swift in Sources */,
 				0922D46E240F34BC001E8DFE /* PeriodDetail.swift in Sources */,
@@ -525,10 +652,13 @@
 				09DEEB152425A09300350397 /* WorksRadioButton.swift in Sources */,
 				0923104824CE00BE00E721B5 /* MiniWorkSearchRow.swift in Sources */,
 				09A0084023F3631F001C696E /* GenreButton.swift in Sources */,
+				D189F4BB25A9FC18005BFB49 /* PlaylistRecording.swift in Sources */,
+				D189F4AE25A9FC18005BFB49 /* Works.swift in Sources */,
 				097325F02404C10700A1C9E6 /* DotsAnimation.swift in Sources */,
 				0906256424316E6200E8FC3E /* RecentReleases.swift in Sources */,
 				0922D4742410A067001E8DFE /* PlaylistButton.swift in Sources */,
 				09599D76257DAC29007DF896 /* Lib.swift in Sources */,
+				D189F4B125A9FC18005BFB49 /* Album.swift in Sources */,
 				0922D468240F1FAC001E8DFE /* PeriodBox.swift in Sources */,
 				09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */,
 				0919D09F244BE10700EF4B50 /* ExternalRecordingSheet.swift in Sources */,
@@ -537,15 +667,24 @@
 				0922D46A240F1FBB001E8DFE /* PeriodDetailSearch.swift in Sources */,
 				09DEEB1324231DB700350397 /* AnimatedRadioIcon.swift in Sources */,
 				09DEEB0B241352F700350397 /* BrowseOnlyMode.swift in Sources */,
+				D189F4B025A9FC18005BFB49 /* Omnisearch.swift in Sources */,
 				09E5441E23FB749C005B8AEE /* RecordingDisclaimer.swift in Sources */,
+				D189F4BD25A9FC18005BFB49 /* FullRecording.swift in Sources */,
+				D189F4B225A9FC18005BFB49 /* ShortRecordingDetail.swift in Sources */,
 				09A6742123F78033000000D6 /* WorkHeader.swift in Sources */,
 				09A6742723F79392000000D6 /* RecordingRow.swift in Sources */,
+				D189F4C425A9FC18005BFB49 /* Recording.swift in Sources */,
+				D189F4AA25A9FC18005BFB49 /* CurrentTrack.swift in Sources */,
 				097325F224089FA200A1C9E6 /* ComposersSearch.swift in Sources */,
 				099F90CD23EE1855004A7021 /* ActivityIndicator.swift in Sources */,
 				095590F3249988E900A3E224 /* ComposerDetailWorks.swift in Sources */,
 				09E19F3723E24F1F0011D718 /* SceneDelegate.swift in Sources */,
+				D189F4C825A9FC18005BFB49 /* PlaylistWorks.swift in Sources */,
 				09DEEB112421830C00350397 /* PlaylistButtons.swift in Sources */,
 				093093682559E311005FB69E /* AlbumPlayButtons.swift in Sources */,
+				D189F4C925A9FC18005BFB49 /* Track.swift in Sources */,
+				D189F4C625A9FC18005BFB49 /* Genres.swift in Sources */,
+				D189F4C125A9FC18005BFB49 /* Composers.swift in Sources */,
 				0923104124C8BE5600E721B5 /* Search.swift in Sources */,
 				095A9CC123E50E400010E150 /* OmnisearchField.swift in Sources */,
 				09A6742523F79239000000D6 /* RecordingsList.swift in Sources */,
@@ -560,6 +699,8 @@
 				09A6741F23F77FDD000000D6 /* WorkDetail.swift in Sources */,
 				09F53EEC24527EBB00D312B9 /* AirPlayButton.swift in Sources */,
 				09AD2CD724341B5600375277 /* RadioBuilder.swift in Sources */,
+				D189F4BE25A9FC18005BFB49 /* Playlist.swift in Sources */,
+				D189F4BC25A9FC18005BFB49 /* Composer.swift in Sources */,
 				090625662431707D00E8FC3E /* RecordingBox.swift in Sources */,
 				093F0A23243442660039C218 /* SettingsMenuItem.swift in Sources */,
 				09E19F5923E254730011D718 /* Radio.swift in Sources */,
@@ -567,9 +708,9 @@
 				09A0083C23F35AA9001C696E /* ComposerDetail.swift in Sources */,
 				097CE15423F20E6B00050846 /* ComposerHeader.swift in Sources */,
 				09E19F5323E254530011D718 /* Player.swift in Sources */,
+				D189F4BA25A9FC18005BFB49 /* Work.swift in Sources */,
 				09A6742923F7B341000000D6 /* RecordingsDisclaimer.swift in Sources */,
 				0923105024D4916E00E721B5 /* WorkSearchField.swift in Sources */,
-				09AAD64F23E61E9F004CDAB6 /* Models.swift in Sources */,
 				09E5442023FB87B7005B8AEE /* RecordingMini.swift in Sources */,
 				0922D466240F1E9B001E8DFE /* PeriodList.swift in Sources */,
 				094B25D0253E087200A65113 /* DonationModal.swift in Sources */,
@@ -578,29 +719,39 @@
 				09DEEB0F241EF9F800350397 /* RecordingNotAvailable.swift in Sources */,
 				09E19F5E23E257A50011D718 /* TabButton.swift in Sources */,
 				0922D4762410A0C6001E8DFE /* FavoritesButton.swift in Sources */,
+				D189F4B325A9FC18005BFB49 /* Token.swift in Sources */,
 				097325F62408B5E000A1C9E6 /* WorkSearchRow.swift in Sources */,
+				D189F4B825A9FC18005BFB49 /* OmniResults.swift in Sources */,
 				09E19F5B23E254810011D718 /* Favorites.swift in Sources */,
 				09A0083E23F35C16001C696E /* GenreBar.swift in Sources */,
 				09A6742323F78171000000D6 /* BackButton.swift in Sources */,
 				0923104C24CF8A3000E721B5 /* MicroRecordingRow.swift in Sources */,
+				D189F4A925A9FC18005BFB49 /* PlaylistSummary.swift in Sources */,
 				09E19F4F23E2543E0011D718 /* Header.swift in Sources */,
 				097C15DD242DB75C006FBBEE /* MiniRecordingRow.swift in Sources */,
 				09647BEF2545DEEA00B14DD0 /* AlbumDetail.swift in Sources */,
 				09AAD65123E62121004CDAB6 /* Inc.swift in Sources */,
 				0923104A24CE015A00E721B5 /* MiniComposerRow.swift in Sources */,
+				D189F4C025A9FC18005BFB49 /* RecentSearch.swift in Sources */,
+				D189F4A825A9FC18005BFB49 /* PlaylistComposers.swift in Sources */,
+				D189F4CB25A9FC18005BFB49 /* AddComposer.swift in Sources */,
 				09AD2CD924341E6600375277 /* RadioStationsGrid.swift in Sources */,
 				097325EC24047D0600A1C9E6 /* RecordingPlaybackControl.swift in Sources */,
 				09A0084223F4E056001C696E /* WorksSearch.swift in Sources */,
 				097325E823FC406E00A1C9E6 /* ProgressBar.swift in Sources */,
+				D189F4AB25A9FC18005BFB49 /* RadioStationPlaylist.swift in Sources */,
 				09DEEB1D242AB7FA00350397 /* ShareButton.swift in Sources */,
 				0922D47224105981001E8DFE /* PlaylistsRecordings.swift in Sources */,
+				D189F4CC25A9FC18005BFB49 /* Recommendations.swift in Sources */,
 				09DEEB1F242C1CA000350397 /* AddToPlaylist.swift in Sources */,
+				D189F4CD25A9FC18005BFB49 /* AddRecordings.swift in Sources */,
 				09AAD65523E628C6004CDAB6 /* ComposerRow.swift in Sources */,
 				0919D09D2441492800EF4B50 /* RecordingProgressBar.swift in Sources */,
 				09DEEB1724282BD900350397 /* EllipsisButton.swift in Sources */,
 				097325EE2404BD1900A1C9E6 /* CircleAnimation.swift in Sources */,
 				09AD2CDB2434211D00375277 /* RadioStationSuperButton.swift in Sources */,
 				097325F8240A111400A1C9E6 /* FavoriteComposersList.swift in Sources */,
+				D189F4B525A9FC18005BFB49 /* RecordingQueue.swift in Sources */,
 				090625682431910500E8FC3E /* RadioSwitcher.swift in Sources */,
 				09A6741D23F778C4000000D6 /* ErrorMessage.swift in Sources */,
 				0922D47024105973001E8DFE /* PlaylistsMenu.swift in Sources */,
@@ -609,9 +760,14 @@
 				093093652558B2D1005FB69E /* RecordingPlayButton.swift in Sources */,
 				09647BFB2546144900B14DD0 /* RecordingDetailTracks.swift in Sources */,
 				09F417B3247989E8008CF53E /* Warning.swift in Sources */,
+				D189F4C725A9FC18005BFB49 /* FullAlbum.swift in Sources */,
 				09E5441C23FB5734005B8AEE /* RecordingTrackList.swift in Sources */,
+				D189F4C525A9FC18005BFB49 /* ShortRecording.swift in Sources */,
 				097CE15823F24C7700050846 /* Library.swift in Sources */,
+				D189F4B625A9FC18005BFB49 /* TrackQueue.swift in Sources */,
+				D189F4CA25A9FC18005BFB49 /* PlaylistRecordings.swift in Sources */,
 				09E5441A23FB571E005B8AEE /* RecordingPlayButtons.swift in Sources */,
+				D189F4BF25A9FC18005BFB49 /* RadioStationPlaylists.swift in Sources */,
 				095590F52499A49900A3E224 /* FullLoader.swift in Sources */,
 				09043E322436DA5200F07C57 /* Loader.swift in Sources */,
 				09DEEB21242C2C2600350397 /* PlaylistChooser.swift in Sources */,
