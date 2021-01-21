@@ -22,7 +22,7 @@ struct WorkSearchRow: View {
                     .foregroundColor(Color.lightRed)
             }
             .frame(width: 60, height: 60)
-            .background(Color(hex: 0x202023))
+            .background(Color.lightBlack)
             .clipped()
             .clipShape(Circle())
             

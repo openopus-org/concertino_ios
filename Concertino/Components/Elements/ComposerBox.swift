@@ -43,7 +43,7 @@ struct ComposerBox: View {
             .padding(12)
         }
         .frame(minWidth: 134, maxWidth: 134, minHeight: 174,  maxHeight: 174, alignment: .topLeading)
-        .background(Color(hex: 0x202023))
+        .background(Color.lightBlack)
         .padding(0)
         .cornerRadius(12)
     }

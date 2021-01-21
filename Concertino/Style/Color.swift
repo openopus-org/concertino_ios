@@ -14,4 +14,5 @@ extension Color {
     static let gray = Color(hex: 0x717171)
     static let lightGray = Color(hex: 0x696969)
     static let lightRed = Color(hex: 0xfe365e)
+    static let lightBlack = Color(hex: 0x202023)
 }

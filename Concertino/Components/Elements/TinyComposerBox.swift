@@ -36,7 +36,7 @@ struct TinyComposerBox: View {
             .padding(12)
         }
         .frame(minWidth: 72, maxWidth: 72, minHeight: 72,  maxHeight: 72, alignment: .top)
-        .background(Color(hex: 0x202023))
+        .background(Color.lightBlack)
         .padding(0)
         .cornerRadius(12)
     }
