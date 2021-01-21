@@ -27,7 +27,7 @@ struct RecordingDisclaimer: View {
             
             Spacer()
         }
-        .foregroundColor(Color(hex: 0xa7a6a6))
+        .foregroundColor(Color.darkGray)
         .padding(EdgeInsets(top: 20, leading: 30, bottom: 30, trailing: 30))
     }
 }

@@ -134,7 +134,7 @@ struct DonationModal: View {
                 
                 Text("Tipping is optional. You will be charged only once and the transaction will be processed through Apple.")
                     .font(.custom("Nunito-Regular", size: 10))
-                    .foregroundColor(Color(hex: 0xa7a6a6))
+                    .foregroundColor(Color.darkGray)
                     .multilineTextAlignment(.center)
             }
             .padding(20)
