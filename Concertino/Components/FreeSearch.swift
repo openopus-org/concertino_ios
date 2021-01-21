@@ -172,7 +172,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Composers".uppercased())
                                             
-                                            .foregroundColor(Color.gray)
+                                            .foregroundColor(Color.lightGray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.composers, id: \.id) { composer in
@@ -192,7 +192,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Works".uppercased())
                                             
-                                            .foregroundColor(Color.gray)
+                                            .foregroundColor(Color.lightGray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.works, id: \.id) { work in
@@ -212,7 +212,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Recordings".uppercased())
                                             
-                                            .foregroundColor(Color.gray)
+                                            .foregroundColor(Color.lightGray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.recordings, id: \.id) { recording in
@@ -272,7 +272,7 @@ struct FreeSearch: View {
                                 VStack {
                                     Text("\(recording.position ?? 0)")
                                         .font(.custom("Barlow-Regular", size: 15))
-                                        .foregroundColor(Color(hex: 0xffffff))
+                                        .foregroundColor(Color.white)
                                 }
                                 .frame(width: 36, height: 36)
                                 .background(Color.lightRed)

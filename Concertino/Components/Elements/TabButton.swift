@@ -23,7 +23,7 @@ struct TabButton: View {
                     Spacer()
                     
                     if tab == "radio" {
-                        AnimatedRadioIcon(color: Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : (self.radioState.isActive ? 0xFFFFFF : 0x7C726E)), isAnimated: self.radioState.isActive)
+                        AnimatedRadioIcon(color: self.AppState.currentTab == self.tab ? Color.lightRed : (self.radioState.isActive ? Color.white : Color.lightGray), isAnimated: self.radioState.isActive)
                             .frame(width: 60, height: 32)
                             .padding(.top, -4)
                             .padding(.bottom, 7)
@@ -31,14 +31,14 @@ struct TabButton: View {
                         Image(icon)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : 0x7C726E))
+                            .foregroundColor(self.AppState.currentTab == self.tab ? Color.lightRed : Color.lightGray)
                             .frame(width: UIDevice.current.isLarge ? 60 : 40, height: UIDevice.current.isLarge ? 20 : 16)
                     }
                     
                     Text(label)
                         
                         .font(.custom("Nunito-Regular", size: 10))
-                        .foregroundColor(Color(hex: self.AppState.currentTab == self.tab ? 0xFE365E : (self.radioState.isActive && tab == "radio" ? 0xFFFFFF : 0x7C726E)))
+                        .foregroundColor(self.AppState.currentTab == self.tab ? Color.lightRed : (self.radioState.isActive && tab == "radio" ? Color.white : Color.lightGray))
                         .padding(.top, icon == "radio" ? -14 : 0)
                 }
             })

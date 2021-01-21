@@ -14,7 +14,7 @@ struct RecordingsDisclaimer: View {
     var body: some View {
         Text(msg)
             .font(.custom("Nunito-Regular", size: 12))
-            .foregroundColor(Color.darkGray)
+            .foregroundColor(Color.extraLightGray)
             .padding(15)
     }
 }

@@ -293,7 +293,7 @@ struct Player: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x4F4F4F), Color.extraDarkGray]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color.darkGray, Color.extraDarkGray]), startPoint: .top, endPoint: .bottom)
                 .frame(minHeight: 130, maxHeight: self.AppState.fullPlayer ? .infinity : 130)
                 .cornerRadius(25)
 
@@ -307,7 +307,7 @@ struct Player: View {
                             Image("handle")
                                 .resizable()
                                 .frame(width: 7, height: 32)
-                                .foregroundColor(Color.lightGray)
+                                .foregroundColor(Color.gray)
                                 .rotationEffect(.degrees(self.AppState.fullPlayer ? 90 : 270))
                             
                             Spacer()

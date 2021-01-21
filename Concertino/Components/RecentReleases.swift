@@ -47,7 +47,7 @@ struct RecentReleases: View {
         VStack(alignment: .leading) {
             Text("Recent releases".uppercased())
                 
-                .foregroundColor(Color.gray)
+                .foregroundColor(Color.lightGray)
                 .font(.custom("Nunito-Regular", size: 12))
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
             

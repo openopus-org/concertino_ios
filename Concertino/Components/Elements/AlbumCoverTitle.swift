@@ -54,12 +54,12 @@ struct AlbumCoverTitle: View {
                         Text("\(album.readableLength)")
                             .padding(.top, -10)
                     }
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color.lightGray)
                     .font(.custom("Nunito-Regular", size: 12))
                     .padding(EdgeInsets(top: 4, leading: 6, bottom: 2, trailing: 6))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color.gray, lineWidth: 1)
+                            .stroke(Color.lightGray, lineWidth: 1)
                     )
                     .padding(.top, 12)
                 }

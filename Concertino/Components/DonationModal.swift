@@ -59,7 +59,7 @@ struct DonationModal: View {
                         .lineLimit(20)
                     
                     Text("Choose a tip value below".uppercased())
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.lightGray)
                         .font(.custom("Nunito-Regular", size: 12))
                         .multilineTextAlignment(.center)
                         .lineLimit(20)
@@ -134,7 +134,7 @@ struct DonationModal: View {
                 
                 Text("Tipping is optional. You will be charged only once and the transaction will be processed through Apple.")
                     .font(.custom("Nunito-Regular", size: 10))
-                    .foregroundColor(Color.darkGray)
+                    .foregroundColor(Color.extraLightGray)
                     .multilineTextAlignment(.center)
             }
             .padding(20)

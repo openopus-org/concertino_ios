@@ -37,7 +37,7 @@ struct PlaylistChooser: View {
                     .padding(.top, 10)
                     
                     Text(playlist.name)
-                        .foregroundColor(Color(hex: (self.active ? 0xFFFFFF : 0xfe365e)))
+                        .foregroundColor(self.active ? Color.white : Color.lightRed)
                         .font(.custom("Nunito-Regular", size: 16))
                         .fixedSize(horizontal: false, vertical: true)
                         .lineLimit(20)
@@ -58,7 +58,7 @@ struct PlaylistChooser: View {
             .frame(minWidth: 125, maxWidth: .infinity, minHeight: 80,  maxHeight: 80, alignment: .topLeading)
         }
         .frame(minWidth: 125, maxWidth: .infinity, minHeight: 80,  maxHeight: 80)
-        .background(Color(hex: (self.active ? 0xfe365e : 0x202023)))
+        .background(self.active ? Color.lightRed : Color.lightBlack)
         .cornerRadius(13)
     }
 }

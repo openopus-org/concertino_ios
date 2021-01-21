@@ -29,11 +29,11 @@ struct RadioSwitcher: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 20, height: 20)
-                        .foregroundColor(Color(hex: isActive ? 0xFFFFFF : 0xfe365e))
+                        .foregroundColor(isActive ? Color.white : Color.lightRed)
                 }
             }
             .frame(width: 44, height: 44)
-            .background(Color(hex: isActive ? 0xfe365e : 0x000000))
+            .background(isActive ? Color.lightRed : Color.black)
             .clipped()
             .clipShape(Circle())
             .padding(.bottom, -6)
@@ -46,7 +46,7 @@ struct RadioSwitcher: View {
             Spacer()
         }
         .frame(minWidth: 72, maxWidth: 72, minHeight: 72,  maxHeight: 72, alignment: .top)
-        .background(Color(hex: self.isActive ? 0xfe365e : 0x202023))
+        .background(self.isActive ? Color.lightRed : Color.lightBlack)
         .padding(0)
         .cornerRadius(12)
     }

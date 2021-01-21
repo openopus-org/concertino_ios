@@ -120,7 +120,7 @@ struct RecordingPlaybackControl: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 18)
-                                    .foregroundColor(Color(hex: self.radioState.isActive && self.radioState.canSkip ? 0xfe365e : 0x424242))
+                                    .foregroundColor(self.radioState.isActive && self.radioState.canSkip ? Color.lightRed : Color.darkGray)
                                 .padding(.leading, 22)
                             })
 

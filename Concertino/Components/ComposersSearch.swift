@@ -64,7 +64,7 @@ struct ComposersSearch: View {
                 else {
                     if self.composers.count > 0 {
                         Text("Composers".uppercased())
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.lightGray)
                         .font(.custom("Nunito-Regular", size: 12))
                         .padding(EdgeInsets(top: 7, leading: 20, bottom: 0, trailing: 0))
                         List(self.composers, id: \.id) { composer in

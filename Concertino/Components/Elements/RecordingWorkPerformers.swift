@@ -111,7 +111,7 @@ struct RecordingWorkPerformers: View {
                             .padding(.bottom, 4)
                             .padding(.top, 4)
                             .foregroundColor(.white)
-                            .background(Color(hex: 0x4F4F4F))
+                            .background(Color.darkGray)
                             .cornerRadius(16)
                         }
                         .padding(.trailing, 8)

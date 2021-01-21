@@ -19,7 +19,7 @@ struct Warning: View {
             
             VStack {
                 Text("warning".uppercased())
-                    .foregroundColor(Color.gray)
+                    .foregroundColor(Color.lightGray)
                     .font(.custom("Nunito-Regular", size: 10))
                     .multilineTextAlignment(.leading)
                 
@@ -105,7 +105,7 @@ struct Warning: View {
                             }
                             .padding(12)
                             .foregroundColor(.white)
-                            .background(Color(hex: 0x555555))
+                            .background(Color.darkGray)
                             .cornerRadius(16)
                     })
                 }

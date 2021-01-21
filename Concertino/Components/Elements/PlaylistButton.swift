@@ -37,8 +37,7 @@ struct PlaylistButton: View {
                 .padding(.top, 10)
                 
                 Text(playlist.name)
-                    
-                    .foregroundColor(Color(hex: (self.active ? 0xFFFFFF : 0xfe365e)))
+                    .foregroundColor(self.active ? Color.white : Color.lightRed)
                     .font(.custom("Nunito-ExtraBold", size: 12))
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(20)
@@ -53,7 +52,7 @@ struct PlaylistButton: View {
             .frame(minWidth: 125, maxWidth: 125, minHeight: 130,  maxHeight: 130, alignment: .topLeading)
         }
         .frame(minWidth: 145, maxWidth: 145, minHeight: 130,  maxHeight: 130)
-        .background(Color(hex: (self.active ? 0xfe365e : 0x202023)))
+        .background(self.active ? Color.lightRed : Color.lightBlack)
         .cornerRadius(13)
     }
 }

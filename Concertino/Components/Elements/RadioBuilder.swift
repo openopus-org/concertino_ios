@@ -87,7 +87,7 @@ struct RadioBuilder: View {
                 Group {
                     Text("Composers and works".uppercased())
                         
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.lightGray)
                         .font(.custom("Nunito-Regular", size: 12))
                         .padding(.top, 20)
                     
@@ -119,12 +119,12 @@ struct RadioBuilder: View {
                     
                     Text("and".uppercased())
                         
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.lightGray)
                         .font(.custom("Nunito-Regular", size: 8))
                         .padding(4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.lightGray, lineWidth: 1)
                         )
                         .padding(.top, 10)
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -132,7 +132,7 @@ struct RadioBuilder: View {
                 
                 Group {
                     Text("Periods".uppercased())
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.lightGray)
                         .font(.custom("Nunito-Regular", size: 12))
                         
                     
@@ -154,12 +154,12 @@ struct RadioBuilder: View {
                     
                     Text("and".uppercased())
                         
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.lightGray)
                         .font(.custom("Nunito-Regular", size: 8))
                         .padding(4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.gray, lineWidth: 1)
+                                .stroke(Color.lightGray, lineWidth: 1)
                             )
                             .padding(.top, 10)
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -168,7 +168,7 @@ struct RadioBuilder: View {
                 Group {
                     Text("Genres".uppercased())
                         
-                        .foregroundColor(Color.gray)
+                        .foregroundColor(Color.lightGray)
                         .font(.custom("Nunito-Regular", size: 12))
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -275,7 +275,7 @@ struct RadioBuilder: View {
                                     ActivityIndicator(isAnimating: self.isLoading)
                                     .configure { $0.color = .white; $0.style = .medium }
                                 } else {
-                                    AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive)
+                                    AnimatedRadioIcon(color: .white, isAnimated: self.radioState.isActive)
                                         .frame(width: 40, height: 20)
                                         .padding(.trailing, self.radioState.isActive ? 3 : -10)
                                         .padding(.leading, self.radioState.isActive ? 0 : -10)
@@ -291,7 +291,7 @@ struct RadioBuilder: View {
                         }
                         .padding(13)
                         .foregroundColor(.white)
-                        .background(Color(hex: self.radioState.isActive ? 0x696969 : 0xfe365e))
+                        .background(self.radioState.isActive ? Color.gray : Color.lightRed)
                         .cornerRadius(16)
                 })
                 .padding(.top, 20)
