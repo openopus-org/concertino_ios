@@ -33,7 +33,7 @@ struct FavoriteComposersList: View {
             if composers.count > 0 {
                 Text("Your Favorite Composers".uppercased())
                     
-                    .foregroundColor(Color(hex: 0x717171))
+                    .foregroundColor(Color.gray)
                     .font(.custom("Nunito-Regular", size: 12))
                     .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
                 ScrollView(.horizontal, showsIndicators: false) {

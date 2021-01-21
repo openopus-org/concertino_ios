@@ -37,7 +37,7 @@ struct ComposersList: View {
         VStack(alignment: .leading) {
             Text("Most Requested Composers".uppercased())
                 
-                .foregroundColor(Color(hex: 0x717171))
+                .foregroundColor(Color.gray)
                 .font(.custom("Nunito-Regular", size: 12))
                 .padding(EdgeInsets(top: 12, leading: 20, bottom: 0, trailing: 0))
             ScrollView(.horizontal, showsIndicators: false) {

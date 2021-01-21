@@ -172,7 +172,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Composers".uppercased())
                                             
-                                            .foregroundColor(Color(hex: 0x717171))
+                                            .foregroundColor(Color.gray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.composers, id: \.id) { composer in
@@ -192,7 +192,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Works".uppercased())
                                             
-                                            .foregroundColor(Color(hex: 0x717171))
+                                            .foregroundColor(Color.gray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.works, id: \.id) { work in
@@ -212,7 +212,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Recordings".uppercased())
                                             
-                                            .foregroundColor(Color(hex: 0x717171))
+                                            .foregroundColor(Color.gray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.recordings, id: \.id) { recording in

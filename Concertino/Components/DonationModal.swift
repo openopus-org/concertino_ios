@@ -59,7 +59,7 @@ struct DonationModal: View {
                         .lineLimit(20)
                     
                     Text("Choose a tip value below".uppercased())
-                        .foregroundColor(Color(hex: 0x717171))
+                        .foregroundColor(Color.gray)
                         .font(.custom("Nunito-Regular", size: 12))
                         .multilineTextAlignment(.center)
                         .lineLimit(20)

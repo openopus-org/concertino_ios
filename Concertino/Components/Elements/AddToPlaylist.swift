@@ -95,12 +95,12 @@ struct AddToPlaylist: View {
                 )
             
             Text("or".uppercased())
-                .foregroundColor(Color(hex: 0x717171))
+                .foregroundColor(Color.gray)
                 .font(.custom("Nunito-Regular", size: 12))
                 .padding(4)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color(hex: 0x717171), lineWidth: 1)
+                        .stroke(Color.gray, lineWidth: 1)
                 )
                 .padding(.top, 16)
                 .padding(.bottom, 20)

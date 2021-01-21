@@ -87,7 +87,7 @@ struct RadioBuilder: View {
                 Group {
                     Text("Composers and works".uppercased())
                         
-                        .foregroundColor(Color(hex: 0x717171))
+                        .foregroundColor(Color.gray)
                         .font(.custom("Nunito-Regular", size: 12))
                         .padding(.top, 20)
                     
@@ -119,12 +119,12 @@ struct RadioBuilder: View {
                     
                     Text("and".uppercased())
                         
-                        .foregroundColor(Color(hex: 0x717171))
+                        .foregroundColor(Color.gray)
                         .font(.custom("Nunito-Regular", size: 8))
                         .padding(4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color(hex: 0x717171), lineWidth: 1)
+                                .stroke(Color.gray, lineWidth: 1)
                         )
                         .padding(.top, 10)
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -132,7 +132,7 @@ struct RadioBuilder: View {
                 
                 Group {
                     Text("Periods".uppercased())
-                        .foregroundColor(Color(hex: 0x717171))
+                        .foregroundColor(Color.gray)
                         .font(.custom("Nunito-Regular", size: 12))
                         
                     
@@ -154,12 +154,12 @@ struct RadioBuilder: View {
                     
                     Text("and".uppercased())
                         
-                        .foregroundColor(Color(hex: 0x717171))
+                        .foregroundColor(Color.gray)
                         .font(.custom("Nunito-Regular", size: 8))
                         .padding(4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color(hex: 0x717171), lineWidth: 1)
+                                .stroke(Color.gray, lineWidth: 1)
                             )
                             .padding(.top, 10)
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -168,7 +168,7 @@ struct RadioBuilder: View {
                 Group {
                     Text("Genres".uppercased())
                         
-                        .foregroundColor(Color(hex: 0x717171))
+                        .foregroundColor(Color.gray)
                         .font(.custom("Nunito-Regular", size: 12))
                     
                     ScrollView(.horizontal, showsIndicators: false) {

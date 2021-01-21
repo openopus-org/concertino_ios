@@ -117,6 +117,7 @@
 		09F53EEC24527EBB00D312B9 /* AirPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F53EEB24527EBB00D312B9 /* AirPlayButton.swift */; };
 		09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5523F9E2D800599992 /* RecordingDetail.swift */; };
 		09FE9A5823F9E38A00599992 /* RecordingWorkPerformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */; };
+		D103CB3325B9F75A00401989 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103CB3225B9F75A00401989 /* Color.swift */; };
 		D189F4A825A9FC18005BFB49 /* PlaylistComposers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48225A9FC16005BFB49 /* PlaylistComposers.swift */; };
 		D189F4A925A9FC18005BFB49 /* PlaylistSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48325A9FC16005BFB49 /* PlaylistSummary.swift */; };
 		D189F4AA25A9FC18005BFB49 /* CurrentTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D189F48425A9FC16005BFB49 /* CurrentTrack.swift */; };
@@ -269,6 +270,7 @@
 		09F53EEB24527EBB00D312B9 /* AirPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayButton.swift; sourceTree = "<group>"; };
 		09FE9A5523F9E2D800599992 /* RecordingDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDetail.swift; sourceTree = "<group>"; };
 		09FE9A5723F9E38A00599992 /* RecordingWorkPerformers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingWorkPerformers.swift; sourceTree = "<group>"; };
+		D103CB3225B9F75A00401989 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		D189F48225A9FC16005BFB49 /* PlaylistComposers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistComposers.swift; sourceTree = "<group>"; };
 		D189F48325A9FC16005BFB49 /* PlaylistSummary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistSummary.swift; sourceTree = "<group>"; };
 		D189F48425A9FC16005BFB49 /* CurrentTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentTrack.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				09E19F4223E24F210011D718 /* Info.plist */,
 				09E19F3F23E24F210011D718 /* LaunchScreen.storyboard */,
 				D189F43425A9FBDD005BFB49 /* Models */,
+				D103CB3125B9F74400401989 /* Style */,
 				09E19F3C23E24F210011D718 /* Preview Content */,
 				09E19F3623E24F1F0011D718 /* SceneDelegate.swift */,
 				09E19F4C23E253780011D718 /* Structure.swift */,
@@ -503,6 +506,14 @@
 				093093672559E311005FB69E /* AlbumPlayButtons.swift */,
 			);
 			path = Elements;
+			sourceTree = "<group>";
+		};
+		D103CB3125B9F74400401989 /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				D103CB3225B9F75A00401989 /* Color.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 		D189F43425A9FBDD005BFB49 /* Models */ = {
@@ -658,6 +669,7 @@
 				0906256424316E6200E8FC3E /* RecentReleases.swift in Sources */,
 				0922D4742410A067001E8DFE /* PlaylistButton.swift in Sources */,
 				09599D76257DAC29007DF896 /* Lib.swift in Sources */,
+				D103CB3325B9F75A00401989 /* Color.swift in Sources */,
 				D189F4B125A9FC18005BFB49 /* Album.swift in Sources */,
 				0922D468240F1FAC001E8DFE /* PeriodBox.swift in Sources */,
 				09FE9A5623F9E2D800599992 /* RecordingDetail.swift in Sources */,

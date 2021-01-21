@@ -19,7 +19,7 @@ struct Warning: View {
             
             VStack {
                 Text("warning".uppercased())
-                    .foregroundColor(Color(hex: 0x717171))
+                    .foregroundColor(Color.gray)
                     .font(.custom("Nunito-Regular", size: 10))
                     .multilineTextAlignment(.leading)
                 
