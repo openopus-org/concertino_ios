@@ -19,7 +19,7 @@ struct WorkSearchRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 28, height: 28)
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
             }
             .frame(width: 60, height: 60)
             .background(Color(hex: 0x202023))
@@ -28,7 +28,7 @@ struct WorkSearchRow: View {
             
             VStack(alignment: .leading) {
                 Text(composer.name.uppercased())
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                     .font(.custom("Nunito-ExtraBold", size: 12))
                 Text(work.title)
                     .font(.custom("Barlow-Regular", size: 16))

@@ -23,7 +23,7 @@ struct RecordingPlaybackControl: View {
                     HStack {
                         Spacer()
                         ActivityIndicator(isAnimating: true)
-                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .large }
+                            .configure { $0.color = Color.lightRed.uiColor(); $0.style = .large }
                         Spacer()
                     }
                 }
@@ -58,7 +58,7 @@ struct RecordingPlaybackControl: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 24)
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                                 .rotationEffect(.degrees(180))
                             })
                         
@@ -75,7 +75,7 @@ struct RecordingPlaybackControl: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 58)
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                                 .padding(.leading, 32)
                                 .padding(.trailing, 32)
                             })
@@ -93,7 +93,7 @@ struct RecordingPlaybackControl: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 24)
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                             })
                         
                         Button(
@@ -133,7 +133,7 @@ struct RecordingPlaybackControl: View {
                 HStack {
                     Spacer()
                     ActivityIndicator(isAnimating: true)
-                        .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .large }
+                        .configure { $0.color = Color.lightRed.uiColor(); $0.style = .large }
                     Spacer()
                 }
                 

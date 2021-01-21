@@ -32,7 +32,7 @@ struct MiniComposerRow: View {
                 VStack(alignment: .leading) {
                     
                     Text(composer.name.uppercased())
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Nunito-ExtraBold", size: 12))
                     
                     Text(composer.complete_name)

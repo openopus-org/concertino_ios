@@ -34,7 +34,7 @@ struct WorksList: View {
                             Section(header:
                                 Text(genre)
                                     .font(.custom("Barlow-SemiBold", size: 13))
-                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .foregroundColor(Color.lightRed)
                                     .padding(.top, self.radioReady ? 0 : 20)
                                     .textCase(.none)
                             ){
@@ -47,7 +47,7 @@ struct WorksList: View {
                             Section(header:
                                 Text(genre)
                                     .font(.custom("Barlow-SemiBold", size: 13))
-                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .foregroundColor(Color.lightRed)
                                     .padding(.top, self.radioReady ? 0 : 20)
                             ){
                                 ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
@@ -75,7 +75,7 @@ struct WorksList: View {
                             Section(header:
                                 Text(rec == "1" ? "Essential" : "Other works")
                                     .font(.custom("Barlow-SemiBold", size: 13))
-                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .foregroundColor(Color.lightRed)
                                     .padding(.top, self.radioReady ? 0 : 20)
                                     .textCase(.none)
                             ){
@@ -89,7 +89,7 @@ struct WorksList: View {
                             Section(header:
                                 Text(rec == "1" ? "Essential" : "Other works")
                                     .font(.custom("Barlow-SemiBold", size: 13))
-                                    .foregroundColor(Color(hex: 0xFE365E))
+                                    .foregroundColor(Color.lightRed)
                                     .padding(.top, self.radioReady ? 0 : 20)
                             ){
                                 ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in

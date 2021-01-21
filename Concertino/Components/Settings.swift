@@ -108,7 +108,7 @@ struct Settings: View {
                     VStack(alignment: .leading) {
                         Text("Library filters".uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 13))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                         if #available(iOS 14.0, *) {
                             Text("Automatic filters that try to eliminate bad or undesirable recordings from the library. They are not perfect, but definitely can improve your playing experience.")
                                 .textCase(.none)
@@ -143,7 +143,7 @@ struct Settings: View {
                         VStack(alignment: .leading) {
                             Text("Device sync".uppercased())
                                 .font(.custom("Nunito-ExtraBold", size: 13))
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                             if #available(iOS 14.0, *) {
                                 Text("Signed-in users have their favorites, playlists and playing history synchronized between multiple devices.")
                                     .textCase(.none)
@@ -180,7 +180,7 @@ struct Settings: View {
                                             .foregroundColor(Color.black)
                                         }
                                         .frame(width: 22, height: 22)
-                                        .background(Color(hex: 0xfe365e))
+                                        .background(Color.lightRed)
                                         .clipped()
                                         .clipShape(Circle())
                                         .padding(.trailing, 4)
@@ -200,7 +200,7 @@ struct Settings: View {
                     VStack(alignment: .leading) {
                         Text("Support us!".uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 13))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                         if #available(iOS 14.0, *) {
                             Text("Help us keeping Concertino free! Donate and back our development and hosting costs. Choose a tip value below. You will be charged only once and the transaction will be processed through Apple.")
                                 .textCase(.none)
@@ -227,7 +227,7 @@ struct Settings: View {
                             Image("favorites")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                                 .frame(height: 18)
                                 .padding(.trailing, 1)
                             
@@ -268,7 +268,7 @@ struct Settings: View {
                                                 .foregroundColor(.white)
                                                 .font(.custom("Nunito-Regular", size: 13))
                                                 .padding(13)
-                                                .background(Color(hex: 0xfe365e))
+                                                .background(Color.lightRed)
                                                 .cornerRadius(16)
                                         })
                                         .buttonStyle(BorderlessButtonStyle())
@@ -285,7 +285,7 @@ struct Settings: View {
                     VStack(alignment: .leading) {
                         Text("Become our patron".uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 13))
-                            .foregroundColor(Color(hex: 0xFE365E))
+                            .foregroundColor(Color.lightRed)
                             
                         if #available(iOS 14.0, *) {
                             Text("One-time tips are great, recurrent donations are amazing! Patrons receive early updates and get their names listed here.")
@@ -323,7 +323,7 @@ struct Settings: View {
                 Section(header:
                     Text("About".uppercased())
                         .font(.custom("Nunito-ExtraBold", size: 13))
-                        .foregroundColor(Color(hex: 0xFE365E))
+                        .foregroundColor(Color.lightRed)
                     ){
                         SettingsMenuItem(title: "Version", description: AppConstants.version)
                             .listRowBackground(Color.black)

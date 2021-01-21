@@ -29,7 +29,7 @@ struct ComposerBox: View {
                 }
                 .frame(width: 52, height: 52)
                 Text(composer.name.uppercased())
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                     .font(.custom("Nunito-ExtraBold", size: 13))
                 Group{
                     Text(composer.complete_name)

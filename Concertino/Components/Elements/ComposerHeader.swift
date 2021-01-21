@@ -71,7 +71,7 @@ struct ComposerHeader: View {
                 VStack(alignment: .leading) {
                     
                     Text(composer.name.uppercased())
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Nunito-ExtraBold", size: 17))
                     
                     Group{

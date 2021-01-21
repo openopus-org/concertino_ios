@@ -85,7 +85,7 @@ struct Warning: View {
                                 }
                                 .padding(12)
                                 .foregroundColor(.white)
-                                .background(Color(hex: 0xfe365e))
+                                .background(Color.lightRed)
                                 .cornerRadius(16)
                         })
                     }

@@ -70,7 +70,7 @@ struct OmnisearchField: View {
                 },
                        label: { Text("Cancel")
                         
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Nunito-Regular", size: 13))
                         .padding(4)
                 })

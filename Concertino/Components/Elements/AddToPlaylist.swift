@@ -22,7 +22,7 @@ struct AddToPlaylistButtons: View {
                 self.presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text("Cancel")
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                     .font(.custom("Barlow-Regular", size: 14))
             })
             
@@ -51,10 +51,10 @@ struct AddToPlaylistButtons: View {
             }, label: {
                 if self.isLoading {
                     ActivityIndicator(isAnimating: true)
-                        .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .medium }
+                        .configure { $0.color = Color.lightRed.uiColor(); $0.style = .medium }
                 } else {
                     Text("Done")
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                     .font(.custom("Barlow-SemiBold", size: 14))
                 }
             })
@@ -78,7 +78,7 @@ struct AddToPlaylist: View {
             
             Text("New Playlist".uppercased())
                 .font(.custom("Nunito-ExtraBold", size: 13))
-                .foregroundColor(Color(hex: 0xfe365e))
+                .foregroundColor(Color.lightRed)
             Text("Create a new playlist and add this recording to it")
                 .font(.custom("Barlow-Regular", size: 16))
                 .foregroundColor(Color.white)
@@ -108,7 +108,7 @@ struct AddToPlaylist: View {
             
             Text("Existing Playlist".uppercased())
                 .font(.custom("Nunito-ExtraBold", size: 13))
-                .foregroundColor(Color(hex: 0xfe365e))
+                .foregroundColor(Color.lightRed)
             Text("Add this recording to an existing playlist")
                 .font(.custom("Barlow-Regular", size: 16))
                 .foregroundColor(Color.white)

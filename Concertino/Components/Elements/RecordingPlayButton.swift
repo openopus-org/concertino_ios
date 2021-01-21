@@ -79,7 +79,7 @@ struct RecordingPlayButton: View {
                         }
                         .frame(width: 33, height: 33)
                         .foregroundColor(.white)
-                        .background(Color(hex: 0xfe365e))
+                        .background(Color.lightRed)
                         .clipped()
                         .clipShape(Circle())
                 })

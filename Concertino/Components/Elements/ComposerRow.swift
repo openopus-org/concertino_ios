@@ -32,7 +32,7 @@ struct ComposerRow: View {
                     
                     Text(composer.name.uppercased())
                         
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Nunito-ExtraBold", size: 15))
                     Group{
                         Text(composer.complete_name)

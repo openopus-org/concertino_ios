@@ -11,4 +11,5 @@ import SwiftUI
 extension Color {
     
     static let gray = Color(hex: 0x717171)
+    static let lightRed = Color(hex: 0xfe365e)
 }

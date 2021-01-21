@@ -85,7 +85,7 @@ struct RecordingPlayButtons: View {
                         }
                         .padding(14)
                         .foregroundColor(.white)
-                        .background(Color(hex: 0xfe365e))
+                        .background(Color.lightRed)
                         .cornerRadius(16)
                 })
             }

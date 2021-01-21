@@ -26,7 +26,7 @@ struct DonationModal: View {
                     self.presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Text("Close")
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Barlow-Regular", size: 14))
                 })
             }
@@ -35,7 +35,7 @@ struct DonationModal: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
                     Text("Thank you for using Concertino!")
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Nunito-ExtraBold", size: 20))
                         .multilineTextAlignment(.center)
                         .lineLimit(20)
@@ -53,7 +53,7 @@ struct DonationModal: View {
                         .lineLimit(20)
                     
                     Text("Help keeping Concertino free. Please donate and back our development and hosting costs!")
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Barlow-SemiBold", size: 14))
                         .multilineTextAlignment(.center)
                         .lineLimit(20)
@@ -78,7 +78,7 @@ struct DonationModal: View {
                             Image("favorites")
                                 .resizable()
                                 .scaledToFit()
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                                 .frame(height: 18)
                                 .padding(.trailing, 1)
                             
@@ -120,7 +120,7 @@ struct DonationModal: View {
                                             .foregroundColor(.white)
                                             .font(.custom("Nunito-Regular", size: 13))
                                             .padding(13)
-                                            .background(Color(hex: 0xfe365e))
+                                            .background(Color.lightRed)
                                             .cornerRadius(16)
                                     })
                                     .buttonStyle(BorderlessButtonStyle())
