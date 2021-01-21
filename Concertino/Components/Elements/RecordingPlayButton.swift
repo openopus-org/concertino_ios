@@ -37,7 +37,7 @@ struct RecordingPlayButton: View {
                                     Image("handle")
                                         .resizable()
                                         .frame(width: 12, height: 24)
-                                        .foregroundColor(Color(hex: 0x696969))
+                                        .foregroundColor(Color.lightGray)
                                         .rotationEffect(.degrees(90))
                                         //.padding(.leading, 3)
                                         .padding(.top, 3)

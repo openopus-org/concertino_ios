@@ -307,7 +307,7 @@ struct Player: View {
                             Image("handle")
                                 .resizable()
                                 .frame(width: 7, height: 32)
-                                .foregroundColor(Color(hex: 0x696969))
+                                .foregroundColor(Color.lightGray)
                                 .rotationEffect(.degrees(self.AppState.fullPlayer ? 90 : 270))
                             
                             Spacer()
