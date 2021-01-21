@@ -112,7 +112,7 @@ struct Warning: View {
                 .padding(.top, 20)
             }
             .padding(15)
-            .background(Color.darkGray)
+            .background(Color.extraDarkGray)
             .cornerRadius(20)
             .frame(maxWidth: 320)
             

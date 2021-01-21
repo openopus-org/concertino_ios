@@ -114,7 +114,7 @@ struct PlaylistButtons: View {
                         }
                         .padding(15)
                         .foregroundColor(.white)
-                        .background(Color.darkGray)
+                        .background(Color.extraDarkGray)
                         .cornerRadius(16)
                 })
                 .buttonStyle(BorderlessButtonStyle())

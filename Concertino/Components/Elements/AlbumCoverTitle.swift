@@ -21,7 +21,7 @@ struct AlbumCoverTitle: View {
             HStack(alignment: .top) {
                 URLImage(album.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                     Rectangle()
-                        .fill(Color.darkGray)
+                        .fill(Color.extraDarkGray)
                         .frame(width: 160, height: 160)
                         .cornerRadius(20)
                 }) { img in

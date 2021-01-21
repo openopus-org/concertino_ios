@@ -18,7 +18,7 @@ struct EllipsisButton: View {
                 .foregroundColor(.white)
         }
         .frame(width: 28, height: 28)
-        .background(Color.darkGray)
+        .background(Color.extraDarkGray)
         .clipped()
         .clipShape(Circle())
     }

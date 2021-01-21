@@ -20,7 +20,7 @@ struct PlaylistButton: View {
                     ForEach(0 ..< playlist.summary.composers.portraits.prefix(4).count, id: \.self) { number in
                         URLImage(self.playlist.summary.composers.portraits[number], placeholder: { _ in
                             Circle()
-                                .fill(Color.darkGray)
+                                .fill(Color.extraDarkGray)
                                 .frame(width: 40, height: 40)
                         }) { img in
                             img.image

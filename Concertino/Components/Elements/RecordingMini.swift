@@ -21,7 +21,7 @@ struct RecordingMini: View {
             HStack(alignment: .top) {
                 URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                     Rectangle()
-                        .fill(Color.darkGray)
+                        .fill(Color.extraDarkGray)
                         .frame(width: 50, height: 50)
                         .cornerRadius(10)
                 }) { img in

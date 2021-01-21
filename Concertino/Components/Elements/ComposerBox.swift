@@ -17,7 +17,7 @@ struct ComposerBox: View {
             VStack(alignment: .leading) {
                 URLImage(composer.portrait!, placeholder: { _ in
                     Circle()
-                        .fill(Color.darkGray)
+                        .fill(Color.extraDarkGray)
                         .frame(width: 52, height: 52)
                 }) { img in
                     img.image

@@ -21,7 +21,7 @@ struct PlaylistChooser: View {
                         ForEach(0 ..< playlist.summary.composers.portraits.prefix(8).count, id: \.self) { number in
                             URLImage(self.playlist.summary.composers.portraits[number], placeholder: { _ in
                                 Circle()
-                                    .fill(Color.darkGray)
+                                    .fill(Color.extraDarkGray)
                                     .frame(width: 30, height: 30)
                             }) { img in
                                 img.image

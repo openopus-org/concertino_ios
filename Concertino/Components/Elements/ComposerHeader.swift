@@ -55,7 +55,7 @@ struct ComposerHeader: View {
             
             URLImage(composer.portrait!, placeholder: { _ in
                 Circle()
-                    .fill(Color.darkGray)
+                    .fill(Color.extraDarkGray)
                     .frame(width: 70, height: 70)
             }) { img in
                 img.image

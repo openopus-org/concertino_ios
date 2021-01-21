@@ -16,7 +16,7 @@ struct ComposerRow: View {
         HStack {
             URLImage(composer.portrait!, placeholder: { _ in
                 Circle()
-                    .fill(Color.darkGray)
+                    .fill(Color.extraDarkGray)
                     .frame(width: 60, height: 60)
             }) { img in
                 img.image
