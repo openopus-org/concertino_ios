@@ -17,7 +17,7 @@ struct RecordingBox: View {
             VStack(alignment: .leading) {
                 URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                     Rectangle()
-                        .fill(Color(hex: 0x2B2B2F))
+                        .fill(Color.darkGray)
                         .frame(width: 125, height: 125)
                         .cornerRadius(20)
                 }) { img in

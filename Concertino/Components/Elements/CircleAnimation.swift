@@ -14,7 +14,7 @@ struct CircleAnimation: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color(hex: 0x2B2B2F), lineWidth: 6)
+                .stroke(Color.darkGray, lineWidth: 6)
                 .frame(width: 20, height: 20)
             
             Circle()

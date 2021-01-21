@@ -103,7 +103,7 @@ struct RecordingPlayButtons: View {
                         Spacer()
                     }
                     .padding(14)
-                    .background(Color(hex: 0x2B2B2F))
+                    .background(Color.darkGray)
                     .cornerRadius(16)
             })
         }

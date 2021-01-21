@@ -293,7 +293,7 @@ struct Player: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x4F4F4F), Color(hex: 0x2B2B2F)]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color(hex: 0x4F4F4F), Color.darkGray]), startPoint: .top, endPoint: .bottom)
                 .frame(minHeight: 130, maxHeight: self.AppState.fullPlayer ? .infinity : 130)
                 .cornerRadius(25)
 

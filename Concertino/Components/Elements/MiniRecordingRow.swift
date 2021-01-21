@@ -18,7 +18,7 @@ struct MiniRecordingRow: View {
             ZStack(alignment: .bottomTrailing) {
                 URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                     Rectangle()
-                        .fill(Color(hex: 0x2B2B2F))
+                        .fill(Color.darkGray)
                         .frame(width: 70, height: 70)
                         .cornerRadius(20)
                 }) { img in

@@ -70,7 +70,7 @@ struct RecordingWorkPerformers: View {
                 if isSheet || isPlayer {
                     URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                         Rectangle()
-                            .fill(Color(hex: 0x2B2B2F))
+                            .fill(Color.darkGray)
                             .frame(width: 110, height: 110)
                             .cornerRadius(20)
                     }) { img in
@@ -88,7 +88,7 @@ struct RecordingWorkPerformers: View {
                         VStack {
                             URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                                 Rectangle()
-                                    .fill(Color(hex: 0x2B2B2F))
+                                    .fill(Color.darkGray)
                                     .frame(width: 110, height: 110)
                                     .cornerRadius(20)
                             }) { img in
