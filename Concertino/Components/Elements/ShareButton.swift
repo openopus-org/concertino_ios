@@ -23,7 +23,7 @@ struct ShareButton: View {
             }
         }
         .frame(width: 28, height: 28)
-        .background(Color(hex: 0x2B2B2F))
+        .background(Color.extraDarkGray)
         .clipped()
         .clipShape(Circle())
     }

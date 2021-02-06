@@ -172,7 +172,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Composers".uppercased())
                                             
-                                            .foregroundColor(Color(hex: 0x717171))
+                                            .foregroundColor(Color.lightGray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.composers, id: \.id) { composer in
@@ -192,7 +192,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Works".uppercased())
                                             
-                                            .foregroundColor(Color(hex: 0x717171))
+                                            .foregroundColor(Color.lightGray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.works, id: \.id) { work in
@@ -212,7 +212,7 @@ struct FreeSearch: View {
                                     Section(header:
                                         Text("Recordings".uppercased())
                                             
-                                            .foregroundColor(Color(hex: 0x717171))
+                                            .foregroundColor(Color.lightGray)
                                             .font(.custom("Nunito-Regular", size: 12))
                                     ){
                                         ForEach(self.recordings, id: \.id) { recording in
@@ -255,7 +255,7 @@ struct FreeSearch: View {
                         Section(header:
                             Text("Recent searches".uppercased())
                                 .font(.custom("Nunito-ExtraBold", size: 13))
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                                 .padding(.top, 10)
                         ){
                             RecentSearches()
@@ -265,17 +265,17 @@ struct FreeSearch: View {
                     Section(header:
                         Text("Trending recordings".uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 13))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                     ){
                         ForEach(self.trendingRecordings, id: \.id) { recording in
                             HStack(alignment: .top) {
                                 VStack {
                                     Text("\(recording.position ?? 0)")
                                         .font(.custom("Barlow-Regular", size: 15))
-                                        .foregroundColor(Color(hex: 0xffffff))
+                                        .foregroundColor(Color.white)
                                 }
                                 .frame(width: 36, height: 36)
-                                .background(Color(hex: 0xfe365e))
+                                .background(Color.lightRed)
                                 .clipped()
                                 .clipShape(Circle())
                                 .padding(.top, 14)

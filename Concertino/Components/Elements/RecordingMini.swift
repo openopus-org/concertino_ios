@@ -21,7 +21,7 @@ struct RecordingMini: View {
             HStack(alignment: .top) {
                 URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                     Rectangle()
-                        .fill(Color(hex: 0x2B2B2F))
+                        .fill(Color.extraDarkGray)
                         .frame(width: 50, height: 50)
                         .cornerRadius(10)
                 }) { img in
@@ -39,7 +39,7 @@ struct RecordingMini: View {
                     if recording.work!.composer!.name != "None" {
                         Text(recording.work!.composer!.name.uppercased())
                             .font(.custom("Nunito-ExtraBold", size: 12))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                     }
                     
                     Text(recording.work!.title)
@@ -57,7 +57,7 @@ struct RecordingMini: View {
                     HStack {
                         Spacer()
                         ActivityIndicator(isAnimating: true)
-                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .medium }
+                            .configure { $0.color = Color.lightRed.uiColor(); $0.style = .medium }
                         Spacer()
                     }
                     .padding(.top, 4)
@@ -77,7 +77,7 @@ struct RecordingMini: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(height: 22)
-                                .foregroundColor(Color(hex: 0xfe365e))
+                                .foregroundColor(Color.lightRed)
                                 .padding(.leading, 18)
                                 .padding(.trailing, 22)
                         })
@@ -119,7 +119,7 @@ struct RecordingMini: View {
                     HStack {
                         Spacer()
                         ActivityIndicator(isAnimating: true)
-                            .configure { $0.color = Color(hex: 0xfe365e).uiColor(); $0.style = .medium }
+                            .configure { $0.color = Color.lightRed.uiColor(); $0.style = .medium }
                         Spacer()
                     }
                     .padding(.top, 4)

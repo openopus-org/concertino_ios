@@ -17,7 +17,7 @@ struct MicroRecordingRow: View {
             ZStack(alignment: .bottomTrailing) {
                 URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                     Rectangle()
-                        .fill(Color(hex: 0x2B2B2F))
+                        .fill(Color.extraDarkGray)
                         .frame(width: 36, height: 36)
                         .cornerRadius(10)
                 }) { img in
@@ -36,12 +36,12 @@ struct MicroRecordingRow: View {
                     if recording.work!.composer!.id != "0" {
                         Text(recording.work!.composer!.name.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                             .font(.custom("Nunito-ExtraBold", size: 12))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                     } else if recording.work!.composer!.name != "None" {
                         ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
                             Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                             .font(.custom("Nunito-ExtraBold", size: 12))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                         }
                     }
                     

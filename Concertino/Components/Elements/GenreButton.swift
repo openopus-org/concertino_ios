@@ -19,10 +19,10 @@ struct GenreButton: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 20, height: 20)
-                    .foregroundColor(Color(hex: self.active ? 0x000000 : 0xfe365e))
+                    .foregroundColor(self.active ? Color.black : Color.lightRed)
             }
             .frame(width: 44, height: 44)
-            .background(Color(hex: self.active ? 0xfe365e : 0x202023))
+            .background(self.active ? Color.lightRed : Color.lightBlack)
             .clipped()
             .clipShape(Circle())
             

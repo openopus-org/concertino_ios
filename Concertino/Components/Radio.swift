@@ -16,7 +16,7 @@ struct Radio: View {
             VStack(alignment: .leading) {
                 Text("Build your radio station".uppercased())
                     .font(.custom("Nunito-ExtraBold", size: 13))
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                 Text("Build your no-nonsense classical radio! Start a continuous stream of music based on what you want to hear.")
                     .font(.custom("Barlow-Regular", size: 13))
                 
@@ -25,7 +25,7 @@ struct Radio: View {
                 
                 Text("Preset radios".uppercased())
                     .font(.custom("Nunito-ExtraBold", size: 13))
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                     .padding(.top, 20)
                 Text("Try one of our carefully curated radio stations. Good for any mood!")
                     .font(.custom("Barlow-Regular", size: 13))

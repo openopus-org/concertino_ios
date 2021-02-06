@@ -85,7 +85,7 @@ struct RadioStationButton: View {
                     ZStack(alignment: .topLeading) {
                         URLImage(self.cover, placeholder: { _ in
                             Rectangle()
-                                .fill(Color(hex: 0x2B2B2F))
+                                .fill(Color.extraDarkGray)
                                 .frame(minWidth: 200, idealWidth: 200, maxWidth: 200, minHeight: 138, idealHeight: 138, maxHeight: 138, alignment: .topLeading)
                                 .cornerRadius(20)
                         }) { img in

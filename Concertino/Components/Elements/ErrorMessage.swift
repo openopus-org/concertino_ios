@@ -17,11 +17,11 @@ struct ErrorMessage: View {
                 Image("warning")
                     .resizable()
                     .scaledToFit()
-                    .foregroundColor(Color(hex: 0xa7a6a6))
+                    .foregroundColor(Color.extraLightGray)
                     .frame(height: 28)
                     .padding(5)
                 Text(msg)
-                    .foregroundColor(Color(hex: 0xa7a6a6))
+                    .foregroundColor(Color.extraLightGray)
                     .font(.custom("Barlow-Regular", size: 14))
             }
         }.padding(15)

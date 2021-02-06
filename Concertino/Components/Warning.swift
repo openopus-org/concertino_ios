@@ -19,7 +19,7 @@ struct Warning: View {
             
             VStack {
                 Text("warning".uppercased())
-                    .foregroundColor(Color(hex: 0x717171))
+                    .foregroundColor(Color.lightGray)
                     .font(.custom("Nunito-Regular", size: 10))
                     .multilineTextAlignment(.leading)
                 
@@ -85,7 +85,7 @@ struct Warning: View {
                                 }
                                 .padding(12)
                                 .foregroundColor(.white)
-                                .background(Color(hex: 0xfe365e))
+                                .background(Color.lightRed)
                                 .cornerRadius(16)
                         })
                     }
@@ -105,14 +105,14 @@ struct Warning: View {
                             }
                             .padding(12)
                             .foregroundColor(.white)
-                            .background(Color(hex: 0x555555))
+                            .background(Color.darkGray)
                             .cornerRadius(16)
                     })
                 }
                 .padding(.top, 20)
             }
             .padding(15)
-            .background(Color(hex: 0x2b2b2f))
+            .background(Color.extraDarkGray)
             .cornerRadius(20)
             .frame(maxWidth: 320)
             

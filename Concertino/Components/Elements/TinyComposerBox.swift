@@ -17,7 +17,7 @@ struct TinyComposerBox: View {
             VStack {
                 URLImage(composer.portrait!, placeholder: { _ in
                     Circle()
-                        .fill(Color(hex: 0x2B2B2F))
+                        .fill(Color.extraDarkGray)
                         .frame(width: 32, height: 32)
                 }) { img in
                     img.image
@@ -36,7 +36,7 @@ struct TinyComposerBox: View {
             .padding(12)
         }
         .frame(minWidth: 72, maxWidth: 72, minHeight: 72,  maxHeight: 72, alignment: .top)
-        .background(Color(hex: 0x202023))
+        .background(Color.lightBlack)
         .padding(0)
         .cornerRadius(12)
     }

@@ -19,7 +19,7 @@ struct MiniWorkSearchRow: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 24, height: 24)
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
             }
             .frame(width: 36, height: 36)
             .clipped()
@@ -27,7 +27,7 @@ struct MiniWorkSearchRow: View {
             
             VStack(alignment: .leading) {
                 Text(composer.name.uppercased())
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                     .font(.custom("Nunito-ExtraBold", size: 12))
                 Text(work.title)
                     .font(.custom("Barlow-Regular", size: 12))

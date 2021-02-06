@@ -16,7 +16,7 @@ struct MiniComposerRow: View {
         HStack {
             URLImage(composer.portrait!, placeholder: { _ in
                 Circle()
-                    .fill(Color(hex: 0x2B2B2F))
+                    .fill(Color.extraDarkGray)
                     .frame(width: 36, height: 36)
             }) { img in
                 img.image
@@ -32,7 +32,7 @@ struct MiniComposerRow: View {
                 VStack(alignment: .leading) {
                     
                     Text(composer.name.uppercased())
-                        .foregroundColor(Color(hex: 0xfe365e))
+                        .foregroundColor(Color.lightRed)
                         .font(.custom("Nunito-ExtraBold", size: 12))
                     
                     Text(composer.complete_name)

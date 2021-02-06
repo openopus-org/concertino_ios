@@ -21,7 +21,7 @@ struct AlbumCoverTitle: View {
             HStack(alignment: .top) {
                 URLImage(album.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                     Rectangle()
-                        .fill(Color(hex: 0x2B2B2F))
+                        .fill(Color.extraDarkGray)
                         .frame(width: 160, height: 160)
                         .cornerRadius(20)
                 }) { img in
@@ -54,12 +54,12 @@ struct AlbumCoverTitle: View {
                         Text("\(album.readableLength)")
                             .padding(.top, -10)
                     }
-                    .foregroundColor(Color(hex: 0x717171))
+                    .foregroundColor(Color.lightGray)
                     .font(.custom("Nunito-Regular", size: 12))
                     .padding(EdgeInsets(top: 4, leading: 6, bottom: 2, trailing: 6))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
-                            .stroke(Color(hex: 0x717171), lineWidth: 1)
+                            .stroke(Color.lightGray, lineWidth: 1)
                     )
                     .padding(.top, 12)
                 }

@@ -70,7 +70,7 @@ struct PlaylistButtons: View {
                                 ActivityIndicator(isAnimating: self.isLoading)
                                 .configure { $0.color = .white; $0.style = .medium }
                             } else {
-                                AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: self.radioState.isActive && self.radioState.playlistId == self.playlistId)
+                                AnimatedRadioIcon(color: .white, isAnimated: self.radioState.isActive && self.radioState.playlistId == self.playlistId)
                                     .frame(width: 40, height: 20)
                                     .padding(.trailing, self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 3 : -10)
                                     .padding(.leading, self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 0 : -10)
@@ -85,7 +85,7 @@ struct PlaylistButtons: View {
                     }
                     .padding(13)
                     .foregroundColor(.white)
-                    .background(Color(hex: self.radioState.isActive && self.radioState.playlistId == self.playlistId ? 0x696969 : 0xfe365e))
+                    .background(self.radioState.isActive && self.radioState.playlistId == self.playlistId ? Color.gray : Color.lightRed)
                     .cornerRadius(16)
             })
             .buttonStyle(BorderlessButtonStyle())
@@ -114,7 +114,7 @@ struct PlaylistButtons: View {
                         }
                         .padding(15)
                         .foregroundColor(.white)
-                        .background(Color(hex: 0x2B2B2F))
+                        .background(Color.extraDarkGray)
                         .cornerRadius(16)
                 })
                 .buttonStyle(BorderlessButtonStyle())

@@ -45,7 +45,7 @@ struct BrowseOnlyMode: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: size == "min" ? 16 : 23)
-                    .foregroundColor(Color(hex: size == "min" ? 0xFFFFFF : 0xFFFFFF))
+                    .foregroundColor(Color.white)
                     .padding(.trailing, size == "min" ? 0 : 2)
                 
                 VStack(alignment: .leading) {
@@ -56,7 +56,7 @@ struct BrowseOnlyMode: View {
                         .font(.custom("Nunito-Regular", size: size == "min" ? 8 : 11))
                         .padding(.top, size == "min" ? -2 : -2)
                 }
-                .foregroundColor(Color(hex: size == "min" ? 0xFFFFFF : 0xFFFFFF))
+                .foregroundColor(Color.white)
             }
         })
     }

@@ -70,7 +70,7 @@ struct RecordingWorkPerformers: View {
                 if isSheet || isPlayer {
                     URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                         Rectangle()
-                            .fill(Color(hex: 0x2B2B2F))
+                            .fill(Color.extraDarkGray)
                             .frame(width: 110, height: 110)
                             .cornerRadius(20)
                     }) { img in
@@ -88,7 +88,7 @@ struct RecordingWorkPerformers: View {
                         VStack {
                             URLImage(recording.cover ?? URL(fileURLWithPath: AppConstants.concNoCoverImg), placeholder: { _ in
                                 Rectangle()
-                                    .fill(Color(hex: 0x2B2B2F))
+                                    .fill(Color.extraDarkGray)
                                     .frame(width: 110, height: 110)
                                     .cornerRadius(20)
                             }) { img in
@@ -111,7 +111,7 @@ struct RecordingWorkPerformers: View {
                             .padding(.bottom, 4)
                             .padding(.top, 4)
                             .foregroundColor(.white)
-                            .background(Color(hex: 0x4F4F4F))
+                            .background(Color.darkGray)
                             .cornerRadius(16)
                         }
                         .padding(.trailing, 8)
@@ -122,12 +122,12 @@ struct RecordingWorkPerformers: View {
                     if recording.work!.composer!.id != "0" {
                         Text(recording.work!.composer!.name.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                             .font(.custom("Nunito-ExtraBold", size: 15))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                     } else if recording.work!.composer!.name != "None" {
                         ForEach(recording.work!.composer!.name.components(separatedBy: CharacterSet(charactersIn: "&,")), id: \.self) { composer in
                             Text(composer.uppercased().trimmingCharacters(in: .whitespacesAndNewlines))
                             .font(.custom("Nunito-ExtraBold", size: 15))
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                         }
                     }
                     

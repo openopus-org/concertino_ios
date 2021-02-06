@@ -26,7 +26,7 @@ struct RadioStations: View {
         VStack(alignment: .leading) {
             Text("Suggested radio stations".uppercased())
                 
-                .foregroundColor(Color(hex: 0x717171))
+                .foregroundColor(Color.lightGray)
                 .font(.custom("Nunito-Regular", size: 12))
                 .padding(EdgeInsets(top: 20, leading: 20, bottom: 0, trailing: 0))
             

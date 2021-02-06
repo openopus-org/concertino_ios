@@ -60,7 +60,7 @@ struct WorkSearchField: View {
                     }, label: {
                         Image(systemName: "xmark.circle.fill")
                             .resizable()
-                            .foregroundColor(Color(hex: 0x7C726E))
+                            .foregroundColor(Color.lightGray)
                             .frame(width: 16, height: 16)
                             .padding(.trailing, 5)
                     })
@@ -84,13 +84,13 @@ struct WorkSearchField: View {
                 label: {
                     if #available(iOS 14.0, *) {
                         Text("Cancel")
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                             .font(.custom("Nunito-Regular", size: 13))
                             .padding(4)
                             .textCase(.none)
                     } else {
                         Text("Cancel")
-                            .foregroundColor(Color(hex: 0xfe365e))
+                            .foregroundColor(Color.lightRed)
                             .font(.custom("Nunito-Regular", size: 13))
                             .padding(4)
                     }

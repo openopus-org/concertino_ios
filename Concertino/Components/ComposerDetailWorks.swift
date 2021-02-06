@@ -97,7 +97,7 @@ struct ComposerDetail: View {
                                     Section(header:
                                         Text(genre)
                                             .font(.custom("Barlow-SemiBold", size: 13))
-                                            .foregroundColor(Color(hex: 0xFE365E))
+                                            .foregroundColor(Color.lightRed)
                                             .padding(.top, 0)
                                             .textCase(.none)
                                     ){
@@ -110,7 +110,7 @@ struct ComposerDetail: View {
                                     Section(header:
                                         Text(genre)
                                             .font(.custom("Barlow-SemiBold", size: 13))
-                                            .foregroundColor(Color(hex: 0xFE365E))
+                                            .foregroundColor(Color.lightRed)
                                             .padding(.top, 0)
                                     ){
                                         ForEach(self.works.filter({$0.genre == genre}), id: \.id) { work in
@@ -126,7 +126,7 @@ struct ComposerDetail: View {
                                     Section(header:
                                         Text(rec == "1" ? "Essential" : "Other works")
                                             .font(.custom("Barlow-SemiBold", size: 13))
-                                            .foregroundColor(Color(hex: 0xFE365E))
+                                            .foregroundColor(Color.lightRed)
                                             .padding(.top, 0)
                                             .textCase(.none)
                                     ){
@@ -139,7 +139,7 @@ struct ComposerDetail: View {
                                     Section(header:
                                         Text(rec == "1" ? "Essential" : "Other works")
                                             .font(.custom("Barlow-SemiBold", size: 13))
-                                            .foregroundColor(Color(hex: 0xFE365E))
+                                            .foregroundColor(Color.lightRed)
                                             .padding(.top, 0)
                                     ){
                                         ForEach(self.works.filter({$0.recommended == rec}), id: \.id) { work in

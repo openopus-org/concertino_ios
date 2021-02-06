@@ -17,7 +17,7 @@ struct ComposerBox: View {
             VStack(alignment: .leading) {
                 URLImage(composer.portrait!, placeholder: { _ in
                     Circle()
-                        .fill(Color(hex: 0x2B2B2F))
+                        .fill(Color.extraDarkGray)
                         .frame(width: 52, height: 52)
                 }) { img in
                     img.image
@@ -29,7 +29,7 @@ struct ComposerBox: View {
                 }
                 .frame(width: 52, height: 52)
                 Text(composer.name.uppercased())
-                    .foregroundColor(Color(hex: 0xfe365e))
+                    .foregroundColor(Color.lightRed)
                     .font(.custom("Nunito-ExtraBold", size: 13))
                 Group{
                     Text(composer.complete_name)
@@ -43,7 +43,7 @@ struct ComposerBox: View {
             .padding(12)
         }
         .frame(minWidth: 134, maxWidth: 134, minHeight: 174,  maxHeight: 174, alignment: .topLeading)
-        .background(Color(hex: 0x202023))
+        .background(Color.lightBlack)
         .padding(0)
         .cornerRadius(12)
     }

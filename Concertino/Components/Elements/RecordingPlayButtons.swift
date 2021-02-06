@@ -42,11 +42,11 @@ struct RecordingPlayButtons: View {
                                     Image("handle")
                                         .resizable()
                                         .frame(width: 6, height: 12)
-                                        .foregroundColor(Color(hex: 0x696969))
+                                        .foregroundColor(Color.gray)
                                         .rotationEffect(.degrees(90))
                                         .padding(.trailing, 6)
                                     Text("in the player".uppercased())
-                                        .foregroundColor(Color(hex: 0x696969))
+                                        .foregroundColor(Color.gray)
                                         .font(.custom("Nunito-Regular", size: 10))
                                 }
                                 Spacer()
@@ -54,7 +54,7 @@ struct RecordingPlayButtons: View {
                         }
                         .padding(15)
                         .foregroundColor(.white)
-                        .background(Color(hex: 0x4F4F4F))
+                        .background(Color.darkGray)
                         .cornerRadius(16)
                 })
             } else {
@@ -85,7 +85,7 @@ struct RecordingPlayButtons: View {
                         }
                         .padding(14)
                         .foregroundColor(.white)
-                        .background(Color(hex: 0xfe365e))
+                        .background(Color.lightRed)
                         .cornerRadius(16)
                 })
             }
@@ -103,7 +103,7 @@ struct RecordingPlayButtons: View {
                         Spacer()
                     }
                     .padding(14)
-                    .background(Color(hex: 0x2B2B2F))
+                    .background(Color.extraDarkGray)
                     .cornerRadius(16)
             })
         }

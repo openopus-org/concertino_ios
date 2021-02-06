@@ -67,7 +67,7 @@ struct AlbumPlayButtons: View {
                                 ActivityIndicator(isAnimating: self.isLoading)
                                 .configure { $0.color = .white; $0.style = .medium }
                             } else if self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" {
-                                AnimatedRadioIcon(color: Color(hex: 0xFFFFFF), isAnimated: true)
+                                AnimatedRadioIcon(color: Color.white, isAnimated: true)
                                     .frame(width: 40, height: 20)
                                     .padding(.trailing, 3)
                                     .padding(.leading, 0)
@@ -89,7 +89,7 @@ struct AlbumPlayButtons: View {
                     }
                     .padding(13)
                     .foregroundColor(.white)
-                    .background(Color(hex: self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? 0x696969 : 0xfe365e))
+                    .background(self.radioState.isActive && self.radioState.playlistId == "album-\(self.album.apple_albumid)" ? Color.gray : Color.lightRed)
                     .cornerRadius(16)
             })
             
@@ -105,7 +105,7 @@ struct AlbumPlayButtons: View {
                         Spacer()
                     }
                     .padding(14)
-                    .background(Color(hex: 0x2B2B2F))
+                    .background(Color.extraDarkGray)
                     .cornerRadius(16)
             })
         }
